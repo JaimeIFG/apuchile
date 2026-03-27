@@ -1,0 +1,480 @@
+{
+  "items": [
+    {
+      "codigo": "30021",
+      "descripcion": "MORTERO AUTONIVELANTE BOMBEABLE",
+      "unidad": "m2",
+      "precio": 3119,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30122",
+      "descripcion": "REVESTIMIENTO ACRILICO AUTONIVELANTE",
+      "unidad": "m2",
+      "precio": 12840,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30138",
+      "descripcion": "REVESTIMIENTO SILICATO IMPERMEABILIZANTE",
+      "unidad": "m2",
+      "precio": 7570,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30140",
+      "descripcion": "REVESTIMIENTO SILICATO IMPERMEABLE LISO",
+      "unidad": "m2",
+      "precio": 7590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30229",
+      "descripcion": "REVESTIMIENTO POLIURETANO CLASICO",
+      "unidad": "m2",
+      "precio": 26800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30230",
+      "descripcion": "REVESTIMIENTO POLIURETANO PREMIUM",
+      "unidad": "m2",
+      "precio": 29400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30231",
+      "descripcion": "REVESTIMIENTO ANTIESTRES",
+      "unidad": "m2",
+      "precio": 17990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30035",
+      "descripcion": "LECHADAS CALIZAS",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30052",
+      "descripcion": "MORTERO AUTONIVELANTE BOMBEABLE",
+      "unidad": "m2",
+      "precio": 3119,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30071",
+      "descripcion": "REVESTIMIENTO ACRILICO RUGOSO CON AUTONIVELANTE",
+      "unidad": "m2",
+      "precio": 11770,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30123",
+      "descripcion": "REVESTIMIENTO ACRILICO AUTONIVELANTE",
+      "unidad": "m2",
+      "precio": 12940,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30139",
+      "descripcion": "REVESTIMIENTO SILICATO IMPERMEABLE",
+      "unidad": "m2",
+      "precio": 7575,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30141",
+      "descripcion": "REVESTIMIENTO SILICATO IMPERMEABLE RUGOSO",
+      "unidad": "m2",
+      "precio": 7615,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30142",
+      "descripcion": "REVESTIMIENTO SILICATO IMPERMEABLE CLASICO RUGOSO",
+      "unidad": "m2",
+      "precio": 9830,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30143",
+      "descripcion": "REVESTIMIENTO SILICATO CLASICO",
+      "unidad": "m2",
+      "precio": 9800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30232",
+      "descripcion": "REVESTIMIENTO ANTIESTRES",
+      "unidad": "m2",
+      "precio": 17990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30233",
+      "descripcion": "LECHADAS CALIZAS",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30053",
+      "descripcion": "MORTERO AUTONIVELANTE BOMBEABLE",
+      "unidad": "m2",
+      "precio": 3119,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30072",
+      "descripcion": "REVESTIMIENTO ACRILICO",
+      "unidad": "m2",
+      "precio": 11770,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30124",
+      "descripcion": "REVESTIMIENTO ACRILICO AUTONIVELANTE",
+      "unidad": "m2",
+      "precio": 12940,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30125",
+      "descripcion": "REVESTIMIENTO ACRILICO RUGOSO",
+      "unidad": "m2",
+      "precio": 12510,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30126",
+      "descripcion": "REVESTIMIENTO ACRILICO CLASICO",
+      "unidad": "m2",
+      "precio": 12910,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30234",
+      "descripcion": "REVESTIMIENTO SILICATO CLASICO RUGOSO",
+      "unidad": "m2",
+      "precio": 9840,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30235",
+      "descripcion": "REVESTIMIENTO POLIURETANO PREMIUM",
+      "unidad": "m2",
+      "precio": 29400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30236",
+      "descripcion": "REVESTIMIENTO ANTIESTRES",
+      "unidad": "m2",
+      "precio": 17990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30054",
+      "descripcion": "LECHADAS CALIZAS",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30073",
+      "descripcion": "MORTERO PARA CIMIENTOS Y SOBRECIMIENTOS",
+      "unidad": "m3",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30098",
+      "descripcion": "CONCRETO",
+      "unidad": "m3",
+      "precio": 3530,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30099",
+      "descripcion": "REPARACIONES",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30100",
+      "descripcion": "TERMINACIONES",
+      "unidad": "m2",
+      "precio": 30520,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30101",
+      "descripcion": "COBERTURAS",
+      "unidad": "m2",
+      "precio": 30530,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30102",
+      "descripcion": "LEYES SOCIALES (AU)",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30074",
+      "descripcion": "MORTERO PARA LADRILLOS",
+      "unidad": "m3",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30127",
+      "descripcion": "REVESTIMIENTO ACRILICO AUTONIVELANTE",
+      "unidad": "m2",
+      "precio": 12940,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30103",
+      "descripcion": "REPARACION",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30104",
+      "descripcion": "TERMINACIONES",
+      "unidad": "m2",
+      "precio": 30520,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30105",
+      "descripcion": "COBERTURAS",
+      "unidad": "m2",
+      "precio": 30530,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30237",
+      "descripcion": "LEYES SOCIALES (AU)",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30075",
+      "descripcion": "ROSARIO BLANCO MORTERO CEMENTO PORTLAND",
+      "unidad": "kg",
+      "precio": 3700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30128",
+      "descripcion": "CEMENTO PORTLAND NORMAL",
+      "unidad": "kg",
+      "precio": 225,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30129",
+      "descripcion": "CEMENTO",
+      "unidad": "kg",
+      "precio": 2840,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30106",
+      "descripcion": "CEMENTO",
+      "unidad": "kg",
+      "precio": 30530,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30238",
+      "descripcion": "LEYES SOCIALES (AU)",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30076",
+      "descripcion": "MURO",
+      "unidad": "m2",
+      "precio": 30100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30039",
+      "descripcion": "INSTALACION",
+      "unidad": "m2",
+      "precio": 30100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30077",
+      "descripcion": "PISO LISO MATERIAL H-15 CM",
+      "unidad": "m2",
+      "precio": 24400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30097",
+      "descripcion": "PISO ANTIDESLIZANTE",
+      "unidad": "m2",
+      "precio": 3330,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30096",
+      "descripcion": "MEMBRANAS POLIMETRICAS",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30095",
+      "descripcion": "ALBAÑIL - 1° NIVEL",
+      "unidad": "hh",
+      "precio": 20100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30240",
+      "descripcion": "LEYES SOCIALES (AU)",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30078",
+      "descripcion": "PISO DURO PAVIM MATERIAL D-16 CM",
+      "unidad": "m2",
+      "precio": 24400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30130",
+      "descripcion": "MEMBRANAS POLIMETRICAS CLASE",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30107",
+      "descripcion": "MEMBRANAS POLIMETRICAS ADHESIVO",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30108",
+      "descripcion": "CEMENTO",
+      "unidad": "kg",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30109",
+      "descripcion": "ALBAÑIL - 1° NIVEL",
+      "unidad": "hh",
+      "precio": 20100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30241",
+      "descripcion": "LEYES SOCIALES (AU)",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30079",
+      "descripcion": "PANEL DE CANELA MDF PRO ALICANTE",
+      "unidad": "m2",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30079",
+      "descripcion": "PANEL DE CANELA MDF PRO ALICANTE",
+      "unidad": "m2",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30079",
+      "descripcion": "TUBO ACRILICO PREALICANTADO",
+      "unidad": "m",
+      "precio": 2900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30079",
+      "descripcion": "MARCO ZOCALO PREALICANTADO",
+      "unidad": "m",
+      "precio": 3130,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30079",
+      "descripcion": "CARPINTERO CIMIENTO",
+      "unidad": "hh",
+      "precio": 9700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30242",
+      "descripcion": "LEYES SOCIALES (AU)",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30080",
+      "descripcion": "PANEL DE CANELA PREALICANTE",
+      "unidad": "m2",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30080",
+      "descripcion": "PERFIL DECORADO MDF CHICO RUSTICO",
+      "unidad": "m",
+      "precio": 1320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30080",
+      "descripcion": "PERFIL DECORADO MDF GRANDE",
+      "unidad": "m",
+      "precio": 1720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30080",
+      "descripcion": "TUBO ACRILICO MOLDURA PLUS",
+      "unidad": "m",
+      "precio": 1420,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30080",
+      "descripcion": "SILICONICO POLIMERICO ACRILICO BEIGE",
+      "unidad": "un",
+      "precio": 500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30243",
+      "descripcion": "LEYES SOCIALES (AU)",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    }
+  ]
+}

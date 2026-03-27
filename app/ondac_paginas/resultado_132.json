@@ -1,0 +1,172 @@
+{
+  "items": [
+    {
+      "codigo": "059",
+      "descripcion": "POSTE IMPREGNADO 3,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 12300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "060",
+      "descripcion": "POSTE IMPREGNADO 4 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 14000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "061",
+      "descripcion": "POSTE IMPREGNADO 4,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 15800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "062",
+      "descripcion": "POSTE IMPREGNADO 5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 17500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "063",
+      "descripcion": "POSTE IMPREGNADO 5,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 19300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "064",
+      "descripcion": "POSTE IMPREGNADO 6 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 21000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "065",
+      "descripcion": "POSTE IMPREGNADO 6,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 22800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "066",
+      "descripcion": "POSTE IMPREGNADO 7 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 24500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "067",
+      "descripcion": "POSTE IMPREGNADO 7,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 26300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "068",
+      "descripcion": "POSTE IMPREGNADO 8 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 28000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "069",
+      "descripcion": "POSTE IMPREGNADO 8,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 29800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "070",
+      "descripcion": "POSTE IMPREGNADO 9 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 31500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "071",
+      "descripcion": "POSTE IMPREGNADO 9,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 33300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "072",
+      "descripcion": "POSTE IMPREGNADO 10 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "073",
+      "descripcion": "POSTE IMPREGNADO 10,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 36800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "074",
+      "descripcion": "POSTE IMPREGNADO 11 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 38500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "075",
+      "descripcion": "POSTE IMPREGNADO 11,5 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 40300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "076",
+      "descripcion": "POSTE IMPREGNADO 12 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 42000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "077",
+      "descripcion": "POSTE IMPREGNADO 13 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 45500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "078",
+      "descripcion": "POSTE IMPREGNADO 14 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 49000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "079",
+      "descripcion": "POSTE IMPREGNADO 15 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 52500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "080",
+      "descripcion": "POSTE IMPREGNADO 16 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 56000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "081",
+      "descripcion": "POSTE IMPREGNADO 17 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 59500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "082",
+      "descripcion": "POSTE IMPREGNADO 18 M DIAMETRO 15 CM",
+      "unidad": "UN",
+      "precio": 63000,
+      "tipo": "material"
+    }
+  ]
+}

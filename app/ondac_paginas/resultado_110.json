@@ -1,0 +1,480 @@
+{
+  "items": [
+    {
+      "codigo": "3097",
+      "descripcion": "CANTO DE MELAMINA PREENGOMADA EN COLOR BLANCO DE 22 MM 20 MT",
+      "unidad": "ML",
+      "precio": 50,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3098",
+      "descripcion": "CANTO DE 22MM",
+      "unidad": "ML",
+      "precio": 50,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3099",
+      "descripcion": "CANTO DE MELAMINA PREENGOMADA EN COLOR BLANCO DE 18 MM",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3100",
+      "descripcion": "CANTO DE 18MM",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3101",
+      "descripcion": "CANTO DE MELAMINA PREENGOMADA EN COLOR BLANCO DE 15 MM",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3102",
+      "descripcion": "CANTO DE 15MM",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3103",
+      "descripcion": "CANTO DE MELAMINA PREENGOMADA EN COLOR BLANCO DE 12 MM",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3104",
+      "descripcion": "CANTO DE 12MM",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3105",
+      "descripcion": "CANTO DE MELAMINA PREENGOMADA EN COLOR BLANCO DE 6 MM",
+      "unidad": "ML",
+      "precio": 20,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3106",
+      "descripcion": "CANTO DE 6MM",
+      "unidad": "ML",
+      "precio": 20,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3107",
+      "descripcion": "CANTO DE MELAMINA PEGADO 22 X 0,4 MM PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3108",
+      "descripcion": "PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3109",
+      "descripcion": "CANTO DE MELAMINA PEGADO 18 X 0,4 MM PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3110",
+      "descripcion": "PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3111",
+      "descripcion": "CANTO DE MELAMINA PEGADO 15 X 0,4 MM PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3112",
+      "descripcion": "PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3113",
+      "descripcion": "CANTO DE MELAMINA PEGADO 12 X 0,4 MM PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 110,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3114",
+      "descripcion": "PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 110,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3115",
+      "descripcion": "CANTO DE MELAMINA PEGADO 6 X 0,4 MM PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 80,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3116",
+      "descripcion": "PRECIO ADHESIVO",
+      "unidad": "ML",
+      "precio": 80,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3117",
+      "descripcion": "CANTO PLÁSTICO PREENGOMADO 2,2 MM E=0,8",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3118",
+      "descripcion": "E=0,8",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3119",
+      "descripcion": "CANTO PLÁSTICO PREENGOMADO 1,8 MM E=0,8",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3120",
+      "descripcion": "E=0,8",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3121",
+      "descripcion": "CANTO PLÁSTICO PREENGOMADO 1,5 MM E=0,8",
+      "unidad": "ML",
+      "precio": 25,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3122",
+      "descripcion": "E=0,8",
+      "unidad": "ML",
+      "precio": 25,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3123",
+      "descripcion": "CANTO PLÁSTICO PREENGOMADO 1,2 MM E=0,8",
+      "unidad": "ML",
+      "precio": 20,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3124",
+      "descripcion": "E=0,8",
+      "unidad": "ML",
+      "precio": 20,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3125",
+      "descripcion": "CANTO PLÁSTICO PREENGOMADO 0,6 MM E=0,8",
+      "unidad": "ML",
+      "precio": 15,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3126",
+      "descripcion": "E=0,8",
+      "unidad": "ML",
+      "precio": 15,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3127",
+      "descripcion": "CANTO PVC APLICADO PREENGOMADO 2,2 MM E=1",
+      "unidad": "ML",
+      "precio": 70,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3128",
+      "descripcion": "E=1",
+      "unidad": "ML",
+      "precio": 70,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3129",
+      "descripcion": "CANTO PVC APLICADO PREENGOMADO 1,8 MM E=1",
+      "unidad": "ML",
+      "precio": 60,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3130",
+      "descripcion": "E=1",
+      "unidad": "ML",
+      "precio": 60,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3131",
+      "descripcion": "CANTO PVC APLICADO PREENGOMADO 1,5 MM E=1",
+      "unidad": "ML",
+      "precio": 50,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3132",
+      "descripcion": "E=1",
+      "unidad": "ML",
+      "precio": 50,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3133",
+      "descripcion": "CANTO PVC APLICADO PREENGOMADO 1,2 MM E=1",
+      "unidad": "ML",
+      "precio": 40,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3134",
+      "descripcion": "E=1",
+      "unidad": "ML",
+      "precio": 40,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3135",
+      "descripcion": "CANTO PVC APLICADO PREENGOMADO 0,6 MM E=1",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3136",
+      "descripcion": "E=1",
+      "unidad": "ML",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3137",
+      "descripcion": "CANTO DE MOLDURA PREENGOMADO LÍNEA DECORATIVA",
+      "unidad": "ML",
+      "precio": 80,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3138",
+      "descripcion": "LÍNEA DECORATIVA",
+      "unidad": "ML",
+      "precio": 80,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3139",
+      "descripcion": "CANTO DE MOLDURA PREENGOMADO LÍNEA CLÁSICA",
+      "unidad": "ML",
+      "precio": 90,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3140",
+      "descripcion": "LÍNEA CLÁSICA",
+      "unidad": "ML",
+      "precio": 90,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3141",
+      "descripcion": "CANTO DE MOLDURA PREENGOMADO LÍNEA MODERNA",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3142",
+      "descripcion": "LÍNEA MODERNA",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3143",
+      "descripcion": "CANTO DE ROBLE MACHIHEMBRADO APLICADO",
+      "unidad": "ML",
+      "precio": 200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3144",
+      "descripcion": "APLICADO",
+      "unidad": "ML",
+      "precio": 200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3145",
+      "descripcion": "CANTO DE ROBLE MACHIHEMBRADO CON ADHESIVO",
+      "unidad": "ML",
+      "precio": 250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3146",
+      "descripcion": "CON ADHESIVO",
+      "unidad": "ML",
+      "precio": 250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3147",
+      "descripcion": "CANTO DE ROBLE PREPEGADO APLICADO INCLUYE ADHESIVO",
+      "unidad": "ML",
+      "precio": 300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3148",
+      "descripcion": "INCLUYE ADHESIVO",
+      "unidad": "ML",
+      "precio": 300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3149",
+      "descripcion": "CANTO DE ROBLE PREPEGADO APLICADO INCLUYE ADHESIVO",
+      "unidad": "ML",
+      "precio": 280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3150",
+      "descripcion": "INCLUYE ADHESIVO",
+      "unidad": "ML",
+      "precio": 280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3151",
+      "descripcion": "CANTO DE ROBLE PREPEGADO APLICADO INCLUYE ADHESIVO",
+      "unidad": "ML",
+      "precio": 250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3152",
+      "descripcion": "INCLUYE ADHESIVO",
+      "unidad": "ML",
+      "precio": 250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3153",
+      "descripcion": "CANTO DE ROBLE MACHIHEMBRADO CON ADHESIVO",
+      "unidad": "ML",
+      "precio": 220,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3154",
+      "descripcion": "CON ADHESIVO",
+      "unidad": "ML",
+      "precio": 220,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3155",
+      "descripcion": "CANTO DE ROBLE MACHIHEMBRADO CON ADHESIVO",
+      "unidad": "ML",
+      "precio": 200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3156",
+      "descripcion": "CON ADHESIVO",
+      "unidad": "ML",
+      "precio": 200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3157",
+      "descripcion": "CANTO DE ROBLE ENCHAPADO APLICADO TACO",
+      "unidad": "ML",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3158",
+      "descripcion": "TACO",
+      "unidad": "ML",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3159",
+      "descripcion": "CANTO DE ROBLE ENCHAPADO APLICADO TACO",
+      "unidad": "ML",
+      "precio": 150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3160",
+      "descripcion": "TACO",
+      "unidad": "ML",
+      "precio": 150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3161",
+      "descripcion": "CANTO DE ROBLE ENCHAPADO APLICADO TACO",
+      "unidad": "ML",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3162",
+      "descripcion": "TACO",
+      "unidad": "ML",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3163",
+      "descripcion": "CANTO DE ROBLE ENCHAPADO APLICADO TACO",
+      "unidad": "ML",
+      "precio": 120,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3164",
+      "descripcion": "TACO",
+      "unidad": "ML",
+      "precio": 120,
+      "tipo": "material"
+    }
+  ]
+}

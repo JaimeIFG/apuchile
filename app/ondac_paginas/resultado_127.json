@@ -1,0 +1,354 @@
+{
+  "items": [
+    {
+      "codigo": "7702",
+      "descripcion": "ACERO INOX ESTRUCTURA TECHOS",
+      "unidad": "kg",
+      "precio": 7845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7703",
+      "descripcion": "ACERO INOX ESTRUCTURA TECHOS RECTO",
+      "unidad": "kg",
+      "precio": 7845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7704",
+      "descripcion": "ACERO INOX ESTRUCTURA TECHOS",
+      "unidad": "kg",
+      "precio": 7845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7705",
+      "descripcion": "ACERO INOX ESTRUCTURA TECHADOS",
+      "unidad": "kg",
+      "precio": 7845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7706",
+      "descripcion": "ACERO INOX SOLDADURA",
+      "unidad": "kg",
+      "precio": 9845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7707",
+      "descripcion": "ACERO INOX TECHOS BAJOS",
+      "unidad": "kg",
+      "precio": 7845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7708",
+      "descripcion": "ACERO INOX SOLDADURA",
+      "unidad": "kg",
+      "precio": 9845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7709",
+      "descripcion": "ACERO TREFILADO ALTA C.",
+      "unidad": "kg",
+      "precio": 745,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7743",
+      "descripcion": "JARAS TREFILADO 3M 3",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7744",
+      "descripcion": "JARAS TREFILADO 3M 3",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7745",
+      "descripcion": "JARAS TREFILADO 3M 4",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7746",
+      "descripcion": "JARAS TREFILADO 3M 4",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7747",
+      "descripcion": "JARAS TREFILADO 3M 5",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7748",
+      "descripcion": "JARAS TREFILADO 3M 5",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7749",
+      "descripcion": "JARAS TREFILADO 3M 6",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7750",
+      "descripcion": "JARAS TREFILADO 3M 6",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7751",
+      "descripcion": "JARAS TREFILADO 3M 8",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7752",
+      "descripcion": "JARAS TREFILADO 3M 8",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7753",
+      "descripcion": "JARAS TREFILADO 3M 10",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7754",
+      "descripcion": "JARAS TREFILADO 3M 10",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7755",
+      "descripcion": "JARAS TREFILADO 3M 12",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7756",
+      "descripcion": "JARAS TREFILADO 3M 12",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7757",
+      "descripcion": "JARAS TREFILADO 3M 14",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7758",
+      "descripcion": "JARAS TREFILADO 3M 14",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7759",
+      "descripcion": "JARAS TREFILADO 3M 16",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7760",
+      "descripcion": "JARAS TREFILADO 3M 16",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7761",
+      "descripcion": "JARAS TREFILADO 3M 18",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7762",
+      "descripcion": "JARAS TREFILADO 3M 18",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7763",
+      "descripcion": "JARAS TREFILADO 3M 20",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7764",
+      "descripcion": "JARAS TREFILADO 3M 20",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7765",
+      "descripcion": "JARAS TREFILADO 3M 22",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7766",
+      "descripcion": "JARAS TREFILADO 3M 22",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7767",
+      "descripcion": "JARAS TREFILADO 3M 25",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7768",
+      "descripcion": "JARAS TREFILADO 3M 25",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7769",
+      "descripcion": "JARAS TREFILADO 3M 28",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7770",
+      "descripcion": "JARAS TREFILADO 3M 28",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7771",
+      "descripcion": "JARAS TREFILADO 3M 32",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7772",
+      "descripcion": "JARAS TREFILADO 3M 32",
+      "unidad": "kg",
+      "precio": 1275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3008",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3009",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3010",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3011",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3012",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3013",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3014",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3015",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3016",
+      "descripcion": "BALDOSÍN CERÁMICO",
+      "unidad": "m2",
+      "precio": 7485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3017",
+      "descripcion": "BALDOSÍN CERÁMICO RÚSTICO",
+      "unidad": "m2",
+      "precio": 8245,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3018",
+      "descripcion": "BALDOSÍN CERÁMICO RÚSTICO",
+      "unidad": "m2",
+      "precio": 8245,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3019",
+      "descripcion": "BALDOSÍN CERÁMICO RÚSTICO",
+      "unidad": "m2",
+      "precio": 8245,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "items": [
+    {
+      "codigo": "50101",
+      "descripcion": "MOLDAJE DE CADENA 25 X 50",
+      "unidad": "ml",
+      "precio": 2820,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50102",
+      "descripcion": "MOLDAJE DE CADENA 25 X 40",
+      "unidad": "ml",
+      "precio": 2632,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50103",
+      "descripcion": "MOLDAJE DE CADENA 25 X 30",
+      "unidad": "ml",
+      "precio": 2444,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50104",
+      "descripcion": "MOLDAJE DE CADENA 25 X 20",
+      "unidad": "ml",
+      "precio": 2256,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50105",
+      "descripcion": "MOLDAJE DE CADENA 20 X 40",
+      "unidad": "ml",
+      "precio": 2537,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50106",
+      "descripcion": "MOLDAJE DE CADENA 20 X 30",
+      "unidad": "ml",
+      "precio": 2349,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50107",
+      "descripcion": "MOLDAJE DE CADENA 20 X 20",
+      "unidad": "ml",
+      "precio": 2161,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50108",
+      "descripcion": "MOLDAJE DE CADENA 15 X 30",
+      "unidad": "ml",
+      "precio": 2254,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50109",
+      "descripcion": "MOLDAJE DE CADENA 15 X 20",
+      "unidad": "ml",
+      "precio": 2066,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50201",
+      "descripcion": "MOLDAJE DE PILAR AISLADO",
+      "unidad": "m2",
+      "precio": 18320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50202",
+      "descripcion": "MOLDAJE DE PILAR ADOSADO",
+      "unidad": "m2",
+      "precio": 16610,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50301",
+      "descripcion": "MOLDAJE DE PILAR AISLADO, VIGAS Y LOSAS",
+      "unidad": "m2",
+      "precio": 17620,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50302",
+      "descripcion": "MOLDAJE DE PILAR ADOSADO, VIGAS Y LOSAS",
+      "unidad": "m2",
+      "precio": 15910,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50401",
+      "descripcion": "MOLDAJE DE LOSA DE CHOP",
+      "unidad": "m2",
+      "precio": 23620,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50501",
+      "descripcion": "MOLDAJE DE MURO",
+      "unidad": "m2",
+      "precio": 16110,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50601",
+      "descripcion": "MOLDAJE DE SOBRECIMIENTO",
+      "unidad": "m2",
+      "precio": 11670,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50701",
+      "descripcion": "MOLDAJE DE VIGA 15 X 30",
+      "unidad": "ml",
+      "precio": 2420,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50702",
+      "descripcion": "MOLDAJE DE VIGA 20 X 40",
+      "unidad": "ml",
+      "precio": 2920,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50703",
+      "descripcion": "MOLDAJE DE VIGA 25 X 50",
+      "unidad": "ml",
+      "precio": 3420,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50704",
+      "descripcion": "MOLDAJE DE VIGA 30 X 60",
+      "unidad": "ml",
+      "precio": 3920,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50801",
+      "descripcion": "MOLDAJE DOS CARAS CAMARA",
+      "unidad": "m2",
+      "precio": 15800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50901",
+      "descripcion": "MOLDAJE INTERIOR CAMARA SEPTICA",
+      "unidad": "m2",
+      "precio": 23710,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51001",
+      "descripcion": "MOLDAJE INTERIOR CAMARA SEPTICA",
+      "unidad": "m2",
+      "precio": 23710,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51101",
+      "descripcion": "MOLDAJE POLIESTIRENO EXPANDIDO",
+      "unidad": "m2",
+      "precio": 13150,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51201",
+      "descripcion": "MOLDAJE PLANO DIREC 20 CM TABLON",
+      "unidad": "m2",
+      "precio": 5610,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51202",
+      "descripcion": "MOLDAJE PLANO DIREC 30 CM TABLON",
+      "unidad": "m2",
+      "precio": 6110,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51301",
+      "descripcion": "MOLDAJE PLANO DIREC 30 CM CEPILLO",
+      "unidad": "m2",
+      "precio": 6810,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51401",
+      "descripcion": "MOLDAJE SCABEE, 20 AISLADO",
+      "unidad": "m2",
+      "precio": 13340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51501",
+      "descripcion": "MOLDAJE SCABEE, ADOSADO",
+      "unidad": "m2",
+      "precio": 11340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51601",
+      "descripcion": "MOLDAJE VIGA, VERTICAL CON PRESA",
+      "unidad": "ml",
+      "precio": 5230,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51701",
+      "descripcion": "MOLDAJE PARA PAVIMENTO",
+      "unidad": "m2",
+      "precio": 2570,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60701",
+      "descripcion": "MOLDAJE POLISTIRENO NONISETTE, E=10",
+      "unidad": "m2",
+      "precio": 2312,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60901",
+      "descripcion": "MOLDAJE POLISTIRENO NONISETTE, E=15",
+      "unidad": "m2",
+      "precio": 2412,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60701",
+      "descripcion": "MORTERO 110 ALCALINO LT",
+      "unidad": "LT",
+      "precio": 65,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60711",
+      "descripcion": "MORTERO 120 ALCALINO LT",
+      "unidad": "LT",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60712",
+      "descripcion": "MORTERO 130 ALCALINO LT",
+      "unidad": "LT",
+      "precio": 77,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60713",
+      "descripcion": "MORTERO 140 ALCALINO LT",
+      "unidad": "LT",
+      "precio": 83,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60714",
+      "descripcion": "MORTERO 150 ALCALINO LT",
+      "unidad": "LT",
+      "precio": 89,
+      "tipo": "apu"
+    }
+  ]
+}

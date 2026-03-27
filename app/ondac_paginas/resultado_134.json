@@ -1,0 +1,277 @@
+{
+  "items": [
+    {
+      "codigo": "8001",
+      "descripcion": "CEMENTO EN POLVO PUZOLANICO E-1 EXTRAFORTE",
+      "unidad": "KG",
+      "precio": 131,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8002",
+      "descripcion": "CEMENTO EN POLVO GRADO CORRIENTE GU",
+      "unidad": "KG",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8003",
+      "descripcion": "CEMENTO EN POLVO ALTA RESISTENCIA HE",
+      "unidad": "KG",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8004",
+      "descripcion": "YESO EN POLVO",
+      "unidad": "KG",
+      "precio": 145,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8005",
+      "descripcion": "CAL HIDRATADA EN POLVO",
+      "unidad": "KG",
+      "precio": 150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8006",
+      "descripcion": "MORTERO SECO PARA PEGAR BLOQ.HORM.20KG",
+      "unidad": "KG",
+      "precio": 220,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8007",
+      "descripcion": "PEGO CERAMICO SUPER GENCOM",
+      "unidad": "KG",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8008",
+      "descripcion": "PEGO CERAMICO GENCOM GRIS",
+      "unidad": "KG",
+      "precio": 330,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8009",
+      "descripcion": "PEGO CERAMICO GENCOM BLANCO",
+      "unidad": "KG",
+      "precio": 360,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8010",
+      "descripcion": "PEGO BLANCO P/CELOBLOCK TOPEX PREMIER",
+      "unidad": "KG",
+      "precio": 330,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8011",
+      "descripcion": "PEGO ESTUCADO BICOMPONENTE SIKAFILL-100",
+      "unidad": "KG",
+      "precio": 830,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8012",
+      "descripcion": "PEGO MEZCL.P/P CONCRETO SILICATO",
+      "unidad": "KG",
+      "precio": 174,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8013",
+      "descripcion": "PEGO MEZCL.P/P CONCRETO SILICAT",
+      "unidad": "KG",
+      "precio": 174,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8014",
+      "descripcion": "PEGO BLANCO P/CERAMICA SILICATO",
+      "unidad": "KG",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8015",
+      "descripcion": "PEGO BLANCO P/CERAMICA SILICATO",
+      "unidad": "KG",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8016",
+      "descripcion": "PEGO PORCELANICO P/CONCRETO",
+      "unidad": "KG",
+      "precio": 1600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8017",
+      "descripcion": "PEGO ESCOCIDO P/CONCRETO SILICATO",
+      "unidad": "KG",
+      "precio": 1700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8018",
+      "descripcion": "PEGO PORCELANICO P/AZULEJO SILICATO",
+      "unidad": "KG",
+      "precio": 1700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8019",
+      "descripcion": "PEGO PORCELANICO 18 KG SILICATO",
+      "unidad": "KG",
+      "precio": 1750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8020",
+      "descripcion": "PITA P/SELLADOS",
+      "unidad": "M",
+      "precio": 11,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8021",
+      "descripcion": "SELLANTE SILICONA P/CERAMICA",
+      "unidad": "ML",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8022",
+      "descripcion": "LATEX SINTETICO EMPLASTEADO REFORZADO",
+      "unidad": "LT",
+      "precio": 2400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8023",
+      "descripcion": "SELLADOR",
+      "unidad": "LT",
+      "precio": 2400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8024",
+      "descripcion": "PASTA EMPL.P/MADERA P/INT.Y EXT.",
+      "unidad": "KG",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8025",
+      "descripcion": "PASTA EMPL.P/METAL P/INT.Y EXT.",
+      "unidad": "KG",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8026",
+      "descripcion": "PASTE MAT.SOLUC.EN AGUA P/INTERIO",
+      "unidad": "KG",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8027",
+      "descripcion": "PASTE PLASTICA",
+      "unidad": "KG",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8028",
+      "descripcion": "FORJAS OSTEOSINTESIS",
+      "unidad": "KG",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8029",
+      "descripcion": "PASTA P/EMPL.EN SECO DE BLOQ.HORM",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8030",
+      "descripcion": "PASTA P/EMPARA SECO CONCRETO",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8031",
+      "descripcion": "FORJAS P/PACKING",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8032",
+      "descripcion": "PEQ.P/ATORN.P/MADERA AGLOMERADO",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8033",
+      "descripcion": "PEQÑ.SOLUC.EN POLVO P/CONCRETO",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8034",
+      "descripcion": "PEQÑ.ATORN.P/COMP.AGLOM.TORMED",
+      "unidad": "KG",
+      "precio": 1200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8035",
+      "descripcion": "PEQÑ.ATORN.P/CEMENTO",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8036",
+      "descripcion": "PEQÑ.TORNILLO P/QUAD.AGLOMERAG",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8037",
+      "descripcion": "DE TIERRA ALCALINIZ.BICOMPONENTE",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8038",
+      "descripcion": "PEQÑ TORNIL P/CONCRETO Y LADRILLO",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8039",
+      "descripcion": "P.T.GALV.ROSC.AUTOPERT.P/LAMINA ESP",
+      "unidad": "KG",
+      "precio": 1100,
+      "tipo": "material"
+    }
+  ]
+}

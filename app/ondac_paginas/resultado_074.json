@@ -1,0 +1,116 @@
+{
+  "items": [
+    {
+      "codigo": "0503",
+      "descripcion": "REVEST. ALUCOBOND M3 MT/TRIPAL",
+      "unidad": "m2",
+      "precio": 18981,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0504",
+      "descripcion": "REVEST. ESTUCO LISO CANTO RODADO",
+      "unidad": "m2",
+      "precio": 2896,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0505",
+      "descripcion": "REVEST. ESTUCO RASPADO SALPICRETE",
+      "unidad": "m2",
+      "precio": 3160,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0506",
+      "descripcion": "REVEST. PIEDRA LAJA GRIS 4 CM",
+      "unidad": "m2",
+      "precio": 9726,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0507",
+      "descripcion": "REVEST. PIEDRA PIZARRA NEGRA",
+      "unidad": "m2",
+      "precio": 11868,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0508",
+      "descripcion": "REVEST. PORCELANATO RECTIFICADO",
+      "unidad": "m2",
+      "precio": 7415,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0509",
+      "descripcion": "REVEST. SIDING VINILICO COLOR",
+      "unidad": "m2",
+      "precio": 4847,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0510",
+      "descripcion": "REVEST. TINETA LINOLEICA HARD COLOR SOFT",
+      "unidad": "m2",
+      "precio": 3847,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0511",
+      "descripcion": "REVEST. VINILICO LINOLEICO HARD COLOR",
+      "unidad": "m2",
+      "precio": 4419,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0512",
+      "descripcion": "REVEST. VINILICO MARMOLIUN",
+      "unidad": "m2",
+      "precio": 5798,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0513",
+      "descripcion": "REVEST. VINILICO HETEROGENEO DE PIEDRA",
+      "unidad": "m2",
+      "precio": 181798,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0514",
+      "descripcion": "REVEST. PERDILAC SOBRE TERMODUR",
+      "unidad": "m2",
+      "precio": 8726,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0515",
+      "descripcion": "REVEST. MARMOLEADO TERRAZ MICRO",
+      "unidad": "m2",
+      "precio": 3796,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0516",
+      "descripcion": "REVEST. PERDILAC CHANTRES",
+      "unidad": "m2",
+      "precio": 20245,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0517",
+      "descripcion": "REVEST. PERDILAC EMANCIPADO",
+      "unidad": "m2",
+      "precio": 20282,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0518",
+      "descripcion": "REVEST. PERDILAC TANGEANDADO GEEC GAL",
+      "unidad": "m2",
+      "precio": 20420,
+      "tipo": "apu"
+    }
+  ]
+}

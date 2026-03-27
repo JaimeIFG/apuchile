@@ -1,0 +1,543 @@
+{
+  "items": [
+    {
+      "codigo": "2009",
+      "descripcion": "BANERMEDIO MUNICIPAL",
+      "unidad": "M2",
+      "precio": 84100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BANERMEDIO MUNICIPAL",
+      "unidad": "M2",
+      "precio": 70990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2011",
+      "descripcion": "BICICLERON",
+      "unidad": "M2",
+      "precio": 49560,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2010",
+      "descripcion": "RETALIZACION BICICLERON",
+      "unidad": "M2",
+      "precio": 48400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2006",
+      "descripcion": "BANERMEDIO OVAL BICOLOR",
+      "unidad": "M2",
+      "precio": 144300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BANERMEDIO BICOLOR",
+      "unidad": "M2",
+      "precio": 50260,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2006",
+      "descripcion": "BANERMEDIO OVAL BICOLOR",
+      "unidad": "M2",
+      "precio": 144300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BANERMEDIO",
+      "unidad": "M2",
+      "precio": 50260,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2013",
+      "descripcion": "BANERMEDIO PLASTICO BICOLOR",
+      "unidad": "M2",
+      "precio": 244100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2014",
+      "descripcion": "RETALIZACION BANERMEDIO PLASTICO BICOLOR",
+      "unidad": "M2",
+      "precio": 38500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2007",
+      "descripcion": "BANERMEDIO SANTANDER",
+      "unidad": "M2",
+      "precio": 84100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BANERMEDIO SANTANDER",
+      "unidad": "M2",
+      "precio": 70990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2013",
+      "descripcion": "BICICLETA ELECTRICA",
+      "unidad": "M2",
+      "precio": 353100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BICICLETA ELECTRICA",
+      "unidad": "M2",
+      "precio": 80280,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2020",
+      "descripcion": "BICICLERON AZUL",
+      "unidad": "M2",
+      "precio": 38500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2022",
+      "descripcion": "BICICLERON AZUL TRIANGULAR",
+      "unidad": "M2",
+      "precio": 38500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2022",
+      "descripcion": "BICICLERON BICOLOR",
+      "unidad": "M2",
+      "precio": 183500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2032",
+      "descripcion": "RETALIZACION BICICLERON BICOLOR",
+      "unidad": "M2",
+      "precio": 38500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2021",
+      "descripcion": "BICICLERON RECTANGULAR",
+      "unidad": "M2",
+      "precio": 133800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2031",
+      "descripcion": "RETALIZACION BICICLERON RECTANGULAR",
+      "unidad": "M2",
+      "precio": 38500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2021",
+      "descripcion": "BICICLERON BLANCO",
+      "unidad": "M2",
+      "precio": 138100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "BICICLERON BICOLOR",
+      "unidad": "M2",
+      "precio": 138100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BICICLERON BICOLOR",
+      "unidad": "M2",
+      "precio": 80290,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2001",
+      "descripcion": "BICICLERON PERPENDICULAR",
+      "unidad": "M2",
+      "precio": 34900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BICICLERON PERPENDICULAR",
+      "unidad": "M2",
+      "precio": 62500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2001",
+      "descripcion": "BICICLERON TRIANGULAR BICOLOR",
+      "unidad": "M2",
+      "precio": 34900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2009",
+      "descripcion": "BICICLERON TRIANGULAR POSICION II",
+      "unidad": "M2",
+      "precio": 21000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BICICLERON TRIANGULAR POSICION II",
+      "unidad": "M2",
+      "precio": 63100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2001",
+      "descripcion": "BICICLERON TRIANGULAR",
+      "unidad": "M2",
+      "precio": 145100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "2008",
+      "descripcion": "RETALIZACION BICICLERON TRIANGULAR",
+      "unidad": "M2",
+      "precio": 28200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8191",
+      "descripcion": "BANDERA BRASILERA 15X1 M",
+      "unidad": "UN",
+      "precio": 1800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8192",
+      "descripcion": "BANDERA BRASILERA TRIANGULAR 38X1 M",
+      "unidad": "UN",
+      "precio": 2430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8193",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8151",
+      "descripcion": "BANDERA CHILENA LINEA BAEZ",
+      "unidad": "UN",
+      "precio": 5440,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8152",
+      "descripcion": "BANDERA CHILENA TRIANGULAR 38X1 M",
+      "unidad": "UN",
+      "precio": 2430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8153",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 2430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8154",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8171",
+      "descripcion": "BANDERA CHILENA LINEA BAEZ 15X",
+      "unidad": "UN",
+      "precio": 3430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8172",
+      "descripcion": "BANDERA CHILENA TRIANGULAR 38X15 M",
+      "unidad": "UN",
+      "precio": 2430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8173",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 21800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8174",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8161",
+      "descripcion": "BANDERA CHILENA LINEA BAEZ 15X",
+      "unidad": "UN",
+      "precio": 6430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8162",
+      "descripcion": "BANDERA CHILENA TRIANGULAR 38X1 M",
+      "unidad": "UN",
+      "precio": 2430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8163",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 21800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8164",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8181",
+      "descripcion": "BANDERA LINEA LINEA BAEZ 15X",
+      "unidad": "UN",
+      "precio": 4430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8182",
+      "descripcion": "BANDERA TRIANGULAR 38X15 M",
+      "unidad": "UN",
+      "precio": 1880,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8183",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 21800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8184",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8171",
+      "descripcion": "BANDERA LINEA LINEA BAEZ 15X",
+      "unidad": "UN",
+      "precio": 13430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8172",
+      "descripcion": "BANDERA TRIANGULAR TRIANGULAR 38X1 M",
+      "unidad": "UN",
+      "precio": 1880,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8173",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 21800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8174",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8191",
+      "descripcion": "BANDERA LINEA LINEA BAEZ 15X",
+      "unidad": "UN",
+      "precio": 11430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8192",
+      "descripcion": "BANDERA TRIANGULAR 38X15 M",
+      "unidad": "UN",
+      "precio": 1880,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8193",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 21800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8194",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8161",
+      "descripcion": "BANDERA LINEA LINEA BAEZ",
+      "unidad": "UN",
+      "precio": 6430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8162",
+      "descripcion": "BANDERA TRIANGULAR 38X15 M",
+      "unidad": "UN",
+      "precio": 1880,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8163",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 21800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8164",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8171",
+      "descripcion": "BANDERA ARGENTINA BAEZ",
+      "unidad": "UN",
+      "precio": 6430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8172",
+      "descripcion": "CARRETERO BAEZ",
+      "unidad": "UN",
+      "precio": 2550,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8173",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 22800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8174",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8181",
+      "descripcion": "BANDERA SCANNER BAEZ",
+      "unidad": "UN",
+      "precio": 11430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8182",
+      "descripcion": "BARRA ACETATO BAEZ BOLLA",
+      "unidad": "UN",
+      "precio": 6590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8183",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 22800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8184",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8051",
+      "descripcion": "BARRA CHOCOLATE I AM",
+      "unidad": "UN",
+      "precio": 1430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8052",
+      "descripcion": "CHINCHINERO TRIANGULAR 38X1 M",
+      "unidad": "UN",
+      "precio": 1430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8053",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 22800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8054",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8061",
+      "descripcion": "BANDERA ARGENTINA",
+      "unidad": "UN",
+      "precio": 14230,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8062",
+      "descripcion": "CHINCHINERO TRIANGULAR 38X1 M",
+      "unidad": "UN",
+      "precio": 1880,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8063",
+      "descripcion": "CARRETERO TRIANGULAR",
+      "unidad": "UN",
+      "precio": 22800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8064",
+      "descripcion": "LINEA BONDAJE 1 M",
+      "unidad": "ML",
+      "precio": 100,
+      "tipo": "apu"
+    }
+  ]
+}

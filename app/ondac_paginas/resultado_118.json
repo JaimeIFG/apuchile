@@ -1,0 +1,354 @@
+{
+  "items": [
+    {
+      "codigo": "1601",
+      "descripcion": "LIJA PARA MADERA GRUESA",
+      "unidad": "pli",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1602",
+      "descripcion": "LIJA PARA MADERA MEDIA",
+      "unidad": "pli",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1603",
+      "descripcion": "LIJA PARA MADERA FINA",
+      "unidad": "pli",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1604",
+      "descripcion": "LIJA PARA FIERRO GRUESA",
+      "unidad": "pli",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1605",
+      "descripcion": "LIJA PARA FIERRO MEDIA",
+      "unidad": "pli",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1606",
+      "descripcion": "LIJA PARA FIERRO FINA",
+      "unidad": "pli",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1607",
+      "descripcion": "LIJA PARA PASTA GRUESA",
+      "unidad": "pli",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1608",
+      "descripcion": "LIJA PARA PASTA MEDIA",
+      "unidad": "pli",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1609",
+      "descripcion": "LIJA PARA PASTA FINA",
+      "unidad": "pli",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1610",
+      "descripcion": "LIJA PARA MURO GRUESA",
+      "unidad": "pli",
+      "precio": 1700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1611",
+      "descripcion": "LIJA PARA MURO MEDIA",
+      "unidad": "pli",
+      "precio": 1700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1612",
+      "descripcion": "LIJA PARA MURO FINA",
+      "unidad": "pli",
+      "precio": 1700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1613",
+      "descripcion": "LIJA PARA LOZA GRUESA",
+      "unidad": "pli",
+      "precio": 1800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1614",
+      "descripcion": "LIJA PARA LOZA MEDIA",
+      "unidad": "pli",
+      "precio": 1800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1615",
+      "descripcion": "LIJA PARA LOZA FINA",
+      "unidad": "pli",
+      "precio": 1800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1616",
+      "descripcion": "LIJA PARA VIDRIO GRUESA",
+      "unidad": "pli",
+      "precio": 2280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1617",
+      "descripcion": "LIJA PARA VIDRIO MEDIA",
+      "unidad": "pli",
+      "precio": 2280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1618",
+      "descripcion": "LIJA PARA VIDRIO FINA",
+      "unidad": "pli",
+      "precio": 2280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1619",
+      "descripcion": "LIJA PARA CONCRETO GRUESA",
+      "unidad": "pli",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1620",
+      "descripcion": "LIJA PARA CONCRETO MEDIA",
+      "unidad": "pli",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1621",
+      "descripcion": "LIJA PARA CONCRETO FINA",
+      "unidad": "pli",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1622",
+      "descripcion": "LIJA PARA YESO GRUESA",
+      "unidad": "pli",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1623",
+      "descripcion": "LIJA PARA YESO MEDIA",
+      "unidad": "pli",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1624",
+      "descripcion": "LIJA PARA YESO FINA",
+      "unidad": "pli",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1625",
+      "descripcion": "LIJA TELA METALURGICA",
+      "unidad": "pli",
+      "precio": 4520,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1626",
+      "descripcion": "LIJA TELA PARA MADERA",
+      "unidad": "pli",
+      "precio": 4520,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1627",
+      "descripcion": "LIJA TELA PARA FIERRO",
+      "unidad": "pli",
+      "precio": 4520,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1628",
+      "descripcion": "LIJA TELA PARA CONCRETO",
+      "unidad": "pli",
+      "precio": 4520,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1629",
+      "descripcion": "LIJA TELA ESPONJA GRUESA",
+      "unidad": "pli",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1630",
+      "descripcion": "LIJA TELA ESPONJA MEDIA",
+      "unidad": "pli",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1631",
+      "descripcion": "LIJA TELA ESPONJA FINA",
+      "unidad": "pli",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1632",
+      "descripcion": "LIJA PARA CONCRETO ARMADO",
+      "unidad": "pli",
+      "precio": 2380,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1633",
+      "descripcion": "LIJA MALLA METALURGICA",
+      "unidad": "pli",
+      "precio": 4730,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1634",
+      "descripcion": "LIJA MALLA PARA MADERA",
+      "unidad": "pli",
+      "precio": 4730,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1635",
+      "descripcion": "LIJA MALLA PARA FIERRO",
+      "unidad": "pli",
+      "precio": 4730,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1636",
+      "descripcion": "LIJA MALLA PARA CONCRETO",
+      "unidad": "pli",
+      "precio": 4730,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1637",
+      "descripcion": "LIJA TELA ESMERIL GRUESA",
+      "unidad": "pli",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1638",
+      "descripcion": "LIJA TELA ESMERIL MEDIA",
+      "unidad": "pli",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1639",
+      "descripcion": "LIJA TELA ESMERIL FINA",
+      "unidad": "pli",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1640",
+      "descripcion": "LIJA DISCO METALURGICA",
+      "unidad": "unid",
+      "precio": 1920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1641",
+      "descripcion": "LIJA DISCO PARA MADERA",
+      "unidad": "unid",
+      "precio": 1920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1642",
+      "descripcion": "LIJA DISCO PARA FIERRO",
+      "unidad": "unid",
+      "precio": 1920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1643",
+      "descripcion": "LIJA DISCO PARA CONCRETO",
+      "unidad": "unid",
+      "precio": 1920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1644",
+      "descripcion": "LIJA DISCO GOMA ABRASIVA",
+      "unidad": "unid",
+      "precio": 2280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1645",
+      "descripcion": "LIJA ROLLO METALURGICA",
+      "unidad": "m",
+      "precio": 8440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1646",
+      "descripcion": "LIJA ROLLO PARA MADERA",
+      "unidad": "m",
+      "precio": 8440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1647",
+      "descripcion": "LIJA ROLLO PARA FIERRO",
+      "unidad": "m",
+      "precio": 8440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1648",
+      "descripcion": "LIJA CINTA METALURGICA",
+      "unidad": "m",
+      "precio": 15630,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1649",
+      "descripcion": "LIJA CINTA PARA MADERA",
+      "unidad": "m",
+      "precio": 15630,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1650",
+      "descripcion": "LIJA CINTA PARA FIERRO",
+      "unidad": "m",
+      "precio": 15630,
+      "tipo": "material"
+    }
+  ]
+}

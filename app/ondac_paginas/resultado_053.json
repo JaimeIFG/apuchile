@@ -1,0 +1,172 @@
+{
+  "items": [
+    {
+      "codigo": "3002",
+      "descripcion": "ASIENTO JAC UNIVERSAL ESMALIDA",
+      "unidad": "UN",
+      "precio": 4778,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3003",
+      "descripcion": "BISECTRIZ PRIMERA",
+      "unidad": "m",
+      "precio": 339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3004",
+      "descripcion": "BISECTRIZ SEGUNDA",
+      "unidad": "m",
+      "precio": 10,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3005",
+      "descripcion": "BLOQUES ALLUVIA DE CAL Y CANTO ELEVADO",
+      "unidad": "UN",
+      "precio": 6700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3006",
+      "descripcion": "ALBAÑIL DE SEGUNDA CATEGORIA",
+      "unidad": "JOR",
+      "precio": 22236,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3007",
+      "descripcion": "PEON EN",
+      "unidad": "JOR",
+      "precio": 17471,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3008",
+      "descripcion": "CAPATAZ COMPLETO 1/8 M DE 0.012",
+      "unidad": "L",
+      "precio": 2379,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3009",
+      "descripcion": "SOLERA CIRCULAR INCLUYE EMPOZADO",
+      "unidad": "ML",
+      "precio": 8925,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3010",
+      "descripcion": "MEZCLA DE LENA Y CARBON SETENTA",
+      "unidad": "KG",
+      "precio": 2280,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3011",
+      "descripcion": "MEZCLA DE LENA Y CARBON COMERCIAL SETENTA",
+      "unidad": "KG",
+      "precio": 1700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3072",
+      "descripcion": "MOVILIZACION PREVIO",
+      "unidad": "GLB",
+      "precio": 1789,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3073",
+      "descripcion": "MOVILIZACION PRVIO",
+      "unidad": "GLB",
+      "precio": 50020,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "3074",
+      "descripcion": "LEYES SOCIALES EJC",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8007",
+      "descripcion": "BLOQUES ALLUVIA DE CAL Y CANTO ELEVADO",
+      "unidad": "UN",
+      "precio": 6700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8008",
+      "descripcion": "ALBAÑIL DE SEGUNDA CATEGORIA",
+      "unidad": "JOR",
+      "precio": 22236,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8009",
+      "descripcion": "PEON EN",
+      "unidad": "JOR",
+      "precio": 17471,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8010",
+      "descripcion": "CAPATAZ COMPLETO 1/8 M DE 0.012",
+      "unidad": "L",
+      "precio": 2379,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8011",
+      "descripcion": "SOLERA CIRCULAR INCLUYE EMPOZADO",
+      "unidad": "ML",
+      "precio": 8925,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8012",
+      "descripcion": "MEZCLA DE LENA CARBON",
+      "unidad": "KG",
+      "precio": 390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8013",
+      "descripcion": "MEZCLA DE LENA Y CARBON SETENTA",
+      "unidad": "KG",
+      "precio": 2280,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8014",
+      "descripcion": "MEZCLA DE LENA Y CARBON COMERCIAL SETENTA",
+      "unidad": "KG",
+      "precio": 2280,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8072",
+      "descripcion": "MOVILIZACION PREVIO",
+      "unidad": "GLB",
+      "precio": 1789,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8073",
+      "descripcion": "MOVILIZACION PRVIO",
+      "unidad": "GLB",
+      "precio": 50020,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8074",
+      "descripcion": "LEYES SOCIALES EJC",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    }
+  ]
+}

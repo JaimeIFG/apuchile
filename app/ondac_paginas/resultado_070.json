@@ -1,0 +1,424 @@
+{
+  "items": [
+    {
+      "codigo": "0101",
+      "descripcion": "PAVIMENTO BITUMINOSO ASFÁLTICO EN FRÍO",
+      "unidad": "m2",
+      "precio": 2146,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0102",
+      "descripcion": "MEZCLA ASFÁLTICA EN FRÍO E=5cm",
+      "unidad": "m2",
+      "precio": 1832,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0103",
+      "descripcion": "SELLO TRATAMIENTO SUPERFICIAL",
+      "unidad": "m2",
+      "precio": 387,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0104",
+      "descripcion": "MEMBRANA ASFÁLTICA",
+      "unidad": "m2",
+      "precio": 1054,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0105",
+      "descripcion": "CORTE QUÍMICO 20cm",
+      "unidad": "ml",
+      "precio": 1268,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0106",
+      "descripcion": "SELLADO DE FISURAS CON EMULSIÓN ASFÁLTICA",
+      "unidad": "ml",
+      "precio": 2546,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0107",
+      "descripcion": "RETACADO CON TIRMO a/3",
+      "unidad": "m2",
+      "precio": 2346,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0108",
+      "descripcion": "RETACADO CON TIRMO a/5",
+      "unidad": "m2",
+      "precio": 2500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0109",
+      "descripcion": "REPARACIÓN LOCALIZADA",
+      "unidad": "m2",
+      "precio": 3148,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0111",
+      "descripcion": "PAVIMENTO PÉTREO VILLAGE MASCARA",
+      "unidad": "m2",
+      "precio": 17446,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0112",
+      "descripcion": "SOLERA PREFABRICADA H-15",
+      "unidad": "ml",
+      "precio": 6762,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0113",
+      "descripcion": "ARENA ESTABILIZADA P/BASE h=0.08",
+      "unidad": "m2",
+      "precio": 762,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0114",
+      "descripcion": "SOLERA DE PIEDRA PARTIDA",
+      "unidad": "ml",
+      "precio": 1587,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0115",
+      "descripcion": "RIEGOS",
+      "unidad": "m2",
+      "precio": 698,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0116",
+      "descripcion": "NIVELACIÓN TERRENO",
+      "unidad": "m2",
+      "precio": 1033,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0117",
+      "descripcion": "PAVIMENTO PIEDRA ESCOLLERA A LA VISTA",
+      "unidad": "m2",
+      "precio": 23302,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0118",
+      "descripcion": "DEMOLICIÓN",
+      "unidad": "m3",
+      "precio": 5642,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0119",
+      "descripcion": "CONSTRUCCIÓN POLICUBICADO",
+      "unidad": "m2",
+      "precio": 4535,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0120",
+      "descripcion": "EXCAVACIÓN EN ROCA",
+      "unidad": "m3",
+      "precio": 15448,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0121",
+      "descripcion": "RELLENO COMPACTADO",
+      "unidad": "m3",
+      "precio": 8020,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0122",
+      "descripcion": "PERFILADO",
+      "unidad": "m2",
+      "precio": 445,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0123",
+      "descripcion": "PERFILADO CON MOTONIVELADORA",
+      "unidad": "m2",
+      "precio": 48300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0124",
+      "descripcion": "FRANCIA SIMPLE LEVE",
+      "unidad": "ml",
+      "precio": 33162,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0125",
+      "descripcion": "PERFILADO CUNETAS",
+      "unidad": "ml",
+      "precio": 851,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0126",
+      "descripcion": "PREPARACIÓN SUBBASE",
+      "unidad": "m2",
+      "precio": 1435,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0127",
+      "descripcion": "CARPINTERO",
+      "unidad": "m2",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0128",
+      "descripcion": "PÉTALOS MADERA Y CONCRETO A.S.T.M.",
+      "unidad": "un",
+      "precio": 38352,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0129",
+      "descripcion": "PLATINAS CONCRETO GRADO 21",
+      "unidad": "m2",
+      "precio": 3408,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0130",
+      "descripcion": "BOCALVA CONCRETO CLASE",
+      "unidad": "m2",
+      "precio": 96558,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0131",
+      "descripcion": "BOCALVA DE INSPECCIÓN CLASE",
+      "unidad": "m2",
+      "precio": 96558,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0132",
+      "descripcion": "EXCAVACIÓN COMÚN",
+      "unidad": "m3",
+      "precio": 1854,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0133",
+      "descripcion": "EXCAVACIÓN EN PAMPA ACCIONES",
+      "unidad": "m3",
+      "precio": 8173,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0134",
+      "descripcion": "ASIENTO TIPO COLONIAL ARM. REDONDEADO",
+      "unidad": "ml",
+      "precio": 9088,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0135",
+      "descripcion": "ÁRMATE CONCRETO",
+      "unidad": "m2",
+      "precio": 8000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0136",
+      "descripcion": "DEMARCACIÓN",
+      "unidad": "ml",
+      "precio": 139,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0137",
+      "descripcion": "PÉTALOS BRONCE 1/2 PULGADA",
+      "unidad": "un",
+      "precio": 31142,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0138",
+      "descripcion": "PÉTALOS DE INSPECCIÓN ACERO INOX",
+      "unidad": "ml",
+      "precio": 31446,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0139",
+      "descripcion": "CARPINTERO TERMINADO",
+      "unidad": "m2",
+      "precio": 31500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0140",
+      "descripcion": "PÉTALOS BRONCE 3/4 PULGADA",
+      "unidad": "un",
+      "precio": 18049,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0141",
+      "descripcion": "PÉTALOS ACERO INOXIDABLE CALIDAD 304",
+      "unidad": "ml",
+      "precio": 31446,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0142",
+      "descripcion": "CARPINTERO TERMINADO",
+      "unidad": "m2",
+      "precio": 31500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0201",
+      "descripcion": "PICADORAS DIAMÉTICO A.INOX. DIAM.",
+      "unidad": "un",
+      "precio": 11756,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0202",
+      "descripcion": "TUBO DE FIERRO GALV. PVC",
+      "unidad": "ml",
+      "precio": 1632,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0203",
+      "descripcion": "MEDIDA AISLANTE MULTICOLOR GALVÁNICO",
+      "unidad": "un",
+      "precio": 18192,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0204",
+      "descripcion": "RETENES PARA FIERRO PROTEGIDO CONSTRUCCIÓN",
+      "unidad": "un",
+      "precio": 6279,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0205",
+      "descripcion": "PIEZAS",
+      "unidad": "un",
+      "precio": 2598,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0206",
+      "descripcion": "SELLADOR",
+      "unidad": "ml",
+      "precio": 2588,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0207",
+      "descripcion": "RETENES",
+      "unidad": "un",
+      "precio": 2540,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0208",
+      "descripcion": "ACCESORIOS CONEXIONADO P/TUBING MAXI DE CONSTRUCCIÓN",
+      "unidad": "un",
+      "precio": 18971,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0209",
+      "descripcion": "RETENES PARA FIERRO CONSTRUCCIÓN",
+      "unidad": "un",
+      "precio": 7565,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0210",
+      "descripcion": "ASIENTOS CONEXIONADO RETUBE",
+      "unidad": "un",
+      "precio": 2763,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0211",
+      "descripcion": "ASIENTOS CONEXIONADO RETUBE",
+      "unidad": "un",
+      "precio": 1869,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0212",
+      "descripcion": "DEMARCACIÓN ESPECIAL",
+      "unidad": "m2",
+      "precio": 2863,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0213",
+      "descripcion": "TERMINACIÓN ESPECIAL",
+      "unidad": "m2",
+      "precio": 37500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0214",
+      "descripcion": "DEMARCACIÓN",
+      "unidad": "m2",
+      "precio": 1530,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0300",
+      "descripcion": "EXCAVACIÓN DEMOLICIÓN EN",
+      "unidad": "m3",
+      "precio": 69312,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0301",
+      "descripcion": "HORMIGÓN",
+      "unidad": "m3",
+      "precio": 1540,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0302",
+      "descripcion": "CARPINTERO GALVANIZADO EN CALIENTE",
+      "unidad": "m2",
+      "precio": 5298,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0303",
+      "descripcion": "CARPINTERO TERMINACIÓN PLANILLA",
+      "unidad": "m2",
+      "precio": 32600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0304",
+      "descripcion": "CARPINTERO TERMINACIÓN",
+      "unidad": "m2",
+      "precio": 32600,
+      "tipo": "apu"
+    }
+  ]
+}

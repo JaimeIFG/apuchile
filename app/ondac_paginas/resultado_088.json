@@ -1,0 +1,403 @@
+{
+  "items": [
+    {
+      "codigo": "DC-ALAMARES",
+      "descripcion": "ALAMBRE GALVANIZADO",
+      "unidad": "kg",
+      "precio": 1150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "1\" X 1/2\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 13,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "1\" X 1/2\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "PVC N/R",
+      "unidad": "m",
+      "precio": 1790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "1\" X 1/2\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "FIERRO LAMINADO MICROACERO",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "PVC N/R",
+      "unidad": "m",
+      "precio": 1150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "FIERRO LAMINADO MICROACERO",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "PVC N/R",
+      "unidad": "m",
+      "precio": 1300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "1/2\" X 1/2\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "FIERRO LAMINADO MICROACERO",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "1\" X 3/4\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 1790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "1\" X 1\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "1 1/2\" X 1/2\" ALAMBRE PARA CONSTRUCCION",
+      "unidad": "m",
+      "precio": 1300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "ALAMBRE GALVANIZADO",
+      "unidad": "kg",
+      "precio": 1150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "1\" X 1\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "1\" X 1/2\" DE ALAMBRE GALVANIZADO",
+      "unidad": "m",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "ALAMBRE PARA CONSTRUCCION",
+      "unidad": "kg",
+      "precio": 1300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "1\" X 3/4\" DE ALAMBRE GALVANIZADO EN ROLLO",
+      "unidad": "m",
+      "precio": 1790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "ALAMBRE GALVANIZADO",
+      "unidad": "kg",
+      "precio": 1150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "1\" X 1\" DE ALAMBRE MICROACERO",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "ALAMBRE MICROACERO",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "026",
+      "descripcion": "1\" X 1\" DE ALAMBRE MICROACERO",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "027",
+      "descripcion": "ALAMBRE",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "028",
+      "descripcion": "1\" X 1\" DE ALAMBRE MICROACERO",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "ALAMBRE MICROACERO LISO",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "1 1/4\" X 3/4\" DE ALAMBRE MICROACERO",
+      "unidad": "m",
+      "precio": 2700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "1\" X 1/2\" ALAMBRE DE AMARRA AL 5100",
+      "unidad": "m",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "ALAMBRE",
+      "unidad": "kg",
+      "precio": 1150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "1\" X 1/2\" ALAMBRE MICROACERO",
+      "unidad": "m",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "ALAMBRE MICROACERO",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "ALAMBRE MICROACERO LISO",
+      "unidad": "kg",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "1\" X 1\" ALAMBRE MICROACERO",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "1 1/4\" X 3/4\" ALAMBRE DE AMARRA AL 5100",
+      "unidad": "m",
+      "precio": 2700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "PVC ACOPLADOR ESTRUCTURAL",
+      "unidad": "unid",
+      "precio": 1300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "039",
+      "descripcion": "CON ACERO ESTRUCTURAL",
+      "unidad": "kg",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "DC-ACERO EN PERFILES",
+      "descripcion": "ACERO EN PERFILES",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "040",
+      "descripcion": "1 1/2\" X 1 1/4\" PERFIL TUBULAR",
+      "unidad": "m",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "041",
+      "descripcion": "1 3/4\" X 1\" EN CONEXIONES DE CAÑERÍA",
+      "unidad": "unid",
+      "precio": 4170,
+      "tipo": "material"
+    },
+    {
+      "codigo": "042",
+      "descripcion": "ALAMBRE GALVANIZADO EN ROLLO PESADO",
+      "unidad": "kg",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "043",
+      "descripcion": "ACERO EN",
+      "unidad": "kg",
+      "precio": 4580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "044",
+      "descripcion": "1 1/4\" X 1/2\" PERFIL TUBULAR",
+      "unidad": "m",
+      "precio": 1790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "045",
+      "descripcion": "1 1/4\" X 3/4\" PERFIL TUBULAR",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "046",
+      "descripcion": "CANERIA MICRODUCION",
+      "unidad": "m",
+      "precio": 920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "047",
+      "descripción": "CON FIERRO CALIBRADO ESTRUCTURAL",
+      "unidad": "kg",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "048",
+      "descripcion": "CONECTOR MATERIAL",
+      "unidad": "unid",
+      "precio": 280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "049",
+      "descripcion": "2 1/4\" X 1 1/4\" PERFIL CALIBRADO",
+      "unidad": "m",
+      "precio": 5300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "050",
+      "descripcion": "ALAMBRE",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "051",
+      "descripcion": "GALVANIZADO EN CALIENTE",
+      "unidad": "kg",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "052",
+      "descripcion": "UNIDAD HIERRO PVC P/IPS",
+      "unidad": "unid",
+      "precio": 7000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "053",
+      "descripcion": "CAÑERIA MICROACERO GALVANIZADO",
+      "unidad": "m",
+      "precio": 14250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "054",
+      "descripcion": "ALAMBRA PVC N/R",
+      "unidad": "m",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "055",
+      "descripcion": "ALAMBRA PVC N/R",
+      "unidad": "m",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "056",
+      "descripcion": "ALAMBRA PVC N/R",
+      "unidad": "m",
+      "precio": 3250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "057",
+      "descripcion": "ALAMBRA PVC N/R",
+      "unidad": "m",
+      "precio": 4170,
+      "tipo": "material"
+    },
+    {
+      "codigo": "058",
+      "descripcion": "ALAMBRA GALVANIZADA EN ROLLO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "059",
+      "descripcion": "ALAMBRA RECUBIERTO EN BREA",
+      "unidad": "kg",
+      "precio": 3650,
+      "tipo": "material"
+    }
+  ]
+}

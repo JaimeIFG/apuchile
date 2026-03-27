@@ -1,0 +1,536 @@
+{
+  "items": [
+    {
+      "codigo": "TM1",
+      "descripcion": "LAMINA DE ACERO 0.5",
+      "unidad": "m2",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM2",
+      "descripcion": "LAMINA DE ACERO GALVANIZADA",
+      "unidad": "m2",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM3",
+      "descripcion": "LAMINA GALVANIZADA No 24",
+      "unidad": "m2",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM4",
+      "descripcion": "LAMINA GALVANIZADA No 26",
+      "unidad": "m2",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM5",
+      "descripcion": "LAMINA GALVANIZADA No 28",
+      "unidad": "m2",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM6",
+      "descripcion": "LAMINA ONDULADA ACANALADA",
+      "unidad": "m2",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM7",
+      "descripcion": "LAMINA ONDULADA ZINCALUM",
+      "unidad": "m2",
+      "precio": 1167,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM8",
+      "descripcion": "LINEA TELEFONICA",
+      "unidad": "ml",
+      "precio": 1,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM9",
+      "descripcion": "LINEA TIPO CABLE",
+      "unidad": "ml",
+      "precio": 1,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM10",
+      "descripcion": "LINEA TIPO CABLE SIN ZANJA",
+      "unidad": "ml",
+      "precio": 4100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM11",
+      "descripcion": "LOSETA CERAMICA",
+      "unidad": "m2",
+      "precio": 4100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM12",
+      "descripcion": "LINER COMERCIAL 0.5 ml",
+      "unidad": "m2",
+      "precio": 1480,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM13",
+      "descripcion": "LINER COMERCIAL 0.75 ml",
+      "unidad": "m2",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM14",
+      "descripcion": "LINER COMERCIAL 1.0 ml",
+      "unidad": "m2",
+      "precio": 2229,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM15",
+      "descripcion": "LINER COMERCIAL 1.5 ml",
+      "unidad": "m2",
+      "precio": 3139,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM16",
+      "descripcion": "LINER COMERCIAL TRANSVERSAL",
+      "unidad": "m2",
+      "precio": 3137,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM17",
+      "descripcion": "LOSETA CERAMICA 20x20",
+      "unidad": "m2",
+      "precio": 4486,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM18",
+      "descripcion": "LOSETA CERAMICA 25x25",
+      "unidad": "m2",
+      "precio": 4486,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM19",
+      "descripcion": "LOSETA CERAMICA 30x30",
+      "unidad": "m2",
+      "precio": 4486,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM20",
+      "descripcion": "LOSETA TIPO MARMOL",
+      "unidad": "m2",
+      "precio": 4486,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM21",
+      "descripcion": "LAYTON NACIONAL AISLADO 4 mm2",
+      "unidad": "ml",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM22",
+      "descripcion": "LAYTON NACIONAL AISLADO 6 mm2",
+      "unidad": "ml",
+      "precio": 388,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM23",
+      "descripcion": "LAYTON NACIONAL AISLADO 10 mm2",
+      "unidad": "ml",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM24",
+      "descripcion": "LAYTON MULTICANAL 3x6+TT 4 mm2",
+      "unidad": "ml",
+      "precio": 1766,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM25",
+      "descripcion": "LAYTON MULTICANAL 3x6+TT 6 mm2",
+      "unidad": "ml",
+      "precio": 2199,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM26",
+      "descripcion": "LAYTON ANTICANAL 3x6+TT 10 mm2",
+      "unidad": "ml",
+      "precio": 3378,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM27",
+      "descripcion": "LAYTON ANTICANAL 3x6+TT 16 mm2",
+      "unidad": "ml",
+      "precio": 2199,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM28",
+      "descripcion": "LAYTON ANTICANAL BIPOLAR MMC",
+      "unidad": "ml",
+      "precio": 2759,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM29",
+      "descripcion": "LAYTON LANZADO TIPO SOLAR BASIC",
+      "unidad": "ml",
+      "precio": 2759,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM30",
+      "descripcion": "LAYTON POLARIZADOR INTERIOR",
+      "unidad": "ml",
+      "precio": 2759,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM31",
+      "descripcion": "LAYTON POLARIZADOR DE AGUA",
+      "unidad": "ml",
+      "precio": 2759,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM32",
+      "descripcion": "LAYTON PORTAMEXICO 6x4 mm2",
+      "unidad": "ml",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM33",
+      "descripcion": "LAYTON PORTAMEXICO 6x6 mm2",
+      "unidad": "ml",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM34",
+      "descripcion": "LAYTON TELEVISION 3x6 MMC",
+      "unidad": "ml",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM35",
+      "descripcion": "LAYTON TELEVISION EMPANTANADO",
+      "unidad": "ml",
+      "precio": 4888,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM36",
+      "descripcion": "LAYTON TELEVISION LAN CAS 5E",
+      "unidad": "ml",
+      "precio": 4888,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM37",
+      "descripcion": "LAYTON EMBUDADO EN COLUMNA",
+      "unidad": "ml",
+      "precio": 4888,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM38",
+      "descripcion": "LAYTON EMBUDADO CABLE DUPLEX",
+      "unidad": "ml",
+      "precio": 6888,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM39",
+      "descripcion": "LAYTON TELEVISION TRIPLEX",
+      "unidad": "ml",
+      "precio": 6888,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM40",
+      "descripcion": "LAYTON TELEVISION AISLADO TPV",
+      "unidad": "ml",
+      "precio": 6888,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM41",
+      "descripcion": "LAYTON TELEVISION MULTICABLE",
+      "unidad": "ml",
+      "precio": 6888,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM42",
+      "descripcion": "LAYTON TELEVISION COBRE",
+      "unidad": "ml",
+      "precio": 4247,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM43",
+      "descripcion": "LAYTON TELEVISION CONJUNTO",
+      "unidad": "ml",
+      "precio": 4247,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM44",
+      "descripcion": "LAYTON DE ACERO GALVANIZADO",
+      "unidad": "ml",
+      "precio": 4247,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM45",
+      "descripcion": "LAYTON DE TELEVISION DE ALUMINIO",
+      "unidad": "ml",
+      "precio": 4247,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM46",
+      "descripcion": "LAYTON TELEVISION GALVANIZADO 6 mm",
+      "unidad": "ml",
+      "precio": 1548,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM47",
+      "descripcion": "LAYTON DE ACERO GALVANIZADO BAJADA",
+      "unidad": "ml",
+      "precio": 1548,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM48",
+      "descripcion": "LAYTON DE ACERO GALVANIZADO 8 mm",
+      "unidad": "ml",
+      "precio": 1548,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM49",
+      "descripcion": "LAYTON DE ACERO GALVANIZADO 10 mm",
+      "unidad": "ml",
+      "precio": 1548,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM50",
+      "descripcion": "LAYTON BIFASICO DE ALUMINIO",
+      "unidad": "ml",
+      "precio": 1548,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM51",
+      "descripcion": "LAYTON ELEFANTE",
+      "unidad": "ml",
+      "precio": 1548,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM52",
+      "descripcion": "LAYTON ELEFANTE GALVANIZADO",
+      "unidad": "ml",
+      "precio": 8138,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM53",
+      "descripcion": "LAYTON ELEFANTE GALVANIZADO CABLE",
+      "unidad": "ml",
+      "precio": 8138,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM54",
+      "descripcion": "LAYTON ELEFANTE GALVANIZADO CAJA",
+      "unidad": "ml",
+      "precio": 9699,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM55",
+      "descripcion": "LAYTON ELEFANTE COBERTURA DE LONA",
+      "unidad": "ml",
+      "precio": 9699,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM56",
+      "descripcion": "LAYTON ELEFANTE TIPO JAULA",
+      "unidad": "ml",
+      "precio": 9699,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM57",
+      "descripcion": "LAYTON OPTATUBE EN TELECABLE",
+      "unidad": "ml",
+      "precio": 9699,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM58",
+      "descripcion": "LAYTON EMPANTANADO TUBON",
+      "unidad": "ml",
+      "precio": 9699,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM59",
+      "descripcion": "LAYTON EMPANTANADO TUBERIA PROV",
+      "unidad": "ml",
+      "precio": 9699,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM60",
+      "descripcion": "LAYTON EMPANTANADO DRENAJE TECHO",
+      "unidad": "ml",
+      "precio": 8777,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM61",
+      "descripcion": "LAYTON EMPANTANADO TIPO CABLERIAS",
+      "unidad": "ml",
+      "precio": 8777,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM62",
+      "descripcion": "LAYTON EMPANTANADO TRANSVERSAL",
+      "unidad": "ml",
+      "precio": 8777,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM63",
+      "descripcion": "LAYTON EMPANTANADO ENTRADA DUCTO",
+      "unidad": "ml",
+      "precio": 8777,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM64",
+      "descripcion": "LAYTON EMPANTANADO DOBLE",
+      "unidad": "ml",
+      "precio": 8777,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM65",
+      "descripcion": "LAYTON MARMOL DE 15 mm",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM66",
+      "descripcion": "LAYTON MARMOL DE 20 mm",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM67",
+      "descripcion": "LAYTON MARMOL DE 25 mm",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM68",
+      "descripcion": "LAYTON MARMOL DE 30 mm",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM69",
+      "descripcion": "LAYTON MARMOL BLANCO",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM70",
+      "descripcion": "LAYTON MARMOL CAFE",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM71",
+      "descripcion": "LAYTON MARMOL NEGRO",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM72",
+      "descripcion": "LAYTON MARMOL GRIS",
+      "unidad": "m2",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM73",
+      "descripcion": "LAYTON MULTICANAL CABLE",
+      "unidad": "ml",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM74",
+      "descripcion": "LAYTON MULTICANAL ANTENA",
+      "unidad": "ml",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM75",
+      "descripcion": "LAYTON MULTICANAL TELEFONO",
+      "unidad": "ml",
+      "precio": 1381,
+      "tipo": "material"
+    },
+    {
+      "codigo": "TM76",
+      "descripcion": "LAYTON MULTICANAL TIMBRE",
+      "unidad": "ml",
+      "precio": 1381,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "items": [
+    {
+      "codigo": "101",
+      "descripcion": "CEMENTO PORTLAND GRIS",
+      "unidad": "saco",
+      "precio": 6400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "102",
+      "descripcion": "CEMENTO PORTLAND BLANCO",
+      "unidad": "saco",
+      "precio": 9200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "103",
+      "descripcion": "CAL EN PASTA",
+      "unidad": "kg",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "104",
+      "descripcion": "CAL EN POLVO",
+      "unidad": "kg",
+      "precio": 120,
+      "tipo": "material"
+    },
+    {
+      "codigo": "105",
+      "descripcion": "YESO EN POLVO",
+      "unidad": "kg",
+      "precio": 160,
+      "tipo": "material"
+    },
+    {
+      "codigo": "106",
+      "descripcion": "ARENA GRUESA",
+      "unidad": "m3",
+      "precio": 18000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "107",
+      "descripcion": "ARENA FINA",
+      "unidad": "m3",
+      "precio": 18000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "108",
+      "descripcion": "RIPIO",
+      "unidad": "m3",
+      "precio": 18000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "109",
+      "descripcion": "GRAVILLA",
+      "unidad": "m3",
+      "precio": 20000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "110",
+      "descripcion": "GRAVA",
+      "unidad": "m3",
+      "precio": 20000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "111",
+      "descripcion": "PIEDRA CHANCADA",
+      "unidad": "m3",
+      "precio": 22000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "112",
+      "descripcion": "HORMIGON H-5",
+      "unidad": "m3",
+      "precio": 65000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "113",
+      "descripcion": "HORMIGON H-10",
+      "unidad": "m3",
+      "precio": 70000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "114",
+      "descripcion": "HORMIGON H-15",
+      "unidad": "m3",
+      "precio": 75000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "115",
+      "descripcion": "HORMIGON H-20",
+      "unidad": "m3",
+      "precio": 80000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "116",
+      "descripcion": "HORMIGON H-25",
+      "unidad": "m3",
+      "precio": 85000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "117",
+      "descripcion": "HORMIGON H-30",
+      "unidad": "m3",
+      "precio": 90000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "118",
+      "descripcion": "MORTERO DE PEGA 1:3",
+      "unidad": "m3",
+      "precio": 45000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "119",
+      "descripcion": "MORTERO DE PEGA 1:4",
+      "unidad": "m3",
+      "precio": 40000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "120",
+      "descripcion": "MORTERO DE PEGA 1:5",
+      "unidad": "m3",
+      "precio": 38000,
+      "tipo": "material"
+    }
+  ]
+}

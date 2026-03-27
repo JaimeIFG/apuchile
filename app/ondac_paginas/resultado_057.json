@@ -1,0 +1,494 @@
+{
+  "items": [
+    {
+      "codigo": "04007",
+      "descripcion": "CERRADURAS CEMETROS ACCESO",
+      "unidad": "UNI",
+      "precio": 38118,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04006",
+      "descripcion": "PUERTA MADERA SECA DE BANCO DEL",
+      "unidad": "M2",
+      "precio": 41842,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04007",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0M",
+      "unidad": "UNI",
+      "precio": 41842,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04038",
+      "descripcion": "CERRADURAS CEMETROS DOMESTICO",
+      "unidad": "UNI",
+      "precio": 18178,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04077",
+      "descripcion": "CERRADURAS CEMETROS ACCESO",
+      "unidad": "UNI",
+      "precio": 38118,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04078",
+      "descripcion": "CERRADURAS CARPINT METALICA",
+      "unidad": "UNI",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION INSTALACION HOJA",
+      "unidad": "UNI",
+      "precio": 8403,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04036",
+      "descripcion": "CERRADURAS ACAB AROS POLO",
+      "unidad": "UNI",
+      "precio": 53132,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04035",
+      "descripcion": "CERRADURAS DE AROS Y DOMESTICO",
+      "unidad": "UNI",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04133",
+      "descripcion": "DEFINICION TABULAR DE PETO DE 2 PCS",
+      "unidad": "M2",
+      "precio": 21360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04134",
+      "descripcion": "CERRADURAS ACAB AROS FAMILIAR",
+      "unidad": "UNI",
+      "precio": 45390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04135",
+      "descripcion": "CERRADURAS ACAB AROS Y PUNTO",
+      "unidad": "UNI",
+      "precio": 53132,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04136",
+      "descripcion": "CERRADURAS ACAB AROS Y OVALOS",
+      "unidad": "UNI",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04134",
+      "descripcion": "DEFINICION TABULAR DE PETO DE ACERO",
+      "unidad": "M2",
+      "precio": 74277,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04137",
+      "descripcion": "CERRADURAS ACAB AROS ESTILSON",
+      "unidad": "UNI",
+      "precio": 25479,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04138",
+      "descripcion": "CERRADURAS ACAIMONES AROS",
+      "unidad": "UNI",
+      "precio": 47300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04139",
+      "descripcion": "CERRADURAS SIMPLES PASO",
+      "unidad": "UNI",
+      "precio": 27395,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04140",
+      "descripcion": "CERRADURAS COMP FAMILIARES",
+      "unidad": "UNI",
+      "precio": 45390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04008",
+      "descripcion": "DEFINICION PORTERIA 0.60X2.0 M PORTERIA",
+      "unidad": "UNI",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04009",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 20000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04010",
+      "descripcion": "AYUDANTE CARPINTERO EBANISTA",
+      "unidad": "JOR",
+      "precio": 15000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04005",
+      "descripcion": "LEYES SOCIALES C.",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    }
+  ]
+}

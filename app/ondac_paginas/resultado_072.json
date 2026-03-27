@@ -1,0 +1,326 @@
+{
+  "items": [
+    {
+      "codigo": "0201",
+      "descripcion": "PUERTA MDF MOLDURA INTERIOR 80X200",
+      "unidad": "UN",
+      "precio": 59696,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0202",
+      "descripcion": "PUERTA PREPINTADA GALVANIZADA 80X200",
+      "unidad": "UN",
+      "precio": 105000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0203",
+      "descripcion": "HOJA PORTÓN GALVANIZADA",
+      "unidad": "M2",
+      "precio": 56720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0204",
+      "descripcion": "MARCO GALVANIZADO PORTÓN 1.00 X 2.10",
+      "unidad": "UN",
+      "precio": 26000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0205",
+      "descripcion": "PUERTA METÁLICA LISA 1.50 X 2.10",
+      "unidad": "UN",
+      "precio": 38000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0206",
+      "descripcion": "LIFTS SOCIALES E.11",
+      "unidad": "UN",
+      "precio": 265000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0211",
+      "descripcion": "PUERTA MDF PREPINTADA GAMA BASICA",
+      "unidad": "UN",
+      "precio": 47297,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0212",
+      "descripcion": "PUERTA INTERIOR MDF 80 X 200",
+      "unidad": "UN",
+      "precio": 34990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0213",
+      "descripcion": "PUERTA METÁLICA GALVANIZADA 80 X 200",
+      "unidad": "UN",
+      "precio": 106989,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0214",
+      "descripcion": "BISAGRAS 4\" X 4\" X 1/8",
+      "unidad": "UN",
+      "precio": 1160,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0215",
+      "descripcion": "MARCO GALVANIZADO 80 X 200",
+      "unidad": "UN",
+      "precio": 17340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0216",
+      "descripcion": "CHAPA MANILLA BRONCEADO 800 CON",
+      "unidad": "UN",
+      "precio": 4590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0217",
+      "descripcion": "CARBOIDIN 1 + VIGAS",
+      "unidad": "UN",
+      "precio": 45288,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0218",
+      "descripcion": "LIFTS SOCIALES E.11",
+      "unidad": "UN",
+      "precio": 265000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0221",
+      "descripcion": "PUERTA MDF PREPINTADA GAMA BASICA",
+      "unidad": "UN",
+      "precio": 47297,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0222",
+      "descripcion": "PUERTA MDF INTERIOR 80X200",
+      "unidad": "UN",
+      "precio": 34990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0223",
+      "descripcion": "PUERTA MDF PREPINTADA GALVANIZADA",
+      "unidad": "UN",
+      "precio": 64990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0224",
+      "descripcion": "BISAGRAS 4\" X 4\" X 1/8",
+      "unidad": "UN",
+      "precio": 1160,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0225",
+      "descripcion": "MARCO GALVANIZADO 80 X 200",
+      "unidad": "UN",
+      "precio": 17340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0226",
+      "descripcion": "CHAPA MANILLA BRONCEADO 800 CON",
+      "unidad": "UN",
+      "precio": 4590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0227",
+      "descripcion": "CARBOIDIN 1 + VIGAS",
+      "unidad": "UN",
+      "precio": 45288,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0228",
+      "descripcion": "LIFTS SOCIALES E.11",
+      "unidad": "UN",
+      "precio": 265000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0231",
+      "descripcion": "PUERTA INTERIOR AMPLIADO CON PERFORACION",
+      "unidad": "UN",
+      "precio": 43129,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0232",
+      "descripcion": "PUERTA MDF PREPINTADO EN DEPOSICION",
+      "unidad": "UN",
+      "precio": 123860,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0233",
+      "descripcion": "PUERTA MDF PREPINTADO EN DEPOSICION",
+      "unidad": "UN",
+      "precio": 23700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0234",
+      "descripcion": "BISAGRAS 4\" X 4\" X 1/8",
+      "unidad": "UN",
+      "precio": 1160,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0235",
+      "descripcion": "MARCO GALVANIZADO 80 X 200",
+      "unidad": "UN",
+      "precio": 17340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0236",
+      "descripcion": "CHAPA MANILLA BRONCEADO 800 CON",
+      "unidad": "UN",
+      "precio": 4590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0237",
+      "descripcion": "CARBOIDIN 1 + VIGAS",
+      "unidad": "UN",
+      "precio": 45288,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0238",
+      "descripcion": "LIFTS SOCIALES E.11",
+      "unidad": "UN",
+      "precio": 265000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0241",
+      "descripcion": "PUERTA INTERIOR AMPLIADO CON PERFORACION",
+      "unidad": "UN",
+      "precio": 43129,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0242",
+      "descripcion": "PUERTA MDF PREPINTADO EN DEPOSICION",
+      "unidad": "UN",
+      "precio": 123860,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0243",
+      "descripcion": "PUERTA MDF PREPINTADO EN DEPOSICION",
+      "unidad": "UN",
+      "precio": 23700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0244",
+      "descripcion": "BISAGRAS 4\" X 4\" X 1/8",
+      "unidad": "UN",
+      "precio": 1160,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0245",
+      "descripcion": "MARCO GALVANIZADO 80 X 200",
+      "unidad": "UN",
+      "precio": 17340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0246",
+      "descripcion": "CHAPA MANILLA BRONCEADO 800 CON",
+      "unidad": "UN",
+      "precio": 4590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0247",
+      "descripcion": "CARBOIDIN 1 + VIGAS",
+      "unidad": "UN",
+      "precio": 45288,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0248",
+      "descripcion": "LIFTS SOCIALES E.11",
+      "unidad": "UN",
+      "precio": 265000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0251",
+      "descripcion": "PUERTA INTERIOR AMPLIADO PERFORADA",
+      "unidad": "UN",
+      "precio": 43129,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0252",
+      "descripcion": "PUERTA MDF PREPINTADO EN DEPOSICION",
+      "unidad": "UN",
+      "precio": 84630,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0253",
+      "descripcion": "PUERTA MDF PREPINTADO EN DEPOSICION",
+      "unidad": "UN",
+      "precio": 23700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0254",
+      "descripcion": "BISAGRAS 4\" X 4\" X 1/8",
+      "unidad": "UN",
+      "precio": 1160,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0255",
+      "descripcion": "MARCO GALVANIZADO 80 X 200",
+      "unidad": "UN",
+      "precio": 17340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0256",
+      "descripcion": "CHAPA MANILLA BRONCEADO 800 CON",
+      "unidad": "UN",
+      "precio": 4590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0257",
+      "descripcion": "CARBOIDIN 1 + VIGAS",
+      "unidad": "UN",
+      "precio": 45288,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0258",
+      "descripcion": "LIFTS SOCIALES E.11",
+      "unidad": "UN",
+      "precio": 265000000,
+      "tipo": "apu"
+    }
+  ]
+}

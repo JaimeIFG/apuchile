@@ -1,0 +1,319 @@
+{
+  "items": [
+    {
+      "codigo": "00101",
+      "descripcion": "HORMIGON H20",
+      "unidad": "m3",
+      "precio": 127431,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00102",
+      "descripcion": "HORMIGON H25 LADRILLO/PIEDRIN",
+      "unidad": "m3",
+      "precio": 138228,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00103",
+      "descripcion": "SEPTICOS EN BAÑO",
+      "unidad": "u",
+      "precio": 27360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00104",
+      "descripcion": "MOLDAJE",
+      "unidad": "m2",
+      "precio": 17369,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00105",
+      "descripcion": "ENFIERRADURA",
+      "unidad": "kg",
+      "precio": 965,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00106",
+      "descripcion": "RETAPE DE PAVIMENTO",
+      "unidad": "m2",
+      "precio": 5734,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00107",
+      "descripcion": "EXCAVACION",
+      "unidad": "m3",
+      "precio": 7310,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00108",
+      "descripcion": "RELLENO COMPACTADO",
+      "unidad": "m3",
+      "precio": 4523,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00109",
+      "descripcion": "CARPETEO ASFALTICO",
+      "unidad": "m2",
+      "precio": 42360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00110",
+      "descripcion": "REPOSICION SOLERAS SOLERILLAS",
+      "unidad": "ml",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00111",
+      "descripcion": "LEYES SOCIALES (43)",
+      "unidad": "%",
+      "precio": 43,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00201",
+      "descripcion": "HORMIGON H20 MECANICO PARA FUNDACION CADENAS Y LOSAS 5 SACOS CEMENTO",
+      "unidad": "m3",
+      "precio": 134286,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00202",
+      "descripcion": "HORMIGON H25 ESTRUCTURA PROVISON",
+      "unidad": "m3",
+      "precio": 152264,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00203",
+      "descripcion": "SEPTICOS EN BAÑO",
+      "unidad": "u",
+      "precio": 27360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00204",
+      "descripcion": "MOLDAJE LIVIANO CONTACTO",
+      "unidad": "m2",
+      "precio": 14320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00205",
+      "descripcion": "CONCRETEO COLOCACION CEMENTO",
+      "unidad": "m2",
+      "precio": 11590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00206",
+      "descripcion": "LEYES SOCIALES (43)",
+      "unidad": "%",
+      "precio": 43,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00301",
+      "descripcion": "HORMIGON H20 BOMBEADO PARA PILARES VIGAS CADENAS Y LOSAS 5 SACOS CEMENTO",
+      "unidad": "m3",
+      "precio": 148118,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00302",
+      "descripcion": "HORMIGON H25 ESTRUCTURA PROVISON",
+      "unidad": "m3",
+      "precio": 152264,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00303",
+      "descripcion": "SEPTICOS EN BAÑO",
+      "unidad": "u",
+      "precio": 27360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00304",
+      "descripcion": "MOLDAJE LIVIANO CONTACTO",
+      "unidad": "m2",
+      "precio": 14320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00305",
+      "descripcion": "ENFIERRADURA",
+      "unidad": "kg",
+      "precio": 965,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00306",
+      "descripcion": "LEYES SOCIALES (43)",
+      "unidad": "%",
+      "precio": 43,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00401",
+      "descripcion": "HORMIGON H20 DE PLANTA PARA PILARES VIGAS CADENAS Y LOSAS 5 SACOS CEMENTO",
+      "unidad": "m3",
+      "precio": 98697,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00402",
+      "descripcion": "HORMIGON H25 ESTRUCTURA PROVISON",
+      "unidad": "m3",
+      "precio": 107940,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00403",
+      "descripcion": "SEPTICOS EN BAÑO",
+      "unidad": "u",
+      "precio": 27360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00404",
+      "descripcion": "CONCRETEO COLOCACION CEMENTO",
+      "unidad": "m2",
+      "precio": 11590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00405",
+      "descripcion": "LEYES SOCIALES (43)",
+      "unidad": "%",
+      "precio": 43,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00501",
+      "descripcion": "HORMIGON H20",
+      "unidad": "m3",
+      "precio": 127431,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00502",
+      "descripcion": "SEPTICOS EN BAÑO",
+      "unidad": "u",
+      "precio": 1200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00503",
+      "descripcion": "MOLDAJE",
+      "unidad": "m2",
+      "precio": 1600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00504",
+      "descripcion": "VIBRO",
+      "unidad": "u",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00505",
+      "descripcion": "HORMIGON MOPOVERON",
+      "unidad": "m3",
+      "precio": 7449,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00506",
+      "descripcion": "ADITIVO ESTRUCTURAL",
+      "unidad": "u",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00507",
+      "descripcion": "CARPETEO ULTRA DELGADO",
+      "unidad": "m2",
+      "precio": 42360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00508",
+      "descripcion": "RETAPE PAVIMENTO GOMA SEMIBLANC",
+      "unidad": "m2",
+      "precio": 12360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00509",
+      "descripcion": "REPOSICION SOLERAS SOLERILLAS",
+      "unidad": "ml",
+      "precio": 14340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00510",
+      "descripcion": "RETAPE PAVIMENTO CIMIENTO",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00511",
+      "descripcion": "LEYES SOCIALES (43)",
+      "unidad": "%",
+      "precio": 43,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00601",
+      "descripcion": "HORMIGON H20 BOMBEADO PARA CIMIENTOS 4 SACOS CEMENTO",
+      "unidad": "m3",
+      "precio": 114096,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00602",
+      "descripcion": "SEPTICOS EN BAÑO",
+      "unidad": "u",
+      "precio": 27360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00603",
+      "descripcion": "HORMIGON H25 ESTRUCTURA PROVISON",
+      "unidad": "m3",
+      "precio": 152264,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00604",
+      "descripcion": "SEPTICOS EN BAÑO",
+      "unidad": "u",
+      "precio": 9360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00605",
+      "descripcion": "CONCRETEO COLOCACION CEMENTO",
+      "unidad": "m2",
+      "precio": 11590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00606",
+      "descripcion": "LEYES SOCIALES (43)",
+      "unidad": "%",
+      "precio": 43,
+      "tipo": "apu"
+    }
+  ]
+}

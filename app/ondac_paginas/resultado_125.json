@@ -1,0 +1,270 @@
+{
+  "items": [
+    {
+      "codigo": "7815",
+      "descripcion": "BALDOSA CERAMICA FLOOR 30X30",
+      "unidad": "m2",
+      "precio": 3750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7816",
+      "descripcion": "BALDOSA CERAMICA FLOOR 45X45",
+      "unidad": "m2",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7817",
+      "descripcion": "BALDOSA CERAMICA GRES 30X30",
+      "unidad": "m2",
+      "precio": 11900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7818",
+      "descripcion": "BALDOSA CERAMICA GRES 45X45",
+      "unidad": "m2",
+      "precio": 12900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7819",
+      "descripcion": "BALDOSA CERAMICA RUSTIKA 30X30",
+      "unidad": "m2",
+      "precio": 8990,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7820",
+      "descripcion": "BALDOSA CERAMICA RUSTIKA 45X45",
+      "unidad": "m2",
+      "precio": 10500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7821",
+      "descripcion": "BALDOSA CERAMICA 30X30 BLANCA",
+      "unidad": "m2",
+      "precio": 3950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7822",
+      "descripcion": "BALDOSA CERAMICA ANTIDESLIZANTE 30X30",
+      "unidad": "m2",
+      "precio": 6450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7823",
+      "descripcion": "BALDOSA CEMICA ESMALTADA 20X20",
+      "unidad": "m2",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7824",
+      "descripcion": "BALDOSA CERAMICA RUSTICA 20X20",
+      "unidad": "m2",
+      "precio": 3250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7825",
+      "descripcion": "BALDOSA CERAMICA RUSTICA 30X30",
+      "unidad": "m2",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7826",
+      "descripcion": "BALDOSA CERAMICA RUSTICA 45X45",
+      "unidad": "m2",
+      "precio": 7450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7827",
+      "descripcion": "BALDOSA CERAMICA INDUSTRIAL",
+      "unidad": "m2",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7828",
+      "descripcion": "BALDOSA DE TRAFICO 20X20X6",
+      "unidad": "m2",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7829",
+      "descripcion": "BALDOSA GRES CERAMICA ANTIDESL.",
+      "unidad": "m2",
+      "precio": 9950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7830",
+      "descripcion": "BALDOSA GRES CERAMICA PULIDA",
+      "unidad": "m2",
+      "precio": 12900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7831",
+      "descripcion": "BALDOSA GRES PORCELANICO 30X30",
+      "unidad": "m2",
+      "precio": 7950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7832",
+      "descripcion": "BALDOSA GRES PORCELANICO 45X45",
+      "unidad": "m2",
+      "precio": 9950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7833",
+      "descripcion": "BALDOSA GRES PORCELANICO 60X60",
+      "unidad": "m2",
+      "precio": 14900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7834",
+      "descripcion": "BALDOSA VINILICA AUTOADHESIVA",
+      "unidad": "m2",
+      "precio": 3950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7835",
+      "descripcion": "BALDOSA VINILICA EN ROLLO",
+      "unidad": "m2",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7836",
+      "descripcion": "BALDOSA VINILICA HOMOGENEA",
+      "unidad": "m2",
+      "precio": 12900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7837",
+      "descripcion": "BALDOSA VINILICA HETEROGENEA",
+      "unidad": "m2",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7838",
+      "descripcion": "BALDOSA VINILICA CONDUCTIVA",
+      "unidad": "m2",
+      "precio": 19900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7839",
+      "descripcion": "BALDOSA CAUCHO HOMOGENEA",
+      "unidad": "m2",
+      "precio": 14900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7840",
+      "descripcion": "BALDOSA CAUCHO HETEROGENEA",
+      "unidad": "m2",
+      "precio": 9950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7841",
+      "descripcion": "BALDOSA CAUCHO ANTIDESL.",
+      "unidad": "m2",
+      "precio": 12900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7842",
+      "descripcion": "BALDOSA CAUCHO CONDUCTIVA",
+      "unidad": "m2",
+      "precio": 24900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7843",
+      "descripcion": "BALDOSA EPOXICA",
+      "unidad": "m2",
+      "precio": 14900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7844",
+      "descripcion": "BALDOSA EPOXICA CONDUCTIVA",
+      "unidad": "m2",
+      "precio": 19900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7845",
+      "descripcion": "BALDOSA MARMOL 30X30",
+      "unidad": "m2",
+      "precio": 24900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7846",
+      "descripcion": "BALDOSA MARMOL 40X40",
+      "unidad": "m2",
+      "precio": 29900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7847",
+      "descripcion": "BALDOSA MARMOL 60X60",
+      "unidad": "m2",
+      "precio": 39900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7848",
+      "descripcion": "BALDOSA GRANITO 30X30",
+      "unidad": "m2",
+      "precio": 14900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7849",
+      "descripcion": "BALDOSA GRANITO 40X40",
+      "unidad": "m2",
+      "precio": 19900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7850",
+      "descripcion": "BALDOSA GRANITO 60X60",
+      "unidad": "m2",
+      "precio": 24900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7851",
+      "descripcion": "BALDOSA PIEDRA LAJA",
+      "unidad": "m2",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7852",
+      "descripcion": "BALDOSA PIEDRA PIZARRA",
+      "unidad": "m2",
+      "precio": 12900,
+      "tipo": "material"
+    }
+  ]
+}

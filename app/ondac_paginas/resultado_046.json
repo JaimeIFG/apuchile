@@ -1,0 +1,298 @@
+{
+  "items": [
+    {
+      "codigo": "09024",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 4099,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09025",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 5359,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09026",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 7196,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09027",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 11431,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09028",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 21790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09029",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 32980,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09030",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 4399,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09031",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 6321,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09032",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 8569,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09033",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 12431,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09034",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 23950,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09035",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 35800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09036",
+      "descripcion": "EXCAVACION A BRAZO EN ZANJA LIMO Y ARCILLA",
+      "unidad": "m3",
+      "precio": 6798,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09037",
+      "descripcion": "EXCAVACION CON RETROEXCAVADORA",
+      "unidad": "m3",
+      "precio": 6798,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09038",
+      "descripcion": "EXCAVACION COMPLETA TERRENO DE CUALQUIER NATURALEZA",
+      "unidad": "m3",
+      "precio": 1360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09039",
+      "descripcion": "EXCAVACION SUELO FIRME ROTANDO",
+      "unidad": "m3",
+      "precio": 4280,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09040",
+      "descripcion": "EXCAVACION SUELO FIRME ROTANDO EN LADERA",
+      "unidad": "m3",
+      "precio": 8259,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09041",
+      "descripcion": "EXCAVACION PARA VOLTEADORES",
+      "unidad": "m3",
+      "precio": 10790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09042",
+      "descripcion": "EXCAVACION TERRENO DURO",
+      "unidad": "m3",
+      "precio": 10790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09043",
+      "descripcion": "EXCAVACION TERRENO DURO",
+      "unidad": "m3",
+      "precio": 11590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09044",
+      "descripcion": "EXCAVACION SUELO COMPACTADO",
+      "unidad": "m3",
+      "precio": 21490,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09045",
+      "descripcion": "EXTRACCION DE PINO NATIVO CAOBA",
+      "unidad": "m3",
+      "precio": 65000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09046",
+      "descripcion": "EXTRACCION CEPAMIENTOS",
+      "unidad": "m3",
+      "precio": 9000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09047",
+      "descripcion": "MUESTRAS DE EXCAVACION Y SONDEOS MATERIALES",
+      "unidad": "m3",
+      "precio": 65200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "09048",
+      "descripcion": "RELLENOS BANCADA",
+      "unidad": "m3",
+      "precio": 85700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10101",
+      "descripcion": "RELLENO ASENTADO CON EQUIPO ENTRE 18 Y 25 CM",
+      "unidad": "m3",
+      "precio": 3590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10102",
+      "descripcion": "RELLENO ASENTADO CON EQUIPO",
+      "unidad": "m3",
+      "precio": 2490,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10103",
+      "descripcion": "RELLENO FUERTE COMPACTADA ENERGIA PROPIA",
+      "unidad": "m3",
+      "precio": 2140,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10104",
+      "descripcion": "RELLENO FUERTE COMPACTADA ENERGIA PROPIA",
+      "unidad": "m3",
+      "precio": 3359,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10105",
+      "descripcion": "RELLENO FUERTE COMPACTADA ENERGIA PROPIA",
+      "unidad": "m3",
+      "precio": 4860,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10106",
+      "descripcion": "FORMACION Y COMPACTACION MONTAJE",
+      "unidad": "m3",
+      "precio": 4310,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10107",
+      "descripcion": "FORMACION Y COMPACTACION MONTAJE",
+      "unidad": "m3",
+      "precio": 4310,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10108",
+      "descripcion": "PORVOT ALUVIAL 20mm 60-65",
+      "unidad": "m3",
+      "precio": 8710,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10109",
+      "descripcion": "PORVOT ALUVIAL 40mm 60-65",
+      "unidad": "m3",
+      "precio": 8710,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10110",
+      "descripcion": "PORVOT ALUVIAL 75mm 60-65",
+      "unidad": "m3",
+      "precio": 7080,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10111",
+      "descripcion": "PORVOT CONFORMAL 60 20mm 60-65",
+      "unidad": "m3",
+      "precio": 8710,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10112",
+      "descripcion": "PORVOT CONFORMAL 60 40mm 60-65",
+      "unidad": "m3",
+      "precio": 8710,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10113",
+      "descripcion": "PORVOT CONFORMAL 60 75mm 60-65",
+      "unidad": "m3",
+      "precio": 6080,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10114",
+      "descripcion": "PORVOT CONFORMAL 60 20mm 60-65",
+      "unidad": "m3",
+      "precio": 4980,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10115",
+      "descripcion": "PORVOT CONFORMAL 60 40mm 60-65",
+      "unidad": "m3",
+      "precio": 4980,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10116",
+      "descripcion": "PORVOT CONFORMAL 60 75mm 60-65",
+      "unidad": "m3",
+      "precio": 6000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "10117",
+      "descripcion": "PORVOT ALUVIAL 60 20mm POLICIA",
+      "unidad": "m3",
+      "precio": 85700,
+      "tipo": "apu"
+    }
+  ]
+}

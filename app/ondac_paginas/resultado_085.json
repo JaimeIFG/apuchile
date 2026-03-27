@@ -1,0 +1,151 @@
+{
+  "items": [
+    {
+      "codigo": "AA",
+      "descripcion": "HORMIGONES",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "categoria"
+    },
+    {
+      "codigo": "001",
+      "descripcion": "HORMIGON H-5 (170) KG/CM2",
+      "unidad": "m3",
+      "precio": 62500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002",
+      "descripcion": "CONCRETO H-10",
+      "unidad": "m3",
+      "precio": 65000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003",
+      "descripcion": "HORMIGON PREPARADO H-5 (170)",
+      "unidad": "m3",
+      "precio": 58500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004",
+      "descripcion": "HORMIGON H-10 (210)",
+      "unidad": "m3",
+      "precio": 67500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "HORMIGON H-15 (255)",
+      "unidad": "m3",
+      "precio": 69500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "HORMIGON H-20 (255)",
+      "unidad": "m3",
+      "precio": 71500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "HORMIGON H-25 (300)",
+      "unidad": "m3",
+      "precio": 73500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "HORMIGON H-30 (340)",
+      "unidad": "m3",
+      "precio": 75500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "HORMIGON H-35 (380)",
+      "unidad": "m3",
+      "precio": 77500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "HORMIGON H-40 (420)",
+      "unidad": "m3",
+      "precio": 79500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "HORMIGON BOMBEABLE H-20",
+      "unidad": "m3",
+      "precio": 78500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "HORMIGON BOMBEABLE H-25",
+      "unidad": "m3",
+      "precio": 80500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "HORMIGON BOMBEABLE H-30",
+      "unidad": "m3",
+      "precio": 82500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "HORMIGON BOMBEABLE H-35",
+      "unidad": "m3",
+      "precio": 84500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "MORTERO H-5 (170)",
+      "unidad": "m3",
+      "precio": 89500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "AB",
+      "descripcion": "MORTEROS",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "categoria"
+    },
+    {
+      "codigo": "200",
+      "descripcion": "MORTERO 1:3 (CEMENTO:ARENA)",
+      "unidad": "m3",
+      "precio": 45000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "201",
+      "descripcion": "MORTERO 1:4",
+      "unidad": "m3",
+      "precio": 41500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "202",
+      "descripcion": "MORTERO 1:5",
+      "unidad": "m3",
+      "precio": 38500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "203",
+      "descripcion": "MORTERO 1:6",
+      "unidad": "m3",
+      "precio": 36500,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "items": [
+    {
+      "codigo": "028",
+      "descripcion": "MEMBRANA IMPERMEABILIZANTE",
+      "unidad": "M2",
+      "precio": 4833,
+      "tipo": "material"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "MEMBRANA IMPERMEABILIZANTE BITUMINOSA",
+      "unidad": "M2",
+      "precio": 4833,
+      "tipo": "material"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "MEMBRANA IMPERMEABILIZANTE DE BENTONITA",
+      "unidad": "M2",
+      "precio": 4833,
+      "tipo": "material"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "PASTA BITUMINOSA PLASTIFICADA CON FIBRA",
+      "unidad": "KG",
+      "precio": 1239,
+      "tipo": "material"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "PASTA BITUMINOSA PLASTIFICADA DE ACCION INMEDIATA",
+      "unidad": "KG",
+      "precio": 1239,
+      "tipo": "material"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "PASTA BITUMINOSA PLASTIFICADA DE ACCION RETARDADA",
+      "unidad": "KG",
+      "precio": 1239,
+      "tipo": "material"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "PASTA BITUMINOSA PLASTIFICADA CON BREA",
+      "unidad": "KG",
+      "precio": 1239,
+      "tipo": "material"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "POLIESTIRENO EXPANDIDO MECANICAMENTE ALTA DENSIDAD",
+      "unidad": "M3",
+      "precio": 21366,
+      "tipo": "material"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "POLIESTIRENO EXPANDIDO MECANICAMENTE BAJA DENSIDAD",
+      "unidad": "M3",
+      "precio": 21366,
+      "tipo": "material"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "SPRAY EP ESPUMA ACRILIICA AUTOEXTINGUIBLE",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "SPRAY EP ESPUMA EXPANDIBLE TEMP ALTA",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "039",
+      "descripcion": "SPRAY EP ESPUMA POLIURETANICA AUTOEXTINGUIBLE",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "040",
+      "descripcion": "SPRAY EP ESPUMA POLIURETANICA SEMI RIGIDA",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "041",
+      "descripcion": "SPRAY EP ESPUMA POLIURETANICA TEMP ALTA",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "042",
+      "descripcion": "SPRAY EP ESPUMA POLIURETANICA RIGIDA",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "043",
+      "descripcion": "IMPERMEABILIZANTE EN SECO MICROCRACK",
+      "unidad": "KG",
+      "precio": 2879,
+      "tipo": "material"
+    },
+    {
+      "codigo": "044",
+      "descripcion": "SPRAY EP SILICONA CONTACTO",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "045",
+      "descripcion": "SPRAY EP SILICONA NEUTRA",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "046",
+      "descripcion": "SPRAY EP GRASA",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "047",
+      "descripcion": "SPRAY EP GRASA CADENA",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "048",
+      "descripcion": "SPRAY EP ACEITE LUBRICANTE",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "049",
+      "descripcion": "SPRAY EP PENETRANTE",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "050",
+      "descripcion": "SPRAY EP GRASA BLANCA LITIO",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "051",
+      "descripcion": "SPRAY EP GALVANIZADO EN FRIO",
+      "unidad": "UN",
+      "precio": 3356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "052",
+      "descripcion": "SPRAY EP PINTURA ANTIOXIDO BLANCO",
+      "unidad": "UN",
+      "precio": 2196,
+      "tipo": "material"
+    },
+    {
+      "codigo": "053",
+      "descripcion": "SPRAY EP PINTURA ANTIOXIDO CAFÉ",
+      "unidad": "UN",
+      "precio": 2196,
+      "tipo": "material"
+    },
+    {
+      "codigo": "054",
+      "descripcion": "SPRAY EP PINTURA ANTIOXIDO GRIS",
+      "unidad": "UN",
+      "precio": 2196,
+      "tipo": "material"
+    },
+    {
+      "codigo": "055",
+      "descripcion": "SPRAY EP PINTURA ANTIOXIDO NEGRO",
+      "unidad": "UN",
+      "precio": 2196,
+      "tipo": "material"
+    },
+    {
+      "codigo": "056",
+      "descripcion": "SPRAY EP PINTURA ANTIOXIDO ROJO",
+      "unidad": "UN",
+      "precio": 2196,
+      "tipo": "material"
+    },
+    {
+      "codigo": "057",
+      "descripcion": "SPRAY EP PINTURA ANTIOXIDO VERDE",
+      "unidad": "UN",
+      "precio": 2196,
+      "tipo": "material"
+    },
+    {
+      "codigo": "058",
+      "descripcion": "SPRAY EP PINTURA ANTIOXIDO AMARILLO",
+      "unidad": "UN",
+      "precio": 2196,
+      "tipo": "material"
+    },
+    {
+      "codigo": "059",
+      "descripcion": "SPRAY ESMALTE SINTETICO AZUL",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "060",
+      "descripcion": "SPRAY ESMALTE SINTETICO BLANCO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "061",
+      "descripcion": "SPRAY ESMALTE SINTETICO CAFÉ",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "062",
+      "descripcion": "SPRAY ESMALTE SINTETICO GRIS",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "063",
+      "descripcion": "SPRAY ESMALTE SINTETICO NEGRO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "064",
+      "descripcion": "SPRAY ESMALTE SINTETICO ROJO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "065",
+      "descripcion": "SPRAY ESMALTE SINTETICO VERDE",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "066",
+      "descripcion": "SPRAY ESMALTE SINTETICO AMARILLO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "067",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO BLANCO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "068",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO NEGRO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "069",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO AMARILLO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "070",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO AZUL",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "071",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO GRIS",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "072",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO ROJO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "073",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO VERDE",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "074",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO PLATA",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    },
+    {
+      "codigo": "075",
+      "descripcion": "SPRAY ESMALTE ULTRA RAPIDO ORO",
+      "unidad": "UN",
+      "precio": 4270,
+      "tipo": "material"
+    }
+  ]
+}

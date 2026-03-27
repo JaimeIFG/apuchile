@@ -1,0 +1,214 @@
+{
+  "items": [
+    {
+      "codigo": "08001",
+      "descripcion": "ALBAÑILERIA ELT-LAD. LAD. M-LAD A.",
+      "unidad": "M2",
+      "precio": 8146,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08002",
+      "descripcion": "LADRILLOS PRAT MEND HUECO",
+      "unidad": "UN",
+      "precio": 138,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08003",
+      "descripcion": "BENCECOL ASFALTICO SEMI EMULS",
+      "unidad": "KG",
+      "precio": 1986,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08004",
+      "descripcion": "CEMENTO ESPECIAL PUZOLANICO",
+      "unidad": "KG",
+      "precio": 157,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08005",
+      "descripcion": "RODADO",
+      "unidad": "M3",
+      "precio": 7156,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08006",
+      "descripcion": "ALBAÑIL + AYUD",
+      "unidad": "JOR",
+      "precio": 31278,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08007",
+      "descripcion": "LEYES SOCIALES (%)",
+      "unidad": "%",
+      "precio": 1786,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08011",
+      "descripcion": "ALBAÑILERIA ELT-LAD. LAD. GRAN TITAN REFORZADO HUECO ON SOGA",
+      "unidad": "M2",
+      "precio": 13146,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08012",
+      "descripcion": "LADRILLOS GRAN TITAN HUECO",
+      "unidad": "UN",
+      "precio": 315,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08013",
+      "descripcion": "MORTERO",
+      "unidad": "M3",
+      "precio": 24700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08014",
+      "descripcion": "BENCECOL ASFALTICO SEMI EMULS",
+      "unidad": "KG",
+      "precio": 1456,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08015",
+      "descripcion": "CEMENTO ESPECIAL PUZOLANICO",
+      "unidad": "KG",
+      "precio": 109,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08016",
+      "descripcion": "RODADO",
+      "unidad": "M3",
+      "precio": 6189,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08017",
+      "descripcion": "ALBAÑIL + AYUD",
+      "unidad": "JOR",
+      "precio": 31362,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08018",
+      "descripcion": "LEYES SOCIALES (%)",
+      "unidad": "%",
+      "precio": 1458,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08031",
+      "descripcion": "ALBAÑILERIA ELT-LAD. LAD. GRAN TITAN REFORZADO HUECO ON SOGA CON CANTERA Y MORTERO",
+      "unidad": "M2",
+      "precio": 14671,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08032",
+      "descripcion": "LADRILLOS GRAN TITAN HUECO",
+      "unidad": "UN",
+      "precio": 24700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08033",
+      "descripcion": "BENCECOL ASFALTICO SEMI EMULS",
+      "unidad": "KG",
+      "precio": 2134,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08034",
+      "descripcion": "BENCECOL ESTEQ ASFILM",
+      "unidad": "UN",
+      "precio": 346,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08035",
+      "descripcion": "CEMENTO ESPECIAL PUZOLANICO",
+      "unidad": "KG",
+      "precio": 109,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08036",
+      "descripcion": "RODADO",
+      "unidad": "M3",
+      "precio": 6189,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08037",
+      "descripcion": "ALBAÑIL + AYUD",
+      "unidad": "JOR",
+      "precio": 31362,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08038",
+      "descripcion": "LEYES SOCIALES (%)",
+      "unidad": "%",
+      "precio": 1458,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08051",
+      "descripcion": "ALBAÑILERIA ELT-LAD. BLOQUE CERAMICO CHIC SIMPLE CON ANIMAS Y RETAPADA POR ARRIBA",
+      "unidad": "M2",
+      "precio": 17617,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08052",
+      "descripcion": "BLOQUE CERAMICO CHIC ELEV",
+      "unidad": "UN",
+      "precio": 5871,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08053",
+      "descripcion": "BENCECOL ESTEM",
+      "unidad": "UN",
+      "precio": 546,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08054",
+      "descripcion": "CEMENTO ESPECIAL PUZOLANICO",
+      "unidad": "KG",
+      "precio": 109,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08055",
+      "descripcion": "RODADO",
+      "unidad": "M3",
+      "precio": 6189,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08056",
+      "descripcion": "ALBAÑIL + AYUD",
+      "unidad": "JOR",
+      "precio": 31362,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "08057",
+      "descripcion": "LEYES SOCIALES (%)",
+      "unidad": "%",
+      "precio": 1458,
+      "tipo": "apu"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "items": [
+    {
+      "codigo": "002",
+      "descripcion": "BLOCK DE CONCRETO DE 15x20x40 CM",
+      "unidad": "UN",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003",
+      "descripcion": "BLOQUE TIPO SPLIT DE 15x20x40 CM",
+      "unidad": "UN",
+      "precio": 1050,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004",
+      "descripcion": "LADRILLO TITANIO DE 7x14x28 CM",
+      "unidad": "UN",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "LADRILLO FISCAL DE 6x12x25 CM",
+      "unidad": "UN",
+      "precio": 120,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "LADRILLO REFRACTARIO DE 6x11x23",
+      "unidad": "UN",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "LADRILLO PRINCESA 6X12X25",
+      "unidad": "UN",
+      "precio": 140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "LADRILLO PRINCESA 7X14X28",
+      "unidad": "UN",
+      "precio": 220,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "LADRILLO PRINCESA SPLIT 7X14X28",
+      "unidad": "UN",
+      "precio": 280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "ADOQUIN TIPO UNILOCK",
+      "unidad": "M2",
+      "precio": 6500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "BALDOSA CERAMICA 30X30",
+      "unidad": "M2",
+      "precio": 4500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "BALDOSA CERAMICA 40X40",
+      "unidad": "M2",
+      "precio": 5500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "BALDOSA GRES 30X30",
+      "unidad": "M2",
+      "precio": 7500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "BALDOSA GRES 40X40",
+      "unidad": "M2",
+      "precio": 8500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "PALMETA BALDOSA 30X30",
+      "unidad": "M2",
+      "precio": 3500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "GRES PORCELANICO 45X45",
+      "unidad": "M2",
+      "precio": 12500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "GRES PORCELANICO 60X60",
+      "unidad": "M2",
+      "precio": 15000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "CERAMICA MURO 25X40",
+      "unidad": "M2",
+      "precio": 8500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "CERAMICA MURO 30X45",
+      "unidad": "M2",
+      "precio": 9500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "LOSETA CAUCHO 40X40X2",
+      "unidad": "M2",
+      "precio": 18500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "ALFOMBRA BEREBER",
+      "unidad": "M2",
+      "precio": 8500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "ALFOMBRA LISA",
+      "unidad": "M2",
+      "precio": 6500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "PISO VINILICO EN ROLLO",
+      "unidad": "M2",
+      "precio": 4500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "PISO FLOTANTE",
+      "unidad": "M2",
+      "precio": 8500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "PISO LAMINADO",
+      "unidad": "M2",
+      "precio": 12500,
+      "tipo": "material"
+    }
+  ]
+}

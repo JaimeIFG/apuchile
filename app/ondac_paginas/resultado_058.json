@@ -1,0 +1,424 @@
+{
+  "items": [
+    {
+      "codigo": "02708",
+      "descripcion": "CURADO DE MANGUERA LISA DE 12 MM(1/2)",
+      "unidad": "m",
+      "precio": 17340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02709",
+      "descripcion": "INSTALACION RIEGO POR GOTEO COMPLETO 2 PH MTR",
+      "unidad": "m2",
+      "precio": 1704,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02710",
+      "descripcion": "PROG CONTADOR RELLENA",
+      "unidad": "un",
+      "precio": 1766,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02711",
+      "descripcion": "INSTALACION CONTADOR DE AGUA FRIA 1/2",
+      "unidad": "un",
+      "precio": 1766,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02712",
+      "descripcion": "S/VIAC LAS VIÑASLOSCANNAVILLO",
+      "unidad": "m",
+      "precio": 1256,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02713",
+      "descripcion": "CARRETEO",
+      "unidad": "m3",
+      "precio": 2712,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02714",
+      "descripcion": "LETES SEÑALES P&G",
+      "unidad": "un",
+      "precio": "",
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02803",
+      "descripcion": "CURADO PRIMAVERAL DE TAPAS DECILLA",
+      "unidad": "m2",
+      "precio": 4262,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02804",
+      "descripcion": "RELLENO B&M 2 MTR",
+      "unidad": "m3",
+      "precio": 922,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02805",
+      "descripcion": "INSTALACION COLECTOR SANITARIO 2 UNIT",
+      "unidad": "ml",
+      "precio": 1364,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02806",
+      "descripcion": "INSTALACION COLECTOR SANITARIO",
+      "unidad": "ml",
+      "precio": 1365,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02807",
+      "descripcion": "SURDEE PLANILLA PRO 150 FF GDM",
+      "unidad": "m2",
+      "precio": 994,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02808",
+      "descripcion": "CARRETEO",
+      "unidad": "m3",
+      "precio": 2712,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02811",
+      "descripcion": "CARPINTERIA 2 PISOS",
+      "unidad": "m2",
+      "precio": 1299,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02812",
+      "descripcion": "LETES SEÑALES P&G",
+      "unidad": "un",
+      "precio": 989,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02815",
+      "descripcion": "CONCRETO GRANARA PGC 80 MM",
+      "unidad": "m3",
+      "precio": 1397,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02816",
+      "descripcion": "CONCRETO SANTAMARIA GRIS H HP 280",
+      "unidad": "m3",
+      "precio": 733,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02817",
+      "descripcion": "INSTALACION COLECTOR SALIT 2 UNIT",
+      "unidad": "ml",
+      "precio": 1344,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02818",
+      "descripcion": "CARRETEO",
+      "unidad": "m3",
+      "precio": 2712,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02819",
+      "descripcion": "LETES SEÑALES P&G",
+      "unidad": "un",
+      "precio": 989,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04900",
+      "descripcion": "CONSOLIDACION CAMARA GAVETA 11A MM HH300",
+      "unidad": "un",
+      "precio": 23174,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04901",
+      "descripcion": "INSTALACION ALCANTARILLADO 2 PVC MM",
+      "unidad": "ml",
+      "precio": 1445,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04902",
+      "descripcion": "SOLDADURAS",
+      "unidad": "un",
+      "precio": 2760,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04903",
+      "descripcion": "INSTALACION COLECTOR SALIT",
+      "unidad": "ml",
+      "precio": 1545,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04904",
+      "descripcion": "CUCINA DE OBRA DAVIS",
+      "unidad": "m3",
+      "precio": 1340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04905",
+      "descripcion": "INSTALACION GRIFERIA MONI",
+      "unidad": "un",
+      "precio": 1549,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04906",
+      "descripcion": "LETES SEÑALES 40",
+      "unidad": "un",
+      "precio": 989,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04907",
+      "descripcion": "INSTALACION COLECTOR SANITEC",
+      "unidad": "ml",
+      "precio": 1346,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04908",
+      "descripcion": "INSTALACION GRIFERIA SANTIS",
+      "unidad": "un",
+      "precio": 1349,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04909",
+      "descripcion": "RANOT",
+      "unidad": "un",
+      "precio": 994,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04910",
+      "descripcion": "LETES SEÑALES MIN",
+      "unidad": "un",
+      "precio": 989,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04905",
+      "descripcion": "COLUMINIO ARCO DOBLE",
+      "unidad": "m3",
+      "precio": 375190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04906",
+      "descripcion": "COLUMINIO 400 DOBLE",
+      "unidad": "m3",
+      "precio": 395190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04907",
+      "descripcion": "INSTALACION COLUMINIO ARCO DOBLE",
+      "unidad": "m3",
+      "precio": 36550,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04905",
+      "descripcion": "COLUMINIO ARCO TRIPLE",
+      "unidad": "m3",
+      "precio": 435590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04906",
+      "descripcion": "COLUMINIO 400 TRIPLE",
+      "unidad": "m3",
+      "precio": 435590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04907",
+      "descripcion": "INSTALACION COLUMINIO ARCO TRIPLE",
+      "unidad": "m3",
+      "precio": 36550,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04901",
+      "descripcion": "COLUMINIO",
+      "unidad": "m3",
+      "precio": 347590,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04902",
+      "descripcion": "COLUMINIO CONCRETO REFORZADO",
+      "unidad": "m3",
+      "precio": 366790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04922",
+      "descripcion": "COLUMINIO INCLUIDO CAMILLA",
+      "unidad": "m3",
+      "precio": 1399500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04902",
+      "descripcion": "COLUMINIO INCLUIDO CAMILA",
+      "unidad": "m3",
+      "precio": 266790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04903",
+      "descripcion": "INSTALACION COLUMINIO INCLUIDO CAMILLA",
+      "unidad": "m3",
+      "precio": 166690,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04903",
+      "descripcion": "COLUMINIO INCLUIDO CAMASTA",
+      "unidad": "m3",
+      "precio": 1294500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04902",
+      "descripcion": "COLUMINIO INCLUIDO CAMETA",
+      "unidad": "m3",
+      "precio": 266790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04901",
+      "descripcion": "INSTALACION COLUMINIO INCLUIDO CAMETA",
+      "unidad": "m3",
+      "precio": 166690,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04903",
+      "descripcion": "COLUMINIO CONCRETO",
+      "unidad": "m3",
+      "precio": 1210500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04902",
+      "descripcion": "COLUMINIO CONCRETO BLANDO DORADO",
+      "unidad": "m3",
+      "precio": 266790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04903",
+      "descripcion": "INSTALACION COLUMINIO CONCRETO BLANDO",
+      "unidad": "m3",
+      "precio": 166690,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04904",
+      "descripcion": "COLUMINIO TRIPLE",
+      "unidad": "m3",
+      "precio": 368790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04902",
+      "descripcion": "COLUMINIO INCLUIDO TRIPLE",
+      "unidad": "m3",
+      "precio": 266790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04903",
+      "descripcion": "INSTALACION COLUMINIO TRIPLE",
+      "unidad": "m3",
+      "precio": 166690,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04914",
+      "descripcion": "COLUMINIO TRIPLE",
+      "unidad": "m3",
+      "precio": 233500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04915",
+      "descripcion": "COLUMINIO TRIPLE",
+      "unidad": "m3",
+      "precio": 236790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04916",
+      "descripcion": "INSTALACION COLUMINIO TRIPLE",
+      "unidad": "m3",
+      "precio": 236790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04914",
+      "descripcion": "COMBINACIONES",
+      "unidad": "m3",
+      "precio": 1116500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04915",
+      "descripcion": "COMBINACION 1",
+      "unidad": "m3",
+      "precio": 266790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04916",
+      "descripcion": "INSTALACION COMBINACION 1",
+      "unidad": "m3",
+      "precio": 166690,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04901",
+      "descripcion": "COMBINACIONES",
+      "unidad": "m3",
+      "precio": 366790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04902",
+      "descripcion": "COMBINACION 2",
+      "unidad": "m3",
+      "precio": 266790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04903",
+      "descripcion": "INSTALACION COMBINACION 2",
+      "unidad": "m3",
+      "precio": 166690,
+      "tipo": "apu"
+    }
+  ]
+}

@@ -1,0 +1,438 @@
+{
+  "items": [
+    {
+      "codigo": "30038",
+      "descripcion": "RELLENO SUELO SELECCIONADO",
+      "unidad": "m3",
+      "precio": 3109,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30041",
+      "descripcion": "RECONFORMACION DPF U.S A MITE",
+      "unidad": "m2",
+      "precio": 1401,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30047",
+      "descripcion": "MEJORAMIENTO AGUA",
+      "unidad": "m3",
+      "precio": 1453,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30049",
+      "descripcion": "RIPIADO",
+      "unidad": "m2",
+      "precio": 946,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30051",
+      "descripcion": "MEJORAMIENTO DE SUELO",
+      "unidad": "m3",
+      "precio": 1453,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30064",
+      "descripcion": "CODO BRONCE 90° 10 MM",
+      "unidad": "un",
+      "precio": 829,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30065",
+      "descripcion": "UNION FIERRO FUND JUNTA PLANA",
+      "unidad": "un",
+      "precio": 3174,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30071",
+      "descripcion": "CURVA PVC SANITARIA 110 MM",
+      "unidad": "un",
+      "precio": 591,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30066",
+      "descripcion": "CODO PVC HD PRESION SOLDABLE 40 MM",
+      "unidad": "un",
+      "precio": 183,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30068",
+      "descripcion": "REDUCCION CONCENTRICA PVC PRES 63-50",
+      "unidad": "un",
+      "precio": 264,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30069",
+      "descripcion": "ADAPTADOR MACHO HD ROSCA",
+      "unidad": "un",
+      "precio": 6229,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30070",
+      "descripcion": "REDUCCION HF",
+      "unidad": "un",
+      "precio": 1538,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30072",
+      "descripcion": "UNION SOLDABLE P/C",
+      "unidad": "un",
+      "precio": 3174,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30013",
+      "descripcion": "MEJORAMIENTO MATERIAL LASTRE TIPO 5",
+      "unidad": "m3",
+      "precio": 2284,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30099",
+      "descripcion": "CEMENTO ESPECIAL POLIMERICO SILAS",
+      "unidad": "m2",
+      "precio": 1923,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30014",
+      "descripcion": "RELLENO TERRENO SELECCIONADO",
+      "unidad": "m3",
+      "precio": 1538,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30015",
+      "descripcion": "RELL TERRA DE PRESTAMO DISTANCIA",
+      "unidad": "m3",
+      "precio": 2284,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30016",
+      "descripcion": "SUBBASE GRBC TIPO II-D 5 A MITE",
+      "unidad": "m3",
+      "precio": 13269,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30017",
+      "descripcion": "BASE GRBC TIPO II 5 A MITE",
+      "unidad": "m3",
+      "precio": 13269,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30018",
+      "descripcion": "CODO BRONCE 90° 30 MM",
+      "unidad": "un",
+      "precio": 819,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30019",
+      "descripcion": "CURVA FIERRO HD 90",
+      "unidad": "un",
+      "precio": 9174,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30020",
+      "descripcion": "UNION PVC SANITARIO",
+      "unidad": "un",
+      "precio": 591,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30088",
+      "descripcion": "LEYES SOCIALES P.c.",
+      "unidad": "%",
+      "precio": 4118,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30022",
+      "descripcion": "RELLENO ESTRUCTURAL COMPACTADO MANO",
+      "unidad": "m3",
+      "precio": 20460,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30028",
+      "descripcion": "RELLENO CON BOLSA",
+      "unidad": "m3",
+      "precio": 24115,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30025",
+      "descripcion": "RELLENO GRANULAR EN ZANJAS",
+      "unidad": "m3",
+      "precio": 7899,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30026",
+      "descripcion": "AFINADURA",
+      "unidad": "m2",
+      "precio": 814568,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30027",
+      "descripcion": "OTROS ASOS MATERIALES",
+      "unidad": "gl",
+      "precio": 1539,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30014",
+      "descripcion": "RELLENO CON SUELA DE CAMA",
+      "unidad": "m3",
+      "precio": 3358,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30054",
+      "descripcion": "ENTRONQUE AGUA POTABLE SOLCAB",
+      "unidad": "un",
+      "precio": 13764,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30096",
+      "descripcion": "RECUBRIMIENTO 10",
+      "unidad": "m2",
+      "precio": 15354,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30097",
+      "descripcion": "IMPERMEABILIZACION",
+      "unidad": "m2",
+      "precio": 10984,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30098",
+      "descripcion": "HORMIGON POBRE F-5",
+      "unidad": "m3",
+      "precio": 70304,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30077",
+      "descripcion": "AFIRMADO",
+      "unidad": "m3",
+      "precio": 1538,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30078",
+      "descripcion": "OTROS GASTOS MATERIALES",
+      "unidad": "gl",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30024",
+      "descripcion": "RELLENO ESTRUCTURAL COMPACTADO MECANIC",
+      "unidad": "m3",
+      "precio": 1539,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30002",
+      "descripcion": "RELLENO ESTRUCTURAL",
+      "unidad": "m3",
+      "precio": 8769,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30004",
+      "descripcion": "RELLENO ESTRUCTURAL",
+      "unidad": "m3",
+      "precio": 1128,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30005",
+      "descripcion": "HORMIGON RELLENO EN ZANJAS",
+      "unidad": "m3",
+      "precio": 8769,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30006",
+      "descripcion": "REFUERZO ACERO A-44-28H",
+      "unidad": "kg",
+      "precio": 22309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30007",
+      "descripcion": "CAJON SOLAR A-44H",
+      "unidad": "kg",
+      "precio": 21309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30008",
+      "descripcion": "MOLDAJE PUNTA CONTRAPAGINA",
+      "unidad": "m2",
+      "precio": 20309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30009",
+      "descripcion": "HORMIGON ALCATRIZAR CORRIENTE",
+      "unidad": "m3",
+      "precio": 74969,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30010",
+      "descripcion": "AFIRMADURA ACHINO GRANULADA",
+      "unidad": "m3",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30011",
+      "descripcion": "LEYES SOCIALES P.c.",
+      "unidad": "%",
+      "precio": 4118,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30055",
+      "descripcion": "ENFIERRADURA",
+      "unidad": "kg",
+      "precio": 829,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30000",
+      "descripcion": "DEMOLICION",
+      "unidad": "m3",
+      "precio": 43020,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30001",
+      "descripcion": "DESPAJE Y LIMPIEZA",
+      "unidad": "ha",
+      "precio": 478909,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30003",
+      "descripcion": "TRAZADOS DE BANDAS TIERRA DE SEGURIDAD",
+      "unidad": "km",
+      "precio": 7615,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30005",
+      "descripcion": "CAJON PLANO",
+      "unidad": "m3",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30006",
+      "descripcion": "HORMIGONADO",
+      "unidad": "m3",
+      "precio": 74969,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30008",
+      "descripcion": "REFUERZO ACERO A-44-28H",
+      "unidad": "kg",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30009",
+      "descripcion": "AFIRMADURA ACHINO GRANULADA",
+      "unidad": "m3",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30010",
+      "descripcion": "CARPINTERIA OBRA GRUESA",
+      "unidad": "m2",
+      "precio": 14309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30012",
+      "descripcion": "LEYES SOCIALES P.c.",
+      "unidad": "%",
+      "precio": 4309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30029",
+      "descripcion": "REFUERZOS DE CARTES DE PAVIMENTOS PARA",
+      "unidad": "m",
+      "precio": 161597,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30000",
+      "descripcion": "CAJON PLANO",
+      "unidad": "m3",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30001",
+      "descripcion": "HORMIGONADO",
+      "unidad": "m3",
+      "precio": 74969,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30003",
+      "descripcion": "REFUERZO ACERO A-44-28H",
+      "unidad": "kg",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30004",
+      "descripcion": "AFIRMADURA ACHINO GRANULADA",
+      "unidad": "m3",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30006",
+      "descripcion": "CARPINTERIA OBRA GRUESA",
+      "unidad": "m2",
+      "precio": 16309,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30012",
+      "descripcion": "LEYES SOCIALES P.c.",
+      "unidad": "%",
+      "precio": 6311,
+      "tipo": "apu"
+    }
+  ]
+}

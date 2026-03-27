@@ -1,0 +1,179 @@
+{
+  "items": [
+    {
+      "codigo": "6015",
+      "descripcion": "REVESTIMIENTO PIEDRA LAVADO SEMILIVIANA",
+      "unidad": "m2",
+      "precio": 22892,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6016",
+      "descripcion": "REVESTIMIENTO LADRILILLO PRINCESA",
+      "unidad": "m2",
+      "precio": 11296,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6017",
+      "descripcion": "REVESTIMIENTO LADRILLOS RUSTICO VISTA",
+      "unidad": "m2",
+      "precio": 8177,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6018",
+      "descripcion": "REVESTIMIENTO MOLDAJE/PIEDRA/LADRILLO",
+      "unidad": "ml",
+      "precio": 2298,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6019",
+      "descripcion": "REVESTIMIENTO MOLDAJE/HORMIGON VISTO",
+      "unidad": "m2",
+      "precio": 7581,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6020",
+      "descripcion": "REVESTIMIENTO FIBROCEMENTO",
+      "unidad": "m2",
+      "precio": 6341,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6021",
+      "descripcion": "REVESTIMIENTO PLACAS YESO",
+      "unidad": "m2",
+      "precio": 3414,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6022",
+      "descripcion": "REVESTIMIENTO MURAL GRANALLA",
+      "unidad": "m2",
+      "precio": 5349,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6023",
+      "descripcion": "REVESTIMIENTO TEXTIL CON BARNIZ",
+      "unidad": "m2",
+      "precio": 10498,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6024",
+      "descripcion": "REVESTIMIENTO TEXTIL/PINTURA DE MEURAL",
+      "unidad": "m2",
+      "precio": 11138,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6025",
+      "descripcion": "REVESTIMIENTO TEXTIL MURAL CON PAPEL",
+      "unidad": "m2",
+      "precio": 1368,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6026",
+      "descripcion": "REVESTIMIENTO PAPEL/MURO RUSTICO",
+      "unidad": "m2",
+      "precio": 759,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6027",
+      "descripcion": "CALEFACCION ESTUFAS ELECTRICA",
+      "unidad": "un",
+      "precio": 26489,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6028",
+      "descripcion": "CALEFACCION GAS Y ESTUFAS CLEFAN",
+      "unidad": "un",
+      "precio": 23436,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6029",
+      "descripcion": "CALEFACCION ELECTRICA/MANTENCION",
+      "unidad": "un",
+      "precio": 18499,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6030",
+      "descripcion": "REVESTIMIENTO PIEDRA CHANCADA",
+      "unidad": "m2",
+      "precio": 18785,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6031",
+      "descripcion": "REVESTIMIENTO PIEDRA FINA HORMIGON VISTA",
+      "unidad": "m2",
+      "precio": 41294,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6032",
+      "descripcion": "REVESTIMIENTO PIEDRA MURAL",
+      "unidad": "m2",
+      "precio": 24762,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6033",
+      "descripcion": "EMPAQUE EN REVESTIMIENTO SOLIDO",
+      "unidad": "m2",
+      "precio": 1371,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6034",
+      "descripcion": "EMPAQUE REVESTIMIENTO/MEJORAR",
+      "unidad": "m2",
+      "precio": 741,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6035",
+      "descripcion": "EMPAQUE ANTI-HUMEDAD-LOCACION",
+      "unidad": "m2",
+      "precio": 10029,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6036",
+      "descripcion": "PINTURA SOBRE",
+      "unidad": "m2",
+      "precio": 815,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6037",
+      "descripcion": "PINTURA LATEX",
+      "unidad": "m2",
+      "precio": 885,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6038",
+      "descripcion": "PINTURA OLEO",
+      "unidad": "m2",
+      "precio": 989,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6039",
+      "descripcion": "POSTE COMPLEMENTARIA ALTA",
+      "unidad": "un",
+      "precio": 145400,
+      "tipo": "apu"
+    }
+  ]
+}

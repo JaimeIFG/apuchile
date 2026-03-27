@@ -1,0 +1,151 @@
+{
+  "items": [
+    {
+      "codigo": "7001",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 6800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7002",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 8400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7003",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 9600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7004",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 12800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7005",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 16000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7006",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 19200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7007",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 22400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7008",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 25600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7009",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 28800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7010",
+      "descripcion": "PERFIL ANGULAR C.E 6 MM GALV.",
+      "unidad": "m",
+      "precio": 32000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7020",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 7200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7021",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 9600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7022",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 12000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7023",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 14400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7024",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 16800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7025",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 19200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7026",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 21600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7027",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 24000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7028",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 26400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7029",
+      "descripcion": "PERFIL ANGULAR C.E 8 MM GALV.",
+      "unidad": "m",
+      "precio": 28800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7030",
+      "descripcion": "PERFIL ANGULAR C.E 10 MM GALV.",
+      "unidad": "m",
+      "precio": 8000,
+      "tipo": "material"
+    }
+  ]
+}

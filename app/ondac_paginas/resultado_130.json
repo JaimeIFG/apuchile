@@ -1,0 +1,235 @@
+{
+  "items": [
+    {
+      "codigo": "602",
+      "descripcion": "MOLDAJES POLIPLAS CORRUGADO 8",
+      "unidad": "LTS",
+      "precio": 4935,
+      "tipo": "material"
+    },
+    {
+      "codigo": "603",
+      "descripcion": "MOLDAJES ENCOFRADOS METALICOS",
+      "unidad": "M2",
+      "precio": 3900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "604",
+      "descripcion": "MORTERO PREMEZCLADO",
+      "unidad": "SAC",
+      "precio": 4555,
+      "tipo": "material"
+    },
+    {
+      "codigo": "605",
+      "descripcion": "MOLDAJES ENCOFRADO MADERA",
+      "unidad": "M2",
+      "precio": 5050,
+      "tipo": "material"
+    },
+    {
+      "codigo": "606",
+      "descripcion": "MORTERO CEMENTO/ARENA",
+      "unidad": "M3",
+      "precio": 34000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PA",
+      "descripcion": "TUBERIAS DE CONCRETO",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "material"
+    },
+    {
+      "codigo": "660",
+      "descripcion": "SISTEMA RANURADOS",
+      "unidad": "M",
+      "precio": 4000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "661",
+      "descripcion": "CLAVO 2\" ZINC",
+      "unidad": "KG",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "662",
+      "descripcion": "CLAVO 3\" ZINC",
+      "unidad": "KG",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "663",
+      "descripcion": "CADENAS GALVANIZADA",
+      "unidad": "M",
+      "precio": 3950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PG",
+      "descripcion": "CAÑERIAS DE COBRE Y PVC",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PH",
+      "descripcion": "CAÑERIAS DE Fe Y FIERRO",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "material"
+    },
+    {
+      "codigo": "710",
+      "descripcion": "CAÑERIAS PVC 75 MM",
+      "unidad": "M",
+      "precio": 4590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "711",
+      "descripcion": "CAÑERIAS PVC 110 MM",
+      "unidad": "M",
+      "precio": 6450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "712",
+      "descripcion": "CAÑERIAS PVC 160 MM",
+      "unidad": "M",
+      "precio": 12850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "713",
+      "descripcion": "CAÑERIAS PVC 200 MM",
+      "unidad": "M",
+      "precio": 20100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "714",
+      "descripcion": "CEMENTO PORTLAND",
+      "unidad": "SAC",
+      "precio": 6450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "715",
+      "descripcion": "CEMENTO ESPECIAL",
+      "unidad": "SAC",
+      "precio": 7850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PI",
+      "descripcion": "CAÑERIAS DE PVC Y PARA ESP",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "material"
+    },
+    {
+      "codigo": "800",
+      "descripcion": "TUBO PVC PRESION 20MM 10",
+      "unidad": "M",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "801",
+      "descripcion": "TUBO PVC PRESION 25MM 10",
+      "unidad": "M",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "802",
+      "descripcion": "TUBO PVC PRESION 32MM 10",
+      "unidad": "M",
+      "precio": 2350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "803",
+      "descripcion": "TUBO PVC PRESION 40MM 10",
+      "unidad": "M",
+      "precio": 3650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "804",
+      "descripcion": "TUBO PVC PRESION 50MM 10",
+      "unidad": "M",
+      "precio": 5950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "805",
+      "descripcion": "TUBO PVC PRESION 63MM 10",
+      "unidad": "M",
+      "precio": 9450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "806",
+      "descripcion": "TUBO PVC PRESION 75MM 10",
+      "unidad": "M",
+      "precio": 13650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "807",
+      "descripcion": "TUBO PVC PRESION 90MM 10",
+      "unidad": "M",
+      "precio": 19950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "808",
+      "descripcion": "TUBO PVC PRESION 110MM 10",
+      "unidad": "M",
+      "precio": 28950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "809",
+      "descripcion": "TUBO PVC PRESION 125MM 10",
+      "unidad": "M",
+      "precio": 37450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "810",
+      "descripcion": "TUBO PVC PRESION 140MM 10",
+      "unidad": "M",
+      "precio": 47450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "811",
+      "descripcion": "TUBO PVC PRESION 160MM 10",
+      "unidad": "M",
+      "precio": 61950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "812",
+      "descripcion": "TUBO PVC PRESION 200MM 10",
+      "unidad": "M",
+      "precio": 97450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "813",
+      "descripcion": "TUBO PVC PRESION 250MM 10",
+      "unidad": "M",
+      "precio": 152450,
+      "tipo": "material"
+    }
+  ]
+}

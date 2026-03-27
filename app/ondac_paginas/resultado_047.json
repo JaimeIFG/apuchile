@@ -1,0 +1,249 @@
+{
+  "items": [
+    {
+      "codigo": "9R01",
+      "descripcion": "MOTELES FULL MERCADO",
+      "unidad": "m2",
+      "precio": 37200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R02",
+      "descripcion": "MOTELES FULL MERCADO TURISTICO",
+      "unidad": "m2",
+      "precio": 37200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R03",
+      "descripcion": "MOTELES FULL MERCADO",
+      "unidad": "m2",
+      "precio": 37200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R04",
+      "descripcion": "MOTELES FULL EXTENSION",
+      "unidad": "m2",
+      "precio": 13500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R05",
+      "descripcion": "MOTELES FULL MERCADO INMOBILIARIO",
+      "unidad": "m2",
+      "precio": 15800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R06",
+      "descripcion": "MOTELES FULL LOCALIZACION ECON",
+      "unidad": "m2",
+      "precio": 12200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R07",
+      "descripcion": "MOTELES FULL EXTENSION TURBO",
+      "unidad": "m2",
+      "precio": 14100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R08",
+      "descripcion": "MOTELES FULL MERCADO CENTRAL",
+      "unidad": "m2",
+      "precio": 15800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R09",
+      "descripcion": "MOTELES FULL RENOVADOS",
+      "unidad": "m2",
+      "precio": 8800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R10",
+      "descripcion": "MOTELES FULL MERCADO",
+      "unidad": "m2",
+      "precio": 17200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R11",
+      "descripcion": "MOTELES CORREOS ARAUCANIA",
+      "unidad": "m2",
+      "precio": 14100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R12",
+      "descripcion": "MOTELES FULL ECONOMICO+PLUS",
+      "unidad": "m2",
+      "precio": 11100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R13",
+      "descripcion": "MOTELES COOR",
+      "unidad": "m2",
+      "precio": 9300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R17",
+      "descripcion": "MOTEL PREMIERE DE BOUTIQUE",
+      "unidad": "m2",
+      "precio": 41100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R18",
+      "descripcion": "MOTEL PREMIERE DE BOUTIQUE +",
+      "unidad": "m2",
+      "precio": 41100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R19",
+      "descripcion": "MOTEL PREMIERE DE BOUTIQUE AMV",
+      "unidad": "m2",
+      "precio": 41100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R20",
+      "descripcion": "MOTELES OTORGANTS 11",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R21",
+      "descripcion": "MOTELES OTORGANTS 12",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R22",
+      "descripcion": "MOTELES OTORGANTS 13",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R23",
+      "descripcion": "MOTELES OTORGANTS 14",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R24",
+      "descripcion": "MOTELES OTORGANTS 15",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R25",
+      "descripcion": "MOTELES OTORGANTS 16",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R26",
+      "descripcion": "MOTELES OTORGANTS 17",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R27",
+      "descripcion": "MOTELES RESERVAR",
+      "unidad": "N",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "PH",
+      "descripcion": "PANELES EN",
+      "unidad": "m2",
+      "precio": 1087,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "PHN02",
+      "descripcion": "PANELES ALTERNATIVAS",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0000",
+      "descripcion": "MOTELES ALTERNATIVAS",
+      "unidad": "m2",
+      "precio": 7483,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "0001",
+      "descripcion": "MOTELES ALTERNATIVAS",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "5018",
+      "descripcion": "PUENTE VIAL DINAMIC",
+      "unidad": "N",
+      "precio": 180,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "5019",
+      "descripcion": "PUENTE VIAL DINAMIC",
+      "unidad": "N",
+      "precio": 180,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "5020",
+      "descripcion": "PUENTE VIAL DINAMIC",
+      "unidad": "N",
+      "precio": 180,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "9R07",
+      "descripcion": "MICHAL CALIDAD BASE CHE FORMATO",
+      "unidad": "m2",
+      "precio": 4128,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "MA",
+      "descripcion": "MAILS",
+      "unidad": "m2",
+      "precio": 25730,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "MA01",
+      "descripcion": "MAILS DE PLAZA VIRTUAL GL N D HOME",
+      "unidad": "m2",
+      "precio": 25730,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "MA02",
+      "descripcion": "MAILS DE PLAZA VIRTUAL GL N Home",
+      "unidad": "m2",
+      "precio": 25730,
+      "tipo": "apu"
+    }
+  ]
+}

@@ -1,0 +1,522 @@
+{
+  "items": [
+    {
+      "codigo": "800151",
+      "descripcion": "CALEFONT SPLENDID 11 LTS. GL",
+      "unidad": "UN",
+      "precio": 224398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800152",
+      "descripcion": "CALEFONT 5.5 LITROS L. SIROCCO",
+      "unidad": "UN",
+      "precio": 64200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800153",
+      "descripcion": "ARTEFACTO PARA CALENTAR AGUA",
+      "unidad": "UN",
+      "precio": 68228,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800154",
+      "descripcion": "CAMARA CORTE FHYL 4X4 A MITE",
+      "unidad": "UN",
+      "precio": 13400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800155",
+      "descripcion": "FAJA GALVANIZADA DE 25X1.5",
+      "unidad": "M",
+      "precio": 3465,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800156",
+      "descripcion": "BANDA",
+      "unidad": "M",
+      "precio": 3465,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800157",
+      "descripcion": "TERMINAL DE HIERRO 20X16",
+      "unidad": "UN",
+      "precio": 345,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800158",
+      "descripcion": "ABRAZADERA GALV. ROSCADA",
+      "unidad": "UN",
+      "precio": 1496,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800159",
+      "descripcion": "NO OCUPA EN DIRECTA 20X16 M.G NO.3",
+      "unidad": "M",
+      "precio": 20200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800160",
+      "descripcion": "COPERTO PRIMARIO",
+      "unidad": "UN",
+      "precio": 85200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800161",
+      "descripcion": "LEYES SOCIALES E241",
+      "unidad": "%",
+      "precio": 2320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800201",
+      "descripcion": "CALEFONT JUNKERS 14 LTS. GL",
+      "unidad": "UN",
+      "precio": 208208,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800202",
+      "descripcion": "CALEFONT RHYOBI 14 LTS. GL TORNADO",
+      "unidad": "UN",
+      "precio": 174200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800203",
+      "descripcion": "ARTEFACTO PARA CALENTAR AGUA",
+      "unidad": "UN",
+      "precio": 68228,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800204",
+      "descripcion": "CAMARA CORTE FHYL 4X4 A MITE",
+      "unidad": "UN",
+      "precio": 13400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800205",
+      "descripcion": "LIJA PARA LIJADOM DE 100 REVESE",
+      "unidad": "UN",
+      "precio": 1370,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800206",
+      "descripcion": "FAJA GALVANIZADA DE 25X1.5",
+      "unidad": "M",
+      "precio": 3465,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800207",
+      "descripcion": "BANDA",
+      "unidad": "M",
+      "precio": 3465,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800208",
+      "descripcion": "ABRAZADERA GALV. ROSCADA 20X16 M.G NO.3",
+      "unidad": "M",
+      "precio": 1370,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800209",
+      "descripcion": "TERMINAL DE HIERRO 20X16",
+      "unidad": "UN",
+      "precio": 1496,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800210",
+      "descripcion": "COPERTO PRIMARIO",
+      "unidad": "UN",
+      "precio": 85200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800211",
+      "descripcion": "LEYES SOCIALES E241",
+      "unidad": "%",
+      "precio": 2320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800251",
+      "descripcion": "CALEFONT SPLENDID 14 LTS. GL",
+      "unidad": "UN",
+      "precio": 224398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800252",
+      "descripcion": "ARTEFACTO PARA CALENTAR AGUA",
+      "unidad": "UN",
+      "precio": 68228,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800253",
+      "descripcion": "LIJA PARA LIJADOM DE 100 REVESE",
+      "unidad": "UN",
+      "precio": 1370,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800254",
+      "descripcion": "DECORACION DE P0 M2",
+      "unidad": "M2",
+      "precio": 616,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800255",
+      "descripcion": "ARTEFACTO PARA CALENTAR AGUA",
+      "unidad": "UN",
+      "precio": 17500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800256",
+      "descripcion": "LIJA PARA LIJADOM DE 100 REVESE",
+      "unidad": "UN",
+      "precio": 1370,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800257",
+      "descripcion": "FAJA GALVANIZADA DE 25X1.5",
+      "unidad": "M",
+      "precio": 3465,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800258",
+      "descripcion": "BANDA",
+      "unidad": "M",
+      "precio": 3465,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800259",
+      "descripcion": "LAJA GRIEGA GENERICA",
+      "unidad": "M2",
+      "precio": 3400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800260",
+      "descripcion": "NO OCUPA EN DIRECTA 20X16 M.G NO.3",
+      "unidad": "M",
+      "precio": 3400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800261",
+      "descripcion": "COPERTO PRIMARIO",
+      "unidad": "UN",
+      "precio": 85200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800262",
+      "descripcion": "LEYES SOCIALES E241",
+      "unidad": "%",
+      "precio": 2320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800701",
+      "descripcion": "CALZADO E.L.S.1",
+      "unidad": "PAR",
+      "precio": 24106,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800702",
+      "descripcion": "ALFOMBRAS DE PRIMERISIMA",
+      "unidad": "UN",
+      "precio": 15300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800703",
+      "descripcion": "BARRAJE DE PRIMERISIMA SERIE",
+      "unidad": "UN",
+      "precio": 17630,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800704",
+      "descripcion": "CEMENTO ESPECIAL POLIMETRIZADO",
+      "unidad": "KG",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800705",
+      "descripcion": "ESPECIFICACION VARIA DIVERSOS",
+      "unidad": "GL",
+      "precio": 3800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800706",
+      "descripcion": "CERAMICO",
+      "unidad": "M2",
+      "precio": 6300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800707",
+      "descripcion": "BONIFICACION",
+      "unidad": "UN",
+      "precio": 5785,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800708",
+      "descripcion": "NO OCUPA EN DIRECTA 20X16 M.G NO.3",
+      "unidad": "M",
+      "precio": 15738,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800709",
+      "descripcion": "CONTACTO DE P30V SENORA",
+      "unidad": "UN",
+      "precio": 92,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800710",
+      "descripcion": "GANCHOS 2.11 LIMA 3MM SERIE 2013",
+      "unidad": "UN",
+      "precio": 1550,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800711",
+      "descripcion": "MINIPLANT CARIÑO ARTBOL 50 MG",
+      "unidad": "KG",
+      "precio": 33300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800712",
+      "descripcion": "MINIPLANT PRIMERA",
+      "unidad": "KG",
+      "precio": 78300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800713",
+      "descripcion": "ELECTRIC DE PRIMERA",
+      "unidad": "UN",
+      "precio": 59900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800714",
+      "descripcion": "ADHESIVO EPOXIDO",
+      "unidad": "UN",
+      "precio": 22500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800715",
+      "descripcion": "LEYES SOCIALES E241",
+      "unidad": "%",
+      "precio": 2320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800751",
+      "descripcion": "CALZADO E.L.S.1",
+      "unidad": "PAR",
+      "precio": 24106,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800752",
+      "descripcion": "ALFOMBRAS DE PRIMERISIMA",
+      "unidad": "UN",
+      "precio": 15300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800753",
+      "descripcion": "BARRAJE DE PRIMERISIMA SERIE",
+      "unidad": "UN",
+      "precio": 17630,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800754",
+      "descripcion": "CEMENTO ESPECIAL POLIMETRIZADO",
+      "unidad": "KG",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800755",
+      "descripcion": "ESPECIFICACION VARIA DIVERSOS",
+      "unidad": "GL",
+      "precio": 3800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800756",
+      "descripcion": "CERAMICO",
+      "unidad": "M2",
+      "precio": 6300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800757",
+      "descripcion": "BONIFICACION",
+      "unidad": "UN",
+      "precio": 5785,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800758",
+      "descripcion": "NO OCUPA EN DIRECTA 20X16 M.G NO.3",
+      "unidad": "M",
+      "precio": 15738,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800759",
+      "descripcion": "CONTACTO DE P30V SENORA",
+      "unidad": "UN",
+      "precio": 90,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800760",
+      "descripcion": "GANCHOS 2.11 LIMA 3MM SERIE 2013",
+      "unidad": "UN",
+      "precio": 1375,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800761",
+      "descripcion": "MINIPLANT CARIÑO ARTBOL 50 MG",
+      "unidad": "KG",
+      "precio": 33300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800762",
+      "descripcion": "MINIPLANT PRIMERA",
+      "unidad": "KG",
+      "precio": 78300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800763",
+      "descripcion": "ELECTRIC DE PRIMERA",
+      "unidad": "UN",
+      "precio": 59900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "800764",
+      "descripcion": "LEYES SOCIALES E241",
+      "unidad": "%",
+      "precio": 2320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801001",
+      "descripcion": "CAMAS DE INSPECCION SCOPIN.",
+      "unidad": "M2",
+      "precio": 21170,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801002",
+      "descripcion": "APLANACION PATIO",
+      "unidad": "UN",
+      "precio": 71200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801003",
+      "descripcion": "BONIFICADO",
+      "unidad": "M",
+      "precio": 74,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801004",
+      "descripcion": "LEYES SOCIALES E241",
+      "unidad": "%",
+      "precio": 2320,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801151",
+      "descripcion": "CAMAS DE INSPECCION CONTACT SR-TB CHI",
+      "unidad": "M2",
+      "precio": 21370,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801152",
+      "descripcion": "APLANACION PATIO",
+      "unidad": "UN",
+      "precio": 71200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801153",
+      "descripcion": "A PLANCION ACUA-OSMIA (AMONER)",
+      "unidad": "M2",
+      "precio": 1450,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801154",
+      "descripcion": "BONIFICADO",
+      "unidad": "M",
+      "precio": 74,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801155",
+      "descripcion": "ACHINADO",
+      "unidad": "M",
+      "precio": 74,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801156",
+      "descripcion": "CERAMICO",
+      "unidad": "M2",
+      "precio": 74300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "801157",
+      "descripcion": "LEYES SOCIALES E241",
+      "unidad": "%",
+      "precio": 2320,
+      "tipo": "apu"
+    }
+  ]
+}

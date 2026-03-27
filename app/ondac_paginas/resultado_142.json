@@ -1,0 +1,333 @@
+{
+  "items": [
+    {
+      "codigo": "0501",
+      "descripcion": "ARIDO DE SILICE MALLA 16/30 SECO",
+      "unidad": "M3",
+      "precio": 58015,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0502",
+      "descripcion": "ARIDO PARA HORMIGON CON CONTROL DE ORIGEN",
+      "unidad": "M3",
+      "precio": 25236,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0503",
+      "descripcion": "ASFALTO EMULSIONADO RS-1",
+      "unidad": "LT",
+      "precio": 371,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0504",
+      "descripcion": "ASFALTO EMULSIONADO RS-2",
+      "unidad": "LT",
+      "precio": 371,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0505",
+      "descripcion": "BARRIDO MECANICO INCLUYE TRASLADO",
+      "unidad": "M2",
+      "precio": 149,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0506",
+      "descripcion": "BLOQUE LIGERO PREFABRICADO DE 7,5 MPA",
+      "unidad": "M3",
+      "precio": 39827,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0507",
+      "descripcion": "BOLON DESPLAZADOR",
+      "unidad": "M3",
+      "precio": 10090,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0508",
+      "descripcion": "BREA LIQUIDA PARA IMPRIMACION DE JUNTAS",
+      "unidad": "LT",
+      "precio": 1189,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0509",
+      "descripcion": "BREA SOLIDA PARA RELLENAR JUNTAS",
+      "unidad": "KG",
+      "precio": 1330,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0510",
+      "descripcion": "BYREX ADHERENTE MPA ULTRALITE - E2 CM",
+      "unidad": "M2",
+      "precio": 14752,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0511",
+      "descripcion": "BYREX ADHERENTE MPA ULTRALITE - E3 CM",
+      "unidad": "M2",
+      "precio": 22128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0512",
+      "descripcion": "BYREX ADHERENTE MPA ULTRALITE - E4 CM",
+      "unidad": "M2",
+      "precio": 29504,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0513",
+      "descripcion": "BYREX IMPERMEABLE E3.5 CM",
+      "unidad": "M2",
+      "precio": 25896,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0514",
+      "descripcion": "BYREX IMPERMEABLE E4 CM",
+      "unidad": "M2",
+      "precio": 29504,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0515",
+      "descripcion": "BYREX IMPERMEABLE E5 CM",
+      "unidad": "M2",
+      "precio": 36880,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0516",
+      "descripcion": "BYREX IMPERMEABLE AUTOADHESIVO E3 CM",
+      "unidad": "M2",
+      "precio": 22128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0517",
+      "descripcion": "BYREX IMPERMEABLE AUTOADHESIVO E4 CM",
+      "unidad": "M2",
+      "precio": 29504,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0518",
+      "descripcion": "BYREX IMPERMEABLE AUTOADHESIVO E5 CM",
+      "unidad": "M2",
+      "precio": 36880,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0519",
+      "descripcion": "BYREX PROTECTOR AUTOAGGLOMERANTE E3 CM",
+      "unidad": "M2",
+      "precio": 22128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0520",
+      "descripcion": "BYREX PROTECTOR AUTOAGGLOMERANTE E4 CM",
+      "unidad": "M2",
+      "precio": 29504,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0521",
+      "descripcion": "BYREX PROTECTOR AUTOAGGLOMERANTE E5 CM",
+      "unidad": "M2",
+      "precio": 36880,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0522",
+      "descripcion": "CAL VIVA PARA ESTABILIZAR EN TERRENO",
+      "unidad": "TON",
+      "precio": 138300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0523",
+      "descripcion": "COBRE ELECTROLÍTICO",
+      "unidad": "KG",
+      "precio": 6026,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0524",
+      "descripcion": "EMULSION ASFALTICA CSS-1",
+      "unidad": "LT",
+      "precio": 300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0525",
+      "descripcion": "GEOMALLA UNIAXIAL DE 40 KN/M",
+      "unidad": "M2",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0526",
+      "descripcion": "GEOMALLA UNIAXIAL DE 55 KN/M",
+      "unidad": "M2",
+      "precio": 5645,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0527",
+      "descripcion": "GEOMALLA UNIAXIAL DE 80 KN/M",
+      "unidad": "M2",
+      "precio": 7980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0528",
+      "descripcion": "GEOMALLA UNIAXIAL DE 110 KN/M",
+      "unidad": "M2",
+      "precio": 10315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0529",
+      "descripcion": "GEOMALLA UNIAXIAL DE 200 KN/M",
+      "unidad": "M2",
+      "precio": 16440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0530",
+      "descripcion": "GEOTEXTIL NO TEJIDO 200 GR/M2",
+      "unidad": "M2",
+      "precio": 1225,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0531",
+      "descripcion": "GEOTEXTIL NO TEJIDO 300 GR/M2",
+      "unidad": "M2",
+      "precio": 1750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0532",
+      "descripcion": "GEOTEXTIL NO TEJIDO 400 GR/M2",
+      "unidad": "M2",
+      "precio": 2275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0533",
+      "descripcion": "GEOTEXTIL NO TEJIDO 500 GR/M2",
+      "unidad": "M2",
+      "precio": 2800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0534",
+      "descripcion": "GEOTEXTIL NO TEJIDO 600 GR/M2",
+      "unidad": "M2",
+      "precio": 3325,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0535",
+      "descripcion": "HORMIGÓN PARA RELLENO H-5",
+      "unidad": "M3",
+      "precio": 79800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0536",
+      "descripcion": "MALLA ELECTROSOLDADA 6X6/10-10 C92",
+      "unidad": "M2",
+      "precio": 4500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0537",
+      "descripcion": "MALLA ELECTROSOLDADA 6X6/15-15 C188",
+      "unidad": "M2",
+      "precio": 2990,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0538",
+      "descripcion": "MEMBRANA ASFALTICA ALUMINIO 4 MM",
+      "unidad": "M2",
+      "precio": 3744,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0539",
+      "descripcion": "MORTERO PLASTICO IMPERMEABLE",
+      "unidad": "KG",
+      "precio": 690,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0540",
+      "descripcion": "PINTURA ASFALTICA ALUMINIO",
+      "unidad": "LT",
+      "precio": 3420,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0541",
+      "descripcion": "POLIETILENO NEGRO 0.20 MM",
+      "unidad": "M2",
+      "precio": 175,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0542",
+      "descripcion": "POLIETILENO TRANSPARENTE 0.10 MM",
+      "unidad": "M2",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0543",
+      "descripcion": "RIPIO PARA HORMIGON",
+      "unidad": "M3",
+      "precio": 15048,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0544",
+      "descripcion": "RIPIO SELECCIONADO",
+      "unidad": "M3",
+      "precio": 15048,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0545",
+      "descripcion": "SELLO ELASTOMERICO POLIURETANO",
+      "unidad": "ML",
+      "precio": 2280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0546",
+      "descripcion": "SEPARADOR METALICO PARA JUNTAS",
+      "unidad": "ML",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "0547",
+      "descripcion": "TIERRA VEGETAL",
+      "unidad": "M3",
+      "precio": 15048,
+      "tipo": "material"
+    }
+  ]
+}

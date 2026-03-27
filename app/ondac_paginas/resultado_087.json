@@ -1,0 +1,235 @@
+{
+  "items": [
+    {
+      "codigo": "CB-001",
+      "descripcion": "MADERAS ELABORADAS",
+      "unidad": "m3",
+      "precio": 7500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-002",
+      "descripcion": "ALPINO SEMICEPILLADO 2,5X2\"",
+      "unidad": "ml",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-003",
+      "descripcion": "PINO IMPREGNADO 2,5X2\"",
+      "unidad": "ml",
+      "precio": 1650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-004",
+      "descripcion": "PINO IMPREGNADO 2X5,1\"",
+      "unidad": "ml",
+      "precio": 2350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-005",
+      "descripcion": "PINO IMPREGNADO 2X7,1\"",
+      "unidad": "ml",
+      "precio": 2950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-006",
+      "descripcion": "PINO IMPREGNADO 2X9,1\"",
+      "unidad": "ml",
+      "precio": 3450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-007",
+      "descripcion": "PINO IMPREGNADO 3X3\"",
+      "unidad": "ml",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-008",
+      "descripcion": "PINO IMPREGNADO 3X5,1\"",
+      "unidad": "ml",
+      "precio": 4250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-009",
+      "descripcion": "PINO IMPREGNADO 3X7,1\"",
+      "unidad": "ml",
+      "precio": 5450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-010",
+      "descripcion": "PINO IMPREGNADO 4X4\"",
+      "unidad": "ml",
+      "precio": 4850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-011",
+      "descripcion": "PINO DIMENSIONADO 1X2\" CCA",
+      "unidad": "ml",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-012",
+      "descripcion": "PINO DIMENSIONADO 1X3\" CCA",
+      "unidad": "ml",
+      "precio": 1650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-013",
+      "descripcion": "PINO DIMENSIONADO 1X4\" CCA",
+      "unidad": "ml",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-014",
+      "descripcion": "PINO DIMENSIONADO 1X6\" CCA",
+      "unidad": "ml",
+      "precio": 2650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-015",
+      "descripcion": "PINO OREGON CEPILLADO 1X2\"",
+      "unidad": "ml",
+      "precio": 1650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-016",
+      "descripcion": "PINO OREGON CEPILLADO 1X3\"",
+      "unidad": "ml",
+      "precio": 2150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-017",
+      "descripcion": "PINO OREGON CEPILLADO 1X4\"",
+      "unidad": "ml",
+      "precio": 2650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-018",
+      "descripcion": "PINO OREGON CEPILLADO 1X6\" PRIMERA",
+      "unidad": "ml",
+      "precio": 3650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-019",
+      "descripcion": "PINO OREGON CEPILLADO 1X6\" TERCERA",
+      "unidad": "ml",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-020",
+      "descripcion": "PINO OREGON CEPILLADO 1X8\" PRIMERA",
+      "unidad": "ml",
+      "precio": 4650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-021",
+      "descripcion": "PINO OREGON CEPILLADO 1X8\" TERCERA",
+      "unidad": "ml",
+      "precio": 3650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-022",
+      "descripcion": "PINO OREGON CEPILLADO 1X10\" PRIMERA",
+      "unidad": "ml",
+      "precio": 5850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-023",
+      "descripcion": "PINO OREGON CEPILLADO 1X10\" TERCERA",
+      "unidad": "ml",
+      "precio": 4650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-024",
+      "descripcion": "PINO OREGON CEPILLADO 1X12\" PRIMERA",
+      "unidad": "ml",
+      "precio": 6850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-025",
+      "descripcion": "PINO OREGON CEPILLADO 1X12\" TERCERA",
+      "unidad": "ml",
+      "precio": 5450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-026",
+      "descripcion": "PINO OREGON CEPILLADO 2X2\"",
+      "unidad": "ml",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-027",
+      "descripcion": "PINO OREGÓN CEPILLADO 2X3\"",
+      "unidad": "ml",
+      "precio": 3650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-028",
+      "descripcion": "PINO OREGÓN CEPILLADO 2X4\"",
+      "unidad": "ml",
+      "precio": 4650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-029",
+      "descripcion": "PINO OREGÓN CEPILLADO 2X6\"",
+      "unidad": "ml",
+      "precio": 6650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-030",
+      "descripcion": "PINO OREGÓN CEPILLADO 2X8\"",
+      "unidad": "ml",
+      "precio": 8650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-031",
+      "descripcion": "POLYMERADO",
+      "unidad": "ml",
+      "precio": 3250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-032",
+      "descripcion": "EUCALIPTO CEPILLADO 2X6\" 3MT",
+      "unidad": "un",
+      "precio": 12850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-033",
+      "descripcion": "ROBLE CEPILLADO CEPILLADO 2X6\" 3MT",
+      "unidad": "un",
+      "precio": 18650,
+      "tipo": "material"
+    }
+  ]
+}

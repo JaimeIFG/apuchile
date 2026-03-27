@@ -1,0 +1,193 @@
+{
+  "items": [
+    {
+      "codigo": "60322",
+      "descripcion": "CEPILLERA COMB ENACION LAVATORIO",
+      "unidad": "UNI",
+      "precio": 86403,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6329",
+      "descripcion": "CDAR TRILOCON RUBS",
+      "unidad": "100000000",
+      "precio": 43308,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6330",
+      "descripcion": "TRILOCON M P LINITS",
+      "unidad": "100000000",
+      "precio": 2339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6331",
+      "descripcion": "HIDRAULICA IINSTALAZON STID HERM",
+      "unidad": "100000000",
+      "precio": 2339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6332",
+      "descripcion": "LENTS SOCIALES (LE)",
+      "unidad": "100000000",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60323",
+      "descripcion": "CEPILLERA COMB ENACION LAVATORIO",
+      "unidad": "UNI",
+      "precio": 86403,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6333",
+      "descripcion": "CDAR TRILOCON RUBS",
+      "unidad": "100000000",
+      "precio": 29339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6334",
+      "descripcion": "GASTOS FINALES",
+      "unidad": "100000000",
+      "precio": 30339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6335",
+      "descripcion": "LENTS SOCIALES (LE)",
+      "unidad": "100000000",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60324",
+      "descripcion": "CEPILLERA COMB ENACION TRIALACION",
+      "unidad": "UNI",
+      "precio": 86403,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6336",
+      "descripcion": "TRILOCON M P LINITS",
+      "unidad": "100000000",
+      "precio": 30339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6337",
+      "descripcion": "TRIOLO VG CON M SILOS",
+      "unidad": "100000000",
+      "precio": 2339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6338",
+      "descripcion": "HIDRAULICA INST ALACION STID HERM",
+      "unidad": "100000000",
+      "precio": 2339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6339",
+      "descripcion": "GASTOS FINALES",
+      "unidad": "100000000",
+      "precio": 30339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6340",
+      "descripcion": "LENTS SOCIALES (LE)",
+      "unidad": "100000000",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60324",
+      "descripcion": "CEPILLERA COMB ENACION TRIALACION",
+      "unidad": "UNI",
+      "precio": 86403,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6341",
+      "descripcion": "CDAR TRILOCON RUBS",
+      "unidad": "100000000",
+      "precio": 43308,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6342",
+      "descripcion": "TRILOCON M P LINITS",
+      "unidad": "100000000",
+      "precio": 2339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6343",
+      "descripcion": "TRIOLO VG CON M SILOS",
+      "unidad": "100000000",
+      "precio": 30339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6344",
+      "descripcion": "HIDRAULICA INST ALACION STID HERM",
+      "unidad": "100000000",
+      "precio": 2339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6345",
+      "descripcion": "GASTOS FINALES",
+      "unidad": "100000000",
+      "precio": 30339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6346",
+      "descripcion": "LENTS SOCIALES (LE)",
+      "unidad": "100000000",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60375",
+      "descripcion": "CEPILLERA HOR MIFONDO LAVATORIO CALOS",
+      "unidad": "UNI",
+      "precio": 34837,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6347",
+      "descripcion": "SELLADO MR P NALON",
+      "unidad": "1000000",
+      "precio": 44118,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6348",
+      "descripcion": "TRIOLO VG CON M SILOS",
+      "unidad": "100000000",
+      "precio": 30339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6349",
+      "descripcion": "GASTOS FINALES",
+      "unidad": "100000000",
+      "precio": 30339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "6350",
+      "descripcion": "LENTS SOCIALES (LE)",
+      "unidad": "100000000",
+      "precio": 0,
+      "tipo": "apu"
+    }
+  ]
+}

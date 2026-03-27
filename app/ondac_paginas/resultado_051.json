@@ -1,0 +1,193 @@
+{
+  "items": [
+    {
+      "codigo": "80501",
+      "descripcion": "ALBAÑILERIA E-20 CME LAD. TITÁN REP.SOLDADO MEDIO ESTUCO ACRILICO EN AMBAS CARAS",
+      "unidad": "m2",
+      "precio": 18771,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "ACRILATEX ELEM",
+      "unidad": "L",
+      "precio": 3917,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "ACERO ESTRIADO A44-28H",
+      "unidad": "kg",
+      "precio": 878,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "CEMENTO ESPECIAL POLAN",
+      "unidad": "kg",
+      "precio": 259,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "PERICIAL",
+      "unidad": "m2",
+      "precio": 2200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "AUXIL + HH AFIC",
+      "unidad": "%",
+      "precio": 10000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "LEYES SOCIALES E.U.",
+      "unidad": "%",
+      "precio": 35000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "80502",
+      "descripcion": "ALBAÑILERIA E-27.5 CME LAD. REJILLA ESTRU",
+      "unidad": "m2",
+      "precio": 21576,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "ACRILATEX ELEM",
+      "unidad": "L",
+      "precio": 3917,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "LADRILLO REJILLA REFRACTARIO",
+      "unidad": "un",
+      "precio": 245,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "BARRO LA PERA ALBAÑILERIA",
+      "unidad": "m3",
+      "precio": 15467,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "PERICIAL",
+      "unidad": "m2",
+      "precio": 2200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "AUXIL + HH AFIC",
+      "unidad": "%",
+      "precio": 10000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "LEYES SOCIALES E.U.",
+      "unidad": "%",
+      "precio": 35000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "80503",
+      "descripcion": "ALBAÑILERIA E-30 CME LAD. REJILLA ESTRU",
+      "unidad": "m2",
+      "precio": 27381,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "ACRILATEX ELEM",
+      "unidad": "L",
+      "precio": 3917,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "LADRILLO REJILLA REFRACTARIO",
+      "unidad": "un",
+      "precio": 245,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "BARRO LA PERA ALBAÑILERIA",
+      "unidad": "m3",
+      "precio": 15467,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "PERICIAL",
+      "unidad": "m2",
+      "precio": 2200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "AUXIL + HH AFIC",
+      "unidad": "%",
+      "precio": 10000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "LEYES SOCIALES E.U.",
+      "unidad": "%",
+      "precio": 35000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "80507",
+      "descripcion": "ALBAÑILERIA E-10 CME LAD. FISCA",
+      "unidad": "m2",
+      "precio": 13367,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "ACRILATEX ELEM",
+      "unidad": "L",
+      "precio": 3917,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "CEMENTO ESPECIAL POLAN",
+      "unidad": "kg",
+      "precio": 259,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "PERICIAL",
+      "unidad": "m2",
+      "precio": 2200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "AUXIL + HH AFIC",
+      "unidad": "%",
+      "precio": 10000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "8000",
+      "descripcion": "LEYES SOCIALES E.U.",
+      "unidad": "%",
+      "precio": 35000,
+      "tipo": "apu"
+    }
+  ]
+}

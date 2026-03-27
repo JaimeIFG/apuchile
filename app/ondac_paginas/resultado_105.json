@@ -1,0 +1,270 @@
+{
+  "items": [
+    {
+      "codigo": "001",
+      "descripcion": "GOMA LINOLEUM, PLANCHA FLEXIBLE",
+      "unidad": "m2",
+      "precio": 3395,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002",
+      "descripcion": "GOMA LINOLEUM, PLANCHA RIGIDA",
+      "unidad": "m2",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003",
+      "descripcion": "TRIPLAY",
+      "unidad": "m2",
+      "precio": 3950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004",
+      "descripcion": "MELAMINA, PLANCHA ESTANDAR",
+      "unidad": "m2",
+      "precio": 8430,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "MELAMINA, PLANCHA ESPECIAL",
+      "unidad": "m2",
+      "precio": 12450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "MADERADE FORMICA STANDARD",
+      "unidad": "m2",
+      "precio": 14950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "HARDBOARD LISO FIBRA DURA",
+      "unidad": "m2",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "HARDBOARD LISO FIBRA DURA MARCA",
+      "unidad": "m2",
+      "precio": 3250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "GRANOPLAST PLUS EN ROLLO NORMAL",
+      "unidad": "m2",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "GRANOPLAST PLUS EN ROLLO SUPERIOR",
+      "unidad": "m2",
+      "precio": 5850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "GRANOPLAST PLUS EN ROLLO RECTO",
+      "unidad": "m2",
+      "precio": 6950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "ALFOMBRA PARA LUGARES SECOS",
+      "unidad": "m2",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "ALFOMBRA PARA LUGARES HUMEDOS",
+      "unidad": "m2",
+      "precio": 6450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "BALDOSA CERAMICA NACIONAL",
+      "unidad": "m2",
+      "precio": 7950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "BALDOSA CERAMICA IMPORTADA",
+      "unidad": "m2",
+      "precio": 12450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "BALDOSA CERAMICA NACIONAL DECORADA",
+      "unidad": "m2",
+      "precio": 9450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "CERAMICA ESMALTADA DE PISO",
+      "unidad": "m2",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "CERAMICA ESMALTADA DE MURO BLANCO",
+      "unidad": "m2",
+      "precio": 6450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "CERAMICA ESMALTADA DE MURO COLOR",
+      "unidad": "m2",
+      "precio": 7950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "GRANITO EN PLACAS PARA PARAMENTOS",
+      "unidad": "m2",
+      "precio": 18950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "GRANITO EN PLACAS PARA PAVIMENTOS",
+      "unidad": "m2",
+      "precio": 22950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "MARMOL EN PLACAS PARA PARAMENTOS",
+      "unidad": "m2",
+      "precio": 24950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "MARMOL EN PLACAS PARA PAVIMENTOS",
+      "unidad": "m2",
+      "precio": 28950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "RODAPIE CERAMICO",
+      "unidad": "ml",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "BOCEL CERAMICO",
+      "unidad": "ml",
+      "precio": 2450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "026",
+      "descripcion": "CUBREJUNTA DE ALUMINIO",
+      "unidad": "ml",
+      "precio": 3450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "027",
+      "descripcion": "CUBREJUNTA DE BRONCE",
+      "unidad": "ml",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "028",
+      "descripcion": "CLAVOS PARA PISO MACHIHEMBRADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "COLA FRIA STANDARD",
+      "unidad": "kg",
+      "precio": 3450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "COLA FRIA SUPERIOR",
+      "unidad": "kg",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "ADHESIVO DE CONTACTO",
+      "unidad": "kg",
+      "precio": 6450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "FRAGUA CORRIENTE",
+      "unidad": "kg",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "FRAGUA ESPECIAL",
+      "unidad": "kg",
+      "precio": 2450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "CEMENTO PLASTICO",
+      "unidad": "kg",
+      "precio": 2950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "MORTERO SECO",
+      "unidad": "kg",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "SELLO IMPERMEABLE STANDARD",
+      "unidad": "kg",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "SELLO IMPERMEABLE SUPERIOR",
+      "unidad": "kg",
+      "precio": 6450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "SELLO IMPERMEABLE DE SILICONA",
+      "unidad": "kg",
+      "precio": 8950,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "items": [
+    {
+      "codigo": "900",
+      "descripcion": "ESTABILIZANTES BIODEGRADABLES SOLUCIONAN PROBLEMAS DE PLASTICIDAD, ELASTICOS.",
+      "unidad": "kg",
+      "precio": 465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "901",
+      "descripcion": "ESTABILIZANTES SINTETICOS DE PVC LIQUIDOS, RETARDA LA FLUIDEZ DURANTE LA GRANULACION.",
+      "unidad": "lt",
+      "precio": 1560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "902",
+      "descripcion": "ESTABILIZANTES GRANULARES CRISTALINAS PARA PVC RIGIDO.",
+      "unidad": "kg",
+      "precio": 980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "903",
+      "descripcion": "ESTABILIZANTES SOLUBLES DE CLORURO DE POLIVINIL CLORUROS.",
+      "unidad": "kg",
+      "precio": 2145,
+      "tipo": "material"
+    },
+    {
+      "codigo": "904",
+      "descripcion": "ESTABILIZANTES DE PLOMO LIQUIDO ANTIOXIDANTES.",
+      "unidad": "lt",
+      "precio": 2460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "905",
+      "descripcion": "ESTABILIZANTES POLIMERICOS PVC RIGIDO.",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "906",
+      "descripcion": "ESTABILIZANTES POLIMERICOS PARA PVC.",
+      "unidad": "kg",
+      "precio": 3100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "907",
+      "descripcion": "ESTABILIZANTES POLVOS PARA PERFILES RIGIDOS.",
+      "unidad": "kg",
+      "precio": 3890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "908",
+      "descripcion": "ESTABILIZANTES PARA MOLDEO POR COMPRESION COMPUESTO.",
+      "unidad": "kg",
+      "precio": 4280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "909",
+      "descripcion": "ESTABILIZANTES PARA MOLDEO POR INYECCION COMPUESTO.",
+      "unidad": "kg",
+      "precio": 4680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "910",
+      "descripcion": "ESTABILIZANTES PARA PRODUCTOS ROTOMOLDEADOS.",
+      "unidad": "kg",
+      "precio": 5890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "911",
+      "descripcion": "ESTABILIZANTES TERMOESTABLES PARA MOLDEADO.",
+      "unidad": "kg",
+      "precio": 6890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "912",
+      "descripcion": "COMPUESTOS CONCENTRADOS PARA COLOREADO.",
+      "unidad": "kg",
+      "precio": 1560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "913",
+      "descripcion": "PIGMENTOS CONCENTRADOS PARA PVC.",
+      "unidad": "kg",
+      "precio": 2340,
+      "tipo": "material"
+    },
+    {
+      "codigo": "914",
+      "descripcion": "PIGMENTOS ORGANICOS PARA COLOREADO.",
+      "unidad": "kg",
+      "precio": 3890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "915",
+      "descripcion": "PIGMENTOS INORGANICOS PARA PLASTICOS.",
+      "unidad": "kg",
+      "precio": 4280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "916",
+      "descripcion": "PROTECTORES ULTRAVIOLETA GRANULAR.",
+      "unidad": "kg",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "917",
+      "descripcion": "LIJA DE ESMERIL DE CARBURO DE SILICIO GRANULADO.",
+      "unidad": "m2",
+      "precio": 890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "918",
+      "descripcion": "LIJA DE ESMERIL PARA MADERAS RECTANGULARES.",
+      "unidad": "m2",
+      "precio": 465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "919",
+      "descripcion": "LIJA DE ESMERIL PARA RECTIFICADO METALICO.",
+      "unidad": "m2",
+      "precio": 1560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "920",
+      "descripcion": "LIJA DE ESMERIL OXIDO DE ALUMINIO RECTANGULAR.",
+      "unidad": "m2",
+      "precio": 890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "921",
+      "descripcion": "LIJA DE ESMERIL PARA METALES TRATADO CON RESINAS.",
+      "unidad": "m2",
+      "precio": 2340,
+      "tipo": "material"
+    },
+    {
+      "codigo": "922",
+      "descripcion": "LIJA DE ESMERIL PARA PIEDRAS NATURALES ABRASIVAS.",
+      "unidad": "m2",
+      "precio": 3890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "923",
+      "descripcion": "LIJA DE ESMERIL PARA METALES TRATADO CON RESINAS SINTETICAS.",
+      "unidad": "m2",
+      "precio": 4890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "924",
+      "descripcion": "DISCOS DE ESMERIL PARA AFILADO DE ACEROS RECTANGULARES.",
+      "unidad": "unid",
+      "precio": 2340,
+      "tipo": "material"
+    },
+    {
+      "codigo": "925",
+      "descripcion": "DISCOS DE ESMERIL PARA CORTE DE ACEROS.",
+      "unidad": "unid",
+      "precio": 3890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "926",
+      "descripcion": "DISCOS DE ESMERIL PARA CORTE DE PIEDRAS TRATADO.",
+      "unidad": "unid",
+      "precio": 4890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "927",
+      "descripcion": "PIEDRA DE ESMERIL PARA AFILADO TRATADO CON RESINAS.",
+      "unidad": "unid",
+      "precio": 1560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "928",
+      "descripcion": "TROZOS DE ESMERIL GRANULADO PARA AFILADO.",
+      "unidad": "kg",
+      "precio": 890,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "items": [
+    {
+      "codigo": "2604",
+      "descripcion": "BAND.MONTAMÉTR.P/V ACMA 10M",
+      "unidad": "m",
+      "precio": 2350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2605",
+      "descripcion": "BAND.MONTAMÉTR.P/V ACMA 15M",
+      "unidad": "m",
+      "precio": 2540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2606",
+      "descripcion": "BAND.MONTAMÉTR.P/V ACMA 20M",
+      "unidad": "m",
+      "precio": 2840,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2607",
+      "descripcion": "BAND.MONTAMÉTR.P/V",
+      "unidad": "m",
+      "precio": 2880,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2608",
+      "descripcion": "BAND.MONTAMÉTR.P/V ACMA",
+      "unidad": "m",
+      "precio": 1890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2609",
+      "descripcion": "BAND.MONTAMÉTR.P/V ACMA",
+      "unidad": "m",
+      "precio": 1980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2610",
+      "descripcion": "BAND.MONTAMÉTR.P/V ACMA",
+      "unidad": "m",
+      "precio": 2450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2611",
+      "descripcion": "BAND.MONTAMÉTR.P/V ACMA",
+      "unidad": "m",
+      "precio": 2980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2612",
+      "descripcion": "BANDA PLASTIFICADA",
+      "unidad": "m",
+      "precio": 3240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2613",
+      "descripcion": "BANDA ADHESIVA",
+      "unidad": "m",
+      "precio": 2680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2614",
+      "descripcion": "BANDA ADHESIVA TERMIC.",
+      "unidad": "m",
+      "precio": 3450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2615",
+      "descripcion": "BANDA MAGNETICA ADHESIVA",
+      "unidad": "m",
+      "precio": 1840,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2702",
+      "descripcion": "MAGNETRON DE SUCCION D-7.8",
+      "unidad": "unid",
+      "precio": 4750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2703",
+      "descripcion": "MAGNETRON DE SUCCION D-15.6",
+      "unidad": "unid",
+      "precio": 6540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2704",
+      "descripcion": "BRAZO EXTENSIÓN",
+      "unidad": "unid",
+      "precio": 8450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2705",
+      "descripcion": "ACCESORIOS",
+      "unidad": "unid",
+      "precio": 2240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2801",
+      "descripcion": "ACOMETIDA ELÉCTRICA DIÁMETRO",
+      "unidad": "m",
+      "precio": 18490,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2802",
+      "descripcion": "ACOMETIDA ELÉCTRICA",
+      "unidad": "m",
+      "precio": 24260,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2803",
+      "descripcion": "ACOMETIDA DIÁMETRO",
+      "unidad": "m",
+      "precio": 15840,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2804",
+      "descripcion": "ACOMETIDA DIÁMETRO",
+      "unidad": "m",
+      "precio": 12340,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2805",
+      "descripcion": "ACOMETIDA DIÁMETRO",
+      "unidad": "m",
+      "precio": 10890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2806",
+      "descripcion": "ACOMETIDA MIXTA",
+      "unidad": "m",
+      "precio": 8450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3801",
+      "descripcion": "SOLDADORA (SUMINISTRO)",
+      "unidad": "día",
+      "precio": 16450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3802",
+      "descripción": "SOLDADORA (ARRIENDO)",
+      "unidad": "día",
+      "precio": 8250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3803",
+      "descripcion": "ANDAMIO COLGANTE 2.0M",
+      "unidad": "día",
+      "precio": 14500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3804",
+      "descripcion": "ANDAMIO COLGANTE 1.5M",
+      "unidad": "día",
+      "precio": 11200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3805",
+      "descripcion": "ANDAMIO COLGANTE 1.0M",
+      "unidad": "día",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3806",
+      "descripcion": "MÓDULOS BAJA CARGA (DISCO)",
+      "unidad": "día",
+      "precio": 6540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3807",
+      "descripcion": "MÓDULOS BAJA CARGA (DISCO)",
+      "unidad": "día",
+      "precio": 5890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3808",
+      "descripcion": "MÓDULOS BAJA CARGA (DISCO)",
+      "unidad": "día",
+      "precio": 4560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3809",
+      "descripcion": "SOLDADORES DISCO O MÓVIL",
+      "unidad": "día",
+      "precio": 12450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3810",
+      "descripcion": "SOLDADORES DISCO O MÓVIL",
+      "unidad": "día",
+      "precio": 9840,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3811",
+      "descripcion": "SOLDADORES DISCO O MÓVIL",
+      "unidad": "día",
+      "precio": 7850,
+      "tipo": "material"
+    }
+  ]
+}

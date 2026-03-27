@@ -1,0 +1,277 @@
+{
+  "items": [
+    {
+      "codigo": "009",
+      "descripcion": "PASTILLAS GALVANIZADAS",
+      "unidad": "kg",
+      "precio": 2136,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "PASTILLAS BRONCE CON PLOMO",
+      "unidad": "kg",
+      "precio": 11062,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "PASTILLAS BRONCE SIN PLOMO",
+      "unidad": "kg",
+      "precio": 11062,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "PASTILLAS COBRE",
+      "unidad": "kg",
+      "precio": 7082,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "PASTILLAS COBRE BERILIO HASTA 4%",
+      "unidad": "kg",
+      "precio": 7082,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "PASTILLAS COBRE BERILIO MAS 4%",
+      "unidad": "kg",
+      "precio": 7082,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "SOLDADURA ESTANO-PLATA",
+      "unidad": "kg",
+      "precio": 11918,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "SOLDADURA ESTANO-PLOMO",
+      "unidad": "kg",
+      "precio": 5328,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "PRODUCTOS METALICOS",
+      "unidad": "kg",
+      "precio": 4368,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "PRODUCTOS SIDERURGICOS",
+      "unidad": "kg",
+      "precio": 669,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "PRODUCTOS SIDERURGICOS",
+      "unidad": "kg",
+      "precio": 669,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "PRODUCTOS SIDERURGICOS",
+      "unidad": "kg",
+      "precio": 669,
+      "tipo": "material"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "PRODUCTOS SIDERURGICOS GALV.",
+      "unidad": "kg",
+      "precio": 1068,
+      "tipo": "material"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "PRODUCTOS SIDERURGICOS",
+      "unidad": "kg",
+      "precio": 669,
+      "tipo": "material"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "PERNOS ESTRUCTURALES",
+      "unidad": "kg",
+      "precio": 1238,
+      "tipo": "material"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "PIEZAS FORJADAS CONFORMADAS",
+      "unidad": "kg",
+      "precio": 1238,
+      "tipo": "material"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "PIEZAS FORJADAS CONFORMADAS",
+      "unidad": "kg",
+      "precio": 1238,
+      "tipo": "material"
+    },
+    {
+      "codigo": "026",
+      "descripcion": "PIEZAS FORJADAS MECANIZADAS HASTA 50",
+      "unidad": "kg",
+      "precio": 3536,
+      "tipo": "material"
+    },
+    {
+      "codigo": "027",
+      "descripcion": "PIEZAS FORJADAS MECANIZADAS",
+      "unidad": "kg",
+      "precio": 5358,
+      "tipo": "material"
+    },
+    {
+      "codigo": "028",
+      "descripcion": "PIEZAS FUNDIDAS BRONCE",
+      "unidad": "kg",
+      "precio": 11062,
+      "tipo": "material"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "PIEZAS FUNDIDAS ACERO",
+      "unidad": "kg",
+      "precio": 2136,
+      "tipo": "material"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "PIEZAS FUNDIDAS",
+      "unidad": "kg",
+      "precio": 1470,
+      "tipo": "material"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "PIEZAS FUNDIDAS ESPECIALES",
+      "unidad": "kg",
+      "precio": 4238,
+      "tipo": "material"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "COMBUSTIBLES SOLIDOS",
+      "unidad": "kg",
+      "precio": 368,
+      "tipo": "material"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "SOLDADURA ELECTRODO RUTILICO",
+      "unidad": "kg",
+      "precio": 2168,
+      "tipo": "material"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "SOLDADURA ELECTRODO BASICO",
+      "unidad": "kg",
+      "precio": 2298,
+      "tipo": "material"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "SOLDADURA ACERO INOXIDABLE",
+      "unidad": "kg",
+      "precio": 5238,
+      "tipo": "material"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "SOLDADURA ALAMBRE",
+      "unidad": "kg",
+      "precio": 2238,
+      "tipo": "material"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "SOLDADURA BRONCE",
+      "unidad": "kg",
+      "precio": 11062,
+      "tipo": "material"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "PRODUCTOS BITUMINOSOS",
+      "unidad": "kg",
+      "precio": 538,
+      "tipo": "material"
+    },
+    {
+      "codigo": "039",
+      "descripcion": "SOLDADURA OXIACETILENICA",
+      "unidad": "kg",
+      "precio": 7082,
+      "tipo": "material"
+    },
+    {
+      "codigo": "040",
+      "descripcion": "OXIACETILENO 14 KG OXIGENO",
+      "unidad": "unid",
+      "precio": 7288,
+      "tipo": "material"
+    },
+    {
+      "codigo": "041",
+      "descripcion": "OXIACETILENO 36 KG OXIGENO",
+      "unidad": "unid",
+      "precio": 18998,
+      "tipo": "material"
+    },
+    {
+      "codigo": "042",
+      "descripcion": "OXIACETILENO 36 KG OXIGENO-CARRETE",
+      "unidad": "unid",
+      "precio": 1788,
+      "tipo": "material"
+    },
+    {
+      "codigo": "043",
+      "descripcion": "OXIACETILENO MEZCLA DE ACETILENO",
+      "unidad": "kg",
+      "precio": 14668,
+      "tipo": "material"
+    },
+    {
+      "codigo": "044",
+      "descripcion": "OXIGENO CON RECARGAS HASTA 6 LITROS",
+      "unidad": "kg",
+      "precio": 14668,
+      "tipo": "material"
+    },
+    {
+      "codigo": "045",
+      "descripcion": "OXIGENO CON RECARGAS HASTA 50 LITROS",
+      "unidad": "kg",
+      "precio": 14668,
+      "tipo": "material"
+    },
+    {
+      "codigo": "046",
+      "descripcion": "OXIGENO CON RECARGAS DE 50 LITROS ACIDO",
+      "unidad": "kg",
+      "precio": 14668,
+      "tipo": "material"
+    },
+    {
+      "codigo": "047",
+      "descripcion": "SOLDADURA SUBACUATICA",
+      "unidad": "kg",
+      "precio": 5768,
+      "tipo": "material"
+    }
+  ]
+}

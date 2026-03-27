@@ -1,0 +1,284 @@
+{
+  "items": [
+    {
+      "codigo": "6501",
+      "descripcion": "MURO DE LADRILLO DE BARRO MACIZO 15 CM DE ESPESOR",
+      "unidad": "M2",
+      "precio": 6685,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6502",
+      "descripcion": "MURO DE LADRILLO DE BARRO MACIZO 20 CM DE ESPESOR",
+      "unidad": "M2",
+      "precio": 8480,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6503",
+      "descripcion": "MURO DE LADRILLO DE BARRO MACIZO 25 CM DE ESPESOR",
+      "unidad": "M2",
+      "precio": 10620,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6504",
+      "descripcion": "MURO DE LADRILLO DE BARRO MACIZO 30 CM DE ESPESOR",
+      "unidad": "M2",
+      "precio": 12760,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6506",
+      "descripcion": "MURO DOBLE DE LADRILLO HUECO CORRUGADO",
+      "unidad": "M2",
+      "precio": 14905,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6510",
+      "descripcion": "TABIQUE METALCOM CON PLACA DE YESO CARTON C/30",
+      "unidad": "M2",
+      "precio": 9820,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6511",
+      "descripcion": "TABIQUE METALCOM CON PLACA DE YESO CARTON C/60",
+      "unidad": "M2",
+      "precio": 7865,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6512",
+      "descripcion": "MURO DE LADRILLO DE BARRO MACIZO REJUNTADO",
+      "unidad": "M2",
+      "precio": 8485,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6513",
+      "descripcion": "MURO DE LADRILLO REFRACTARIO",
+      "unidad": "M2",
+      "precio": 24845,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6514",
+      "descripcion": "MURO DE LADRILLO REFRACTARIO CON MORTERO ESPECIAL",
+      "unidad": "M2",
+      "precio": 28490,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6515",
+      "descripcion": "MURO DE LADRILLO REFRACTARIO CON MORTERO ESPECIAL Y SEPARADOR",
+      "unidad": "M2",
+      "precio": 32135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6516",
+      "descripcion": "MURO DE LADRILLO SILICO CALCAREO",
+      "unidad": "M2",
+      "precio": 9365,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6517",
+      "descripcion": "MURO DE LADRILLO SILICO CALCAREO PERFORADO",
+      "unidad": "M2",
+      "precio": 8585,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6518",
+      "descripcion": "MURO DE LADRILLO SILICO CALCAREO VISTA",
+      "unidad": "M2",
+      "precio": 11240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6519",
+      "descripcion": "MURO DE LADRILLO SILICO CALCAREO VISTA PERFORADO",
+      "unidad": "M2",
+      "precio": 10460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6520",
+      "descripcion": "MURO DE BLOQUES DE HORMIGON 15 CM",
+      "unidad": "M2",
+      "precio": 8065,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6521",
+      "descripcion": "MURO DE BLOQUES DE HORMIGON 20 CM",
+      "unidad": "M2",
+      "precio": 9560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6522",
+      "descripcion": "MURO DE BLOQUES DE HORMIGON 25 CM",
+      "unidad": "M2",
+      "precio": 11055,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6523",
+      "descripcion": "MURO DE BLOQUES DE HORMIGON 30 CM",
+      "unidad": "M2",
+      "precio": 12550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6524",
+      "descripcion": "MURO DE BLOQUES DE HORMIGON CELULAR",
+      "unidad": "M2",
+      "precio": 15280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6525",
+      "descripcion": "TABIQUE TERMOARCILLA 11,5 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 8320,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6526",
+      "descripcion": "TABIQUE TERMOARCILLA 14 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 9525,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6527",
+      "descripcion": "TABIQUE TERMOARCILLA 19 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 11935,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6528",
+      "descripcion": "TABIQUE TERMOARCILLA 24 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 14345,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6529",
+      "descripcion": "TABIQUE TERMOARCILLA 29 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 16755,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6530",
+      "descripcion": "TABIQUE TERMOARCILLA 9 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 7115,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6531",
+      "descripcion": "TABIQUE DRYWALL CON ESTRUCTURA METALICA",
+      "unidad": "M2",
+      "precio": 7895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6532",
+      "descripcion": "TABIQUE DRYWALL CON ESTRUCTURA METALICA DOBLE PLACA",
+      "unidad": "M2",
+      "precio": 10235,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6533",
+      "descripcion": "TABIQUE DRYWALL CON ESTRUCTURA DE MADERA",
+      "unidad": "M2",
+      "precio": 8265,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6534",
+      "descripcion": "TABIQUE DRYWALL CON ESTRUCTURA DE MADERA DOBLE PLACA",
+      "unidad": "M2",
+      "precio": 10605,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6535",
+      "descripcion": "TABIQUE SOLIDO DE YESO CARTON",
+      "unidad": "M2",
+      "precio": 6840,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6536",
+      "descripcion": "TABIQUE SOLIDO DE YESO CARTON HIDROFUGO",
+      "unidad": "M2",
+      "precio": 7595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6537",
+      "descripcion": "PANEL SOLIDO DE YESO CARTON 10 CM",
+      "unidad": "M2",
+      "precio": 8905,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6538",
+      "descripcion": "PANEL SOLIDO DE YESO CARTON 7 CM",
+      "unidad": "M2",
+      "precio": 7690,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6539",
+      "descripcion": "PANEL SOLIDO DE YESO CARTON 6,5 CM",
+      "unidad": "M2",
+      "precio": 7285,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6540",
+      "descripcion": "PANEL SOLIDO DE YESO CARTON 5 CM",
+      "unidad": "M2",
+      "precio": 6475,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6541",
+      "descripcion": "MURO DE HORMIGON ARMADO 15 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 21095,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6542",
+      "descripcion": "MURO DE HORMIGON ARMADO 20 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 25315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6543",
+      "descripcion": "MURO DE HORMIGON ARMADO 25 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 29535,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6544",
+      "descripcion": "MURO DE HORMIGON ARMADO 30 CM ESPESOR",
+      "unidad": "M2",
+      "precio": 33755,
+      "tipo": "material"
+    }
+  ]
+}

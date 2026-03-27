@@ -1,0 +1,480 @@
+{
+  "items": [
+    {
+      "codigo": "00504",
+      "descripcion": "TABIQUES MARCADOR",
+      "unidad": "m2",
+      "precio": 19500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00505",
+      "descripcion": "REVESTIMIENTO TABIQUE MARCADOR",
+      "unidad": "m2",
+      "precio": 29900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00511",
+      "descripcion": "TABIQUE METALCON LIVIANO LANA",
+      "unidad": "m2",
+      "precio": 4642,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00512",
+      "descripcion": "INTERRUPTOR AUTOMATICO",
+      "unidad": "UN",
+      "precio": 2141,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00513",
+      "descripcion": "INTERRUPTOR DIFERENCIAL TERASAFE",
+      "unidad": "UN",
+      "precio": 14347,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00514",
+      "descripcion": "INTERRUPTOR DIFERENCIAL 25A 30MA",
+      "unidad": "UN",
+      "precio": 16147,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00515",
+      "descripcion": "CONTACTOR TRIPOLAR",
+      "unidad": "UN",
+      "precio": 13367,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00516",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00521",
+      "descripcion": "TABIQUE METALCON C/LANA VIDRIO",
+      "unidad": "m2",
+      "precio": 48130,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00522",
+      "descripcion": "INTERRUPTOR AUTOMATICO",
+      "unidad": "UN",
+      "precio": 2141,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00523",
+      "descripcion": "INTERRUPTOR TERM MAGN DIF 25A",
+      "unidad": "UN",
+      "precio": 3441,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00524",
+      "descripcion": "CONTACTOR TRIPOLAR",
+      "unidad": "UN",
+      "precio": 13367,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00525",
+      "descripcion": "RELE DE SOBRECARGA",
+      "unidad": "UN",
+      "precio": 7189,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00526",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00531",
+      "descripcion": "TABIQUE PINTA ENGEL/CAMENTE CARGADO",
+      "unidad": "m2",
+      "precio": 4903,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00532",
+      "descripcion": "PAPEL MURESCO VINILICO",
+      "unidad": "m2",
+      "precio": 14069,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00533",
+      "descripcion": "TINNER ESPECIAL 2270m",
+      "unidad": "LT",
+      "precio": 2351,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00534",
+      "descripcion": "VALVULA TERMOPLASTICA C/ESFERA",
+      "unidad": "UN",
+      "precio": 301,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00535",
+      "descripcion": "PRECIO ESCALANTE",
+      "unidad": "%",
+      "precio": 100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00541",
+      "descripcion": "MAMPOSTERIA FINO 1ER",
+      "unidad": "m2",
+      "precio": 7542,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00542",
+      "descripcion": "PRECIO ESPECIALIZADO SOLUCINTEGRAL",
+      "unidad": "GL",
+      "precio": 9150,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00543",
+      "descripcion": "TALADRO PERCUTOR 350 (35)",
+      "unidad": "DIA",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00544",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 26500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00545",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00551",
+      "descripcion": "TAPACANES DE P160 1ER",
+      "unidad": "ML",
+      "precio": 1346,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00552",
+      "descripcion": "PRECIO ESPECIALIZADO DALQUICONSULT",
+      "unidad": "GL",
+      "precio": 679,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00553",
+      "descripcion": "GALONERO (35 seg)",
+      "unidad": "JOR",
+      "precio": 25500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00554",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 26500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00555",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00561",
+      "descripcion": "MAMPOSTERIA P160 1ER",
+      "unidad": "m2",
+      "precio": 7130,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00562",
+      "descripcion": "PRECIO ESPECIALIZADO DALQUICONSULT",
+      "unidad": "GL",
+      "precio": 2304,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00563",
+      "descripcion": "GALONERO (35 seg)",
+      "unidad": "JOR",
+      "precio": 25500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00564",
+      "descripcion": "CARPINTERO",
+      "unidad": "JOR",
+      "precio": 26500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00565",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00571",
+      "descripcion": "TAPACANES TRUPAN 13MM TERON",
+      "unidad": "ML",
+      "precio": 2549,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00572",
+      "descripcion": "PRECIO ESPECIALIZADO",
+      "unidad": "GL",
+      "precio": 2195,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00573",
+      "descripcion": "GALONERO (35 seg)",
+      "unidad": "JOR",
+      "precio": 25500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00574",
+      "descripcion": "CARPINTERO TERMINACION MUEBLE",
+      "unidad": "JOR",
+      "precio": 32000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00575",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00581",
+      "descripcion": "TAPACAN LISO 8 POSTORINTE",
+      "unidad": "ML",
+      "precio": 6249,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00582",
+      "descripcion": "PRECIO ESPECIALIZADO SOLUCINTEGRAL",
+      "unidad": "GL",
+      "precio": 5652,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00583",
+      "descripcion": "TALADRO",
+      "unidad": "DIA",
+      "precio": 4090,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00584",
+      "descripcion": "TALADRO PERCAS 2500",
+      "unidad": "DIA",
+      "precio": 4400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00585",
+      "descripcion": "GALONERO TERMINACION",
+      "unidad": "JOR",
+      "precio": 27500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00586",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00591",
+      "descripcion": "TAPACAN 100 8 POSTORINTE, FONCEADO H",
+      "unidad": "ML",
+      "precio": 3350,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00592",
+      "descripcion": "PRECIO ESPECIALIZADO DALQUICONSULT",
+      "unidad": "GL",
+      "precio": 8782,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00593",
+      "descripcion": "TALADRO PERCAS 2500",
+      "unidad": "DIA",
+      "precio": 2431,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00594",
+      "descripcion": "GALONERO TERMINACION",
+      "unidad": "JOR",
+      "precio": 27500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00595",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00601",
+      "descripcion": "TEJA ASFALTICA ONDULADA LINEA BRIC",
+      "unidad": "m2",
+      "precio": 3260,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00602",
+      "descripcion": "TEJA REGISTEO C/TAPA GALANICA",
+      "unidad": "UN",
+      "precio": 1109,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00603",
+      "descripcion": "ACANALADO GALVANIZADO",
+      "unidad": "ML",
+      "precio": 1875,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00604",
+      "descripcion": "ALAMBRE GALVANIZ NBLUE",
+      "unidad": "KG",
+      "precio": 2069,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00605",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00611",
+      "descripcion": "TEJA REGISTRO C/TAPA GALANICA",
+      "unidad": "UN",
+      "precio": 2103,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00612",
+      "descripcion": "ACANALADO CHAPA REGISTRO GALANICA",
+      "unidad": "UN",
+      "precio": 1190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00613",
+      "descripcion": "ALAMBRE GALVANIZ NBLUE",
+      "unidad": "KG",
+      "precio": 2069,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00614",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00621",
+      "descripcion": "TEJA REGISTRO C/TAPA GALANICA",
+      "unidad": "UN",
+      "precio": 2103,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00622",
+      "descripcion": "ACANALADO CHAPA REGISTRO GALANICA",
+      "unidad": "UN",
+      "precio": 1190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00623",
+      "descripcion": "ALAMBRE GALVANIZ NBLUE",
+      "unidad": "KG",
+      "precio": 2069,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00624",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00631",
+      "descripcion": "TEJA SANIT. SCORIA LONGHAND",
+      "unidad": "m2",
+      "precio": 11790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00632",
+      "descripcion": "ESCALAMIENTO GRANDE MACIELON",
+      "unidad": "GL",
+      "precio": 1297,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00633",
+      "descripcion": "GALONERO TERMINACION",
+      "unidad": "JOR",
+      "precio": 27500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00634",
+      "descripcion": "ALAMBRE GALVANIZ NBLUE",
+      "unidad": "KG",
+      "precio": 2069,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00635",
+      "descripcion": "LEYES SOCIALES (L.S.)",
+      "unidad": "%",
+      "precio": 71,
+      "tipo": "apu"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "items": [
+    {
+      "codigo": "5002",
+      "descripcion": "POLIESIRENO EXPANDIDO CANT 30 KG/M3",
+      "unidad": "m3",
+      "precio": 15785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5003",
+      "descripcion": "POLIESTIRENO EXPANDIDO DENSIDAD 15 KG/M3",
+      "unidad": "m3",
+      "precio": 9486,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5004",
+      "descripcion": "POLIESTIRENO EXPANDIDO DENSIDAD 20 KG/M3",
+      "unidad": "m3",
+      "precio": 12650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5005",
+      "descripcion": "ZINC EN POLVO BRILLANTE",
+      "unidad": "kg",
+      "precio": 2625,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5006",
+      "descripcion": "ZINC MATE",
+      "unidad": "kg",
+      "precio": 2985,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5007",
+      "descripcion": "ZINC LAMINADO",
+      "unidad": "kg",
+      "precio": 1890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5008",
+      "descripcion": "TABLON DE CONSTRUCCION",
+      "unidad": "m",
+      "precio": 8175,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5009",
+      "descripcion": "TABLON DE CONSTRUCCION",
+      "unidad": "m",
+      "precio": 14700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5010",
+      "descripcion": "CLAVOS DE CONSTRUCCION",
+      "unidad": "kg",
+      "precio": 1155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5011",
+      "descripcion": "BISAGRA ACERO INOXIDABLE",
+      "unidad": "unid",
+      "precio": 1995,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5012",
+      "descripcion": "BISAGRA DE ACERO GALVANIZADO",
+      "unidad": "unid",
+      "precio": 1575,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5013",
+      "descripcion": "SOLDADURA 60/11",
+      "unidad": "kg",
+      "precio": 1890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5014",
+      "descripcion": "SOLDADURA 70/30",
+      "unidad": "kg",
+      "precio": 2520,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5015",
+      "descripcion": "SOLDADURA 6013",
+      "unidad": "kg",
+      "precio": 1470,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5016",
+      "descripcion": "SOLDADURA 7018",
+      "unidad": "kg",
+      "precio": 2100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5017",
+      "descripcion": "SOLDADURA E6013",
+      "unidad": "kg",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5018",
+      "descripcion": "SOLDADURA E7018",
+      "unidad": "kg",
+      "precio": 2520,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5019",
+      "descripcion": "BISAGRA 60X40MM ACERO INOXIDABLE",
+      "unidad": "unid",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5020",
+      "descripcion": "BISAGRA 80X60MM ACERO INOXIDABLE",
+      "unidad": "unid",
+      "precio": 3150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5021",
+      "descripcion": "BISAGRA 100X80MM ACERO INOXIDABLE",
+      "unidad": "unid",
+      "precio": 4725,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5022",
+      "descripcion": "BISAGRA 120X100MM ACERO INOXIDABLE",
+      "unidad": "unid",
+      "precio": 7350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5023",
+      "descripcion": "JUNTADOR DE PVC BLANCO 22MM",
+      "unidad": "m",
+      "precio": 1050,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5024",
+      "descripcion": "SILICONA ACIDA BLANCA",
+      "unidad": "unid",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5025",
+      "descripcion": "SILICONA ACIDA TRANSPARENTE",
+      "unidad": "unid",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5026",
+      "descripcion": "ESPUMA POLIURETANO",
+      "unidad": "unid",
+      "precio": 2100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5027",
+      "descripcion": "ADHESIVO CONTACTO",
+      "unidad": "lt",
+      "precio": 4200,
+      "tipo": "material"
+    }
+  ]
+}

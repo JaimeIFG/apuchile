@@ -1,0 +1,494 @@
+{
+  "items": [
+    {
+      "codigo": "40121",
+      "descripcion": "CARRERA CORRECTOR U.7 MM",
+      "unidad": "M",
+      "precio": 18730,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "40121",
+      "descripcion": "CARRERA CORRECTOR U.7 MM",
+      "unidad": "M",
+      "precio": 18730,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "40131",
+      "descripcion": "CARRERA CORRECTOR U.15 MM",
+      "unidad": "M",
+      "precio": 19720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "40141",
+      "descripcion": "CARRERA CORRECTOR U.22 MM",
+      "unidad": "M",
+      "precio": 23330,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50081",
+      "descripcion": "CARRERAS DIAGONALES CARA E CHON",
+      "unidad": "M",
+      "precio": 14431,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50083",
+      "descripcion": "CARRERAS DIAGONALES EN CARA",
+      "unidad": "M",
+      "precio": 16081,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50091",
+      "descripcion": "CARRERAS DIAGONALES 1x6\" EN PINO",
+      "unidad": "M",
+      "precio": 7000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50093",
+      "descripcion": "CARRERAS DIAGONALES 2x6\" EN PINO",
+      "unidad": "M",
+      "precio": 9100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50121",
+      "descripcion": "CARRERAS SOBREPUESTAS DE 2x6\"",
+      "unidad": "M",
+      "precio": 4413,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50131",
+      "descripcion": "PACK DE PRESIÓN CON ESPESOR PREM",
+      "unidad": "M",
+      "precio": 8226,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50141",
+      "descripcion": "MAESTROS DE FIEGAS",
+      "unidad": "M",
+      "precio": 29900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50151",
+      "descripcion": "YELTES DE BASE 2x10 MM",
+      "unidad": "M",
+      "precio": 27700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50161",
+      "descripcion": "YELTES SOBREPASO",
+      "unidad": "M",
+      "precio": 5000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50171",
+      "descripcion": "CARRERAS SOBREPUESTAS DE 3x6\"",
+      "unidad": "M",
+      "precio": 4413,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50181",
+      "descripcion": "PACK DIFERENTE ESPESO EN ESPESOR",
+      "unidad": "M",
+      "precio": 8226,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50191",
+      "descripcion": "MAESTROS DE FIEGAS",
+      "unidad": "M",
+      "precio": 29900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50201",
+      "descripcion": "YELTES SOBREPASO",
+      "unidad": "M",
+      "precio": 5000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50211",
+      "descripcion": "CARRERAS ASIENTOS",
+      "unidad": "M",
+      "precio": 4000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50221",
+      "descripcion": "RECIBIDORES CARRIZALES ARMADOS",
+      "unidad": "M",
+      "precio": 46500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50231",
+      "descripcion": "CARRERAS CANALES",
+      "unidad": "M",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50241",
+      "descripcion": "CARRERAS DE CORONAMIENTO",
+      "unidad": "M",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50251",
+      "descripcion": "CARRERAS LLANOS",
+      "unidad": "M",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50261",
+      "descripcion": "CARRERAS LLANOS",
+      "unidad": "M",
+      "precio": 14500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50271",
+      "descripcion": "ESQUINEROS CORREA COMPLEMENTO",
+      "unidad": "M",
+      "precio": 14500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50281",
+      "descripcion": "CARRERAS SILLA DE TREZAS",
+      "unidad": "M",
+      "precio": 24800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50291",
+      "descripcion": "RECIBIDORES CARRIZALES SILLA DE",
+      "unidad": "M",
+      "precio": 48500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50301",
+      "descripcion": "CARRERAS VIGUETAS DE MADERA CC",
+      "unidad": "M",
+      "precio": 20300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50311",
+      "descripcion": "CARRERAS SILLAR SOLDADO",
+      "unidad": "M",
+      "precio": 11500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50321",
+      "descripcion": "RECIBIDORES CARRIZALES SILLA CC",
+      "unidad": "M",
+      "precio": 48500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50331",
+      "descripcion": "ENCUENTROS",
+      "unidad": "M",
+      "precio": 2500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50341",
+      "descripcion": "PACK DIFERENTE ESPESO EN PREMIEM",
+      "unidad": "M",
+      "precio": 11700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50351",
+      "descripcion": "ENCUENTROS DE LICIOS",
+      "unidad": "M",
+      "precio": 8150,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50361",
+      "descripcion": "ENCUENTROS EN SILLAR 1920",
+      "unidad": "M",
+      "precio": 1620,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50371",
+      "descripcion": "ENCUENTROS DE LLIOS 78PO",
+      "unidad": "M",
+      "precio": 12300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50381",
+      "descripcion": "ESQUINEROS TABIQUE DE MADERA",
+      "unidad": "M",
+      "precio": 16000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50391",
+      "descripcion": "COMPAÑERO TABLA DE OLLO LIMEA",
+      "unidad": "M",
+      "precio": 6475,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50401",
+      "descripcion": "BASTIDORES DE ESQ DE OLI",
+      "unidad": "M",
+      "precio": 1500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50411",
+      "descripcion": "GUARNICIONES DE FIBRO CM",
+      "unidad": "M",
+      "precio": 2500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50421",
+      "descripcion": "MAESTROS DE FIBRAS",
+      "unidad": "M",
+      "precio": 29900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50431",
+      "descripcion": "ENCRIBIDOS ENCOFRADO LISO LAREDO CM",
+      "unidad": "M",
+      "precio": 1820,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50441",
+      "descripcion": "LÍPEZ SOBREALIGÓ",
+      "unidad": "M",
+      "precio": 5000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50451",
+      "descripcion": "TABICAS PARA PISO ALTUR",
+      "unidad": "M",
+      "precio": 4000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50461",
+      "descripcion": "PACK DESCOMPLI ENCUBRI PREMIUN",
+      "unidad": "M",
+      "precio": 11800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50471",
+      "descripcion": "CONTRUCCION EN GALABIO TIPO UM",
+      "unidad": "M",
+      "precio": 17500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50481",
+      "descripcion": "CONTRUCCION TECNICO",
+      "unidad": "M",
+      "precio": 17500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50491",
+      "descripcion": "LÍPEZ SOBREALIGÓ",
+      "unidad": "M",
+      "precio": 5000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50501",
+      "descripcion": "CELULAR DE VINO SOLUBLE PUERTA",
+      "unidad": "M",
+      "precio": 1477,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50511",
+      "descripcion": "CIERRES AUSPICIO GEMA TIRO",
+      "unidad": "M",
+      "precio": 13500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50521",
+      "descripcion": "CONTRUCCION PROYECTOR TABIQUE",
+      "unidad": "M",
+      "precio": 2500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50531",
+      "descripcion": "GUARDADO",
+      "unidad": "M",
+      "precio": 5600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50541",
+      "descripcion": "LÍPEZ SOBREALIGÓ",
+      "unidad": "M",
+      "precio": 5000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50551",
+      "descripcion": "CELULAR DE VINO ALAC COM CANAL",
+      "unidad": "M",
+      "precio": 1416,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50561",
+      "descripcion": "CELULAR TABU DE GEMA TIRO",
+      "unidad": "M",
+      "precio": 13500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50571",
+      "descripcion": "CONTRUCCION GALABIO TIPO UM",
+      "unidad": "M",
+      "precio": 17500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50581",
+      "descripcion": "CONTRUCCION TECNICO DURESA",
+      "unidad": "M",
+      "precio": 17500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50591",
+      "descripcion": "LÍPEZ SOBREALIGÓ",
+      "unidad": "M",
+      "precio": 22000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50601",
+      "descripcion": "CENTROS DE LUZ CON DIAMETROS",
+      "unidad": "M",
+      "precio": 34687,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50611",
+      "descripcion": "MOLDURAZO ININT DIMERS V94",
+      "unidad": "M",
+      "precio": 2500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50621",
+      "descripcion": "CONTRUCCION ENCUBRI TIPO UM",
+      "unidad": "M",
+      "precio": 8500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50631",
+      "descripcion": "PESTANA",
+      "unidad": "M",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50641",
+      "descripcion": "CONTRUCCION DIRECTIVO TACKET",
+      "unidad": "M",
+      "precio": 12500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50651",
+      "descripcion": "ELECTROPLANO",
+      "unidad": "M",
+      "precio": 9100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50661",
+      "descripcion": "LÍPEZ SOBREALIGÓ",
+      "unidad": "M",
+      "precio": 5000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50671",
+      "descripcion": "CERAMICA MAINHO BRONCE BRASA",
+      "unidad": "M",
+      "precio": 18414,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50681",
+      "descripcion": "CERAMICA BRAGA BEARA TIZA SOCORRO",
+      "unidad": "M",
+      "precio": 20900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50691",
+      "descripcion": "ACABADO EDIFICACTO BLAMPINO SEL",
+      "unidad": "M",
+      "precio": 2190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50701",
+      "descripcion": "CONTRUCCION MAETING",
+      "unidad": "M",
+      "precio": 28600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50711",
+      "descripcion": "VENTANAS ACTIAS",
+      "unidad": "M",
+      "precio": 3800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50721",
+      "descripcion": "ZOFAUETA",
+      "unidad": "M",
+      "precio": 29800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50731",
+      "descripcion": "LÍPEZ SOBREALIGÓ",
+      "unidad": "M",
+      "precio": 5000,
+      "tipo": "apu"
+    }
+  ]
+}

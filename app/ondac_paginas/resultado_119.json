@@ -1,0 +1,340 @@
+{
+  "items": [
+    {
+      "codigo": "7619",
+      "descripcion": "AISLANTE POLIESTIRENO EXPANDIDO",
+      "unidad": "m2",
+      "precio": 6320,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7620",
+      "descripcion": "AISLANTE ESPUMA DE POLIURETANO",
+      "unidad": "m2",
+      "precio": 8450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7621",
+      "descripcion": "AISLANTE LANA DE VIDRIO",
+      "unidad": "m2",
+      "precio": 4780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7622",
+      "descripcion": "AISLANTE REFLECTIVO MULTICAPA",
+      "unidad": "m2",
+      "precio": 3920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7623",
+      "descripcion": "CEMENTO TIPO I",
+      "unidad": "kg",
+      "precio": 185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7624",
+      "descripcion": "CEMENTO TIPO II",
+      "unidad": "kg",
+      "precio": 195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7625",
+      "descripcion": "CEMENTO TIPO V",
+      "unidad": "kg",
+      "precio": 210,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7626",
+      "descripcion": "CEMENTO BLANCO",
+      "unidad": "kg",
+      "precio": 420,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7627",
+      "descripcion": "CAL HIDRATADA",
+      "unidad": "kg",
+      "precio": 85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7628",
+      "descripcion": "YESO",
+      "unidad": "kg",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7629",
+      "descripcion": "ARENA GRUESA",
+      "unidad": "m3",
+      "precio": 18500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7630",
+      "descripcion": "ARENA FINA",
+      "unidad": "m3",
+      "precio": 19200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7631",
+      "descripcion": "RIPIO",
+      "unidad": "m3",
+      "precio": 16800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7632",
+      "descripcion": "GRAVILLA",
+      "unidad": "m3",
+      "precio": 17500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7633",
+      "descripcion": "PIEDRA POMES",
+      "unidad": "m3",
+      "precio": 22000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7634",
+      "descripcion": "LADRILLO CERAMICO PRINCESA 14x29x6",
+      "unidad": "un",
+      "precio": 185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7635",
+      "descripcion": "LADRILLO CERAMICO PRINCESA 14x29x9",
+      "unidad": "un",
+      "precio": 245,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7636",
+      "descripcion": "LADRILLO CERAMICO PRINCESA 14x29x12",
+      "unidad": "un",
+      "precio": 295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7637",
+      "descripcion": "LADRILLO CERAMICO PRINCESA 14x29x15",
+      "unidad": "un",
+      "precio": 340,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7638",
+      "descripcion": "LADRILLO CERAMICO PRINCESA 14x29x18",
+      "unidad": "un",
+      "precio": 380,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7639",
+      "descripcion": "LADRILLO REFRACTARIO",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7640",
+      "descripcion": "BLOQUE HORMIGON 14x19x39",
+      "unidad": "un",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7641",
+      "descripcion": "BLOQUE HORMIGON 14x19x19",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7642",
+      "descripcion": "BLOQUE HORMIGON 19x19x39",
+      "unidad": "un",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7643",
+      "descripcion": "BLOQUE HORMIGON 19x19x19",
+      "unidad": "un",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7644",
+      "descripcion": "FIERRO REDONDO LISO A63-42H",
+      "unidad": "kg",
+      "precio": 820,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7645",
+      "descripcion": "FIERRO ESTRIADO A440-28H",
+      "unidad": "kg",
+      "precio": 780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7646",
+      "descripcion": "MALLA ACMA C92",
+      "unidad": "m2",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7647",
+      "descripcion": "MALLA ACMA C188",
+      "unidad": "m2",
+      "precio": 3950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7648",
+      "descripcion": "MALLA ACMA C257",
+      "unidad": "m2",
+      "precio": 4850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7649",
+      "descripcion": "ALAMBRE GALVANIZADO N°16",
+      "unidad": "kg",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7650",
+      "descripcion": "ALAMBRE GALVANIZADO N°18",
+      "unidad": "kg",
+      "precio": 1520,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7651",
+      "descripcion": "CLAVO CORRIENTE 2\"",
+      "unidad": "kg",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7652",
+      "descripcion": "CLAVO CORRIENTE 2.5\"",
+      "unidad": "kg",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7653",
+      "descripcion": "CLAVO CORRIENTE 3\"",
+      "unidad": "kg",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7654",
+      "descripcion": "CLAVO CORRIENTE 4\"",
+      "unidad": "kg",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7655",
+      "descripcion": "TORNILLO AUTORROSCANTE 12x1\"",
+      "unidad": "un",
+      "precio": 25,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7656",
+      "descripcion": "TORNILLO AUTORROSCANTE 12x1.5\"",
+      "unidad": "un",
+      "precio": 28,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7657",
+      "descripcion": "TORNILLO AUTORROSCANTE 12x2\"",
+      "unidad": "un",
+      "precio": 32,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7658",
+      "descripcion": "PERNO CABEZA HEXAGONAL 12x80",
+      "unidad": "un",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7659",
+      "descripcion": "PERNO CABEZA HEXAGONAL 12x100",
+      "unidad": "un",
+      "precio": 220,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7660",
+      "descripcion": "PERNO CABEZA HEXAGONAL 16x100",
+      "unidad": "un",
+      "precio": 320,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7661",
+      "descripcion": "TUERCA HEXAGONAL 12mm",
+      "unidad": "un",
+      "precio": 35,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7662",
+      "descripcion": "TUERCA HEXAGONAL 16mm",
+      "unidad": "un",
+      "precio": 55,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7663",
+      "descripcion": "GOLILLA PLANA 12mm",
+      "unidad": "un",
+      "precio": 8,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7664",
+      "descripcion": "GOLILLA PLANA 16mm",
+      "unidad": "un",
+      "precio": 12,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7665",
+      "descripcion": "SOLDADURA E-6011 3.2mm",
+      "unidad": "kg",
+      "precio": 4850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7666",
+      "descripcion": "SOLDADURA E-7018 3.2mm",
+      "unidad": "kg",
+      "precio": 5250,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "items": [
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CONCRETO SIMPLE D=0.4",
+      "unidad": "m",
+      "precio": 25
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CONCRETO SIMPLE D=0.5",
+      "unidad": "m",
+      "precio": 32
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CONCRETO SIMPLE D=0.6",
+      "unidad": "m",
+      "precio": 40
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CONCRETO SIMPLE D=0.8",
+      "unidad": "m",
+      "precio": 63
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CONCRETO SIMPLE D=1.0",
+      "unidad": "m",
+      "precio": 98
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CONCRETO SIMPLE D=1.2",
+      "unidad": "m",
+      "precio": 142
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO PVC 110MM",
+      "unidad": "m",
+      "precio": 337
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO PVC COMPUESTO NOVAFORT",
+      "unidad": "m",
+      "precio": 1937
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CORRUGADO 4\"",
+      "unidad": "m",
+      "precio": 3600
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CORRUGADO 6\"",
+      "unidad": "m",
+      "precio": 7200
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CORRUGADO PERFORADO",
+      "unidad": "m",
+      "precio": 1440
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CORRUGADO RANURADO",
+      "unidad": "m",
+      "precio": 1980
+    },
+    {
+      "codigo": "TUB",
+      "descripcion": "TUBO CORRUGADO LISO",
+      "unidad": "m",
+      "precio": 1584
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA DE CONSTRUCCION 50",
+      "unidad": "un",
+      "precio": 1440
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA PARAFINA 3/4 X 25",
+      "unidad": "un",
+      "precio": 1800
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA PARAFINA 1\" X 25",
+      "unidad": "un",
+      "precio": 2340
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA PARAFINA 1 1/4\" X 25",
+      "unidad": "un",
+      "precio": 2700
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA PARAFINA 1 1/2\" X 25",
+      "unidad": "un",
+      "precio": 3240
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA PARAFINA 2\" X 25",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA PARAFINA 2 1/2\" X 25",
+      "unidad": "un",
+      "precio": 6300
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA PARAFINA 3\" X 25",
+      "unidad": "un",
+      "precio": 9000
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR ELECTRODOS",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR OXIACETILENICA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR PLASMA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR LASER CARBON",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR PLASMA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR ELECTRODOS",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR OXIACETILENICA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR PLASMA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDAR OXIACETILENICA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDADURA CORTE",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDADURA OXIACETILENICA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDADURA TIG",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDADURA ELECTRODO",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDADURA PLASMA",
+      "unidad": "un",
+      "precio": 4500
+    },
+    {
+      "codigo": "VEL",
+      "descripcion": "VELA SOLDADURA CORTE",
+      "unidad": "un",
+      "precio": 4500
+    }
+  ]
+}

@@ -1,0 +1,438 @@
+{
+  "items": [
+    {
+      "codigo": "B001",
+      "descripcion": "IMPERMEABILIZANTE BITUMINOSO DE 3 MM",
+      "unidad": "m2",
+      "precio": 3695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B002",
+      "descripcion": "IMPERMEABILIZANTE BITUMINOSO DE 4 MM",
+      "unidad": "m2",
+      "precio": 4425,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B003",
+      "descripcion": "IMPERMEABILIZANTE ASFÁLTICO DE 3 MM",
+      "unidad": "m2",
+      "precio": 3245,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B004",
+      "descripcion": "IMPERMEABILIZANTE ASFÁLTICO DE 4 MM",
+      "unidad": "m2",
+      "precio": 3895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B005",
+      "descripcion": "IMPERMEABILIZANTE QUÍMICO DE 3 MM",
+      "unidad": "m2",
+      "precio": 4125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B006",
+      "descripcion": "IMPERMEABILIZANTE QUÍMICO DE 4 MM",
+      "unidad": "m2",
+      "precio": 4975,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B007",
+      "descripcion": "MALLA RACHEL PROTECCIÓN",
+      "unidad": "m2",
+      "precio": 1895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B008",
+      "descripcion": "GEOTEXTIL NO TEJIDO 300 GR/M2",
+      "unidad": "m2",
+      "precio": 2315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B009",
+      "descripcion": "MALLA SOLDADA ELECTROSOLDADA",
+      "unidad": "m2",
+      "precio": 3245,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B010",
+      "descripcion": "IMPERMEABILIZANTE CON MALLA",
+      "unidad": "m2",
+      "precio": 5125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B011",
+      "descripcion": "IMPERMEABILIZANTE CON GEOTEXTIL",
+      "unidad": "m2",
+      "precio": 4825,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B012",
+      "descripcion": "IMPERMEABILIZANTE CON PROTECCIÓN MECÁNICA",
+      "unidad": "m2",
+      "precio": 5495,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B013",
+      "descripcion": "AISLACIÓN TÉRMICA POLIESTIRENO",
+      "unidad": "m2",
+      "precio": 2145,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B014",
+      "descripcion": "AISLACIÓN TÉRMICA LANA MINERAL",
+      "unidad": "m2",
+      "precio": 2895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B015",
+      "descripcion": "BARRERA DE VAPOR",
+      "unidad": "m2",
+      "precio": 1245,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B016",
+      "descripcion": "SELLO ANTICAPILARES HORIZONTAL",
+      "unidad": "ml",
+      "precio": 1895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B017",
+      "descripcion": "SELLO ANTICAPILARES VERTICAL",
+      "unidad": "ml",
+      "precio": 2145,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B018",
+      "descripcion": "JUNTA DE DILATACIÓN",
+      "unidad": "ml",
+      "precio": 3245,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B019",
+      "descripcion": "SELLO ELÁSTICO POLIURETANO",
+      "unidad": "ml",
+      "precio": 1595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B020",
+      "descripcion": "SELLADOR ACRÍLICO",
+      "unidad": "ml",
+      "precio": 895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B021",
+      "descripcion": "SELLADOR SILICONADO",
+      "unidad": "ml",
+      "precio": 1295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B022",
+      "descripcion": "DETECTOR DE AGUA",
+      "unidad": "unid",
+      "precio": 28950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B023",
+      "descripcion": "DETECTOR DE AGUA INALÁMBRICO",
+      "unidad": "unid",
+      "precio": 38450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B024",
+      "descripcion": "ESTANQUE DE AGUA POTABLE 1000 L",
+      "unidad": "unid",
+      "precio": 125000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B025",
+      "descripcion": "ESTANQUE DE AGUA POTABLE 2000 L",
+      "unidad": "unid",
+      "precio": 195000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B026",
+      "descripcion": "BOMBA CENTRÍFUGA 1 HP",
+      "unidad": "unid",
+      "precio": 145000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B027",
+      "descripcion": "BOMBA CENTRÍFUGA 2 HP",
+      "unidad": "unid",
+      "precio": 225000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B028",
+      "descripcion": "PRESOSTATO",
+      "unidad": "unid",
+      "precio": 18950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B029",
+      "descripcion": "MANÓMETRO",
+      "unidad": "unid",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B030",
+      "descripcion": "VÁLVULA CHECK 1/2\"",
+      "unidad": "unid",
+      "precio": 4250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B031",
+      "descripcion": "VÁLVULA CHECK 3/4\"",
+      "unidad": "unid",
+      "precio": 5150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B032",
+      "descripcion": "VÁLVULA CHECK 1\"",
+      "unidad": "unid",
+      "precio": 6850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B033",
+      "descripcion": "PROTECCIÓN PRESOSTATO CHICO",
+      "unidad": "unid",
+      "precio": 3250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B034",
+      "descripcion": "PROTECCIÓN PRESOSTATO GRANDE",
+      "unidad": "unid",
+      "precio": 4150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B035",
+      "descripcion": "TABLERO GENERAL MONOFÁSICO",
+      "unidad": "unid",
+      "precio": 85000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B036",
+      "descripcion": "TABLERO GENERAL TRIFÁSICO",
+      "unidad": "unid",
+      "precio": 125000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B037",
+      "descripcion": "CENTRO DE CARGA 4 CIRCUITOS",
+      "unidad": "unid",
+      "precio": 25000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B038",
+      "descripcion": "CENTRO DE CARGA 8 CIRCUITOS",
+      "unidad": "unid",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B039",
+      "descripcion": "CENTRO DE CARGA 12 CIRCUITOS",
+      "unidad": "unid",
+      "precio": 45000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B040",
+      "descripcion": "INTERRUPTOR TERMOMAGNÉTICO 10A",
+      "unidad": "unid",
+      "precio": 3500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B041",
+      "descripcion": "INTERRUPTOR TERMOMAGNÉTICO 16A",
+      "unidad": "unid",
+      "precio": 3500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B042",
+      "descripcion": "INTERRUPTOR TERMOMAGNÉTICO 20A",
+      "unidad": "unid",
+      "precio": 3500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B043",
+      "descripcion": "INTERRUPTOR TERMOMAGNÉTICO 25A",
+      "unidad": "unid",
+      "precio": 4200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B044",
+      "descripcion": "INTERRUPTOR TERMOMAGNÉTICO 32A",
+      "unidad": "unid",
+      "precio": 5500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B045",
+      "descripcion": "INTERRUPTOR DIFERENCIAL 25A",
+      "unidad": "unid",
+      "precio": 18500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B046",
+      "descripcion": "INTERRUPTOR DIFERENCIAL 40A",
+      "unidad": "unid",
+      "precio": 22500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B047",
+      "descripcion": "PROTECTOR SOBRETENSIÓN",
+      "unidad": "unid",
+      "precio": 15500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B048",
+      "descripcion": "CABLE THW 12 AWG",
+      "unidad": "m",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B049",
+      "descripcion": "CABLE THW 14 AWG",
+      "unidad": "m",
+      "precio": 650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B050",
+      "descripcion": "CABLE THW 10 AWG",
+      "unidad": "m",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B051",
+      "descripcion": "CABLE THW 8 AWG",
+      "unidad": "m",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B052",
+      "descripcion": "CABLE THW 6 AWG",
+      "unidad": "m",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B053",
+      "descripcion": "TUBERÍA PVC ELÉCTRICA 20 MM",
+      "unidad": "m",
+      "precio": 750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B054",
+      "descripcion": "TUBERÍA PVC ELÉCTRICA 25 MM",
+      "unidad": "m",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B055",
+      "descripcion": "TUBERÍA PVC ELÉCTRICA 32 MM",
+      "unidad": "m",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B056",
+      "descripcion": "CAJA DE DERIVACIÓN",
+      "unidad": "unid",
+      "precio": 2500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B057",
+      "descripcion": "ENCHUFE SIMPLE",
+      "unidad": "unid",
+      "precio": 3500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B058",
+      "descripcion": "ENCHUFE DOBLE",
+      "unidad": "unid",
+      "precio": 5500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B059",
+      "descripcion": "INTERRUPTOR SIMPLE",
+      "unidad": "unid",
+      "precio": 2500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B060",
+      "descripcion": "INTERRUPTOR DOBLE",
+      "unidad": "unid",
+      "precio": 4500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B061",
+      "descripcion": "CONMUTADOR",
+      "unidad": "unid",
+      "precio": 6500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B062",
+      "descripcion": "PULSADOR TIMBRE",
+      "unidad": "unid",
+      "precio": 2500,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "items": [
+    {
+      "codigo": "8018",
+      "descripcion": "ALAMBRES FRUTALES DE 2,5MM",
+      "unidad": "m",
+      "precio": 3156,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8019",
+      "descripcion": "ALAMBRES FRUTALES DE 3,15MM",
+      "unidad": "m",
+      "precio": 4518,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8020",
+      "descripcion": "ALAMBRES FRUTALES DE 3,15MM",
+      "unidad": "m",
+      "precio": 4518,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8021",
+      "descripcion": "ALAMBRE DE CONSTRUCCION",
+      "unidad": "kg",
+      "precio": 1594,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8022",
+      "descripcion": "ALAMBRE DE CONSTRUCCION",
+      "unidad": "kg",
+      "precio": 1594,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8023",
+      "descripcion": "ALAMBRE NEGRO 16",
+      "unidad": "kg",
+      "precio": 1792,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8024",
+      "descripcion": "ALAMBRE GALVANIZADO No 8",
+      "unidad": "kg",
+      "precio": 1792,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8025",
+      "descripcion": "ALAMBRE GALVANIZADO No 12",
+      "unidad": "kg",
+      "precio": 1792,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8026",
+      "descripcion": "ALAMBRE GALVANIZADO No 16",
+      "unidad": "kg",
+      "precio": 1792,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8027",
+      "descripcion": "ALAMBRE GALVANIZADO No 18",
+      "unidad": "kg",
+      "precio": 1792,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8028",
+      "descripcion": "ALAMBRE PUAS CALIBRE 16",
+      "unidad": "m",
+      "precio": 178,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8029",
+      "descripcion": "ALAMBRE PUAS GALVANIZADO",
+      "unidad": "m",
+      "precio": 178,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8030",
+      "descripcion": "ALAMBRE PUAS GALVANIZADO OVALADO",
+      "unidad": "m",
+      "precio": 178,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8031",
+      "descripcion": "ALAMBRE TEJIDOS OVALADOS 7x19",
+      "unidad": "m2",
+      "precio": 3542,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8032",
+      "descripcion": "ALAMBRE ACERO INOXIDABLE",
+      "unidad": "kg",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8033",
+      "descripcion": "ALAMBRE GALVANIZADO BOBINA",
+      "unidad": "kg",
+      "precio": 1792,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8034",
+      "descripcion": "ALAMBRE NEGRO BOBINA",
+      "unidad": "kg",
+      "precio": 1594,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8035",
+      "descripcion": "ALAMBRE GALV GRAPAS CERCA",
+      "unidad": "kg",
+      "precio": 2070,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8036",
+      "descripcion": "ALAMBRE GALV CORTINAS",
+      "unidad": "kg",
+      "precio": 2070,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8037",
+      "descripcion": "MALLA DE HEXAGONO",
+      "unidad": "m2",
+      "precio": 4775,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8038",
+      "descripcion": "MALLA RASCHEL GALVANIZADA",
+      "unidad": "m2",
+      "precio": 6375,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8039",
+      "descripcion": "SEPARADOR TIPO Nº42 GALV",
+      "unidad": "kg",
+      "precio": 6335,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8040",
+      "descripcion": "SEPARADOR MULTI GALV",
+      "unidad": "kg",
+      "precio": 4445,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8041",
+      "descripcion": "SEPARADOR MULTI GALV ONDULADO",
+      "unidad": "kg",
+      "precio": 4445,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8042",
+      "descripcion": "BLOQUES DE VIDRIO HUECO",
+      "unidad": "unid",
+      "precio": 3405,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8043",
+      "descripcion": "CEMENTO PARA ALBAÑILERIA",
+      "unidad": "kg",
+      "precio": 178,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8044",
+      "descripcion": "MORTERO DE CEMENTO BLANCO",
+      "unidad": "kg",
+      "precio": 178,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8045",
+      "descripcion": "MORTERO DE JUNTA COLOR",
+      "unidad": "kg",
+      "precio": 178,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8046",
+      "descripcion": "BLOQUES SILICO CALCÁREOS",
+      "unidad": "unid",
+      "precio": 342,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8047",
+      "descripcion": "BLOQUES SILICO CALCÁREOS",
+      "unidad": "unid",
+      "precio": 432,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8048",
+      "descripcion": "BLOQUES DE VIDRIO HUECO",
+      "unidad": "unid",
+      "precio": 3405,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8049",
+      "descripcion": "LADRILLO CERAMICO HUECO",
+      "unidad": "unid",
+      "precio": 142,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8050",
+      "descripcion": "LADRILLO CERAMICO HUECO",
+      "unidad": "unid",
+      "precio": 179,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "items": [
+    {
+      "codigo": "00101",
+      "descripcion": "REPLANTEO OBRAS DE EDIFICACION",
+      "unidad": "m2",
+      "precio": 3109,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00102",
+      "descripcion": "ACERO CORRUGADO A44-28H",
+      "unidad": "kg",
+      "precio": 508,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00103",
+      "descripcion": "ACERO CORRUGADO A63-42H",
+      "unidad": "kg",
+      "precio": 508,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00104",
+      "descripcion": "ACERO CORRUGADO A44-28H",
+      "unidad": "kg",
+      "precio": 508,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00105",
+      "descripcion": "ACERO CORRUGADO A63-42H",
+      "unidad": "kg",
+      "precio": 510,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00106",
+      "descripcion": "ACERO CORRUGADO A44-28H",
+      "unidad": "kg",
+      "precio": 510,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00107",
+      "descripcion": "ACERO CORRUGADO A63-42H",
+      "unidad": "kg",
+      "precio": 510,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00108",
+      "descripcion": "ACERO CORRUGADO A44-28H",
+      "unidad": "kg",
+      "precio": 1105,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00109",
+      "descripción": "ACERO CORRUGADO A44-28H",
+      "unidad": "kg",
+      "precio": 1105,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00210",
+      "descripcion": "ACERO CORRUGADO A44-28H",
+      "unidad": "kg",
+      "precio": 1105,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00211",
+      "descripcion": "ACERO CORRUGADO A63-42H",
+      "unidad": "kg",
+      "precio": 1105,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00212",
+      "descripcion": "ADITIVO ACELERANTE FRAGUADO CONCRETO",
+      "unidad": "kg",
+      "precio": 1314,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00213",
+      "descripcion": "ADITIVO ACELERANTE FRAGUADO CONCRETO",
+      "unidad": "kg",
+      "precio": 1329,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00640",
+      "descripcion": "AISLANTE TERMO ACUSTICO SOBRE ARENA",
+      "unidad": "m2",
+      "precio": 14703,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00640",
+      "descripcion": "AISLANTE TERMO ACUSTICO SOBRE ARENA",
+      "unidad": "m2",
+      "precio": 4100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00640",
+      "descripcion": "AISLANTE ACUSTICO LANA DE VIDRIO 50MM",
+      "unidad": "m2",
+      "precio": 1442,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00641",
+      "descripcion": "AISLANTE TERMOACUSTICO SOBRE ARENA",
+      "unidad": "m2",
+      "precio": 1442,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00642",
+      "descripcion": "AISLANTE TERMOACUSTICO SOBRE ARENA",
+      "unidad": "m2",
+      "precio": 1716,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00643",
+      "descripcion": "AISLAR TUBO TERMICO CON LANA VIDRIO",
+      "unidad": "m",
+      "precio": 511,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00644",
+      "descripcion": "AISLAR TUBO TERMICO",
+      "unidad": "m",
+      "precio": 511,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00645",
+      "descripcion": "AFERRARSE TERMO ACUSTICO",
+      "unidad": "m",
+      "precio": 625,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00646",
+      "descripcion": "AFELIAR SOBRESALIENTE",
+      "unidad": "m",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00647",
+      "descripcion": "AFELIAR SOBRE ESCALON HORMIGON",
+      "unidad": "m",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00648",
+      "descripcion": "AFELIAR SOBRE ESCALON MADERA",
+      "unidad": "m",
+      "precio": 4250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00649",
+      "descripcion": "AFELIAR SOBRE ESCALON MAIZ",
+      "unidad": "m",
+      "precio": 3845,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00650",
+      "descripcion": "AFELIAR SOBRE ESCALON MADERA",
+      "unidad": "m",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00651",
+      "descripcion": "AFELIAR SOBRE ESCALON METALICO",
+      "unidad": "m",
+      "precio": 3167,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00652",
+      "descripcion": "AFELIAR SOBRE ESCALON GRES",
+      "unidad": "m",
+      "precio": 3167,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00653",
+      "descripcion": "AFELIAR SOBRE MURO GRES",
+      "unidad": "m",
+      "precio": 3167,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00655",
+      "descripcion": "AFELIAR TREN ESCALON",
+      "unidad": "m",
+      "precio": 2398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00656",
+      "descripcion": "AFELIAR TREN ESCALON",
+      "unidad": "m",
+      "precio": 2398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00657",
+      "descripcion": "ALMA PANEL PORTANTE EN MADERA",
+      "unidad": "m2",
+      "precio": 1470,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00701",
+      "descripcion": "ALUMBRADO PUBLICO CON POSTE",
+      "unidad": "un",
+      "precio": 24398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00702",
+      "descripcion": "ALUMBRADO PUBLICO SIN POSTE HORMIGON",
+      "unidad": "un",
+      "precio": 24398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00703",
+      "descripcion": "ALUMBRADO PUBLICO SIN POSTE",
+      "unidad": "un",
+      "precio": 24398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00704",
+      "descripcion": "ALUMBRADO PUBLICO SIN POSTE METALICO",
+      "unidad": "un",
+      "precio": 24398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00705",
+      "descripcion": "ALUMBRADO PUBLICO SIN POSTE MADERA",
+      "unidad": "un",
+      "precio": 24398,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00706",
+      "descripcion": "ALUMBRADO PUBLICO SIN POSTE MADERA",
+      "unidad": "un",
+      "precio": 24398,
+      "tipo": "apu"
+    }
+  ]
+}

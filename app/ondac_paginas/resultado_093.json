@@ -1,0 +1,382 @@
+{
+  "items": [
+    {
+      "codigo": "8565",
+      "descripcion": "MOLDAJE DE PLACA/LOSA BLANCA REUTILIZABLE",
+      "unidad": "m2",
+      "precio": 2395,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8566",
+      "descripcion": "MOLDAJE DE MURO/TABIQUE BLANCO REUTILIZABLE",
+      "unidad": "m2",
+      "precio": 2595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8567",
+      "descripcion": "MOLDAJE DE PILAR/COLUMNA BLANCO REUTILIZABLE",
+      "unidad": "m2",
+      "precio": 3295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8568",
+      "descripcion": "MOLDAJE DE PLACA/LOSA BLANCA REUTILIZABLE",
+      "unidad": "m2",
+      "precio": 3595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8569",
+      "descripcion": "MOLDAJE DE MURO/TABIQUE BLANCO REUTILIZABLE",
+      "unidad": "m2",
+      "precio": 3995,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8570",
+      "descripcion": "MOLDAJE DE PILAR/COLUMNA BLANCO REUTILIZABLE",
+      "unidad": "m2",
+      "precio": 4595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8571",
+      "descripcion": "MOLDAJE PARA CONCRETO VISTO BLANCO",
+      "unidad": "m2",
+      "precio": 7950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8572",
+      "descripcion": "MOLDAJE PARA CONCRETO VISTO MADERA",
+      "unidad": "m2",
+      "precio": 9950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8573",
+      "descripcion": "TELA",
+      "unidad": "m2",
+      "precio": 8395,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8574",
+      "descripcion": "MOLDAJE PARA CONCRETO VISTO CARTON TEXTURADO",
+      "unidad": "m2",
+      "precio": 12950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8575",
+      "descripcion": "DESMOLDANTE CONCENTRADO",
+      "unidad": "lt",
+      "precio": 3895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8576",
+      "descripcion": "DESMOLDANTE LISTO PARA USAR",
+      "unidad": "lt",
+      "precio": 2395,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8577",
+      "descripcion": "CLAVO GALVANIZADO DE ACERO DE MAQUINA 2 1/2",
+      "unidad": "kg",
+      "precio": 2695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8578",
+      "descripcion": "CLAVO GALVANIZADO DE ACERO DE MAQUINA 3",
+      "unidad": "kg",
+      "precio": 2695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8579",
+      "descripcion": "CLAVO GALVANIZADO DE ACERO DE MAQUINA 4",
+      "unidad": "kg",
+      "precio": 2695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8580",
+      "descripcion": "CLAVO GALVANIZADO DE ACERO ESTRIADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8581",
+      "descripcion": "CONECTOR VIGA A COLUMNA HD 6X20",
+      "unidad": "un",
+      "precio": 2950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8582",
+      "descripcion": "CONECTOR VIGA A VIGA HD 6X12",
+      "unidad": "un",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8583",
+      "descripcion": "CONECTOR SIMPSON A181",
+      "unidad": "un",
+      "precio": 2950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8584",
+      "descripcion": "CONECTOR SIMPSON A181-2",
+      "unidad": "un",
+      "precio": 3250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8585",
+      "descripcion": "CONECTOR VIGA A COLUMNA HD 8X15",
+      "unidad": "un",
+      "precio": 3350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8586",
+      "descripcion": "CONECTOR SIMPSON A181-3",
+      "unidad": "un",
+      "precio": 3650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8587",
+      "descripcion": "SUPER CONECTOR COLUMNA VIGA ZORRO",
+      "unidad": "un",
+      "precio": 4295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8588",
+      "descripcion": "SUPER CONECTOR VIGA A VIGA ZORRO",
+      "unidad": "un",
+      "precio": 3895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8589",
+      "descripcion": "GANCHO DE 20° A 180° LARGO FIERRO 8 MM",
+      "unidad": "un",
+      "precio": 295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8590",
+      "descripcion": "GANCHO DE 20° A 180° LARGO FIERRO 10 MM",
+      "unidad": "un",
+      "precio": 395,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8591",
+      "descripcion": "GANCHO DE 20° A 180° LARGO FIERRO 12 MM",
+      "unidad": "un",
+      "precio": 495,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8592",
+      "descripcion": "GANCHO DE 12 MM A 180° LARGO FIERRO 14 MM",
+      "unidad": "un",
+      "precio": 595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8593",
+      "descripcion": "GANCHO DE ESTRIBO PARA FIERRO 12-14 MM",
+      "unidad": "un",
+      "precio": 695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8594",
+      "descripcion": "GANCHO PARA FIERRO DE CONSTRUCCIÓN GRADO 630",
+      "unidad": "un",
+      "precio": 895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8595",
+      "descripcion": "GANCHO CABEZA/CANCIASABOYA EXTREMO A17",
+      "unidad": "un",
+      "precio": 1095,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8596",
+      "descripcion": "GANCHO CABEZA/CANCIASABOYA EXTREMO A25",
+      "unidad": "un",
+      "precio": 1295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8597",
+      "descripcion": "GANCHO CABEZA/CANCIASABOYA CONIC SCREW-TIG",
+      "unidad": "un",
+      "precio": 1695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8598",
+      "descripcion": "GANCHO ESTRIBO PARA LAMAS DE PIEDRA LONG",
+      "unidad": "un",
+      "precio": 2095,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8599",
+      "descripcion": "STICK 360",
+      "unidad": "un",
+      "precio": 1595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8600",
+      "descripcion": "STICK 560",
+      "unidad": "un",
+      "precio": 1795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8601",
+      "descripcion": "GANCHO PERPENDICULAR SEGUNDA PARA TIERRAL",
+      "unidad": "un",
+      "precio": 1950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8602",
+      "descripcion": "GANCHO PERPENDICULAR PRIMERA PARA TIERRAL",
+      "unidad": "un",
+      "precio": 2295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8603",
+      "descripcion": "SOPORTE DE ACERO PARA TIRANTE",
+      "unidad": "un",
+      "precio": 3795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8604",
+      "descripcion": "GANCHO CONCHOCIERRO PARA BISELADO",
+      "unidad": "un",
+      "precio": 4795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8605",
+      "descripcion": "GANCHO CONCHOCIERRO GANCHO LARGO",
+      "unidad": "un",
+      "precio": 5795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8606",
+      "descripcion": "GANCHO DE SUJECIÓN PARA BISELADO UNI",
+      "unidad": "un",
+      "precio": 6795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8607",
+      "descripcion": "GANCHO LARGO NORMAL",
+      "unidad": "un",
+      "precio": 7250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8608",
+      "descripcion": "GANCHO DE SUJECIÓN PARA BISELADO BI",
+      "unidad": "un",
+      "precio": 8295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8609",
+      "descripcion": "PROTECTOR DE PUNTA DRA-SO-LU",
+      "unidad": "un",
+      "precio": 1795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8610",
+      "descripcion": "PROTECTOR DE PUNTA DRA-SO-LU",
+      "unidad": "un",
+      "precio": 1795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8611",
+      "descripcion": "PROTECTOR DE PUNTA DRA-SO-LU",
+      "unidad": "un",
+      "precio": 2095,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8612",
+      "descripcion": "PROTECTOR LAMINAR 4 MM LARGO",
+      "unidad": "m",
+      "precio": 2295,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8613",
+      "descripcion": "PROTECTOR LAMINAR 6 MM LARGO",
+      "unidad": "m",
+      "precio": 2595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8614",
+      "descripcion": "PROTECTOR LAMINAR 8 MM LARGO",
+      "unidad": "m",
+      "precio": 2895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8615",
+      "descripcion": "PROTECTOR LAMINAR 6 MM ANCHO",
+      "unidad": "m",
+      "precio": 3195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8616",
+      "descripcion": "PROTECTOR LAMINAR 8 MM ANCHO",
+      "unidad": "m",
+      "precio": 3495,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8617",
+      "descripcion": "PROTECTOR ESPECIAL A MM LARGO",
+      "unidad": "m",
+      "precio": 3795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8618",
+      "descripcion": "GANGS",
+      "unidad": "un",
+      "precio": 4095,
+      "tipo": "material"
+    }
+  ]
+}

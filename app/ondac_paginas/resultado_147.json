@@ -1,0 +1,207 @@
+{
+  "items": [
+    {
+      "codigo": "001A",
+      "descripcion": "ASCENSOR ACERO INOXIDABLE 6 PISOS",
+      "unidad": "un",
+      "precio": 26400000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "001B",
+      "descripcion": "ASCENSOR ACERO INOXIDABLE 8 PISOS",
+      "unidad": "un",
+      "precio": 35200000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "001C",
+      "descripcion": "ASCENSOR ACERO INOXIDABLE 10 PISOS",
+      "unidad": "un",
+      "precio": 44000000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "001D",
+      "descripcion": "ASCENSOR ACERO INOXIDABLE 12 PISOS",
+      "unidad": "un",
+      "precio": 52800000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002A",
+      "descripcion": "ASCENSOR ESTANDAR 6 PISOS",
+      "unidad": "un",
+      "precio": 22000000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002B",
+      "descripcion": "ASCENSOR ESTANDAR 8 PISOS",
+      "unidad": "un",
+      "precio": 29300000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002C",
+      "descripcion": "ASCENSOR ESTANDAR 10 PISOS",
+      "unidad": "un",
+      "precio": 36600000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002D",
+      "descripcion": "ASCENSOR ESTANDAR 12 PISOS",
+      "unidad": "un",
+      "precio": 43900000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003A",
+      "descripcion": "ASCENSOR HIDRAULICO 3 PISOS",
+      "unidad": "un",
+      "precio": 16500000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003B",
+      "descripcion": "ASCENSOR HIDRAULICO 4 PISOS",
+      "unidad": "un",
+      "precio": 19800000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003C",
+      "descripcion": "ASCENSOR HIDRAULICO 5 PISOS",
+      "unidad": "un",
+      "precio": 23100000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004A",
+      "descripcion": "ASCENSOR MONTACARGAS 1000 KG",
+      "unidad": "un",
+      "precio": 13200000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004B",
+      "descripcion": "ASCENSOR MONTACARGAS 2000 KG",
+      "unidad": "un",
+      "precio": 19800000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "ADHESIVO CERAMICO",
+      "unidad": "kg",
+      "precio": 590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "ADHESIVO CONTACTO",
+      "unidad": "lt",
+      "precio": 3200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "ADHESIVO EPOXICO",
+      "unidad": "kg",
+      "precio": 4800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "ADHESIVO SILICONA",
+      "unidad": "un",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "AGREGADO PETREO",
+      "unidad": "m3",
+      "precio": 15000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "AGUA POTABLE",
+      "unidad": "m3",
+      "precio": 1200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "ALAMBRE ESPINO",
+      "unidad": "rollo",
+      "precio": 24000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "ALAMBRE GALVANIZADO",
+      "unidad": "kg",
+      "precio": 1800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "ALAMBRE RECOCIDO",
+      "unidad": "kg",
+      "precio": 1500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "ALQUILER ANDAMIO",
+      "unidad": "m2/mes",
+      "precio": 2500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "ALQUILER BETONERA",
+      "unidad": "dia",
+      "precio": 15000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "ALQUILER COMPRESOR",
+      "unidad": "dia",
+      "precio": 25000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "ALQUILER GRUA",
+      "unidad": "dia",
+      "precio": 180000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "ALQUILER MARTILLO NEUMATICO",
+      "unidad": "dia",
+      "precio": 18000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "ALQUILER MIXER",
+      "unidad": "viaje",
+      "precio": 45000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "ALQUILER RETROEXCAVADORA",
+      "unidad": "hr",
+      "precio": 35000,
+      "tipo": "material"
+    }
+  ]
+}

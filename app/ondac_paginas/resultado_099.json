@@ -1,0 +1,144 @@
+{
+  "items": [
+    {
+      "codigo": "2176",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2177",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2178",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2179",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2180",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2181",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2182",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2183",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2184",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "2185",
+      "descripcion": "ACERO ESTRUCTURAL PERFIL SOLDADO",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3601",
+      "descripcion": "PLACA DECKO TIPO A GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3602",
+      "descripcion": "PLACA DECKO TIPO A GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3603",
+      "descripcion": "PLACA DECKO TIPO C GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3604",
+      "descripcion": "PLACA DECKO TIPO D GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3605",
+      "descripcion": "PLACA DECKO TIPO E GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3606",
+      "descripcion": "PLACA DECKO TIPO F GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3607",
+      "descripcion": "PLACA DECKO TIPO G GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3608",
+      "descripcion": "PLACA DECKO TIPO H GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3609",
+      "descripcion": "PLACA DECKO TIPO I GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3610",
+      "descripcion": "PLACA DECKO TIPO J GALVANIZADA",
+      "unidad": "m2",
+      "precio": 3580,
+      "tipo": "material"
+    }
+  ]
+}

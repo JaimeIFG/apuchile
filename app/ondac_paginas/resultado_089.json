@@ -1,0 +1,172 @@
+{
+  "items": [
+    {
+      "codigo": "8001",
+      "descripcion": "L.C 90 ML LADRILLO ESCAVADO",
+      "unidad": "ML",
+      "precio": 679,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8002",
+      "descripcion": "L.C 140 ML LADRILLO ESCAVADO",
+      "unidad": "ML",
+      "precio": 1069,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8003",
+      "descripcion": "L.C 180 ML LADRILLO ESCAVADO",
+      "unidad": "ML",
+      "precio": 1359,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8004",
+      "descripcion": "L.C 200 ML LADRILLO ESCAVADO",
+      "unidad": "ML",
+      "precio": 1509,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8005",
+      "descripcion": "L.C 90 ML LADRILLO ESTRUCT.INDS HECHO",
+      "unidad": "ML",
+      "precio": 719,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8006",
+      "descripcion": "L.C 140 ML LADRILLO ESTRUCT.INDS HECHO",
+      "unidad": "ML",
+      "precio": 1139,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8007",
+      "descripcion": "L.C 180 ML LADRILLO ESTRUCT.INDS HECHO",
+      "unidad": "ML",
+      "precio": 1449,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8008",
+      "descripcion": "L.C 200 ML LADRILLO ESTRUCT.INDS HECHO",
+      "unidad": "ML",
+      "precio": 1609,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8009",
+      "descripcion": "L.C 90 ML LADRILLO ESTRUCT.INDS VISTO",
+      "unidad": "ML",
+      "precio": 859,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8010",
+      "descripcion": "L.C 140 ML LADRILLO ESTRUCT.INDS VISTO",
+      "unidad": "ML",
+      "precio": 1359,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8011",
+      "descripcion": "L.C 180 ML LADRILLO ESTRUCT.INDS VISTO",
+      "unidad": "ML",
+      "precio": 1729,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8012",
+      "descripcion": "L.C 200 ML LADRILLO ESTRUCT.INDS VISTO",
+      "unidad": "ML",
+      "precio": 1919,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8013",
+      "descripcion": "ESCALERA PREFABRICADA HORMIGON",
+      "unidad": "ML",
+      "precio": 8749,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8014",
+      "descripcion": "LOSILLA LADRILLO 24x12x3",
+      "unidad": "M2",
+      "precio": 6319,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8015",
+      "descripcion": "LOSILLA LADRILLO 28x14x3",
+      "unidad": "M2",
+      "precio": 6319,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8016",
+      "descripcion": "LOSILLA LADRILLO 30x15x3",
+      "unidad": "M2",
+      "precio": 6319,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8017",
+      "descripcion": "BOVEDILLA CEMENTO 60x25x15",
+      "unidad": "UNID",
+      "precio": 1449,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8018",
+      "descripcion": "BOVEDILLA CEMENTO 60x20x15",
+      "unidad": "UNID",
+      "precio": 1309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8019",
+      "descripcion": "BOVEDILLA CEMENTO 60x20x20",
+      "unidad": "UNID",
+      "precio": 1579,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8020",
+      "descripcion": "BOVEDILLA CEMENTO 60x25x20",
+      "unidad": "UNID",
+      "precio": 1749,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8021",
+      "descripcion": "LOSILLA PREFABRICADA HORMIGON",
+      "unidad": "M2",
+      "precio": 10549,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8022",
+      "descripcion": "BLOQUE H.A LIVIANO 10x20x40",
+      "unidad": "UNID",
+      "precio": 569,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8023",
+      "descripcion": "BLOQUE H.A LIVIANO 15x20x40",
+      "unidad": "UNID",
+      "precio": 679,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8024",
+      "descripcion": "BLOQUE H.A LIVIANO 20x20x40",
+      "unidad": "UNID",
+      "precio": 789,
+      "tipo": "material"
+    }
+  ]
+}

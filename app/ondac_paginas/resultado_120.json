@@ -1,0 +1,263 @@
+{
+  "items": [
+    {
+      "codigo": "3016",
+      "descripcion": "LADRILLO COMUN 15x10x5",
+      "unidad": "un",
+      "precio": 58,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3017",
+      "descripcion": "LADRILLO REFRACTARIO NACIONAL",
+      "unidad": "un",
+      "precio": 280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3018",
+      "descripcion": "LADRILLO REFRACTARIO IMPORTADO",
+      "unidad": "un",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3019",
+      "descripcion": "LADRILLO CARAVISTA 5x12x25",
+      "unidad": "un",
+      "precio": 165,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3020",
+      "descripcion": "LADRILLO CARAVISTA 6x12x25",
+      "unidad": "un",
+      "precio": 195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3021",
+      "descripcion": "LADRILLO CARAVISTA RANU RANA",
+      "unidad": "un",
+      "precio": 210,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3022",
+      "descripcion": "LADRILLO CARAVISTA RANU AEPI",
+      "unidad": "un",
+      "precio": 185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3023",
+      "descripcion": "LADRILLO SILICO CALCARIO",
+      "unidad": "un",
+      "precio": 85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3024",
+      "descripcion": "LADRILLO DE MAQUINA",
+      "unidad": "un",
+      "precio": 75,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3025",
+      "descripcion": "LADRILLO TABIQUE",
+      "unidad": "un",
+      "precio": 42,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3026",
+      "descripcion": "LADRILLO HUECO 8x12x25",
+      "unidad": "un",
+      "precio": 85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3027",
+      "descripcion": "LADRILLO HUECO 10x12x25",
+      "unidad": "un",
+      "precio": 95,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3028",
+      "descripcion": "LADRILLO HUECO 15x12x25",
+      "unidad": "un",
+      "precio": 115,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3029",
+      "descripcion": "LADRILLO HUECO 20x12x25",
+      "unidad": "un",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3030",
+      "descripcion": "LADRILLO REFRACTARIO",
+      "unidad": "un",
+      "precio": 320,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3031",
+      "descripcion": "LADRILLO PRENSADO",
+      "unidad": "un",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3032",
+      "descripcion": "LADRILLO CERAMICO TRADICIONAL",
+      "unidad": "un",
+      "precio": 58,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3033",
+      "descripcion": "LADRILLO TECNO BRICK",
+      "unidad": "un",
+      "precio": 95,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3034",
+      "descripcion": "LADRILLO TECNO BRICK PREMIUM",
+      "unidad": "un",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3035",
+      "descripcion": "LADRILLO PRINCE",
+      "unidad": "un",
+      "precio": 48,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3036",
+      "descripcion": "LADRILLO PRINCE MK 500 MOLINO",
+      "unidad": "un",
+      "precio": 95,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3037",
+      "descripcion": "LADRILLO PRINCE MK 500 MANUAL",
+      "unidad": "un",
+      "precio": 85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3038",
+      "descripcion": "LADRILLO PRINCE MK 600",
+      "unidad": "un",
+      "precio": 110,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3039",
+      "descripcion": "LADRILLO ACEBEDO IMPERMEABLE",
+      "unidad": "un",
+      "precio": 95,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3040",
+      "descripcion": "ADOQUIN ADOBE CHICO",
+      "unidad": "un",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3041",
+      "descripcion": "ADOQUIN ADOBE MEDIANO",
+      "unidad": "un",
+      "precio": 550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3042",
+      "descripcion": "ADOQUIN ADOBE GRANDE",
+      "unidad": "un",
+      "precio": 650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3043",
+      "descripcion": "LADRILLO ECOLOGICO PRENSADO",
+      "unidad": "un",
+      "precio": 85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3044",
+      "descripcion": "LADRILLO ECOLOGICO AUTOCLAVE",
+      "unidad": "un",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3045",
+      "descripcion": "LADRILLO LISO COMUN",
+      "unidad": "un",
+      "precio": 45,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3046",
+      "descripcion": "LADRILLO CLINKER COLORADO",
+      "unidad": "un",
+      "precio": 185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3047",
+      "descripcion": "LADRILLO CLINKER GRIS",
+      "unidad": "un",
+      "precio": 195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3048",
+      "descripcion": "LADRILLO TABIQUE 3x8x25",
+      "unidad": "un",
+      "precio": 35,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3049",
+      "descripcion": "LADRILLO TABIQUE 5x8x25",
+      "unidad": "un",
+      "precio": 42,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3050",
+      "descripcion": "LADRILLO TABIQUE GRAN MEDIO",
+      "unidad": "un",
+      "precio": 48,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3051",
+      "descripcion": "LADRILLO TABIQUE 7x8x25",
+      "unidad": "un",
+      "precio": 58,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3052",
+      "descripcion": "LADRILLO TABIQUE GRAN GRANDE",
+      "unidad": "un",
+      "precio": 65,
+      "tipo": "material"
+    }
+  ]
+}

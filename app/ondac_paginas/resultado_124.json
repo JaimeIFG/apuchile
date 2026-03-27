@@ -1,0 +1,508 @@
+{
+  "items": [
+    {
+      "codigo": "1200",
+      "descripcion": "LADRILLO FISCAL RECOCIDO",
+      "unidad": "un",
+      "precio": 410,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1201",
+      "descripcion": "LADRILLO FISCAL RECOCIDO",
+      "unidad": "un",
+      "precio": 410,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1202",
+      "descripcion": "LADRILLO FISCAL GRANDE",
+      "unidad": "un",
+      "precio": 590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1203",
+      "descripcion": "LADRILLO FISCAL REFRACTARIO",
+      "unidad": "un",
+      "precio": 1400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1204",
+      "descripcion": "LADRILLO FISCAL KING SIZE",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1205",
+      "descripcion": "LADRILLO TITANIO",
+      "unidad": "un",
+      "precio": 1390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1206",
+      "descripcion": "LADRILLO TITANIO REVESTIDO",
+      "unidad": "un",
+      "precio": 1550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1207",
+      "descripcion": "LADRILLO TITANIO SPLIT FACE",
+      "unidad": "un",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1208",
+      "descripcion": "LADRILLO PRINCESA SPLIT FACE",
+      "unidad": "un",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1209",
+      "descripcion": "LADRILLO CERAMICO SPLIT FACE",
+      "unidad": "un",
+      "precio": 6200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1210",
+      "descripcion": "LADRILLO PRINCESA LISO",
+      "unidad": "un",
+      "precio": 1400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1211",
+      "descripcion": "LADRILLO PRINCESA ACANALADO",
+      "unidad": "un",
+      "precio": 1400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1212",
+      "descripcion": "LADRILLO PRINCESA RUSTICO",
+      "unidad": "un",
+      "precio": 1400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1213",
+      "descripcion": "LADRILLO REFRACTARIO",
+      "unidad": "un",
+      "precio": 980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1214",
+      "descripcion": "LADRILLO REFRACTARIO N°4",
+      "unidad": "un",
+      "precio": 5690,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1215",
+      "descripcion": "LADRILLO REFRACTARIO ISOLITE",
+      "unidad": "un",
+      "precio": 2600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1216",
+      "descripcion": "LADRILLO SILICO CALCAREO",
+      "unidad": "un",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1217",
+      "descripcion": "LADRILLO SILICO CALCAREO N°6",
+      "unidad": "un",
+      "precio": 1800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1218",
+      "descripcion": "LADRILLO HUECO 13X8X29 SIMPLE",
+      "unidad": "un",
+      "precio": 3130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1219",
+      "descripcion": "LADRILLO HUECO 13X8X29 DOBLE",
+      "unidad": "un",
+      "precio": 4480,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1220",
+      "descripcion": "LADRILLO HUECO 18X8X29",
+      "unidad": "un",
+      "precio": 5430,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1221",
+      "descripcion": "LADRILLO HUECO 18X11X29",
+      "unidad": "un",
+      "precio": 6250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1222",
+      "descripcion": "LADRILLO HUECO 28X8X29",
+      "unidad": "un",
+      "precio": 9490,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1223",
+      "descripcion": "LADRILLO HUECO 15X11X29",
+      "unidad": "un",
+      "precio": 5750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1224",
+      "descripcion": "LADRILLO ESTRUCTURAL",
+      "unidad": "un",
+      "precio": 1480,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1225",
+      "descripcion": "LADRILLO ESTRUCTURAL MECANICO",
+      "unidad": "un",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1226",
+      "descripcion": "LADRILLO PERFORADO",
+      "unidad": "un",
+      "precio": 470,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1227",
+      "descripcion": "LADRILLO PERFORADO MECANICO",
+      "unidad": "un",
+      "precio": 510,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1228",
+      "descripcion": "LADRILLO SUPER KING SIZE",
+      "unidad": "un",
+      "precio": 1280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1229",
+      "descripcion": "LADRILLO SUPER ESTRUTURAL",
+      "unidad": "un",
+      "precio": 1580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1230",
+      "descripcion": "LADRILLO SUPER REFRACTARIO",
+      "unidad": "un",
+      "precio": 2580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1231",
+      "descripcion": "LADRILLO VISTA BARROCO",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1232",
+      "descripcion": "LADRILLO VISTA SPLIT FACE",
+      "unidad": "un",
+      "precio": 990,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1233",
+      "descripcion": "LADRILLO VISTA LISO",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1234",
+      "descripcion": "LADRILLO VISTA RUGOSO",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1235",
+      "descripcion": "LADRILLO VISTA RUSTICO",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1236",
+      "descripcion": "LADRILLO VISTA LAJA",
+      "unidad": "un",
+      "precio": 890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1237",
+      "descripcion": "LADRILLO VISTA COLONIAL",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1238",
+      "descripcion": "LADRILLO VISTA ESMALTADO",
+      "unidad": "un",
+      "precio": 1980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1239",
+      "descripcion": "LADRILLO LISO",
+      "unidad": "un",
+      "precio": 400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1240",
+      "descripcion": "LADRILLO LISO MECANICO",
+      "unidad": "un",
+      "precio": 430,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1241",
+      "descripcion": "LADRILLO CERAMICO CUADRICULA",
+      "unidad": "un",
+      "precio": 4300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1242",
+      "descripcion": "LADRILLO CERAMICO HEXAGONAL",
+      "unidad": "un",
+      "precio": 4300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1243",
+      "descripcion": "LADRILLO REFRACTARIO CURVO",
+      "unidad": "un",
+      "precio": 2870,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1244",
+      "descripcion": "LADRILLO REFRACTARIO AISLANTE",
+      "unidad": "un",
+      "precio": 2100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1245",
+      "descripcion": "LADRILLO REFRACTARIO BIANCO",
+      "unidad": "un",
+      "precio": 2980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1246",
+      "descripcion": "LADRILLO REFRACTARIO CHAMOTTE",
+      "unidad": "un",
+      "precio": 2680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1247",
+      "descripcion": "LADRILLO REFRACTARIO ESTANDAR",
+      "unidad": "un",
+      "precio": 1980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1248",
+      "descripcion": "LADRILLO REFRACTARIO ISOLITE N°23",
+      "unidad": "un",
+      "precio": 4200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1249",
+      "descripcion": "LADRILLO REFRACTARIO ISOLITE N°26",
+      "unidad": "un",
+      "precio": 5200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1250",
+      "descripcion": "LADRILLO REFRACTARIO MAGNESIO",
+      "unidad": "un",
+      "precio": 8900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1251",
+      "descripcion": "LADRILLO REFRACTARIO SILICO ALUMINOSO",
+      "unidad": "un",
+      "precio": 2890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1252",
+      "descripcion": "LADRILLO REFRACTARIO SUPER",
+      "unidad": "un",
+      "precio": 3890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1253",
+      "descripcion": "LADRILLO REFRACTARIO T-19",
+      "unidad": "un",
+      "precio": 4200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1254",
+      "descripcion": "LADRILLO REFRACTARIO T-23",
+      "unidad": "un",
+      "precio": 5200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1255",
+      "descripcion": "LADRILLO REFRACTARIO T-26",
+      "unidad": "un",
+      "precio": 6200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1256",
+      "descripcion": "LADRILLO REFRACTARIO T-30",
+      "unidad": "un",
+      "precio": 7200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1257",
+      "descripcion": "LADRILLO REFRACTARIO ZIRCON",
+      "unidad": "un",
+      "precio": 12900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1258",
+      "descripcion": "LADRILLO TITANIO SPLIT RUSTICO",
+      "unidad": "un",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1259",
+      "descripcion": "LADRILLO CERAMICO ESMALTADO",
+      "unidad": "un",
+      "precio": 4890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1260",
+      "descripcion": "LADRILLO CERAMICO LISO",
+      "unidad": "un",
+      "precio": 4300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1261",
+      "descripcion": "LADRILLO CERAMICO RUGOSO",
+      "unidad": "un",
+      "precio": 4300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1262",
+      "descripcion": "LADRILLO CERAMICO RUSTICO",
+      "unidad": "un",
+      "precio": 4300,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1263",
+      "descripcion": "LADRILLO SUPER VISTA",
+      "unidad": "un",
+      "precio": 1190,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1264",
+      "descripcion": "LADRILLO BARROCO ESMALTADO",
+      "unidad": "un",
+      "precio": 1980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1265",
+      "descripcion": "LADRILLO CERAMICO HEXAGONAL ESMALTADO",
+      "unidad": "un",
+      "precio": 5890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1266",
+      "descripcion": "LADRILLO LISO ESMALTADO",
+      "unidad": "un",
+      "precio": 1980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1267",
+      "descripcion": "LADRILLO RUGOSO ESMALTADO",
+      "unidad": "un",
+      "precio": 1980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1268",
+      "descripcion": "LADRILLO RUSTICO ESMALTADO",
+      "unidad": "un",
+      "precio": 1980,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1269",
+      "descripcion": "LADRILLO SPLIT FACE ESMALTADO",
+      "unidad": "un",
+      "precio": 2180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1270",
+      "descripcion": "LADRILLO VISTA LAJA ESMALTADO",
+      "unidad": "un",
+      "precio": 2080,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1271",
+      "descripcion": "LADRILLO COLONIAL ESMALTADO",
+      "unidad": "un",
+      "precio": 1980,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "items": [
+    {
+      "codigo": "00134",
+      "descripcion": "JARDINERO PARA EL",
+      "unidad": "jor",
+      "precio": 15118,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00135",
+      "descripcion": "MAESTRO ESPECIALISTA",
+      "unidad": "jor",
+      "precio": 18828,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00136",
+      "descripcion": "METALMECANICO MEDIANO",
+      "unidad": "jor",
+      "precio": 19056,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00137",
+      "descripcion": "JEFE DE BODEGA COMPRA DESPACHO BODEGAJ",
+      "unidad": "jor",
+      "precio": 22569,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00138",
+      "descripcion": "MECANICO GASFITER",
+      "unidad": "jor",
+      "precio": 20938,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00139",
+      "descripcion": "SOLDADOR TORNERO E 5 seg",
+      "unidad": "jor",
+      "precio": 23547,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00140",
+      "descripcion": "CHOFER MONTAJE 27008",
+      "unidad": "jor",
+      "precio": 14801,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00141",
+      "descripcion": "CARPINTERO TERMINACION",
+      "unidad": "jor",
+      "precio": 19000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00142",
+      "descripcion": "LOPES GONZALEZ J",
+      "unidad": "jor",
+      "precio": 24000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00143",
+      "descripcion": "JARDINERO LUZ COMBINADO 2009/2010",
+      "unidad": "jor",
+      "precio": 15705,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00144",
+      "descripcion": "METALMECANICO MEDIANO",
+      "unidad": "jor",
+      "precio": 19056,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00145",
+      "descripcion": "NUEVA CORRIENTE E 5 seg",
+      "unidad": "jor",
+      "precio": 2547,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00146",
+      "descripcion": "SOLDADO MONTAJE 27008",
+      "unidad": "jor",
+      "precio": 14801,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00147",
+      "descripcion": "CARPINTERO TERMINACION",
+      "unidad": "jor",
+      "precio": 19000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00148",
+      "descripcion": "LOPES GONZALEZ J",
+      "unidad": "jor",
+      "precio": 24000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00151",
+      "descripcion": "JARDINERO LUZ HORMIGON PROG VARIADOS",
+      "unidad": "jor",
+      "precio": 5133,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00152",
+      "descripcion": "MECANICO GASFITER MEDIANO",
+      "unidad": "jor",
+      "precio": 20938,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00153",
+      "descripcion": "NUEVA CORRIENTE E 5 seg",
+      "unidad": "jor",
+      "precio": 1947,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00154",
+      "descripcion": "PINTA CORRIENTE 27008",
+      "unidad": "jor",
+      "precio": 13000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00155",
+      "descripcion": "CARPINTERO TERMINACION",
+      "unidad": "jor",
+      "precio": 19000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00156",
+      "descripcion": "LOPES GONZALEZ J",
+      "unidad": "jor",
+      "precio": 24000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00161",
+      "descripcion": "JARDINERO LUZ HORMIGON PROG VARIADOS",
+      "unidad": "jor",
+      "precio": 5133,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00162",
+      "descripcion": "MECANICO GASFITER MEDIANO",
+      "unidad": "jor",
+      "precio": 20938,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00163",
+      "descripcion": "NUEVA CORRIENTE E 5 seg",
+      "unidad": "jor",
+      "precio": 1947,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00164",
+      "descripcion": "PINTA CORRIENTE 27008",
+      "unidad": "jor",
+      "precio": 13000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00165",
+      "descripcion": "CARPINTERO TERMINACION",
+      "unidad": "jor",
+      "precio": 19000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00166",
+      "descripcion": "LOPES GONZALEZ J",
+      "unidad": "jor",
+      "precio": 24000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00170",
+      "descripcion": "JARDINERO LUZ PISO FLOTANTE AJUNTADO",
+      "unidad": "jor",
+      "precio": 5133,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00171",
+      "descripcion": "PINTOR AJUNTADO MEDIANO ESC",
+      "unidad": "jor",
+      "precio": 15200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00172",
+      "descripcion": "NUEVA CORRIENTE E 5 seg",
+      "unidad": "jor",
+      "precio": 1947,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00173",
+      "descripcion": "CHOFER MONTAJE 27008",
+      "unidad": "jor",
+      "precio": 2505,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00174",
+      "descripcion": "CARPINTERO TERMINACION",
+      "unidad": "jor",
+      "precio": 19000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00175",
+      "descripcion": "LOPES GONZALEZ J",
+      "unidad": "jor",
+      "precio": 24000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00176",
+      "descripcion": "UMRAL DE GEMO POLLO 1.0m x 1.0m",
+      "unidad": "jor",
+      "precio": 47170,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00177",
+      "descripcion": "ALFAVILLERO",
+      "unidad": "jor",
+      "precio": 25069,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00178",
+      "descripcion": "ZANJADOR",
+      "unidad": "jor",
+      "precio": 14093,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00179",
+      "descripcion": "LOPES GONZALEZ J",
+      "unidad": "jor",
+      "precio": 24000000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00182",
+      "descripcion": "LAYES HERMANO LINETTE SIN PUNTO O MARQUINS",
+      "unidad": "jor",
+      "precio": 21767,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00183",
+      "descripcion": "SOLDADOR LAYES EN OBRAS",
+      "unidad": "jor",
+      "precio": 23547,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00184",
+      "descripcion": "CHOFER MONTAJE",
+      "unidad": "jor",
+      "precio": 1350,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00185",
+      "descripcion": "JNMCHAN CARPINTEROS TIPO JF 4.2a 5dm",
+      "unidad": "jor",
+      "precio": 41000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00186",
+      "descripcion": "ALFAVILLERO JARCINEROS FRANJEO CALADO",
+      "unidad": "jor",
+      "precio": 8000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00187",
+      "descripcion": "PINTOR",
+      "unidad": "jor",
+      "precio": 16000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "00188",
+      "descripcion": "LOPES GONZALEZ J",
+      "unidad": "jor",
+      "precio": 24000000,
+      "tipo": "apu"
+    }
+  ]
+}

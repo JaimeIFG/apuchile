@@ -1,0 +1,571 @@
+{
+  "items": [
+    {
+      "codigo": "001",
+      "descripcion": "CEMENTO PTO",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002",
+      "descripcion": "CEMENTO PORTLAND GRADO CORRIENTE",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003",
+      "descripcion": "CEMENTO PORTLAND TIPO HE",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004",
+      "descripcion": "CEMENTO PARA LADRILLOS REFRACTARIO",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "CEMENTO PORTLAND SIDERURGICO",
+      "unidad": "kg",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO GRADO CORRIENTE",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "CEMENTO PORTLAND HE",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "CEMENTO BLANCO",
+      "unidad": "kg",
+      "precio": 209,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "CEMENTO ALUMINOSO ESPECIAL",
+      "unidad": "kg",
+      "precio": 1309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "CEMENTO ALUMINOSO NORMAL",
+      "unidad": "kg",
+      "precio": 798,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "CEMENTO PARA POZOS",
+      "unidad": "kg",
+      "precio": 183,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "CEMENTO PARA POZOS PETROLIFEROS",
+      "unidad": "kg",
+      "precio": 183,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "CEMENTO PARA MORTEROS ESTRUCTURALES",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "CEMENTO PARA MORTEROS",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "CEMENTO ESPECIAL PARA ANCLAJES",
+      "unidad": "kg",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "CEMENTO PORTLAND COMPUESTO",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "CEMENTO PORTLAND SIDERURGICO GRADO ALTO HORNO",
+      "unidad": "kg",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "EXTENSOR CAL",
+      "unidad": "kg",
+      "precio": 56,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "CAL HIDRATA",
+      "unidad": "kg",
+      "precio": 56,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "CAL VIVA",
+      "unidad": "kg",
+      "precio": 50,
+      "tipo": "material"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "CEMENTO PARA POSTENSADO",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "CEMENTO PORTLAND COMPUESTO CPC-30R",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "CEMENTO PORTLAND COMPUESTO CPC-40",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "CEMENTO PORTLAND GRADO CORRIENTE GU",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "CEMENTO ESPECIAL PEGA CERAMICAS",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "026",
+      "descripcion": "CEMENTO ESPECIAL ALTA RESISTENCIA INICIAL",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "027",
+      "descripcion": "CEMENTO ESPECIAL BAJO CALOR DE HIDRATACION",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "028",
+      "descripcion": "CEMENTO ESPECIAL RESISTENTE A SULFATOS",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "CEMENTO ESPECIAL ANTI SALITRE",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "CEMENTO ESPECIAL PETROLERO",
+      "unidad": "kg",
+      "precio": 183,
+      "tipo": "material"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "CEMENTO ESPECIAL RAPIDO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "CEMENTO CONSTRUCCION MAMPOSTERIA",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "CEMENTO ESPECIAL BLANCO",
+      "unidad": "kg",
+      "precio": 209,
+      "tipo": "material"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "CEMENTO ESPECIAL IMPERMEABLE",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "CEMENTO ESPECIAL ESTUCO Y FRAGUADO LENTO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "CEMENTO ESPECIAL SEGURIDAD ESTANCA",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "CEMENTO ESPECIAL AMPLIACION",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "CEMENTO ESPECIAL COLOREADO",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "039",
+      "descripcion": "CEMENTO ESPECIAL CONDUCTIVO",
+      "unidad": "kg",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "040",
+      "descripcion": "YESO",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "041",
+      "descripcion": "ESTUCO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "042",
+      "descripcion": "CEMENTO ESPECIAL PARA ESTRUCTURAS",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "043",
+      "descripcion": "CEMENTO ESPECIAL PARA INYECCIONES",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "044",
+      "descripcion": "CEMENTO PORTLAND DE ESCORIA",
+      "unidad": "kg",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "045",
+      "descripcion": "CEMENTO ESPECIAL PARA ALISADO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "046",
+      "descripcion": "CEMENTO ESPECIAL PARA REVOQUES",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "047",
+      "descripcion": "CEMENTO ESPECIAL ANTISARRO",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "048",
+      "descripcion": "CEMENTO ESPECIAL DE MAGNESIO",
+      "unidad": "kg",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "049",
+      "descripcion": "CEMENTO ESPECIAL RETRACTIL",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "050",
+      "descripcion": "CEMENTO PORTLAND TIPO V",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "051",
+      "descripcion": "CEMENTO ASFÁLTICO",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "052",
+      "descripcion": "CEMENTO EXPANSIVO",
+      "unidad": "kg",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "053",
+      "descripcion": "CEMENTO ESPECIAL SECADO RAPIDO",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "054",
+      "descripcion": "CEMENTO ESPECIAL THIXOTROPICO",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "055",
+      "descripcion": "CEMENTO ESPECIAL HIDROFUGO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "056",
+      "descripcion": "CEMENTO ESPECIAL PARA PERFORACIONES",
+      "unidad": "kg",
+      "precio": 183,
+      "tipo": "material"
+    },
+    {
+      "codigo": "057",
+      "descripcion": "CEMENTO ESPECIAL PARA SELLADO DE TUBERIAS",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "058",
+      "descripcion": "CEMENTO ESPECIAL PARA TUBOS DE ESCAPE",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "059",
+      "descripcion": "CEMENTO ESPECIAL SOREL",
+      "unidad": "kg",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "060",
+      "descripcion": "CEMENTO ESPECIAL AUTOCLAVADO",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "061",
+      "descripcion": "CEMENTO TALCO HIDRO GRANULADO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "062",
+      "descripcion": "CEMENTO ESPECIAL PORTLAND",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "063",
+      "descripcion": "CEMENTO TALLO SILICE ACTIVADO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "064",
+      "descripción": "YESO",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "065",
+      "descripcion": "CEMENTO PORTLAND TIPO III",
+      "unidad": "kg",
+      "precio": 134,
+      "tipo": "material"
+    },
+    {
+      "codigo": "066",
+      "descripcion": "CEMENTO PORTLAND TIPO V",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "067",
+      "descripcion": "CEMENTO PORTLAND TIPO I PUZOLANICO",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "068",
+      "descripcion": "CEMENTO BLANCO NACIONAL",
+      "unidad": "kg",
+      "precio": 209,
+      "tipo": "material"
+    },
+    {
+      "codigo": "069",
+      "descripcion": "CEMENTO PORTLAND TIPO II",
+      "unidad": "kg",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "070",
+      "descripcion": "CEMENTO PORTLAND TIPO I",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "071",
+      "descripcion": "CEMENTO EXPANSION CONTROLADA",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "072",
+      "descripcion": "CEMENTO TAPASALIENTE",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "073",
+      "descripcion": "CEMENTO TAPAPOROS ESTRUCTURAL",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "074",
+      "descripcion": "CEMENTO BIL-SILICO EXPANDIBLE",
+      "unidad": "kg",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "075",
+      "descripcion": "CEMENTO EPOXICONCRETO",
+      "unidad": "kg",
+      "precio": 2500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "076",
+      "descripcion": "CEMENTO SILICO ALUMINICO",
+      "unidad": "kg",
+      "precio": 209,
+      "tipo": "material"
+    },
+    {
+      "codigo": "077",
+      "descripcion": "CEMENTO EPOXICO ANCLAJE ACANALADO",
+      "unidad": "kg",
+      "precio": 2500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "078",
+      "descripcion": "CEMENTO EPOXICO ESTRUCTURAL",
+      "unidad": "kg",
+      "precio": 2500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "079",
+      "descripcion": "CEMENTO",
+      "unidad": "kg",
+      "precio": 126,
+      "tipo": "material"
+    },
+    {
+      "codigo": "080",
+      "descripcion": "CEMENTO GRIS DE ALBAÑIL ACIDO",
+      "unidad": "kg",
+      "precio": 164,
+      "tipo": "material"
+    },
+    {
+      "codigo": "081",
+      "descripcion": "CEMENTO GROUT NORMAL",
+      "unidad": "kg",
+      "precio": 279,
+      "tipo": "material"
+    }
+  ]
+}

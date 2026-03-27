@@ -1,0 +1,354 @@
+{
+  "items": [
+    {
+      "codigo": "7648",
+      "descripcion": "ACCESORIO FIJO MAMPARA",
+      "unidad": "UN",
+      "precio": 5185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7649",
+      "descripcion": "ACCESORIO MÓVIL MAMPARA",
+      "unidad": "UN",
+      "precio": 1700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7650",
+      "descripcion": "ACCESORIO ESQUINERO",
+      "unidad": "UN",
+      "precio": 1385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7651",
+      "descripcion": "ACCESORIO BISAGRA",
+      "unidad": "UN",
+      "precio": 1385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7652",
+      "descripcion": "ACCESORIO ALUMINIO",
+      "unidad": "UN",
+      "precio": 2310,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7653",
+      "descripcion": "ACCESORIO CRISTAL",
+      "unidad": "UN",
+      "precio": 2310,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7654",
+      "descripcion": "ACCESORIO SUPERIOR DERECHO",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7655",
+      "descripcion": "ACCESORIO SUPERIOR IZQUIERDO",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7656",
+      "descripcion": "ACCESORIO INFERIOR DERECHO",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7657",
+      "descripcion": "ACCESORIO INFERIOR IZQUIERDO",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7658",
+      "descripcion": "ACCESORIO BRAZO PORTA TOALLA",
+      "unidad": "UN",
+      "precio": 3465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7659",
+      "descripcion": "ACCESORIO GUÍA HORIZONTAL",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7660",
+      "descripcion": "ACCESORIO GUÍA VERTICAL",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7661",
+      "descripcion": "ACCESORIO GANCHO DE TECHO",
+      "unidad": "UN",
+      "precio": 1155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7662",
+      "descripcion": "ACCESORIO GANCHO DE PARED",
+      "unidad": "UN",
+      "precio": 1155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7663",
+      "descripcion": "ACCESORIO GANCHO MÓVIL",
+      "unidad": "UN",
+      "precio": 1155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7664",
+      "descripcion": "ACCESORIO RIEL DESLIZANTE",
+      "unidad": "UN",
+      "precio": 3465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7665",
+      "descripcion": "ACCESORIO ESTRUCTURA PLEGABLE",
+      "unidad": "UN",
+      "precio": 3850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7666",
+      "descripcion": "ACCESORIO PALANCA TENSORA",
+      "unidad": "UN",
+      "precio": 1925,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7667",
+      "descripcion": "ACCESORIO SOPORTE DE ESQUINA",
+      "unidad": "UN",
+      "precio": 1155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7668",
+      "descripcion": "ACCESORIO TENSOR DE CABLE",
+      "unidad": "UN",
+      "precio": 770,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7669",
+      "descripcion": "ACCESORIO TENSOR DE ACERO",
+      "unidad": "UN",
+      "precio": 1155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7670",
+      "descripcion": "ACCESORIO TENSOR PARA TELA",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7671",
+      "descripcion": "ACCESORIO TENSOR ALUMINIO",
+      "unidad": "UN",
+      "precio": 2695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7672",
+      "descripcion": "ACCESORIO TENSOR INOX",
+      "unidad": "UN",
+      "precio": 3465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7673",
+      "descripcion": "ACCESORIO TENSOR GALV.",
+      "unidad": "UN",
+      "precio": 1925,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7674",
+      "descripcion": "ACCESORIO DESLIZADOR",
+      "unidad": "UN",
+      "precio": 578,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7675",
+      "descripcion": "ACCESORIO RODAMIENTO",
+      "unidad": "UN",
+      "precio": 1925,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7676",
+      "descripcion": "ACCESORIO SIST. EXTENSION",
+      "unidad": "UN",
+      "precio": 13475,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7677",
+      "descripcion": "ACCESORIO ABRAZADERA",
+      "unidad": "UN",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7678",
+      "descripcion": "ACCESORIO GRAPAS",
+      "unidad": "UN",
+      "precio": 385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7679",
+      "descripcion": "ACCESORIO ARGOLLAS",
+      "unidad": "UN",
+      "precio": 193,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7680",
+      "descripcion": "ACCESORIO PERFIL L",
+      "unidad": "ML",
+      "precio": 770,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7681",
+      "descripcion": "ACCESORIO PERFIL U",
+      "unidad": "ML",
+      "precio": 770,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7682",
+      "descripcion": "ACCESORIO PERFIL H",
+      "unidad": "ML",
+      "precio": 963,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7683",
+      "descripcion": "ACCESORIO PLANCHA INTERMEDIA",
+      "unidad": "UN",
+      "precio": 3465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7684",
+      "descripcion": "ACCESORIO PLANCHA SUPERIOR",
+      "unidad": "UN",
+      "precio": 3465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7685",
+      "descripcion": "ACCESORIO PLANCHA INFERIOR",
+      "unidad": "UN",
+      "precio": 3465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7686",
+      "descripcion": "ACCESORIO BARRA REGULABLE",
+      "unidad": "UN",
+      "precio": 3850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7687",
+      "descripcion": "ACCESORIO BARRA EXTENSIBLE",
+      "unidad": "UN",
+      "precio": 6160,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7688",
+      "descripcion": "ACCESORIO BARRA FIJA",
+      "unidad": "UN",
+      "precio": 2695,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7689",
+      "descripcion": "ACCESORIO BARRA ARTICULADA",
+      "unidad": "UN",
+      "precio": 3850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7690",
+      "descripcion": "ACCESORIO MOSQUITERO",
+      "unidad": "UN",
+      "precio": 12320,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7691",
+      "descripcion": "ACCESORIO CORTINA",
+      "unidad": "UN",
+      "precio": 7700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7692",
+      "descripcion": "ACCESORIO TELA",
+      "unidad": "M2",
+      "precio": 1925,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7693",
+      "descripcion": "ACCESORIO PVC",
+      "unidad": "M2",
+      "precio": 1155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7694",
+      "descripcion": "ACCESORIO LONA",
+      "unidad": "M2",
+      "precio": 1540,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7695",
+      "descripcion": "ACCESORIO VINILO",
+      "unidad": "M2",
+      "precio": 963,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7696",
+      "descripcion": "ACCESORIO CRISTAL TEMP.",
+      "unidad": "M2",
+      "precio": 19250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7697",
+      "descripcion": "ACCESORIO CRISTAL LAMIN.",
+      "unidad": "M2",
+      "precio": 30800,
+      "tipo": "material"
+    }
+  ]
+}

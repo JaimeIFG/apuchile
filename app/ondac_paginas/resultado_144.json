@@ -1,0 +1,326 @@
+{
+  "items": [
+    {
+      "codigo": "8002",
+      "descripcion": "ADOQUIN CUADRADO CONCRETO 6 KIPS",
+      "unidad": "m2",
+      "precio": 16108,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8003",
+      "descripcion": "ADOQUIN CUADRADO CONCRETO 8 KIPS",
+      "unidad": "m2",
+      "precio": 16108,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8004",
+      "descripcion": "ADOQUIN CUADRADO HEXAGONAL DE BAJA RESISTENCIA",
+      "unidad": "m2",
+      "precio": 14408,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8005",
+      "descripcion": "ADOQUIN CUADRADO HEXAGONAL DE BAJA RESISTENCIA",
+      "unidad": "m2",
+      "precio": 14408,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8006",
+      "descripcion": "ADOQUIN CUADRADO HEXAGONAL DE BAJA RESISTENCIA",
+      "unidad": "m2",
+      "precio": 16897,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8007",
+      "descripcion": "ADOQUIN CUADRADO HEXAGONAL DE BAJA RESISTENCIA",
+      "unidad": "m2",
+      "precio": 16897,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8008",
+      "descripcion": "ADOQUIN CUADRADO HEXAGONAL DE BAJA RESISTENCIA",
+      "unidad": "m2",
+      "precio": 18597,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8009",
+      "descripcion": "ADOQUIN CUADRADO RECTANGULAR DE BAJA RESISTENCIA",
+      "unidad": "m2",
+      "precio": 13874,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8015",
+      "descripcion": "ACRÍLICO ESPESADO CANALADO TRANSITE CON PLANCHA GALVANIZADA ACANALADA",
+      "unidad": "m2",
+      "precio": 24900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8016",
+      "descripcion": "ACRÍLICO ESPESADO CANALADO TRANSITE CON PLANCHA GALVANIZADA ACANALADA",
+      "unidad": "m2",
+      "precio": 24900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8017",
+      "descripcion": "ACRÍLICO PLANO REFORZADO CON MECH DOKIT HI",
+      "unidad": "m2",
+      "precio": 32900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8018",
+      "descripcion": "ACRÍLICO PLANO REFORZADO CON MECH DOKIT LO",
+      "unidad": "m2",
+      "precio": 30200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8019",
+      "descripcion": "ACRÍLICO PLANO REFORZADO CON MESH INOXIDABLE",
+      "unidad": "m2",
+      "precio": 19870,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8020",
+      "descripcion": "ACRÍLICO PLANO REFORZADO CON MESH INETT Y M",
+      "unidad": "m2",
+      "precio": 32430,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8021",
+      "descripcion": "ACRÍLICO PLANO REFORZADO CON MESH INETT Y M",
+      "unidad": "m2",
+      "precio": 30200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8022",
+      "descripcion": "ACRÍLICO TEXTURADO REFORZADO",
+      "unidad": "m2",
+      "precio": 17000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8045",
+      "descripcion": "ADITIVOS ESPUMA PARA CONCRETO",
+      "unidad": "lt",
+      "precio": 64409,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8046",
+      "descripcion": "ADITIVOS ESPUMA PARA CONCRETO",
+      "unidad": "lt",
+      "precio": 64409,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8047",
+      "descripcion": "ADITIVOS ESPUMA PARA CONCRETO",
+      "unidad": "lt",
+      "precio": 64409,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8048",
+      "descripcion": "ADITIVOS ESPUMA PARA MORTERO ULTRA",
+      "unidad": "A",
+      "precio": 3590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8049",
+      "descripcion": "ADITIVOS ESPUMA PARA MORTERO ULTRA",
+      "unidad": "A",
+      "precio": 3590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8050",
+      "descripcion": "ADITIVOS ESPUMA PARA MORTERO ULTRA",
+      "unidad": "kg",
+      "precio": 12308,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8051",
+      "descripcion": "ADITIVOS ESPUMA MODIFICADOR",
+      "unidad": "A",
+      "precio": 12308,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8052",
+      "descripcion": "ADITIVOS ESPUMA MODIFICADOR",
+      "unidad": "A",
+      "precio": 12308,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8053",
+      "descripcion": "ADITIVOS ESPUMA RECUBRIMIENTO COLMENA",
+      "unidad": "A",
+      "precio": 12308,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8054",
+      "descripcion": "ADITIVOS ESPUMA RECUBRIMIENTO COLMENA",
+      "unidad": "A",
+      "precio": 12308,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8055",
+      "descripcion": "ADITIVOS ESPUMA RECUBRIMIENTO COLMENA",
+      "unidad": "A",
+      "precio": 12308,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8056",
+      "descripcion": "ADITIVOS HORMIGÓN PARA HORMIGÓN",
+      "unidad": "kg",
+      "precio": 1700,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8057",
+      "descripcion": "ADITIVOS HORMIGÓN PARA MORTERO ANTICARBO",
+      "unidad": "kg",
+      "precio": 4900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8058",
+      "descripcion": "ADITIVOS HORMIGÓN REFUERZO FRAGUADO",
+      "unidad": "kg",
+      "precio": 1290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8059",
+      "descripcion": "ADITIVOS HORMIGÓN SÚPER PLASTIFICANTE",
+      "unidad": "lt",
+      "precio": 1290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8060",
+      "descripcion": "AGAVE FIBRA AGLOMERADA AISLANTE ACÚSTICO",
+      "unidad": "A",
+      "precio": 1290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8061",
+      "descripcion": "ACIDO ACÉTICO AISLANTES ACÚSTICOS",
+      "unidad": "A",
+      "precio": 1290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8062",
+      "descripcion": "CATALIZANTES CATALIZANTE FLUENTE",
+      "unidad": "kg",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8063",
+      "descripcion": "CATALIZANTES CATALIZANTE FLUENTE",
+      "unidad": "kg",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8064",
+      "descripcion": "CATALIZANTES POLIURETANICA FLUENTE",
+      "unidad": "A",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8065",
+      "descripcion": "CATALIZANTES POLYURETANICA FLUENTE",
+      "unidad": "A",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8066",
+      "descripcion": "CATALIZANTES POLIURETANICA ALTA FLUENTE",
+      "unidad": "A",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8067",
+      "descripcion": "CATALIZANTES POLIURETANICA ALTA FLUENTE",
+      "unidad": "A",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8068",
+      "descripcion": "CATALIZANTES POLIURETANICA ALTA FLUENTE",
+      "unidad": "A",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8069",
+      "descripcion": "CATALIZANTES POLIURETANICA ALTA FLUENTE",
+      "unidad": "A",
+      "precio": 1440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8070",
+      "descripcion": "CATALIZANTES POLIURETANICA FLUENTE",
+      "unidad": "A",
+      "precio": 4190,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8071",
+      "descripcion": "CATALIZANTES POLIURETANICA FLUENTE",
+      "unidad": "A",
+      "precio": 4190,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8072",
+      "descripcion": "CATALIZANTES REFRACTARIOS BITUMEN",
+      "unidad": "A",
+      "precio": 11830,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8073",
+      "descripcion": "CATALIZANTES REFRACTARIOS BITUMEN",
+      "unidad": "A",
+      "precio": 11830,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8074",
+      "descripcion": "CATALIZANTES REFRACTARIOS BITUMEN",
+      "unidad": "A",
+      "precio": 11830,
+      "tipo": "material"
+    }
+  ]
+}

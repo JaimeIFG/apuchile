@@ -1,0 +1,270 @@
+{
+  "items": [
+    {
+      "codigo": "5050",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-188 10 X 15 CM",
+      "unidad": "M2",
+      "precio": 7760,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5051",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-257 10 X 15 CM",
+      "unidad": "M2",
+      "precio": 10620,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5052",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-335 10 X 15 CM",
+      "unidad": "M2",
+      "precio": 12450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5053",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-524 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 17450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5054",
+      "descripcion": "ACERO A-63-42H",
+      "unidad": "KG",
+      "precio": 1165,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5055",
+      "descripcion": "ACERO A-44-28H",
+      "unidad": "KG",
+      "precio": 1175,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5056",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-188 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 7760,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5057",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-257 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 10620,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5058",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-335 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 12450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5059",
+      "descripcion": "MALLA ELECTROSOLDADA ANTRACKSIL C-524 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 17450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5060",
+      "descripcion": "MALLA ACMA C-92 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 4620,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5061",
+      "descripcion": "MALLA ACMA C-131 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 6170,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5062",
+      "descripcion": "MALLA ACMA C-188 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 7760,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5063",
+      "descripcion": "MALLA ACMA C-257 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 10620,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5064",
+      "descripcion": "MALLA ACMA C-335 15 X 15 CM",
+      "unidad": "M2",
+      "precio": 12450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5065",
+      "descripcion": "BARRA DE ACERO A-44-28H DIA 6 MM",
+      "unidad": "ML",
+      "precio": 315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5066",
+      "descripcion": "BARRA DE ACERO A-44-28H DIA 8 MM",
+      "unidad": "ML",
+      "precio": 560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5067",
+      "descripcion": "BARRA DE ACERO A-44-28H DIA 10 MM",
+      "unidad": "ML",
+      "precio": 875,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5068",
+      "descripcion": "BARRA DE ACERO A-44-28H DIA 12 MM",
+      "unidad": "ML",
+      "precio": 1260,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5069",
+      "descripcion": "BARRA DE ACERO A-44-28H DIA 16 MM",
+      "unidad": "ML",
+      "precio": 2240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5070",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 6 MM",
+      "unidad": "ML",
+      "precio": 315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5071",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 8 MM",
+      "unidad": "ML",
+      "precio": 560,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5072",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 10 MM",
+      "unidad": "ML",
+      "precio": 875,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5073",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 12 MM",
+      "unidad": "ML",
+      "precio": 1260,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5074",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 16 MM",
+      "unidad": "ML",
+      "precio": 2240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5075",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 18 MM",
+      "unidad": "ML",
+      "precio": 2835,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5076",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 20 MM",
+      "unidad": "ML",
+      "precio": 3500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5077",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 22 MM",
+      "unidad": "ML",
+      "precio": 4235,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5078",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 25 MM",
+      "unidad": "ML",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5079",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 28 MM",
+      "unidad": "ML",
+      "precio": 6860,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5080",
+      "descripcion": "BARRA DE ACERO A-63-42H DIA 32 MM",
+      "unidad": "ML",
+      "precio": 8960,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5081",
+      "descripcion": "ALAMBRE DE AMARRE N°16",
+      "unidad": "KG",
+      "precio": 1350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5082",
+      "descripcion": "SEPARADOR CUBO 1,5 CM",
+      "unidad": "UN",
+      "precio": 27,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5083",
+      "descripcion": "SEPARADOR CUBO 2,0 CM",
+      "unidad": "UN",
+      "precio": 30,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5084",
+      "descripcion": "SEPARADOR CUBO 2,5 CM",
+      "unidad": "UN",
+      "precio": 33,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5085",
+      "descripcion": "SEPARADOR CUBO 3,0 CM",
+      "unidad": "UN",
+      "precio": 36,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5086",
+      "descripcion": "SEPARADOR CUBO 4,0 CM",
+      "unidad": "UN",
+      "precio": 42,
+      "tipo": "material"
+    },
+    {
+      "codigo": "5087",
+      "descripcion": "SEPARADOR CUBO 5,0 CM",
+      "unidad": "UN",
+      "precio": 48,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,480 @@
+{
+  "items": [
+    {
+      "codigo": "AN13",
+      "descripcion": "CERAMICA ACARI DECORATIVA",
+      "unidad": "m2",
+      "precio": 10354,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "AN14",
+      "descripcion": "CERAMICA ACARI PISO ANTIDESLIZANTE",
+      "unidad": "m2",
+      "precio": 9536,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "AN15",
+      "descripcion": "CERAMICA ACARI PISO BASICO",
+      "unidad": "m2",
+      "precio": 8318,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "AN11",
+      "descripcion": "CERAMICA PORTINARI 30X30",
+      "unidad": "m2",
+      "precio": 12788,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QF15",
+      "descripcion": "EXCAVACION SEMI FACIL",
+      "unidad": "m3",
+      "precio": 2726,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QF17",
+      "descripcion": "RELLENO COMPACTADO",
+      "unidad": "m3",
+      "precio": 6827,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "AN26",
+      "descripcion": "CERAMICA TUBULAR PIEDRA ESPECIAL",
+      "unidad": "ml",
+      "precio": 4958,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "AN27",
+      "descripcion": "ZOCALOS DE CERAMICA",
+      "unidad": "ml",
+      "precio": 2468,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK29",
+      "descripcion": "CERAMICA TUBULAR PIEDRA ESPECIAL",
+      "unidad": "ml",
+      "precio": 11426,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QA15",
+      "descripcion": "CIELO VACIADO 15 cm",
+      "unidad": "m2",
+      "precio": 25097,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QA16",
+      "descripcion": "CIELO DEPORTIVO GIMNASIO",
+      "unidad": "m2",
+      "precio": 29527,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QA17",
+      "descripcion": "CIELO VACIADO INCLUYE BORDE",
+      "unidad": "m2",
+      "precio": 29189,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QA14",
+      "descripcion": "CIELO E.MADERA ROBLE L.E.Chalet",
+      "unidad": "m2",
+      "precio": 2798,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QA13",
+      "descripcion": "CIELO FALSO PLACAS DE FIBROCEMENTO",
+      "unidad": "m2",
+      "precio": 14179,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QA12",
+      "descripcion": "CIELO FALSO METAL ACUSTICO AISLANTE",
+      "unidad": "m2",
+      "precio": 13348,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QA19",
+      "descripcion": "CIELO VOLCANITA 10 mm CARTONCILLO",
+      "unidad": "m2",
+      "precio": 8883,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK05",
+      "descripcion": "CORTINEROS",
+      "unidad": "ml",
+      "precio": 14473,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK01",
+      "descripcion": "DINTELES 12x20 cm PILAR CANTONEADO",
+      "unidad": "ml",
+      "precio": 11897,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK02",
+      "descripcion": "DINTELES 15x20 cm PILAR CANTONEADO",
+      "unidad": "ml",
+      "precio": 13990,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK03",
+      "descripcion": "CIELO VOLCANITA 12,5 mm CANTONEADO",
+      "unidad": "m2",
+      "precio": 11468,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK04",
+      "descripcion": "CIELO FALSO FIBRO CEMENTO VIACOL",
+      "unidad": "m2",
+      "precio": 11400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK19",
+      "descripcion": "MALLA ELECTRO SOLDADA ACMA-95",
+      "unidad": "m2",
+      "precio": 7490,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK34",
+      "descripcion": "MUEBLE AEREO MUEBLERIA COCHINERO PORFI",
+      "unidad": "ml",
+      "precio": 44453,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK35",
+      "descripcion": "COMPLEMENTOS DE MUEBLERIA MOLDURANO",
+      "unidad": "gl",
+      "precio": 17140,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QK37",
+      "descripcion": "MUEBLERIA PISERA",
+      "unidad": "ml",
+      "precio": 3403,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "Q-418",
+      "descripcion": "VIDRIADO ACCIONAMENTO FIMTRAL",
+      "unidad": "ml",
+      "precio": 1403,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "Q-419",
+      "descripcion": "INSTALACION ACERO INOXIDABLE GVI HERPEN PORTERIA",
+      "unidad": "un",
+      "precio": 18790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV01",
+      "descripcion": "COMPOSITE ACRO TRIPLE",
+      "unidad": "m2",
+      "precio": 458899,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV02",
+      "descripcion": "COMPOSITE ACRO DOBLE",
+      "unidad": "m2",
+      "precio": 464598,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV17",
+      "descripcion": "EQUIPOS OBRAS",
+      "unidad": "m2",
+      "precio": 217500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV19",
+      "descripcion": "EQUIPOS PERFILAMENO DRACAENA",
+      "unidad": "m2",
+      "precio": 632030,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV20",
+      "descripcion": "COMPOSITE PERFILAMENTO",
+      "unidad": "m2",
+      "precio": 584208,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV22",
+      "descripcion": "COMPOSITE DECOR GLAS DE ALUMINIO",
+      "unidad": "m2",
+      "precio": 1558339,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV24",
+      "descripcion": "COMPOSITE DUAL ROLE",
+      "unidad": "m2",
+      "precio": 504520,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV26",
+      "descripcion": "TERMOPANEL",
+      "unidad": "m2",
+      "precio": 1536888,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV31",
+      "descripcion": "COMBINACION 1",
+      "unidad": "m2",
+      "precio": 1504308,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV32",
+      "descripcion": "COMBINACION 2",
+      "unidad": "m2",
+      "precio": 1568808,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV34",
+      "descripcion": "CZOCKERS ACERO DOBLE GWI",
+      "unidad": "m2",
+      "precio": 1391898,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV35",
+      "descripcion": "COMPOSITE ACERO TRIPLE CANTILEVER",
+      "unidad": "m2",
+      "precio": 1543308,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QM37",
+      "descripcion": "COMPUESTO Y CONTADOR SEGUROS",
+      "unidad": "un",
+      "precio": 91790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QM38",
+      "descripcion": "COMPUESTO EPOXI RESINA + SPAR 2500",
+      "unidad": "kg",
+      "precio": 2040,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QM32",
+      "descripcion": "CUBRE-VIS SILO ANTIOXANTE",
+      "unidad": "kg",
+      "precio": 4408,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QM33",
+      "descripcion": "CONJUNTO ACIDOS PRIMER IMPRIGNANTE",
+      "unidad": "lt",
+      "precio": 699,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV28",
+      "descripcion": "COSTANERA PRESTADA",
+      "unidad": "ml",
+      "precio": 1308,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV29",
+      "descripcion": "COSTANERA PRESTADA",
+      "unidad": "ml",
+      "precio": 1384,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV30",
+      "descripcion": "COSTANERA PRESTADA CANTONEADO",
+      "unidad": "ml",
+      "precio": 1621,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV41",
+      "descripcion": "CUARTO SECO MAXI GWI ZINCOR",
+      "unidad": "m2",
+      "precio": 978,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV42",
+      "descripcion": "CUARTO SECO MCC ZINCOR",
+      "unidad": "m2",
+      "precio": 9763,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV45",
+      "descripcion": "CUBIERTA PLANILLA PISO 1 CAP",
+      "unidad": "un",
+      "precio": 32388,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV46",
+      "descripcion": "CUBIERTA ACERO INOXIDABLE INCLUYE SACHET",
+      "unidad": "m2",
+      "precio": 12790,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV35",
+      "descripcion": "CUBIERTA TELA CRUZLANA",
+      "unidad": "m2",
+      "precio": 15549,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV37",
+      "descripcion": "CUBIERTA METALICA ACERO GALVANIZM",
+      "unidad": "m2",
+      "precio": 12502,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV39",
+      "descripcion": "CUBIERTA PARALIZADA",
+      "unidad": "m2",
+      "precio": 9302,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV98",
+      "descripcion": "CUBIERTA ZINC ACANALADO inc 5mmx",
+      "unidad": "m2",
+      "precio": 8392,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QV99",
+      "descripcion": "CUBIERTA ZINC ACANALADO inc 6,5mmx",
+      "unidad": "m2",
+      "precio": 9138,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QW00",
+      "descripcion": "CUBIERTA ZINC ACANALADO inc 8mmx",
+      "unidad": "m2",
+      "precio": 8994,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QW02",
+      "descripcion": "CUBIERTA COMPUESTO ACANALADO incl(",
+      "unidad": "m2",
+      "precio": 8331,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QW03",
+      "descripcion": "CUBIERTA COMPUESTO ACANALADO incl25",
+      "unidad": "m2",
+      "precio": 7879,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QW04",
+      "descripcion": "CUBIERTA CHAPA ACERO GALVANIZ Ind40x",
+      "unidad": "m2",
+      "precio": 8991,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QW05",
+      "descripcion": "CUBIERTA CHAPA ACERO GALVANIZ Ind10x",
+      "unidad": "m2",
+      "precio": 7399,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "QW08",
+      "descripcion": "CUBIERTA ACACHADA CHAPA DURA 6mmx",
+      "unidad": "m2",
+      "precio": 4633,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "ST04",
+      "descripcion": "ETHERS",
+      "unidad": "m2",
+      "precio": 4633,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "ST01",
+      "descripcion": "CUBIERTA CO-POINT EXPOLIAR BASIC5 KALO SEMA",
+      "unidad": "m2",
+      "precio": 4273,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "ST07",
+      "descripcion": "CUBIERTA-SPLAT COLOR KALO 570",
+      "unidad": "m2",
+      "precio": 4373,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "ST02",
+      "descripcion": "ETHERS",
+      "unidad": "m2",
+      "precio": 3139,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "ST03",
+      "descripcion": "CUBIERTA-SPLAT COLOR 570",
+      "unidad": "m2",
+      "precio": 3133,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "ST06",
+      "descripcion": "ETHERS",
+      "unidad": "m2",
+      "precio": 2844,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "ST05",
+      "descripcion": "CUBIERTA-SPRAYED INC SPEK 30kg",
+      "unidad": "m2",
+      "precio": 3909,
+      "tipo": "apu"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "items": [
+    {
+      "codigo": "CB-001",
+      "descripcion": "ADITIVO EXPANSIVO COMPENSADOR RETRACCIÓN DE FRAGUADO",
+      "unidad": "kg",
+      "precio": 2140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-002",
+      "descripcion": "ADITIVO PARA CONCRETO REDUCTOR DE AGUA",
+      "unidad": "kg",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-003",
+      "descripcion": "ADITIVO PARA CONCRETO RETARDADOR DE FRAGUADO",
+      "unidad": "kg",
+      "precio": 750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-004",
+      "descripcion": "ADITIVO PARA CONCRETO ACELERADOR DE FRAGUADO",
+      "unidad": "kg",
+      "precio": 720,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-005",
+      "descripcion": "ADITIVO PARA CONCRETO DESMOLDANTE",
+      "unidad": "kg",
+      "precio": 1180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-006",
+      "descripcion": "ADITIVO REDUCTOR DE AGUA ALTA PERFORMANCE",
+      "unidad": "kg",
+      "precio": 1350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-007",
+      "descripcion": "CEMENTO PÓRTLAND GRADO CORRIENTE",
+      "unidad": "kg",
+      "precio": 140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-008",
+      "descripcion": "CEMENTO PÓRTLAND ALTA RESISTENCIA INICIAL",
+      "unidad": "kg",
+      "precio": 150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-009",
+      "descripcion": "CEMENTO PÓRTLAND SIDERÚRGICO",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-010",
+      "descripcion": "CEMENTO PÓRTLAND CON FILLER CALCÁREO",
+      "unidad": "kg",
+      "precio": 130,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-011",
+      "descripcion": "CEMENTO BLANCO",
+      "unidad": "kg",
+      "precio": 350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-012",
+      "descripcion": "CONCRETO H5",
+      "unidad": "m3",
+      "precio": 73000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-013",
+      "descripcion": "CONCRETO H10",
+      "unidad": "m3",
+      "precio": 75000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-014",
+      "descripcion": "CONCRETO H15",
+      "unidad": "m3",
+      "precio": 77000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-015",
+      "descripcion": "CONCRETO H20",
+      "unidad": "m3",
+      "precio": 79000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-016",
+      "descripcion": "CONCRETO H25",
+      "unidad": "m3",
+      "precio": 82000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-017",
+      "descripcion": "CONCRETO H30",
+      "unidad": "m3",
+      "precio": 85000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-018",
+      "descripcion": "CONCRETO PREMEZCLADO H5",
+      "unidad": "m3",
+      "precio": 78000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-019",
+      "descripcion": "CONCRETO PREMEZCLADO H10",
+      "unidad": "m3",
+      "precio": 80000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CB-020",
+      "descripcion": "CONCRETO PREMEZCLADO H15",
+      "unidad": "m3",
+      "precio": 82000,
+      "tipo": "material"
+    }
+  ]
+}

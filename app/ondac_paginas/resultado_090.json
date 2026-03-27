@@ -1,0 +1,221 @@
+{
+  "items": [
+    {
+      "codigo": "6013",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°1 A 3 UNIDADES PESO",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6014",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°2 1/2\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6015",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°3 3/4\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6016",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°4 1\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6017",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°5 1 1/2\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6018",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°6 2\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6019",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°7 3\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6020",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°8 4\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6021",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°9 6\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6022",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°10 8\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6023",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°11 10\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6024",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°12 12\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6025",
+      "descripcion": "PIEDRA CHANCADA COMUNA 1/4\" - 3/8\"",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6026",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°13",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6027",
+      "descripcion": "PIEDRA CHANCADA COMUNA N°14",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6028",
+      "descripcion": "PIEDRA CHANCADA COMUNA MEZCLA COMBINADA",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6029",
+      "descripcion": "PIEDRA CHANCADA COMUNA SELECCIONADA",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6030",
+      "descripcion": "PIEDRA CHANCADA COMUNA SELLO MORTERO",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6031",
+      "descripcion": "PIEDRA CHANCADA N°1",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6032",
+      "descripcion": "PIEDRA CHANCADA N°1 A 3 UNIDADES PESO",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6033",
+      "descripcion": "PIEDRA CHANCADA N°2",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6034",
+      "descripcion": "PIEDRA CHANCADA N°3",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6035",
+      "descripcion": "PIEDRA CHANCADA N°4",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6036",
+      "descripcion": "PIEDRA CHANCADA N°5",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6037",
+      "descripcion": "PIEDRA CHANCADA N°6",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6038",
+      "descripcion": "PIEDRA CHANCADA N°7",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6039",
+      "descripcion": "PIEDRA CHANCADA N°8",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6040",
+      "descripcion": "PIEDRA CHANCADA N°9",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6041",
+      "descripcion": "PIEDRA CHANCADA N°10",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6042",
+      "descripcion": "PIEDRA CHANCADA N°11",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    },
+    {
+      "codigo": "6043",
+      "descripcion": "PIEDRA CHANCADA N°12",
+      "unidad": "M3",
+      "precio": 10309,
+      "tipo": "material"
+    }
+  ]
+}

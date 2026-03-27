@@ -1,0 +1,200 @@
+{
+  "items": [
+    {
+      "codigo": "B06",
+      "descripcion": "CONFIRUNCIONESDEACERODEALTA RESISTENCIA",
+      "unidad": "kg",
+      "precio": 1460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B07",
+      "descripcion": "CONFIRUNCIONESDEHORMIGONARMADO",
+      "unidad": "kg",
+      "precio": 1460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B08",
+      "descripcion": "CONFIRUNCIONESDEHORMIGON PRESFORZADO",
+      "unidad": "kg",
+      "precio": 1550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B09",
+      "descripcion": "CONFIRUNCIONESDEHORMIGON",
+      "unidad": "kg",
+      "precio": 1550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B10",
+      "descripcion": "CONFIRUNCIONES DEHORMIGON CONCRETO",
+      "unidad": "kg",
+      "precio": 1460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B11",
+      "descripcion": "CONFIRUNCIONESDEHORMIGONARMADO CON FIBRAS",
+      "unidad": "kg",
+      "precio": 1460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B12",
+      "descripcion": "CONFIRUNCIONES DE MORTERO",
+      "unidad": "kg",
+      "precio": 1710,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B13",
+      "descripcion": "COLA",
+      "unidad": "kg",
+      "precio": 1710,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B14",
+      "descripcion": "CONFIRUNCIONES DE MORTERO ESPECIAL",
+      "unidad": "kg",
+      "precio": 1710,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B15",
+      "descripcion": "COLA CERAMICA",
+      "unidad": "kg",
+      "precio": 890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B16",
+      "descripcion": "COLA CARPINTERO",
+      "unidad": "kg",
+      "precio": 3370,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B17",
+      "descripcion": "COLA CARPINTERO PROFESIONAL",
+      "unidad": "kg",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B18",
+      "descripcion": "COLA CARPINTERO PROFESIONAL SEMI HUMEDO",
+      "unidad": "kg",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B19",
+      "descripcion": "COLA CARPINTERO PROFESIONAL INTERIOR",
+      "unidad": "kg",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B20",
+      "descripcion": "COLA PLASTICA PROFESIONAL BLANCA ALTA CALIDAD",
+      "unidad": "kg",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B21",
+      "descripcion": "COLA PLASTICA PROFESIONAL BLANCA ALTA",
+      "unidad": "kg",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B22",
+      "descripcion": "COLA FRIA",
+      "unidad": "kg",
+      "precio": 2610,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B23",
+      "descripcion": "ADITIVO DE HORMIGON PLASTIFICANTE",
+      "unidad": "lts",
+      "precio": 1090,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B24",
+      "descripcion": "ADITIVO DE HORMIGON",
+      "unidad": "lts",
+      "precio": 1090,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B25",
+      "descripcion": "ESPERACUENTAS RETICULADO",
+      "unidad": "lts",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B26",
+      "descripcion": "ESPERACUENTAS RETICULADO TELA",
+      "unidad": "m2",
+      "precio": 4920,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B27",
+      "descripcion": "ESPERACUENTAS",
+      "unidad": "lts",
+      "precio": 4230,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B28",
+      "descripcion": "FRAGUA DE PVC BOMBEO EXTERIOR",
+      "unidad": "m",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B29",
+      "descripcion": "FRAGUA DE PVC",
+      "unidad": "m",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B30",
+      "descripcion": "FRAGUA DE PVC INTERIOR",
+      "unidad": "m",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B31",
+      "descripcion": "FRAGUA DE PVDF",
+      "unidad": "m",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B32",
+      "descripcion": "FRAGUA DE PVC GRIS",
+      "unidad": "m",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B33",
+      "descripcion": "FRAGUA REPUESTO MECANICA DE TIPO CLIC",
+      "unidad": "unid",
+      "precio": 1450,
+      "tipo": "material"
+    }
+  ]
+}

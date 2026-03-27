@@ -1,0 +1,473 @@
+{
+  "items": [
+    {
+      "codigo": "M01",
+      "descripcion": "MADERA DE ESTRUCTURAL EN EUCALIPTUS SALIGNO 2\"X3\"",
+      "unidad": "ML",
+      "precio": 590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M02",
+      "descripcion": "MADERA DE ESTRUCTURAL EN EUCALIPTUS SALIGNO 2\"X4\"",
+      "unidad": "ML",
+      "precio": 790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M03",
+      "descripcion": "MOLDURA TRANSPARENTE DE PVC",
+      "unidad": "ML",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M04",
+      "descripcion": "MADERA DE ESTRUCTURAL EN EUCALIPTUS SALIGNO 2\"X6\"",
+      "unidad": "ML",
+      "precio": 1190,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M05",
+      "descripcion": "MADERA DE ESTRUCTURAL EN EUCALIPTUS SALIGNO 2\"X8\"",
+      "unidad": "ML",
+      "precio": 1580,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M06",
+      "descripcion": "TABIQUE METALICO",
+      "unidad": "M2",
+      "precio": 6250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M07",
+      "descripcion": "MADERA ESTRUCTURAL PINO IMPREGNADO",
+      "unidad": "ML",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M08",
+      "descripcion": "MADERA DE ESTRUCTURAL EN EUCALIPTUS SALIGNO 3\"X3\"",
+      "unidad": "ML",
+      "precio": 1330,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M09",
+      "descripcion": "MADERA ESTRUCTURAL PINO IMPREGNADO",
+      "unidad": "ML",
+      "precio": 2750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M10",
+      "descripcion": "ENMADERADO AMERICANO",
+      "unidad": "M2",
+      "precio": 12900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M11",
+      "descripcion": "POLIESTIRENO EXPANDIDO ALTA DENSIDAD",
+      "unidad": "M3",
+      "precio": 72000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M12",
+      "descripcion": "FIBRA VIDRIO 50 MM",
+      "unidad": "M2",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M13",
+      "descripcion": "POLIESTIRENO ALTA DENSIDAD",
+      "unidad": "M3",
+      "precio": 85000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M14",
+      "descripcion": "LOSA PREFABRICADA VIGUETA Y BOVEDILLA",
+      "unidad": "M2",
+      "precio": 14500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M15",
+      "descripcion": "ESCANTILLON DE ROBLE DE 3X3 CM",
+      "unidad": "ML",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M16",
+      "descripcion": "LISTON DE PINO DE 2X3 CM",
+      "unidad": "ML",
+      "precio": 440,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M17",
+      "descripcion": "ESCANTILLON DE ROBLE DE 3X3 CM IMPREGNADO",
+      "unidad": "ML",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M18",
+      "descripcion": "2 CMS",
+      "unidad": "ML",
+      "precio": 550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M19",
+      "descripcion": "LISTON DE PINO DE 2X4 CM",
+      "unidad": "ML",
+      "precio": 590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M20",
+      "descripcion": "PERFIL CANALIETA CIERRO PVC 15 MM",
+      "unidad": "ML",
+      "precio": 2600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M21",
+      "descripcion": "PERFIL CANALIETA EXTERIOR PVC 15 MM",
+      "unidad": "ML",
+      "precio": 1750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M22",
+      "descripcion": "PERFIL CANALIETA INTERIOR PVC 15 MM",
+      "unidad": "ML",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M23",
+      "descripcion": "TAPACANTO 2 CMS",
+      "unidad": "ML",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M24",
+      "descripcion": "TAPACANTO 4 CMS",
+      "unidad": "ML",
+      "precio": 2480,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M25",
+      "descripcion": "PERFIL CUATRACANTO PVC TARUGO",
+      "unidad": "ML",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M26",
+      "descripcion": "PERFIL CUADRADO PVC TARUGO",
+      "unidad": "ML",
+      "precio": 1650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M27",
+      "descripcion": "PERFIL CANAL T DE PVC 30 MM BLANCO",
+      "unidad": "ML",
+      "precio": 4275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M28",
+      "descripcion": "2 CMS",
+      "unidad": "ML",
+      "precio": 925,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M29",
+      "descripcion": "PERFIL CANAL T DE PVC 30 MM BLANCO",
+      "unidad": "ML",
+      "precio": 4275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M30",
+      "descripcion": "PERFIL RIEL A SOLDAR PVC CRISTAL MM",
+      "unidad": "ML",
+      "precio": 1780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M31",
+      "descripcion": "PERFIL RIEL SOLAPA PVC CRISTAL MM",
+      "unidad": "ML",
+      "precio": 1890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M32",
+      "descripcion": "SOLAPA 2 CMS",
+      "unidad": "ML",
+      "precio": 2275,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M33",
+      "descripcion": "PERFIL RIEL SOLAPA PVC CRISTAL MM",
+      "unidad": "ML",
+      "precio": 1890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M34",
+      "descripcion": "PERFIL RIEL A SOLDAR PVC CRISTAL",
+      "unidad": "ML",
+      "precio": 4760,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M35",
+      "descripcion": "PERFIL RIEL A SOLDAR PVC CRISTAL MM",
+      "unidad": "ML",
+      "precio": 4080,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M36",
+      "descripcion": "PERFIL RIEL A SOLDAR PVC CRISTAL MM",
+      "unidad": "ML",
+      "precio": 4400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M37",
+      "descripcion": "SOLAPA SOLDADAS EN PVC 15 MM",
+      "unidad": "ML",
+      "precio": 2750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M38",
+      "descripcion": "SO MM SOLADO 4 CMS",
+      "unidad": "ML",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M39",
+      "descripcion": "SOLAPA SOLDADAS EN PVC 15 MM SOLAPA",
+      "unidad": "ML",
+      "precio": 2750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M40",
+      "descripcion": "SO MM SOLADO 6 CMS",
+      "unidad": "ML",
+      "precio": 7150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M41",
+      "descripcion": "SOLAPA A SOLDAR EN PVC 15 MM SOLAPA",
+      "unidad": "ML",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M42",
+      "descripcion": "SO MM SOLADO 7 CMS",
+      "unidad": "ML",
+      "precio": 8350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M43",
+      "descripcion": "SOLAPA A SOLDAR EN PVC 15 MM SOLAPA",
+      "unidad": "ML",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M44",
+      "descripcion": "SO MM SOLADO 8 CMS",
+      "unidad": "ML",
+      "precio": 9550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M45",
+      "descripcion": "SOLAPA A SOLDAR EN PVC 15 MM SOLAPA",
+      "unidad": "ML",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M46",
+      "descripcion": "SO MM SOLADO 9 CMS",
+      "unidad": "ML",
+      "precio": 10750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M47",
+      "descripcion": "SOLAPA A SOLDAR EN PVC 15 MM SOLAPA",
+      "unidad": "ML",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M48",
+      "descripcion": "SO MM SOLADO 2 CMS",
+      "unidad": "ML",
+      "precio": 2750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M49",
+      "descripcion": "SOLAPA A SOLDAR EN PVC 15 MM",
+      "unidad": "ML",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M50",
+      "descripcion": "TARUGO 2 CMS",
+      "unidad": "ML",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M51",
+      "descripcion": "SOLAPA A SOLDAR EN PVC 15 MM",
+      "unidad": "ML",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M52",
+      "descripcion": "TARUGO 4 CMS",
+      "unidad": "ML",
+      "precio": 2480,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M53",
+      "descripcion": "FLANCHE COMPACTO RANURADO PVC 15 MM",
+      "unidad": "ML",
+      "precio": 8250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M54",
+      "descripcion": "TARUGO 2 CMS",
+      "unidad": "ML",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M55",
+      "descripcion": "FLANCHE COMPACTO RANURADO PVC 18 MM",
+      "unidad": "ML",
+      "precio": 9900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M56",
+      "descripcion": "TARUGO 2 CMS",
+      "unidad": "ML",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M57",
+      "descripcion": "FLANCHE COMPACTO RANURADO PVC 18 MM",
+      "unidad": "ML",
+      "precio": 9900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M58",
+      "descripcion": "TARUGO 2 CMS",
+      "unidad": "ML",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M59",
+      "descripcion": "FLANCHE COMPACTO RANURADO PVC 18 MM",
+      "unidad": "ML",
+      "precio": 9900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M60",
+      "descripcion": "TARUGO 4 CMS",
+      "unidad": "ML",
+      "precio": 2480,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M61",
+      "descripcion": "FLANCHE COMPACTO DE MADERA PVC 15 MM",
+      "unidad": "ML",
+      "precio": 8250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M62",
+      "descripcion": "TARUGO 2 CMS",
+      "unidad": "ML",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M63",
+      "descripcion": "FLANCHE COMPACTO DE MADERA PVC 18 MM",
+      "unidad": "ML",
+      "precio": 9900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M64",
+      "descripcion": "TARUGO 2 CMS",
+      "unidad": "ML",
+      "precio": 1240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M65",
+      "descripcion": "OJALILLOS CINC",
+      "unidad": "UN",
+      "precio": 1875,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M66",
+      "descripcion": "OJALILLOS ORO",
+      "unidad": "UN",
+      "precio": 1875,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M67",
+      "descripcion": "OJALILLOS ORO",
+      "unidad": "UN",
+      "precio": 1450,
+      "tipo": "material"
+    }
+  ]
+}

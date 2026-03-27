@@ -1,0 +1,179 @@
+{
+  "items": [
+    {
+      "codigo": "8078",
+      "descripcion": "CAMA 1 1/2 PL ECON CHILE 30 KG/M3",
+      "unidad": "m2",
+      "precio": 4338,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8079",
+      "descripcion": "CAMA 1 1/2 PL ECON CHILE 30 KG/M3",
+      "unidad": "m2",
+      "precio": 5085,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8080",
+      "descripcion": "AISLACION LANA VIDRIO 25 MM",
+      "unidad": "m2",
+      "precio": 3808,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8081",
+      "descripcion": "CAMA 1 1/2 PL TRADICIONAL 30 KG/M3",
+      "unidad": "m2",
+      "precio": 4885,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8082",
+      "descripcion": "CAMA 1 1/2 PL ECON CHILE 30 KG/M3",
+      "unidad": "m2",
+      "precio": 5238,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8083",
+      "descripcion": "CAMA 1 1/2 PL TRADICIONAL 50 KG/M3",
+      "unidad": "m2",
+      "precio": 5550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8084",
+      "descripcion": "CAMA 1 1/2 PL TRADICIONAL 30 KG/M3",
+      "unidad": "m2",
+      "precio": 4885,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8085",
+      "descripcion": "MANTA FIBERGLASS",
+      "unidad": "m2",
+      "precio": 2894,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8086",
+      "descripcion": "CAMA 1 1/2 PL TRADICIONAL 50 KG/M3",
+      "unidad": "m2",
+      "precio": 5550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8087",
+      "descripcion": "CAMA 1 1/2 PL TRADICIONAL 50 KG/M3",
+      "unidad": "m2",
+      "precio": 5550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8088",
+      "descripcion": "CAMA 2 PL TRADICIONAL 50 KG/M3",
+      "unidad": "m2",
+      "precio": 7400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8089",
+      "descripcion": "CAMA 2 PL TRADICIONAL 50 KG/M3",
+      "unidad": "m2",
+      "precio": 7400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8090",
+      "descripcion": "CAMA 3 PL TRADICIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 11100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8091",
+      "descripcion": "CAMA 3 PL TRADICIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 11100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8092",
+      "descripcion": "CAMA 3 1/2 PL TRADICIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 12950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8093",
+      "descripcion": "CAMA 4 PL TRADICIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 14800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8094",
+      "descripcion": "CAMA 1 1/2 PL TRADITIONAL 30 KG/M3",
+      "unidad": "m2",
+      "precio": 5998,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8095",
+      "descripcion": "CAMA 1 1/2 PL TRADITIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 6623,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8096",
+      "descripcion": "CAMA 2 PL TRADITIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 8879,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8097",
+      "descripcion": "CAMA 2 1/2 PL TRADITIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 11079,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8098",
+      "descripcion": "CAMA 3 PL TRADITIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 13292,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8099",
+      "descripcion": "CAMA 3 1/2 PL TRADITIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 15505,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8100",
+      "descripcion": "CAMA 4 PL TRADITIONAL CALORIFUGO",
+      "unidad": "m2",
+      "precio": 17718,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8101",
+      "descripcion": "MANTA FIBERGLASS",
+      "unidad": "m2",
+      "precio": 2894,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8102",
+      "descripcion": "MANTA FIBERGLASS",
+      "unidad": "m2",
+      "precio": 2894,
+      "tipo": "material"
+    }
+  ]
+}

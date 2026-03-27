@@ -1,0 +1,179 @@
+{
+  "items": [
+    {
+      "codigo": "3010",
+      "descripcion": "BLOCK CEMENTO 14x19x39",
+      "unidad": "un",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3011",
+      "descripcion": "BLOCK CEMENTO 19x19x39",
+      "unidad": "un",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3012",
+      "descripcion": "BLOCK CEMENTO MEDIANO",
+      "unidad": "un",
+      "precio": 850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3013",
+      "descripcion": "BLOCK CEMENTO GRANDE",
+      "unidad": "un",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3014",
+      "descripcion": "BLOCK CEMENTO RECTANGULAR",
+      "unidad": "un",
+      "precio": 750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3015",
+      "descripcion": "LADRILLO PRINCESA ROJO",
+      "unidad": "un",
+      "precio": 220,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3016",
+      "descripcion": "LADRILLO PRINCESA BLANCO",
+      "unidad": "un",
+      "precio": 280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3017",
+      "descripcion": "LADRILLO HUECO",
+      "unidad": "un",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3018",
+      "descripcion": "LADRILLO MACIZO",
+      "unidad": "un",
+      "precio": 250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3019",
+      "descripcion": "LADRILLO PRENSADO CARA VISTA",
+      "unidad": "un",
+      "precio": 350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3020",
+      "descripcion": "LADRILLO FISCAL",
+      "unidad": "un",
+      "precio": 190,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3021",
+      "descripcion": "LADRILLO REFRACTARIO",
+      "unidad": "un",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3022",
+      "descripcion": "TABIQUE YESO-CARTON 10mm",
+      "unidad": "m2",
+      "precio": 3850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3023",
+      "descripcion": "TABIQUE YESO-CARTON 12.5mm",
+      "unidad": "m2",
+      "precio": 4250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3024",
+      "descripcion": "BLOCK LIVIANO",
+      "unidad": "un",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3025",
+      "descripcion": "BLOCK SOLIDO",
+      "unidad": "un",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3026",
+      "descripcion": "ADOQUIN CEMENTO",
+      "unidad": "m2",
+      "precio": 8900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3027",
+      "descripcion": "ADOQUIN CERAMICO",
+      "unidad": "m2",
+      "precio": 12500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3028",
+      "descripcion": "BALDOSA CEMENTO",
+      "unidad": "m2",
+      "precio": 4950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3029",
+      "descripcion": "BALDOSA CERAMICA",
+      "unidad": "m2",
+      "precio": 8900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3030",
+      "descripcion": "BALDOSA GRANITO",
+      "unidad": "m2",
+      "precio": 14500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3031",
+      "descripcion": "BALDOSA MARMOL",
+      "unidad": "m2",
+      "precio": 18900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3032",
+      "descripcion": "CERAMICA MURO",
+      "unidad": "m2",
+      "precio": 6900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3033",
+      "descripcion": "CERAMICA PISO",
+      "unidad": "m2",
+      "precio": 8900,
+      "tipo": "material"
+    },
+    {
+      "codigo": "3034",
+      "descripcion": "PORCELANATO",
+      "unidad": "m2",
+      "precio": 12900,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "items": [
+    {
+      "codigo": "M02",
+      "descripcion": "GOMA CAUCHO NATURAL 3MM CHAPA",
+      "unidad": "m2",
+      "precio": 1445,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M03",
+      "descripcion": "GOMA CAUCHO NATURAL 6MM",
+      "unidad": "m2",
+      "precio": 2890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M04",
+      "descripcion": "PEGAMENTO NEOPRENO PARA 50ML",
+      "unidad": "un",
+      "precio": 1500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M05",
+      "descripcion": "AISLANTE LANA DE VIDRIO 50MM",
+      "unidad": "m2",
+      "precio": 2350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M06",
+      "descripcion": "AISLANTE LANA DE VIDRIO 80MM",
+      "unidad": "m2",
+      "precio": 3760,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M07",
+      "descripcion": "CLAVOS GALV. 2 1/2 PULGADA",
+      "unidad": "kg",
+      "precio": 2150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M08",
+      "descripcion": "CLAVOS GALV. 3 PULGADAS",
+      "unidad": "kg",
+      "precio": 2150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M09",
+      "descripcion": "CLAVOS GALV. 4 PULGADAS",
+      "unidad": "kg",
+      "precio": 2150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M10",
+      "descripcion": "CLAVOS GALV. PARA PIZARREÑO 1 1/4",
+      "unidad": "kg",
+      "precio": 2400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M11",
+      "descripcion": "TORNILLO AUTOPERF. PUNTA BROCA 1/2",
+      "unidad": "un",
+      "precio": 15,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M12",
+      "descripcion": "TORNILLO AUTOPERF. PUNTA BROCA 3/4",
+      "unidad": "un",
+      "precio": 18,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M13",
+      "descripcion": "TORNILLO AUTOPERF. PUNTA BROCA 1",
+      "unidad": "un",
+      "precio": 22,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M14",
+      "descripcion": "TARUGOS FISHER Nº6 X 30MM",
+      "unidad": "un",
+      "precio": 25,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M15",
+      "descripcion": "TARUGOS FISHER Nº8 X 40MM",
+      "unidad": "un",
+      "precio": 35,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M16",
+      "descripcion": "TARUGOS FISHER Nº10 X 50MM",
+      "unidad": "un",
+      "precio": 45,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M17",
+      "descripcion": "PERNO ANCLAJE M8 X 75MM",
+      "unidad": "un",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M18",
+      "descripcion": "PERNO ANCLAJE M10 X 100MM",
+      "unidad": "un",
+      "precio": 1450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M19",
+      "descripcion": "PERNO ANCLAJE M12 X 120MM",
+      "unidad": "un",
+      "precio": 2100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M20",
+      "descripcion": "ADHESIVO STRUCTURAL ACRYLICO",
+      "unidad": "un",
+      "precio": 8950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M21",
+      "descripcion": "ADHESIVO STRUCTURAL EPOXICO",
+      "unidad": "un",
+      "precio": 12500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M22",
+      "descripcion": "SOLDADURA E6013 2.5MM",
+      "unidad": "kg",
+      "precio": 4200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M23",
+      "descripcion": "SOLDADURA E7018 3.2MM",
+      "unidad": "kg",
+      "precio": 5800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M24",
+      "descripcion": "SOLDADURA E6011 2.5MM",
+      "unidad": "kg",
+      "precio": 4800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M25",
+      "descripcion": "ALAMBRE SOLDAR MIG ER70S-6",
+      "unidad": "kg",
+      "precio": 3200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M26",
+      "descripcion": "GAS ARGON 99.99% 10M3",
+      "unidad": "un",
+      "precio": 85000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "M27",
+      "descripcion": "GAS CO2 99.5% 10M3",
+      "unidad": "un",
+      "precio": 45000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PO1",
+      "descripcion": "ARTICULOS PARA RIEGO HOGAR",
+      "unidad": "gl",
+      "precio": 150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PO2",
+      "descripcion": "MALLA GALLINERO 1M X 25M",
+      "unidad": "rl",
+      "precio": 28500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PO3",
+      "descripcion": "MALLA RACHEL 2M X 100M VERDE",
+      "unidad": "rl",
+      "precio": 68000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PO4",
+      "descripcion": "ESTACA MADERA PINO 1.8M",
+      "unidad": "un",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "PO5",
+      "descripcion": "ESTACA MADERA PINO 2.4M",
+      "unidad": "un",
+      "precio": 2400,
+      "tipo": "material"
+    }
+  ]
+}

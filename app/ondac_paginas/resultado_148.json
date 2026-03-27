@@ -1,0 +1,95 @@
+{
+  "items": [
+    {
+      "codigo": "VIC",
+      "descripcion": "SOLDURAS Y SOLDERILLOS",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "categoria"
+    },
+    {
+      "codigo": "8001",
+      "descripcion": "SOLDADURA ELECTRODO 6011 Ø3,2",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8002",
+      "descripcion": "SOLDADURA ELECTRODO 6013 Ø3,2",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8003",
+      "descripcion": "SOLDADURA ELECTRODO 7018",
+      "unidad": "kg",
+      "precio": 3100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8004",
+      "descripcion": "SOLDADURA ELECTRODO INOX",
+      "unidad": "kg",
+      "precio": 8500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8005",
+      "descripcion": "SOLDADURA ELECTRODO ALUMINIO",
+      "unidad": "kg",
+      "precio": 12500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "VID",
+      "descripcion": "VIDRIOS",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "categoria"
+    },
+    {
+      "codigo": "8010",
+      "descripcion": "CARACTERISTICAS DE VIDRIOS UTILIZADOS",
+      "unidad": "m²",
+      "precio": 0,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8011",
+      "descripcion": "VIDRIO SIMPLE TRANSPARENTE 3mm",
+      "unidad": "m²",
+      "precio": 8500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8012",
+      "descripcion": "CARACTERISTICAS DE VIDRIOS UTILIZADOS",
+      "unidad": "m²",
+      "precio": 12500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8013",
+      "descripcion": "VIDRIO SIMPLE TRANSPARENTE 4mm",
+      "unidad": "m²",
+      "precio": 9500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8014",
+      "descripcion": "VIDRIO SIMPLE TRANSPARENTE 5mm",
+      "unidad": "m²",
+      "precio": 11500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8015",
+      "descripcion": "VIDRIO SIMPLE TRANSPARENTE 6mm",
+      "unidad": "m²",
+      "precio": 13500,
+      "tipo": "material"
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "items": [
+    {
+      "codigo": "G01",
+      "descripcion": "MOLDAJE GENERAL P/FUNDACIONES, ENTRAMADO, SOBRECIMIENTOS Y RADIERES",
+      "unidad": "m2",
+      "precio": 3225
+    },
+    {
+      "codigo": "G02",
+      "descripcion": "MOLDAJE GRAL P/MUROS VERTICALES",
+      "unidad": "m2",
+      "precio": 3225
+    },
+    {
+      "codigo": "G03",
+      "descripcion": "MOLDAJE GENERAL HORIZONTAL RECTO",
+      "unidad": "m2",
+      "precio": 3225
+    },
+    {
+      "codigo": "G04",
+      "descripcion": "MOLDAJE GENERAL ESPECIAL O CURVO",
+      "unidad": "m2",
+      "precio": 4225
+    },
+    {
+      "codigo": "G05",
+      "descripcion": "MOLDAJE GENERAL REUTILIZABLE PINO OREGON",
+      "unidad": "m2",
+      "precio": 10000
+    },
+    {
+      "codigo": "G06",
+      "descripcion": "MOLDAJE GRAL P/ENTRAMADO PLACAS",
+      "unidad": "m2",
+      "precio": 3225
+    },
+    {
+      "codigo": "G07",
+      "descripcion": "PINO OREGON 1X2",
+      "unidad": "ml",
+      "precio": 415
+    },
+    {
+      "codigo": "G08",
+      "descripcion": "PINO OREGON 2X2",
+      "unidad": "ml",
+      "precio": 800
+    },
+    {
+      "codigo": "G09",
+      "descripcion": "PINO OREGON 2X3",
+      "unidad": "ml",
+      "precio": 1075
+    },
+    {
+      "codigo": "G10",
+      "descripcion": "PINO OREGON 2X4",
+      "unidad": "ml",
+      "precio": 1420
+    },
+    {
+      "codigo": "G11",
+      "descripcion": "PINO OREGON 2X5",
+      "unidad": "ml",
+      "precio": 1785
+    },
+    {
+      "codigo": "G12",
+      "descripcion": "PINO OREGON 2X6",
+      "unidad": "ml",
+      "precio": 2150
+    },
+    {
+      "codigo": "G13",
+      "descripcion": "PINO OREGON 2X8",
+      "unidad": "ml",
+      "precio": 2850
+    },
+    {
+      "codigo": "G14",
+      "descripcion": "PINO OREGON 2X10",
+      "unidad": "ml",
+      "precio": 3570
+    },
+    {
+      "codigo": "G15",
+      "descripcion": "PINO OREGON 3X3",
+      "unidad": "ml",
+      "precio": 1615
+    },
+    {
+      "codigo": "G16",
+      "descripcion": "PINO OREGON 3X4",
+      "unidad": "ml",
+      "precio": 2130
+    },
+    {
+      "codigo": "G17",
+      "descripcion": "PINO OREGON 4X4",
+      "unidad": "ml",
+      "precio": 2850
+    },
+    {
+      "codigo": "G18",
+      "descripcion": "FIERRO CORRUGADO A44-28H",
+      "unidad": "kg",
+      "precio": 630
+    },
+    {
+      "codigo": "G19",
+      "descripcion": "FIERRO LISO A37-24ES",
+      "unidad": "kg",
+      "precio": 650
+    },
+    {
+      "codigo": "G20",
+      "descripcion": "MALLA ACMA C92",
+      "unidad": "m2",
+      "precio": 1890
+    },
+    {
+      "codigo": "G21",
+      "descripcion": "MALLA ACMA C131",
+      "unidad": "m2",
+      "precio": 2650
+    },
+    {
+      "codigo": "G22",
+      "descripcion": "MALLA ACMA C188",
+      "unidad": "m2",
+      "precio": 3780
+    },
+    {
+      "codigo": "G23",
+      "descripcion": "MALLA ACMA C257",
+      "unidad": "m2",
+      "precio": 5150
+    },
+    {
+      "codigo": "G24",
+      "descripcion": "MALLA ACMA C335",
+      "unidad": "m2",
+      "precio": 6720
+    },
+    {
+      "codigo": "G25",
+      "descripcion": "ALAMBRE GALVANIZADO",
+      "unidad": "kg",
+      "precio": 1250
+    },
+    {
+      "codigo": "G26",
+      "descripcion": "ALAMBRE NEGRO",
+      "unidad": "kg",
+      "precio": 870
+    },
+    {
+      "codigo": "G27",
+      "descripcion": "SEPARADORES",
+      "unidad": "un",
+      "precio": 85
+    },
+    {
+      "codigo": "G28",
+      "descripcion": "CLAVO 2",
+      "unidad": "kg",
+      "precio": 1550
+    },
+    {
+      "codigo": "G29",
+      "descripcion": "CLAVO 2 1/2",
+      "unidad": "kg",
+      "precio": 1550
+    },
+    {
+      "codigo": "G30",
+      "descripcion": "CLAVO 3",
+      "unidad": "kg",
+      "precio": 1550
+    },
+    {
+      "codigo": "G31",
+      "descripcion": "CLAVO 4",
+      "unidad": "kg",
+      "precio": 1550
+    },
+    {
+      "codigo": "G32",
+      "descripcion": "CLAVO 5",
+      "unidad": "kg",
+      "precio": 1550
+    },
+    {
+      "codigo": "G33",
+      "descripcion": "CLAVO TECHO 1 1/2",
+      "unidad": "kg",
+      "precio": 1700
+    },
+    {
+      "codigo": "G34",
+      "descripcion": "CLAVO TECHO 2",
+      "unidad": "kg",
+      "precio": 1700
+    },
+    {
+      "codigo": "G35",
+      "descripcion": "CLAVO TECHO 2 1/2",
+      "unidad": "kg",
+      "precio": 1700
+    },
+    {
+      "codigo": "G36",
+      "descripcion": "CLAVO TECHO 3",
+      "unidad": "kg",
+      "precio": 1700
+    },
+    {
+      "codigo": "G37",
+      "descripcion": "CLAVO ESCARPIA",
+      "unidad": "kg",
+      "precio": 2100
+    },
+    {
+      "codigo": "G38",
+      "descripcion": "TORNILLO AUTOPERFORANTE 8X1 1/4",
+      "unidad": "un",
+      "precio": 20
+    },
+    {
+      "codigo": "G39",
+      "descripcion": "TORNILLO AUTOPERFORANTE 10X1 1/2",
+      "unidad": "un",
+      "precio": 35
+    },
+    {
+      "codigo": "G40",
+      "descripcion": "TORNILLO AUTOPERFORANTE 12X1 3/4",
+      "unidad": "un",
+      "precio": 55
+    }
+  ]
+}

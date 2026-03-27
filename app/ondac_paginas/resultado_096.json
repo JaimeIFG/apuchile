@@ -1,0 +1,410 @@
+{
+  "items": [
+    {
+      "codigo": "002",
+      "descripcion": "ANTIOXIDANTE SILICOZ",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003",
+      "descripcion": "ANTIOXIDANTE SILICOZ",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004",
+      "descripcion": "ANTIOXIDANTE CONVERTIDOR GALVO",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "ANTIOXIDANTE CONVERTIDOR GALVO",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "DILUYENTE ESTANDAR (DILANOL)",
+      "unidad": "lt",
+      "precio": 1870,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "DILUYENTE ESPECIAL (DILANOL)",
+      "unidad": "lt",
+      "precio": 2100,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "ANTIOXIDANTE ESMALTE AL AGUA C/",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "ANTIOXIDANTE ESMALTE AL AGUA S/",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "ANTIOXIDANTE ESMALTE AL AGUA C/",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "ANTIOXIDANTE ESMALTE AL AGUA S/",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "CREOSOTA",
+      "unidad": "lt",
+      "precio": 1420,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "CREOSOTA",
+      "unidad": "gl",
+      "precio": 5370,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "ANTIOXIDANTE ESMALTE SILICATICO",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "ANTIOXIDANTE ESMALTE SILICATICO",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "ANTIOXIDANTE ESMALTE AL AGUA C/",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "CREOSOTA",
+      "unidad": "gl",
+      "precio": 5370,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "ANTIOXIDANTE OLEO",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "ANTIOXIDANTE OLEO",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "ANTIOXIDANTE CARB/RC (terminales CINTA)",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "ANTIOXIDANTE CARB/RC (terminales CINTA)",
+      "unidad": "kg",
+      "precio": 2850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "ANTICORROSIVO",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "ANTICORROSIVO MATERIAL",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "DILUYENTE PARA MATERIAL DE OIL",
+      "unidad": "lt",
+      "precio": 1870,
+      "tipo": "material"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "DILUYENTE PARA MATERIAL DE OIL",
+      "unidad": "gl",
+      "precio": 7070,
+      "tipo": "material"
+    },
+    {
+      "codigo": "026",
+      "descripcion": "ANTICORROSIVO MATERIAL",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "027",
+      "descripcion": "ANTICORROSIVO PVC PARKET",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "028",
+      "descripcion": "ANTICORROSIVO PVC PARKET",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "FDG 250 (30 cm) RETROL TEREX",
+      "unidad": "m2",
+      "precio": 46140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "FDG 300 (40 cm) RETROL VISAL",
+      "unidad": "m2",
+      "precio": 52570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "ANTICORROSIVO TIXOL GALVANIZED",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "ANTICORROSIVO TIXOL GALVANIZED",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "PINTURA",
+      "unidad": "lt",
+      "precio": 10290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "ANTICORROSIVO OLEO CROMO/RED DE C/",
+      "unidad": "lt",
+      "precio": 10290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "ANTIOXIDANTE GRANIT",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "MISC GENERAL SILICOZ",
+      "unidad": "kg",
+      "precio": 3240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "ANTICORROSIVO MATERIAL SILICON",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "ANTICORROSIVO MATERIAL SILICON",
+      "unidad": "gl",
+      "precio": 17280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "039",
+      "descripcion": "ANTICORROSIVO POLIURETANICO EN SILICN",
+      "unidad": "lt",
+      "precio": 4570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "040",
+      "descripcion": "CINTA COMPENSATORIA DIVERTERJACANAL",
+      "unidad": "mt",
+      "precio": 4280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "041",
+      "descripcion": "CINTA COMPENSATORIA/DIV GRANIT",
+      "unidad": "mt",
+      "precio": 4280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "042",
+      "descripcion": "FILTROS SLURRY NATURAL",
+      "unidad": "unid",
+      "precio": 12280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "043",
+      "descripcion": "FILTROS SLURRY ARTIFICIAL",
+      "unidad": "unid",
+      "precio": 12280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "044",
+      "descripcion": "PINTURA ECONOMICA-GALPOTEX",
+      "unidad": "lt",
+      "precio": 1570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "045",
+      "descripcion": "PINTURA ECONOMICA-GALPOTEX",
+      "unidad": "gl",
+      "precio": 5940,
+      "tipo": "material"
+    },
+    {
+      "codigo": "046",
+      "descripcion": "PINTURA ECONOMICA-GALPONITEX",
+      "unidad": "lt",
+      "precio": 1570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "047",
+      "descripcion": "PINTURA ECONOMICA-GALPONITEX",
+      "unidad": "gl",
+      "precio": 5940,
+      "tipo": "material"
+    },
+    {
+      "codigo": "048",
+      "descripcion": "PINTURA ECONOMICA-GALVONITEX",
+      "unidad": "lt",
+      "precio": 1570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "049",
+      "descripcion": "PINTURA ECONOMICA-GALVONITEX",
+      "unidad": "gl",
+      "precio": 5940,
+      "tipo": "material"
+    },
+    {
+      "codigo": "050",
+      "descripcion": "PINTURA SILICONICA-SILICN",
+      "unidad": "lt",
+      "precio": 10290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "051",
+      "descripcion": "PINTURA MASTIC ELASTOFLEX",
+      "unidad": "kg",
+      "precio": 2140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "052",
+      "descripcion": "PINTURA MASTIC INTEPLAN GALVO",
+      "unidad": "kg",
+      "precio": 2140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "053",
+      "descripcion": "PINTURA MASTIC INTEPLAN",
+      "unidad": "kg",
+      "precio": 2140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "054",
+      "descripcion": "BETUN",
+      "unidad": "kg",
+      "precio": 4280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "055",
+      "descripcion": "PINTURA MASTIC INTEPLAN GALVO",
+      "unidad": "kg",
+      "precio": 2140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "056",
+      "descripcion": "BETUN",
+      "unidad": "kg",
+      "precio": 4280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "057",
+      "descripcion": "PINTURA MATERIAL-AV.GRP MATERIAL",
+      "unidad": "kg",
+      "precio": 2140,
+      "tipo": "material"
+    },
+    {
+      "codigo": "058",
+      "descripcion": "PINTURA MATERIAL-AV.GRP MATERIAL",
+      "unidad": "gl",
+      "precio": 10290,
+      "tipo": "material"
+    },
+    {
+      "codigo": "059",
+      "descripcion": "PINTURA MASTIC INTEPLAN GALVO",
+      "unidad": "kg",
+      "precio": 2140,
+      "tipo": "material"
+    }
+  ]
+}

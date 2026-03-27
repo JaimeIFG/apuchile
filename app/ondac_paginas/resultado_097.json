@@ -1,0 +1,277 @@
+{
+  "items": [
+    {
+      "codigo": "CR01",
+      "descripcion": "ZINC SLAB COLOR AMARILLO 108 x M/2,5",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR02",
+      "descripcion": "ZINC SLAB COLOR AZUL PROFUNDO",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR03",
+      "descripcion": "ZINC SLAB COLOR BLANCO",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR04",
+      "descripcion": "ZINC SLAB COLOR GRIS CLARO",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR05",
+      "descripcion": "ZINC SLAB COLOR GRIS MEDIO N°30",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR06",
+      "descripcion": "ZINC SLAB COLOR GRIS N°90",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR07",
+      "descripcion": "ZINC SLAB COLOR MARRON",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR08",
+      "descripcion": "ZINC SLAB COLOR NATURAL",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR09",
+      "descripcion": "ZINC SLAB COLOR NEGRO",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR10",
+      "descripcion": "ZINC SLAB COLOR ROJO",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR11",
+      "descripcion": "ZINC SLAB COLOR VERDE",
+      "unidad": "M",
+      "precio": 14878,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR12",
+      "descripcion": "ZINC SLAB GALVANIZADO N°26",
+      "unidad": "M",
+      "precio": 8265,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR13",
+      "descripcion": "ZINC SLAB GALVANIZADO N°28",
+      "unidad": "M",
+      "precio": 7453,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR14",
+      "descripcion": "ZINC SLAB GALVANIZADO N°30",
+      "unidad": "M",
+      "precio": 6890,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR15",
+      "descripcion": "ZINC SLAB ALUZINC ONDULADO N°26",
+      "unidad": "M",
+      "precio": 10825,
+      "tipo": "material"
+    },
+    {
+      "codigo": "CR16",
+      "descripcion": "ZINC SLAB ALUZINC ONDULADO N°28",
+      "unidad": "M",
+      "precio": 9745,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D001",
+      "descripcion": "SIKA LATEX ADITIVO LIGANTE LATEX",
+      "unidad": "LT",
+      "precio": 4879,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D002",
+      "descripcion": "DESMOLDANTE METALICO LIQUIDO",
+      "unidad": "LT",
+      "precio": 6433,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D003",
+      "descripcion": "DESMOLDANTE UNIVERSAL",
+      "unidad": "LT",
+      "precio": 4725,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D004",
+      "descripcion": "SIKLATEX ADITIVO ACELERANTE FRAGUADO",
+      "unidad": "LT",
+      "precio": 4879,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D005",
+      "descripcion": "SIKLATEX ADITIVO ACELERANTE FRAGUADO",
+      "unidad": "GL",
+      "precio": 17390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D006",
+      "descripcion": "SIKA LATEX ADITIVO ANTICONGELANTE",
+      "unidad": "LT",
+      "precio": 4879,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D007",
+      "descripcion": "SIKA LATEX IMPERMEABILIZANTE LIQUID",
+      "unidad": "LT",
+      "precio": 4879,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D008",
+      "descripcion": "SIKA LATEX RETARDANTE DE FRAGUADO",
+      "unidad": "LT",
+      "precio": 4879,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D009",
+      "descripcion": "ZINC LAMINADO GALVANIZADO N°28",
+      "unidad": "KG",
+      "precio": 1465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D010",
+      "descripcion": "ZINC LAMINADO GALVANIZADO N°30",
+      "unidad": "KG",
+      "precio": 1465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D011",
+      "descripcion": "ZINC LAMINADO GALVANIZADO N°26",
+      "unidad": "KG",
+      "precio": 1465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D012",
+      "descripcion": "ZINC CHAPA CINCALUM N°26",
+      "unidad": "KG",
+      "precio": 2046,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D013",
+      "descripcion": "ZINC CHAPA CINCALUM N°28",
+      "unidad": "KG",
+      "precio": 2046,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D014",
+      "descripcion": "ZINC CHAPA CINCALUM N°30",
+      "unidad": "KG",
+      "precio": 2046,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D015",
+      "descripcion": "ZINC CHAPA ONDULADO GALVANIZADO",
+      "unidad": "KG",
+      "precio": 1465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D016",
+      "descripcion": "MALLA ACMA CUADRADA N°8",
+      "unidad": "M2",
+      "precio": 2280,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D017",
+      "descripcion": "MALLA ACMA CUADRADA N°10",
+      "unidad": "M2",
+      "precio": 1824,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D018",
+      "descripcion": "MALLA ACMA CUADRADA N°12",
+      "unidad": "M2",
+      "precio": 1456,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D019",
+      "descripcion": "MALLA ACMA CUADRADA N°15",
+      "unidad": "M2",
+      "precio": 976,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D020",
+      "descripcion": "MALLA ACMA GALLINERO HEXAGONAL",
+      "unidad": "ML",
+      "precio": 1932,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D021",
+      "descripcion": "MALLA ACMA CERCO N°8",
+      "unidad": "ML",
+      "precio": 6825,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D022",
+      "descripcion": "MALLA ACMA CERCO N°10",
+      "unidad": "ML",
+      "precio": 5460,
+      "tipo": "material"
+    },
+    {
+      "codigo": "D023",
+      "descripcion": "MALLA ACMA CERCO N°12",
+      "unidad": "ML",
+      "precio": 4368,
+      "tipo": "material"
+    }
+  ]
+}

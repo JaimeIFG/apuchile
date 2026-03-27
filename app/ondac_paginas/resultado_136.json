@@ -1,0 +1,466 @@
+{
+  "items": [
+    {
+      "codigo": "015",
+      "descripcion": "RELLENO COMPACTADO SUELO COMUN",
+      "unidad": "M3",
+      "precio": 4116,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "RELLENO COMPACTADO CON MATERIAL DE PRESTAMO SELECCIONADO",
+      "unidad": "M3",
+      "precio": 12558,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "RELLENO COMPACTADO CON SUELO CEMENTO",
+      "unidad": "M3",
+      "precio": 13795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "RELLENO COMPACTADO CON SUELO CEMENTO FINO",
+      "unidad": "M3",
+      "precio": 15987,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "PROTECCION CON GEOMEMBRANA HDPE",
+      "unidad": "M2",
+      "precio": 7798,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "PROTECCION CON GEOMEMBRANA PEAD",
+      "unidad": "M2",
+      "precio": 7798,
+      "tipo": "material"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "PROTECCION CON GEOMEMBRANA TEXTURA DA",
+      "unidad": "M2",
+      "precio": 10452,
+      "tipo": "material"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "PROTECCION CON GEOTEXTIL",
+      "unidad": "M2",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "PROTECCION CON GEOTEXTIL REFORZADO",
+      "unidad": "M2",
+      "precio": 1892,
+      "tipo": "material"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "PROTECCION CON ESTABILIZADORES QUIMICOS",
+      "unidad": "M2",
+      "precio": 4128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "PROTECCION CON GEOTEXTIL NO TEJIDO",
+      "unidad": "M2",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "026",
+      "descripcion": "PROTECCION CON MALLA DE ACERO",
+      "unidad": "M2",
+      "precio": 4128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "027",
+      "descripcion": "RELLENO CON SUELO DE PLAYA",
+      "unidad": "M3",
+      "precio": 4116,
+      "tipo": "material"
+    },
+    {
+      "codigo": "028",
+      "descripcion": "RELLENO CON GRAVA Y GALLETONES",
+      "unidad": "M3",
+      "precio": 12558,
+      "tipo": "material"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "DEMOLICION Y EXTRACCION DE MATERIAL",
+      "unidad": "M3",
+      "precio": 4256,
+      "tipo": "material"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "PREPARACION Y COMPACTACION DE TERRENO GRANULAR",
+      "unidad": "M2",
+      "precio": 1128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "PREPARACION Y COMPACTACION TERRENO GRANULAR CON RODILLO",
+      "unidad": "M2",
+      "precio": 1556,
+      "tipo": "material"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "PREPARACION Y COMPACTACION DE SUBRASANTE",
+      "unidad": "M2",
+      "precio": 856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "PERFILADO Y LIMPIEZA 20 CM CANTER",
+      "unidad": "M",
+      "precio": 328,
+      "tipo": "material"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "PERFILADO Y LIMPIEZA 30 CM CANTER",
+      "unidad": "M",
+      "precio": 458,
+      "tipo": "material"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "PERFILADO CON MATERIAL DE PRESTAMO",
+      "unidad": "M2",
+      "precio": 1892,
+      "tipo": "material"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "PERFILADO DE SOLERAS CON CEMENTOS",
+      "unidad": "M",
+      "precio": 6986,
+      "tipo": "material"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "NIVELACION DE TERRENO CON CEMENTOS",
+      "unidad": "M2",
+      "precio": 1128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "PERFILADO PARA SOLADOS DE COLECTOR",
+      "unidad": "M",
+      "precio": 4328,
+      "tipo": "material"
+    },
+    {
+      "codigo": "039",
+      "descripcion": "PERFILADO PARA SOLADOS DE COLECTOR CON CEMENTO",
+      "unidad": "M",
+      "precio": 7428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "040",
+      "descripcion": "PERFILADO DE TUBERIA CON CEMENTO",
+      "unidad": "M",
+      "precio": 1856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "041",
+      "descripcion": "PERFILADO DE CUNETAS TEMPORARIAS",
+      "unidad": "M",
+      "precio": 858,
+      "tipo": "material"
+    },
+    {
+      "codigo": "042",
+      "descripcion": "ROTURA DE LOZA EXISTENTE",
+      "unidad": "M2",
+      "precio": 2156,
+      "tipo": "material"
+    },
+    {
+      "codigo": "043",
+      "descripcion": "PERFILADO Y LIMPIEZA PAVIMENTO EXISTENTE",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "044",
+      "descripcion": "PERFILADO Y LIMPIEZA PAVIMENTO",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "045",
+      "descripcion": "PERFILADO Y ACONDICIONAMIENTO COLECTOR",
+      "unidad": "M",
+      "precio": 1956,
+      "tipo": "material"
+    },
+    {
+      "codigo": "046",
+      "descripcion": "PERFILADO PARA COLOCACION DE TUBERIA",
+      "unidad": "M",
+      "precio": 1856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "047",
+      "descripcion": "PERFILADO Y LIMPIEZA TRANSVERSAL",
+      "unidad": "M",
+      "precio": 1256,
+      "tipo": "material"
+    },
+    {
+      "codigo": "048",
+      "descripcion": "PERFILADO Y COMPACTACION DE TERRENO",
+      "unidad": "M2",
+      "precio": 856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "049",
+      "descripcion": "PERFILADO Y SOLDADURA TRANSVERSAL",
+      "unidad": "M",
+      "precio": 1856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "050",
+      "descripcion": "PERFILADO DE CUNETAS Y ACCIONES",
+      "unidad": "M",
+      "precio": 1256,
+      "tipo": "material"
+    },
+    {
+      "codigo": "051",
+      "descripcion": "PERFILADO Y LIMPIEZA MIXTA",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "052",
+      "descripcion": "PERFILADO DE CAJA Y ACONDICIONAMIENTO",
+      "unidad": "M2",
+      "precio": 1056,
+      "tipo": "material"
+    },
+    {
+      "codigo": "053",
+      "descripcion": "PERFILADO Y LIMPIEZA PAVIMENTO",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "054",
+      "descripcion": "PERFILADO Y LIMPIEZA DE VEREDAS",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "055",
+      "descripcion": "PERFILADO Y LIMPIEZA DE CALZADAS",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "056",
+      "descripcion": "PERFILADO Y SOLDADURA CALZADAS",
+      "unidad": "M2",
+      "precio": 856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "057",
+      "descripcion": "PERFILADO Y SOLDADURA TRANSVERSAL",
+      "unidad": "M",
+      "precio": 1856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "058",
+      "descripcion": "PERFILADO Y LIMPIEZA DE CUNETAS",
+      "unidad": "M",
+      "precio": 728,
+      "tipo": "material"
+    },
+    {
+      "codigo": "059",
+      "descripcion": "PERFILADO DE ACCESOS Y CUNETAS",
+      "unidad": "M",
+      "precio": 1256,
+      "tipo": "material"
+    },
+    {
+      "codigo": "060",
+      "descripcion": "PERFILADO Y LIMPIEZA MIXTA",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "061",
+      "descripcion": "PERFILADO Y LIMPIEZA VEREDAS",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "062",
+      "descripcion": "PERFILADO DE SUPERFICIE",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "063",
+      "descripcion": "PERFILADO CONCRETO CON CEMENTO",
+      "unidad": "M2",
+      "precio": 1056,
+      "tipo": "material"
+    },
+    {
+      "codigo": "064",
+      "descripcion": "PERFILADO Y ALISADO DE SUPERFICIE",
+      "unidad": "M2",
+      "precio": 856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "065",
+      "descripcion": "PERFILADO MANUAL",
+      "unidad": "M2",
+      "precio": 428,
+      "tipo": "material"
+    },
+    {
+      "codigo": "066",
+      "descripcion": "PERFILADO Y ALISADO",
+      "unidad": "M2",
+      "precio": 856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "067",
+      "descripcion": "PERFILADO Y SOLDADURA MANUAL",
+      "unidad": "M2",
+      "precio": 1056,
+      "tipo": "material"
+    },
+    {
+      "codigo": "068",
+      "descripcion": "PERFILADO CON EQUIPO MECÁNICO",
+      "unidad": "M2",
+      "precio": 328,
+      "tipo": "material"
+    },
+    {
+      "codigo": "069",
+      "descripcion": "PERFILADO Y LIMPIEZA SOLERA",
+      "unidad": "M",
+      "precio": 728,
+      "tipo": "material"
+    },
+    {
+      "codigo": "070",
+      "descripcion": "PERFILADO CON BOMBA",
+      "unidad": "M2",
+      "precio": 1856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "071",
+      "descripcion": "PERFILADO DE CANALES CON MATERIAL",
+      "unidad": "M",
+      "precio": 2856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "072",
+      "descripcion": "PERFILADO Y LIMPIEZA DE CANALES",
+      "unidad": "M",
+      "precio": 1256,
+      "tipo": "material"
+    },
+    {
+      "codigo": "073",
+      "descripcion": "PERFILADO Y SOLDADURA",
+      "unidad": "M2",
+      "precio": 1056,
+      "tipo": "material"
+    },
+    {
+      "codigo": "074",
+      "descripcion": "DEMOLICION CON EQUIPO",
+      "unidad": "M3",
+      "precio": 4256,
+      "tipo": "material"
+    },
+    {
+      "codigo": "075",
+      "descripcion": "DEMOLICION PAVIMENTO CON GALLETONES",
+      "unidad": "M2",
+      "precio": 2856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "076",
+      "descripcion": "DEMOLICION TERRENO CON CEMENTOS",
+      "unidad": "M3",
+      "precio": 13795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "077",
+      "descripcion": "DEMOLICION",
+      "unidad": "M3",
+      "precio": 4256,
+      "tipo": "material"
+    },
+    {
+      "codigo": "078",
+      "descripcion": "EXTRACCION DE ADOQUINES",
+      "unidad": "M2",
+      "precio": 1556,
+      "tipo": "material"
+    },
+    {
+      "codigo": "079",
+      "descripcion": "CORTE CONCRETO",
+      "unidad": "M",
+      "precio": 2856,
+      "tipo": "material"
+    },
+    {
+      "codigo": "080",
+      "descripcion": "RETIRO DE ESCOMBROS",
+      "unidad": "M3",
+      "precio": 4256,
+      "tipo": "material"
+    }
+  ]
+}

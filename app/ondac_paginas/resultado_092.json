@@ -1,0 +1,144 @@
+{
+  "items": [
+    {
+      "codigo": "001",
+      "descripcion": "CEMENTO GRIS CORRIENTE ESPECIAL E-1",
+      "unidad": "kg",
+      "precio": 155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "002",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "003",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP CON ADICION CALIZA",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "004",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "CEMENTO ALUMINOSO",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "CAL HIDRATADA TIPO N",
+      "unidad": "kg",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "CAL VIVA",
+      "unidad": "kg",
+      "precio": 65,
+      "tipo": "material"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "YESO DE CONSTRUCCION",
+      "unidad": "kg",
+      "precio": 155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "CEMENTO GRIS CORRIENTE ESPECIAL E-1",
+      "unidad": "kg",
+      "precio": 155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP CON ADICION CALIZA",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "CEMENTO ALUMINOSO",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "CAL HIDRATADA TIPO N",
+      "unidad": "kg",
+      "precio": 125,
+      "tipo": "material"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "CAL VIVA",
+      "unidad": "kg",
+      "precio": 65,
+      "tipo": "material"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "YESO DE CONSTRUCCION",
+      "unidad": "kg",
+      "precio": 155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "CEMENTO GRIS CORRIENTE ESPECIAL E-1",
+      "unidad": "kg",
+      "precio": 155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP CON ADICION CALIZA",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "CEMENTO PORTLAND PUZOLANICO IP",
+      "unidad": "kg",
+      "precio": 135,
+      "tipo": "material"
+    }
+  ]
+}

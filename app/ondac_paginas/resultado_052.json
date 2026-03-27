@@ -1,0 +1,179 @@
+{
+  "items": [
+    {
+      "codigo": "60040",
+      "descripcion": "ALFOMBRA SOLVENT LAC TARDES",
+      "unidad": "M2",
+      "precio": 35345,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60041",
+      "descripcion": "ALFOMBRA SOLVENT OPTIMA COLOR COUNTRY COLOR",
+      "unidad": "M2",
+      "precio": 6471,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60042",
+      "descripcion": "ALFOMBRA SOLVENT SALMON COLOR ANIS OPTIMA CARBON",
+      "unidad": "M2",
+      "precio": 6163,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60043",
+      "descripcion": "ALFOMBRA SOLVENT FASHION COLOR MONTECELLA BE SAN CARLOS",
+      "unidad": "M2",
+      "precio": 6330,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60044",
+      "descripcion": "ALFOMBRA SOLVENT FASHION COLOR 100% POLI CALIFORNIA ANIS",
+      "unidad": "M2",
+      "precio": 8731,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60045",
+      "descripcion": "ALFOMBRA SOLVENT CHOCOLATE COLOR TERMACETINA ANIS SU CUIR",
+      "unidad": "M2",
+      "precio": 8781,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60046",
+      "descripcion": "ALFOMBRA SOLVENT CHOCOLATE COLOR BORBON ASI DE CHOCOLATE COLOR",
+      "unidad": "M2",
+      "precio": 5399,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60047",
+      "descripcion": "ALFOMBRA SOLVENT CHOCOLATE COLOR MOROCO COLOR",
+      "unidad": "M2",
+      "precio": 5199,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60048",
+      "descripcion": "ALFOMBRA SOLVENT OPTIMA COLOR CHOCOLATE",
+      "unidad": "M2",
+      "precio": 6121,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60050",
+      "descripcion": "ALFOMBRA SOLVENT OPTIMA COLOR DORIS LS",
+      "unidad": "M2",
+      "precio": 6121,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60051",
+      "descripcion": "ALFOMBRA SOLVENT ALVINO REAL SOLIS CHOCOLATE CALIFORNIA",
+      "unidad": "M2",
+      "precio": 7490,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60052",
+      "descripcion": "ALFOMBRA SOLVENT BANO ROJO SOLLS CALIFORNIA CON B U B Y Z2",
+      "unidad": "M2",
+      "precio": 7409,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60053",
+      "descripcion": "ALFOMBRA SOLVENT BANO COLOR CHOCOLATE CHOCOLATE CON CANELA",
+      "unidad": "M2",
+      "precio": 7490,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60054",
+      "descripcion": "ALFOMBRA SOLVENT RUSTICO RAIN COLOR KECO GEN DE CANELA",
+      "unidad": "M2",
+      "precio": 5399,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60055",
+      "descripcion": "ALFOMBRA SOLVENT RUSTICO RAIN COLOR VISION",
+      "unidad": "M2",
+      "precio": 5399,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60059",
+      "descripcion": "ALFOMBRA PELU COPIADO SEVIS",
+      "unidad": "M2",
+      "precio": 6078,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60060",
+      "descripcion": "ALFOMBRA VALDIVIA COLOR ROJO CLASIS ANIS DA",
+      "unidad": "M2",
+      "precio": 6321,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60072",
+      "descripcion": "ALFOMBRA DE PIES",
+      "unidad": "PZA",
+      "precio": 100000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60110",
+      "descripcion": "AFICIONADO US DE LA MANO",
+      "unidad": "PZA",
+      "precio": 641,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60112",
+      "descripcion": "AFICIONADO SEMI DESARMANTE SOBRE MADERA",
+      "unidad": "PZA",
+      "precio": 316,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60113",
+      "descripcion": "APLIQUES RAMO",
+      "unidad": "PZA",
+      "precio": 7213,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60117",
+      "descripcion": "APLIQUES ELECTRICO LA",
+      "unidad": "PZA",
+      "precio": 121900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60118",
+      "descripcion": "ARCO BARY LAT",
+      "unidad": "PZA",
+      "precio": 329900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60119",
+      "descripcion": "ARCO BARY",
+      "unidad": "PZA",
+      "precio": 244000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60121",
+      "descripcion": "ARCO BARY",
+      "unidad": "PZA",
+      "precio": 244000,
+      "tipo": "apu"
+    }
+  ]
+}

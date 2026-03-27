@@ -1,0 +1,445 @@
+{
+  "items": [
+    {
+      "codigo": "9316",
+      "descripcion": "GABINETE 460 LITROS LARIX",
+      "unidad": "UN",
+      "precio": 55314,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9317",
+      "descripcion": "GABINETE 500X350X800 WENGE",
+      "unidad": "UN",
+      "precio": 52505,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9318",
+      "descripcion": "GABINETE 600X350X800 WENGE",
+      "unidad": "UN",
+      "precio": 58476,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9319",
+      "descripcion": "GABINETE DE 2 PTS CON ESTANTES",
+      "unidad": "UN",
+      "precio": 34190,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9320",
+      "descripcion": "GABINETE DE 3 PTS CON ESTANTES",
+      "unidad": "UN",
+      "precio": 51086,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9321",
+      "descripcion": "GABINETE DE 4 PTS CON",
+      "unidad": "UN",
+      "precio": 75398,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9322",
+      "descripcion": "GABINETE DE 2 PTS NOGAL",
+      "unidad": "UN",
+      "precio": 32390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9323",
+      "descripcion": "GABINETE DE 3 PTS NOGAL",
+      "unidad": "UN",
+      "precio": 48185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9324",
+      "descripcion": "GABINETE DE 4 PTS NOGAL",
+      "unidad": "UN",
+      "precio": 71780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9325",
+      "descripcion": "GABINETE DE 2 PTS CEDRO ROJO",
+      "unidad": "UN",
+      "precio": 35990,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9326",
+      "descripcion": "GABINETE DE 3 PTS CEDRO ROJO",
+      "unidad": "UN",
+      "precio": 53385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9327",
+      "descripcion": "GABINETE DE 4 PTS CEDRO ROJO",
+      "unidad": "UN",
+      "precio": 79780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9328",
+      "descripcion": "GABINETE DE 2 PTS ROBLE RUSTICO",
+      "unidad": "UN",
+      "precio": 30690,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9329",
+      "descripcion": "GABINETE DE 3 PTS ROBLE RUSTICO",
+      "unidad": "UN",
+      "precio": 45585,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9330",
+      "descripcion": "GABINETE DE 4 PTS ROBLE RUSTICO",
+      "unidad": "UN",
+      "precio": 68180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9331",
+      "descripcion": "GABINETE DE 2 PTS ROBLE CLARO",
+      "unidad": "UN",
+      "precio": 32390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9332",
+      "descripción": "GABINETE DE 3 PTS ROBLE CLARO",
+      "unidad": "UN",
+      "precio": 48185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9333",
+      "descripcion": "GABINETE DE 4 PTS ROBLE CLARO",
+      "unidad": "UN",
+      "precio": 71780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9334",
+      "descripcion": "GABINETE DE 2 PTS CEREZO",
+      "unidad": "UN",
+      "precio": 35990,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9335",
+      "descripcion": "GABINETE DE 3 PTS CEREZO",
+      "unidad": "UN",
+      "precio": 53385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9336",
+      "descripcion": "GABINETE DE 4 PTS CEREZO",
+      "unidad": "UN",
+      "precio": 79780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9337",
+      "descripcion": "GABINETE DE 2 PTS CEDRO OREGÓN",
+      "unidad": "UN",
+      "precio": 32390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9338",
+      "descripcion": "GABINETE DE 3 PTS CEDRO OREGÓN",
+      "unidad": "UN",
+      "precio": 48185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9339",
+      "descripcion": "GABINETE DE 4 PTS CEDRO OREGÓN",
+      "unidad": "UN",
+      "precio": 71780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9340",
+      "descripcion": "GABINETE DE 2 PTS PINO OREGÓN",
+      "unidad": "UN",
+      "precio": 30690,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9341",
+      "descripcion": "GABINETE DE 3 PTS PINO OREGÓN",
+      "unidad": "UN",
+      "precio": 45585,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9342",
+      "descripcion": "GABINETE DE 4 PTS PINO OREGÓN",
+      "unidad": "UN",
+      "precio": 68180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9343",
+      "descripcion": "GABINETE DE 2 PTS PINO BARNIZADO",
+      "unidad": "UN",
+      "precio": 32390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9344",
+      "descripcion": "GABINETE DE 3 PTS PINO BARNIZADO",
+      "unidad": "UN",
+      "precio": 48185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9345",
+      "descripcion": "GABINETE DE 4 PTS PINO BARNIZADO",
+      "unidad": "UN",
+      "precio": 71780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9346",
+      "descripcion": "GABINETE DE 2 PTS PINO TEÑIDO",
+      "unidad": "UN",
+      "precio": 35990,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9347",
+      "descripcion": "GABINETE DE 3 PTS PINO TEÑIDO",
+      "unidad": "UN",
+      "precio": 53385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9348",
+      "descripcion": "GABINETE DE 4 PTS PINO TEÑIDO",
+      "unidad": "UN",
+      "precio": 79780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9349",
+      "descripcion": "GABINETE DE 2 PTS CAOBA",
+      "unidad": "UN",
+      "precio": 35990,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9350",
+      "descripcion": "GABINETE DE 3 PTS CAOBA",
+      "unidad": "UN",
+      "precio": 53385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9351",
+      "descripcion": "GABINETE DE 4 PTS CAOBA",
+      "unidad": "UN",
+      "precio": 79780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9352",
+      "descripcion": "GABINETE DE PINO CEPILLADO EN BRUTO",
+      "unidad": "UN",
+      "precio": 25891,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9353",
+      "descripcion": "GABINETE DE 2 PTS BLANCO",
+      "unidad": "UN",
+      "precio": 32390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9354",
+      "descripcion": "GABINETE DE 3 PTS BLANCO",
+      "unidad": "UN",
+      "precio": 48185,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9355",
+      "descripcion": "GABINETE DE 4 PTS BLANCO",
+      "unidad": "UN",
+      "precio": 71780,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9356",
+      "descripcion": "GABINETE DE COCINA CON CAJONES",
+      "unidad": "UN",
+      "precio": 22492,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9357",
+      "descripcion": "GABINETE DE COCINA CON PUERTAS",
+      "unidad": "UN",
+      "precio": 19593,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9358",
+      "descripcion": "GABINETE MODULAR ALTO 35 CM",
+      "unidad": "UN",
+      "precio": 11896,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9359",
+      "descripcion": "GABINETE MODULAR ALTO 50 CM",
+      "unidad": "UN",
+      "precio": 17844,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9360",
+      "descripcion": "GABINETE MODULAR ALTO 60 CM",
+      "unidad": "UN",
+      "precio": 22492,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9361",
+      "descripcion": "GABINETE MODULAR ALTO 70 CM",
+      "unidad": "UN",
+      "precio": 26441,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9362",
+      "descripcion": "GABINETE MODULAR ALTO 80 CM",
+      "unidad": "UN",
+      "precio": 30390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9363",
+      "descripcion": "GABINETE MODULAR ALTO 90 CM",
+      "unidad": "UN",
+      "precio": 34339,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9364",
+      "descripcion": "GABINETE BAJO MUEBLE DE 35 CM",
+      "unidad": "UN",
+      "precio": 11896,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9365",
+      "descripcion": "GABINETE BAJO MUEBLE DE 50 CM",
+      "unidad": "UN",
+      "precio": 17844,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9366",
+      "descripcion": "GABINETE BAJO MUEBLE DE 60 CM",
+      "unidad": "UN",
+      "precio": 22492,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9367",
+      "descripcion": "GABINETE BAJO MUEBLE DE 70 CM",
+      "unidad": "UN",
+      "precio": 26441,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9368",
+      "descripcion": "GABINETE BAJO MUEBLE DE 80 CM",
+      "unidad": "UN",
+      "precio": 30390,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9369",
+      "descripcion": "GABINETE BAJO MUEBLE DE 90 CM",
+      "unidad": "UN",
+      "precio": 34339,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9370",
+      "descripcion": "GABINETE ALTO CON VIDRIO TRANSPARENTE",
+      "unidad": "UN",
+      "precio": 32490,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9371",
+      "descripcion": "GABINETE ALTO CON VIDRIO OPACO",
+      "unidad": "UN",
+      "precio": 32490,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9372",
+      "descripcion": "GAVETA DE 30 CM",
+      "unidad": "UN",
+      "precio": 8698,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9373",
+      "descripcion": "GAVETA DE 40 CM",
+      "unidad": "UN",
+      "precio": 11097,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9374",
+      "descripcion": "GAVETA DE 50 CM",
+      "unidad": "UN",
+      "precio": 13496,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9375",
+      "descripcion": "GAVETA DE 60 CM",
+      "unidad": "UN",
+      "precio": 15895,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9376",
+      "descripcion": "GAVETA DE 70 CM",
+      "unidad": "UN",
+      "precio": 18294,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9377",
+      "descripcion": "GAVETA DE 80 CM",
+      "unidad": "UN",
+      "precio": 20693,
+      "tipo": "material"
+    },
+    {
+      "codigo": "9378",
+      "descripcion": "GAVETA DE 90 CM",
+      "unidad": "UN",
+      "precio": 23092,
+      "tipo": "material"
+    }
+  ]
+}

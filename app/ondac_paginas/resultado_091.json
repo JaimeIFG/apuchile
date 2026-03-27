@@ -1,0 +1,270 @@
+{
+  "items": [
+    {
+      "codigo": "8013",
+      "descripcion": "MEZCLA EMULSION BITUM MODIFICADA 38%",
+      "unidad": "m3",
+      "precio": 74583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8014",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA GRAD",
+      "unidad": "m3",
+      "precio": 67738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8015",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA GRAD",
+      "unidad": "m3",
+      "precio": 69738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8016",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA GRAD",
+      "unidad": "m3",
+      "precio": 71738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8017",
+      "descripcion": "BASE",
+      "unidad": "m3",
+      "precio": 8400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8018",
+      "descripcion": "MEZCLA CEMENTO 2% AL HUMEDAD",
+      "unidad": "m3",
+      "precio": 9800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8019",
+      "descripcion": "BASE",
+      "unidad": "m3",
+      "precio": 8400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8020",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA",
+      "unidad": "m3",
+      "precio": 67738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8021",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA",
+      "unidad": "m3",
+      "precio": 69738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8022",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA",
+      "unidad": "m3",
+      "precio": 71738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8023",
+      "descripcion": "BASE",
+      "unidad": "m3",
+      "precio": 8400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8024",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8025",
+      "descripcion": "BASE",
+      "unidad": "m3",
+      "precio": 8400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8026",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8027",
+      "descripcion": "MEZCLA EMULSION BITUM MODIFICADA 38%",
+      "unidad": "m3",
+      "precio": 74583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8028",
+      "descripcion": "BASE",
+      "unidad": "m3",
+      "precio": 8400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8029",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8030",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8031",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8032",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE",
+      "unidad": "m3",
+      "precio": 67738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8033",
+      "descripcion": "MEZCLA EMULSION BITUM MODIFICADA 38%",
+      "unidad": "m3",
+      "precio": 74583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8034",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA GRAD",
+      "unidad": "m3",
+      "precio": 67738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8035",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA GRAD",
+      "unidad": "m3",
+      "precio": 69738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8036",
+      "descripcion": "MEZCLA ASFALTICA EN CALIENTE DENSA GRAD",
+      "unidad": "m3",
+      "precio": 71738,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8037",
+      "descripcion": "MEZCLA EMULSION BITUM MODIFICADA",
+      "unidad": "m3",
+      "precio": 74583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8038",
+      "descripcion": "MEZCLA EMULSION BITUM MODIFICADA 38%",
+      "unidad": "m3",
+      "precio": 74583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8039",
+      "descripcion": "MEZCLA DE CONCRETO 340 KG/M3 CEMENTO",
+      "unidad": "m3",
+      "precio": 89436,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8040",
+      "descripcion": "MEZCLA DE CONCRETO 350 KG/M3 CEMENTO",
+      "unidad": "m3",
+      "precio": 91236,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8041",
+      "descripcion": "MEZCLA DE CONCRETO 380 KG/M3 CEMENTO",
+      "unidad": "m3",
+      "precio": 95636,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8042",
+      "descripcion": "MEZCLA DE CONCRETO 400 KG/M3 CEMENTO",
+      "unidad": "m3",
+      "precio": 99236,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8043",
+      "descripcion": "MEZCLA DE CONCRETO 420 KG/M3 CEMENTO",
+      "unidad": "m3",
+      "precio": 102836,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8044",
+      "descripcion": "MEZCLA CEMENTO 3% AL HUMEDAD",
+      "unidad": "m3",
+      "precio": 10800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8045",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8046",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8047",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8048",
+      "descripcion": "MEZCLA ASFALTICA ESPUMA 25 HUMEDAD",
+      "unidad": "m3",
+      "precio": 35000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8049",
+      "descripcion": "MEZCLA CEMENTO 2% AL HUMEDAD",
+      "unidad": "m3",
+      "precio": 9800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8050",
+      "descripcion": "MEZCLA CEMENTO 3% AL HUMEDAD",
+      "unidad": "m3",
+      "precio": 10800,
+      "tipo": "material"
+    }
+  ]
+}

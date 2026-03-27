@@ -1,0 +1,550 @@
+{
+  "items": [
+    {
+      "codigo": "02094",
+      "descripcion": "REVESTIMIENTO ASFALTICO ROCIADO",
+      "unidad": "m²",
+      "precio": 14050,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02175",
+      "descripcion": "PAVIMENTO ASFALTICO EN CALIENTE",
+      "unidad": "m²",
+      "precio": 4175,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "02176",
+      "descripcion": "BASE ESTABILIZADA GRANULAR",
+      "unidad": "m³",
+      "precio": 16300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "03012",
+      "descripcion": "PERFIL CONSTRUCCION HORMIGON ARMADO",
+      "unidad": "ml",
+      "precio": 22830,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "03048",
+      "descripcion": "HORMIGON PARA ACERAS",
+      "unidad": "m²",
+      "precio": 4600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04332",
+      "descripcion": "ALBAÑIL AMERICA BLANCA 50ML",
+      "unidad": "UNI",
+      "precio": 4200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04333",
+      "descripcion": "MAESTRO DE OBRA",
+      "unidad": "UNI",
+      "precio": 63000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04334",
+      "descripcion": "INSTALADOR TERMOSOLAR",
+      "unidad": "UNI",
+      "precio": 42000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "07134",
+      "descripcion": "BODEGA EN TERRAPLENES AMERICANO",
+      "unidad": "m²",
+      "precio": 8547,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "04335",
+      "descripcion": "MONTAJE DE ANDAMIOS 100 MG",
+      "unidad": "UNI",
+      "precio": 5600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "05617",
+      "descripcion": "ARENA GRUESA FLLETE 10MM",
+      "unidad": "m³",
+      "precio": 22830,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "05618",
+      "descripcion": "RIPIO TAMIZADO",
+      "unidad": "m³",
+      "precio": 21000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "05619",
+      "descripcion": "ARENA FINA LAVADA",
+      "unidad": "m³",
+      "precio": 19380,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "05620",
+      "descripcion": "GRAVILLA",
+      "unidad": "m³",
+      "precio": 21000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "05621",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 24900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50038",
+      "descripcion": "FLUJO SEAL",
+      "unidad": "m²",
+      "precio": 1480,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50039",
+      "descripcion": "IMPRIMACION CON CERA VEMIDAN",
+      "unidad": "m²",
+      "precio": 980,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50040",
+      "descripcion": "SHOTCRETE LECA 2M ESP HT 15 KM",
+      "unidad": "m²",
+      "precio": 5340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50041",
+      "descripcion": "REPARACION FISURAS MENORES",
+      "unidad": "ml",
+      "precio": 1200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50042",
+      "descripcion": "ANDAMIO CAMINERO",
+      "unidad": "UNI",
+      "precio": 19200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50362",
+      "descripcion": "HORMIGON IMPERMEABILIZACION / HOPAC",
+      "unidad": "m²",
+      "precio": 25580,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50363",
+      "descripcion": "MOLDAJE Y ACABADO",
+      "unidad": "m²",
+      "precio": 20430,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50364",
+      "descripcion": "MOLDAJES TECHO MADERA",
+      "unidad": "m²",
+      "precio": 30400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50365",
+      "descripcion": "SHOTCRETE LECA 2M ESP HT 15 KM",
+      "unidad": "m²",
+      "precio": 5340,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50366",
+      "descripcion": "REPARACION FISURAS MENORES",
+      "unidad": "ml",
+      "precio": 1200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50367",
+      "descripcion": "ANDAMIO CAMINERO",
+      "unidad": "UNI",
+      "precio": 19200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "50368",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 24900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51326",
+      "descripcion": "ESTUCO HORMIGON",
+      "unidad": "m²",
+      "precio": 7630,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "51327",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 10000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54602",
+      "descripcion": "PETROLEO DIESEL",
+      "unidad": "lt",
+      "precio": 850,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54604",
+      "descripcion": "BENCINA 93 OCTANOS CORRIENTEMENTE",
+      "unidad": "lt",
+      "precio": 890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54605",
+      "descripcion": "CEMEX IMPERMEABIL",
+      "unidad": "KG",
+      "precio": 10630,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54606",
+      "descripcion": "ADITIVO PLASTIFICANTE",
+      "unidad": "lt",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54607",
+      "descripcion": "IMPRIMANTE ASFALTICO",
+      "unidad": "lt",
+      "precio": 560,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54615",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 24900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54656",
+      "descripcion": "RESINAMAR",
+      "unidad": "m²",
+      "precio": 7630,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54657",
+      "descripcion": "PETROLEO DIESEL",
+      "unidad": "lt",
+      "precio": 850,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54658",
+      "descripcion": "BENCINA 93 OCTANOS CORRIENTEMENTE",
+      "unidad": "lt",
+      "precio": 890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54659",
+      "descripcion": "CEMEX IMPERMEABIL",
+      "unidad": "KG",
+      "precio": 10630,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54660",
+      "descripcion": "ADITIVO PLASTIFICANTE",
+      "unidad": "lt",
+      "precio": 3000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54661",
+      "descripcion": "IMPRIMANTE ASFALTICO",
+      "unidad": "lt",
+      "precio": 560,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54615",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 24900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54700",
+      "descripcion": "ACEITE PRESAT Y LIMPIEZA DE CLIMA",
+      "unidad": "m²",
+      "precio": 34360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54701",
+      "descripcion": "BRETEO PIRINEO",
+      "unidad": "m²",
+      "precio": 29300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54702",
+      "descripcion": "HORMIGON CIMENTACION",
+      "unidad": "m³",
+      "precio": 36900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54703",
+      "descripcion": "RECARO PREMIADO - GRANBEM",
+      "unidad": "UNI",
+      "precio": 8600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54704",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 24900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54705",
+      "descripcion": "VARILLA FCA",
+      "unidad": "m²",
+      "precio": 735,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54706",
+      "descripcion": "SOBRECAMA UNION",
+      "unidad": "UNI",
+      "precio": 13650,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54862",
+      "descripcion": "SERVICIOS TECNICOS PROFESIONALES",
+      "unidad": "hr",
+      "precio": 120,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54863",
+      "descripcion": "PROFESIONALES MEDICIONES AGUA",
+      "unidad": "hr",
+      "precio": 450,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54864",
+      "descripcion": "CALCULO Y TRAMITE DE CONSUMOS",
+      "unidad": "hr",
+      "precio": 600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54940",
+      "descripcion": "ELABORACION PIPING SISTEMAS",
+      "unidad": "hr",
+      "precio": 2250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54941",
+      "descripcion": "MOTORES 4020 FS",
+      "unidad": "hr",
+      "precio": 1200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54942",
+      "descripcion": "INFORME 500H",
+      "unidad": "UNI",
+      "precio": 15600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54943",
+      "descripcion": "MOTORES COLECTIVAS SUE",
+      "unidad": "hr",
+      "precio": 14400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54944",
+      "descripcion": "CALENTADOR ELECTRICO 2000W",
+      "unidad": "hr",
+      "precio": 14500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54945",
+      "descripcion": "DUCTO COMPLETO 103 SAM",
+      "unidad": "hr",
+      "precio": 14500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54946",
+      "descripcion": "COLUMNA ATMOSFERICA",
+      "unidad": "hr",
+      "precio": 3500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54947",
+      "descripcion": "FABRICACION DE PIEZAS",
+      "unidad": "hr",
+      "precio": 3200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54948",
+      "descripcion": "CORTE OBSTINACION SOLDADURA",
+      "unidad": "hr",
+      "precio": 720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54949",
+      "descripcion": "TOLETES OBSTINACION SOLDADURA",
+      "unidad": "hr",
+      "precio": 700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54950",
+      "descripcion": "PLOMADA Y PINTURA",
+      "unidad": "hr",
+      "precio": 9600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54951",
+      "descripcion": "ALBANIL Y APOYO",
+      "unidad": "hr",
+      "precio": 4800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54972",
+      "descripcion": "JORNALES",
+      "unidad": "hr",
+      "precio": 4800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54973",
+      "descripcion": "AYUDANTE",
+      "unidad": "hr",
+      "precio": 14400,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "54974",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 24900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59594",
+      "descripcion": "MAQUINARIA OBRA (INCLUYE MALLA",
+      "unidad": "m²",
+      "precio": 8840,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59595",
+      "descripcion": "CONSTRUCCION",
+      "unidad": "m²",
+      "precio": 5040,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59596",
+      "descripcion": "CONSTRUCCIONES MULTIFLEX",
+      "unidad": "m²",
+      "precio": 42110,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59597",
+      "descripcion": "SUPERFICIE MELT GLASS",
+      "unidad": "m²",
+      "precio": 44200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59598",
+      "descripcion": "TANQUE INSTALACION MOTOR CALEF",
+      "unidad": "UNI",
+      "precio": 42500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59599",
+      "descripcion": "ACLILEX",
+      "unidad": "m²",
+      "precio": 23900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59600",
+      "descripcion": "CAMBIO BOLSA LISO",
+      "unidad": "hr",
+      "precio": 17900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59601",
+      "descripcion": "POLLOS/GALLON 4 ANO",
+      "unidad": "hr",
+      "precio": 31000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59602",
+      "descripcion": "ALBANIL Y APOYO",
+      "unidad": "hr",
+      "precio": 4800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59603",
+      "descripcion": "JORNALES",
+      "unidad": "hr",
+      "precio": 4800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "59604",
+      "descripcion": "LEPES GOMA BEE.",
+      "unidad": "UNI",
+      "precio": 24900,
+      "tipo": "apu"
+    }
+  ]
+}

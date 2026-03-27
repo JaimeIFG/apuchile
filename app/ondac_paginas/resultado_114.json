@@ -1,0 +1,480 @@
+{
+  "items": [
+    {
+      "codigo": "T600",
+      "descripcion": "CHIP ACT.GRANUL.500",
+      "unidad": "kg",
+      "precio": 88.65,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T601",
+      "descripcion": "CHIP ACT.GRANUL.500A",
+      "unidad": "kg",
+      "precio": 88.65,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T602",
+      "descripcion": "CHIP ACT.GRANUL.500B",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T603",
+      "descripcion": "CHIP ACT.GRANUL.500A",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T604",
+      "descripcion": "CHIP ACT.GRANUL.500 TIPO",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T605",
+      "descripcion": "CHIP ACT.GRANUL.500A TIPO",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T606",
+      "descripcion": "CHIP ACT.GRANUL.500A TERB",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T607",
+      "descripcion": "CHIP ACT.GRANUL.CREMA",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T608",
+      "descripcion": "CHIP ACT.GRANUL.500A",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T609",
+      "descripcion": "CHIP ACT.GRANUL.",
+      "unidad": "kg",
+      "precio": 103.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T610",
+      "descripcion": "CHIP POLIURET.GRANUL.",
+      "unidad": "kg",
+      "precio": 44.73,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T611",
+      "descripcion": "CHIP POLIURET.GRANUL.500A",
+      "unidad": "kg",
+      "precio": 51.76,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T612",
+      "descripcion": "CHIP POLIURET.ACRILAT.GRAN",
+      "unidad": "kg",
+      "precio": 70.2,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T613",
+      "descripcion": "CHIP POLIURET.ACRILAT.GRAN",
+      "unidad": "kg",
+      "precio": 70.2,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T614",
+      "descripcion": "CHIP POLIURET.ACRIL.500A",
+      "unidad": "kg",
+      "precio": 44.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T615",
+      "descripcion": "CHIP POLIURET.ACRIL.500A",
+      "unidad": "kg",
+      "precio": 47.04,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T616",
+      "descripcion": "CHIP POLIURET.ACRIL.500A",
+      "unidad": "kg",
+      "precio": 44.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T617",
+      "descripcion": "CHIP POLIURET.ACRIL.500A",
+      "unidad": "kg",
+      "precio": 47.04,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T618",
+      "descripcion": "CHIP POLIETILENO.RETARD.500A",
+      "unidad": "kg",
+      "precio": 51.76,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T619",
+      "descripcion": "CIM.CORRIENT.ACEL.PZ",
+      "unidad": "kg",
+      "precio": 7.28,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T620",
+      "descripcion": "CIM.CORRIENT.RETARD.PZ",
+      "unidad": "kg",
+      "precio": 7.28,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T621",
+      "descripcion": "CIM.17.PORTLAND.PZ.42,5",
+      "unidad": "kg",
+      "precio": 7.28,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T622",
+      "descripcion": "CIM.17.PORTLAND.500A.42,5",
+      "unidad": "kg",
+      "precio": 7.28,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T623",
+      "descripcion": "CIM.17.PORTLAND.500A.42,5",
+      "unidad": "kg",
+      "precio": 13.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T624",
+      "descripcion": "CIM.17.PORTLAND.500A.10",
+      "unidad": "kg",
+      "precio": 13.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T625",
+      "descripcion": "CIM.17.PORTLAND.500A.35",
+      "unidad": "kg",
+      "precio": 1.7,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T626",
+      "descripcion": "CIM.V.METALICA.500.500A",
+      "unidad": "kg",
+      "precio": 1.91,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T627",
+      "descripcion": "CIM.V.METALICA.500.500A",
+      "unidad": "kg",
+      "precio": 1.91,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T628",
+      "descripcion": "CIM.V.METALICA.500.500A",
+      "unidad": "kg",
+      "precio": 1.91,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T629",
+      "descripcion": "CIM.V.METALICA.500.500A",
+      "unidad": "kg",
+      "precio": 1.91,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T630",
+      "descripcion": "CIM.V.METALICA.500.500",
+      "unidad": "kg",
+      "precio": 14.98,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T631",
+      "descripcion": "CIM.V.METALICA.500.500",
+      "unidad": "kg",
+      "precio": 14.98,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T632",
+      "descripcion": "CIM.V.METALICA.500.500",
+      "unidad": "kg",
+      "precio": 14.98,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T633",
+      "descripcion": "CIM.V.METALICA.500.500",
+      "unidad": "kg",
+      "precio": 14.98,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T634",
+      "descripcion": "CIM.V.METALICA.500.500",
+      "unidad": "kg",
+      "precio": 14.98,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T635",
+      "descripcion": "COLA.CONTACT.POLVO",
+      "unidad": "kg",
+      "precio": 65.35,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T636",
+      "descripcion": "Cuartos de entero EXTRA",
+      "unidad": "kg",
+      "precio": 6.78,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T637",
+      "descripcion": "Cuartos de entero EXTRA",
+      "unidad": "kg",
+      "precio": 6.78,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T638",
+      "descripcion": "Cuartos de entero EXTRA",
+      "unidad": "kg",
+      "precio": 6.78,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T639",
+      "descripcion": "Cuartos de entero EXTRA",
+      "unidad": "kg",
+      "precio": 12.04,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T640",
+      "descripcion": "CIM.EXPANS.COM.500.8001",
+      "unidad": "kg",
+      "precio": 12.04,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T641",
+      "descripcion": "CIM.EXPANS.COM.500A.8001",
+      "unidad": "kg",
+      "precio": 51.67,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T642",
+      "descripcion": "CIM.EXPANS.COM.500B.8001",
+      "unidad": "kg",
+      "precio": 51.67,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T643",
+      "descripcion": "CIM.500.COM.500.8001",
+      "unidad": "kg",
+      "precio": 51.67,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T644",
+      "descripcion": "CIM.500.COM.500A.8001",
+      "unidad": "kg",
+      "precio": 51.67,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T645",
+      "descripcion": "CIM.500.PZ.ACCEL.8001",
+      "unidad": "kg",
+      "precio": 7.39,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T646",
+      "descripcion": "CIM.500.PZ.ACCEL.8001",
+      "unidad": "kg",
+      "precio": 14.73,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T647",
+      "descripcion": "CIM.500.PZ.ACCEL.500",
+      "unidad": "kg",
+      "precio": 14.73,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T648",
+      "descripcion": "CIM.500.PZ.ACCEL.500",
+      "unidad": "kg",
+      "precio": 6.38,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T649",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 6.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T650",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 6.94,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T651",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.89,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T652",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.89,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T653",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T654",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T655",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T656",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T657",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T658",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T659",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 4.85,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T660",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 10.73,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T661",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 8.77,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T662",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 5.54,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T663",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 5.54,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T664",
+      "descripcion": "CIM.500.PZ.ALT.500.500",
+      "unidad": "kg",
+      "precio": 5.54,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T665",
+      "descripcion": "CIM.500.PZ.PORTLAND.500",
+      "unidad": "kg",
+      "precio": 5.54,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T666",
+      "descripcion": "CIM.500.PZ.PORTLAND.500",
+      "unidad": "kg",
+      "precio": 5.54,
+      "tipo": "material"
+    },
+    {
+      "codigo": "T667",
+      "descripcion": "CIM.500.PZ.PORTLAND.500",
+      "unidad": "kg",
+      "precio": 8.63,
+      "tipo": "material"
+    }
+  ]
+}

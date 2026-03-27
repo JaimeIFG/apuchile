@@ -1,0 +1,249 @@
+{
+  "items": [
+    {
+      "codigo": "7103",
+      "descripcion": "LADRILLO FISCAL COMUN",
+      "unidad": "un",
+      "precio": 155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7104",
+      "descripcion": "LADRILLO FISCAL MECANIZADO",
+      "unidad": "un",
+      "precio": 165,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7105",
+      "descripcion": "LADRILLO FISCAL REFRACTARIO",
+      "unidad": "un",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7106",
+      "descripcion": "LADRILLO FISCAL SILICO CALCAREO",
+      "unidad": "un",
+      "precio": 195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7107",
+      "descripcion": "LADRILLO FISCAL TITANIO",
+      "unidad": "un",
+      "precio": 425,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7108",
+      "descripcion": "LADRILLO HUECO 12x19x33",
+      "unidad": "un",
+      "precio": 550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7109",
+      "descripcion": "LADRILLO HUECO 14x19x33",
+      "unidad": "un",
+      "precio": 620,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7110",
+      "descripcion": "LADRILLO HUECO 18x19x33",
+      "unidad": "un",
+      "precio": 740,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7111",
+      "descripcion": "LADRILLO PRINCESA 12x6x25",
+      "unidad": "un",
+      "precio": 180,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7112",
+      "descripcion": "LADRILLO PRINCESA 6x12x25",
+      "unidad": "un",
+      "precio": 155,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7113",
+      "descripcion": "LADRILLO PRINCESA DOBLE",
+      "unidad": "un",
+      "precio": 325,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7114",
+      "descripcion": "LADRILLO PRINCESA TRIPLE",
+      "unidad": "un",
+      "precio": 425,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7115",
+      "descripcion": "LADRILLO REFRACTARIO 11x6x23",
+      "unidad": "un",
+      "precio": 315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7116",
+      "descripcion": "LADRILLO REFRACTARIO 23x11x6",
+      "unidad": "un",
+      "precio": 315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7117",
+      "descripcion": "LADRILLO TITANIO 6x12x25",
+      "unidad": "un",
+      "precio": 195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7118",
+      "descripcion": "LADRILLO TITANIO 12x6x25",
+      "unidad": "un",
+      "precio": 215,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7119",
+      "descripcion": "LADRILLO TITANIO DOBLE",
+      "unidad": "un",
+      "precio": 385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7120",
+      "descripcion": "LADRILLO TITANIO TRIPLE",
+      "unidad": "un",
+      "precio": 525,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7121",
+      "descripcion": "LADRILLO VISTA 12x6x25",
+      "unidad": "un",
+      "precio": 240,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7122",
+      "descripcion": "LADRILLO VISTA 6x12x25",
+      "unidad": "un",
+      "precio": 215,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7123",
+      "descripcion": "LADRILLO VISTA MECANIZADO",
+      "unidad": "un",
+      "precio": 285,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7124",
+      "descripcion": "LADRILLO VISTA REFRACTARIO",
+      "unidad": "un",
+      "precio": 525,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7125",
+      "descripcion": "LADRILLO VISTA TITANIO",
+      "unidad": "un",
+      "precio": 315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7126",
+      "descripcion": "LADRILLO VISTA TITANIO CARA LISA",
+      "unidad": "un",
+      "precio": 385,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7127",
+      "descripcion": "LADRILLO VISTA TITANIO RUGOSO",
+      "unidad": "un",
+      "precio": 425,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7201",
+      "descripcion": "LADRILLO ZINC TITANIO 6x12",
+      "unidad": "un",
+      "precio": 315,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7202",
+      "descripcion": "LADRILLO ZINC TITANIO 6x25",
+      "unidad": "un",
+      "precio": 525,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7203",
+      "descripcion": "LADRILLO ZINC TITANIO 12x25",
+      "unidad": "un",
+      "precio": 715,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7204",
+      "descripcion": "LADRILLO ZINC TITANIO DOBLE",
+      "unidad": "un",
+      "precio": 715,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7205",
+      "descripcion": "LADRILLO ZINC TITANIO TRIPLE",
+      "unidad": "un",
+      "precio": 995,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7301",
+      "descripcion": "LADRILLO ZINC VISTA 6x12",
+      "unidad": "un",
+      "precio": 285,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7302",
+      "descripcion": "LADRILLO ZINC VISTA 6x25",
+      "unidad": "un",
+      "precio": 475,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7303",
+      "descripcion": "LADRILLO ZINC VISTA 12x25",
+      "unidad": "un",
+      "precio": 645,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7304",
+      "descripcion": "LADRILLO ZINC VISTA DOBLE",
+      "unidad": "un",
+      "precio": 645,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7305",
+      "descripcion": "LADRILLO ZINC VISTA TRIPLE",
+      "unidad": "un",
+      "precio": 895,
+      "tipo": "material"
+    }
+  ]
+}

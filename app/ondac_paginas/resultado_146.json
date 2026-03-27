@@ -1,0 +1,431 @@
+{
+  "items": [
+    {
+      "codigo": "B010",
+      "descripcion": "CAMA FILTRO PROCEDENTE DE CHANCADURIA (A 10 KM DISTANCIA) PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 1851,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B020",
+      "descripcion": "CAMA FILTRO PROCEDENTE DE CANTERA (A 10 KM DIST) PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 4336,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B030",
+      "descripcion": "GRAVA FILTRO PROCEDENTE DE CHANCADURIA PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 1564,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B040",
+      "descripcion": "GRAVA FILTRO CHANCADURIA PETREOS GRANULAR PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 2279,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B050",
+      "descripcion": "GRAVA FILTRO EXTRACCION PETREOS PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 5435,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B060",
+      "descripcion": "GRAVA",
+      "unidad": "M3",
+      "precio": 1464,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B070",
+      "descripcion": "GRAVA COMPACTA GRADUADA PETREOS GRANULAR PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 1650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B080",
+      "descripcion": "GRAVA PARA SOLERA PETREOS PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 1632,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B090",
+      "descripcion": "GRAVA PARA DREN PETREOS PARA PAVIMENTACION DE OBRAS DIVERSAS",
+      "unidad": "M3",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B100",
+      "descripcion": "GRAVA PARA DREN PETREOS DURO",
+      "unidad": "M3",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B110",
+      "descripcion": "GRAVA PARA DREN PETREOS BLANDO",
+      "unidad": "M3",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B120",
+      "descripcion": "GRAVA PARA DREN SEGUN ESPECIF",
+      "unidad": "M3",
+      "precio": 1680,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B130",
+      "descripcion": "GRAVA PARA TRATAMIENTO SUPERFICIAL",
+      "unidad": "M3",
+      "precio": 1625,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B140",
+      "descripcion": "GRAVA",
+      "unidad": "M3",
+      "precio": 1625,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B150",
+      "descripcion": "GRAVA",
+      "unidad": "M3",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B160",
+      "descripcion": "GRAVA PARA FILTROS GRANULARES",
+      "unidad": "M3",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B170",
+      "descripcion": "GRAVA",
+      "unidad": "M3",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B180",
+      "descripcion": "GRAVA PARA FILTROS GRANULARES",
+      "unidad": "M3",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B190",
+      "descripcion": "GRAVA PARA HORMIGON GRANULAR",
+      "unidad": "M3",
+      "precio": 1462,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B200",
+      "descripcion": "GRAVA COMPACTADA GRANITO VERDE",
+      "unidad": "M3",
+      "precio": 1462,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B210",
+      "descripcion": "GRAVILLA",
+      "unidad": "M3",
+      "precio": 1462,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B220",
+      "descripcion": "GRAVILLA PARA HORMIGON GRANULAR",
+      "unidad": "M3",
+      "precio": 1462,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B230",
+      "descripcion": "ARENA GRUESA PROCEDENTE DE CHANCADURIA PARA PAVIMENTACION",
+      "unidad": "M3",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B240",
+      "descripcion": "ARENA FINA PROCEDENTE CHANCADURIA",
+      "unidad": "M3",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B250",
+      "descripcion": "RIPIO CHANCADO ASTM E AGREGADO DE",
+      "unidad": "M3",
+      "precio": 1590,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C001",
+      "descripcion": "FERTILIZANTES",
+      "unidad": "",
+      "precio": 0,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C010",
+      "descripcion": "ABONO",
+      "unidad": "KG",
+      "precio": 263,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C020",
+      "descripcion": "ABONO PARA CESPED",
+      "unidad": "KG",
+      "precio": 1083,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C030",
+      "descripcion": "ABONO ORGANICO PROCEDENTE HUMUS AZADA",
+      "unidad": "M3",
+      "precio": 7080,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C040",
+      "descripcion": "ABONO COMPUESTO RICO EN FOSFORO",
+      "unidad": "KG",
+      "precio": 1583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C050",
+      "descripcion": "ACIDO FOLICO",
+      "unidad": "KG",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C060",
+      "descripcion": "BACTERIAS DE CRECIMIENTO LENTO",
+      "unidad": "KG",
+      "precio": 2790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C070",
+      "descripcion": "BACTERIAS DE CRECIMIENTO RAPIDO",
+      "unidad": "KG",
+      "precio": 2790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C080",
+      "descripcion": "BACTERIAS DE CRECIMIENTO RAPIDO CON FORMULACION",
+      "unidad": "KG",
+      "precio": 2790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C090",
+      "descripcion": "BACTERIAS PARA SEMILLAS",
+      "unidad": "KG",
+      "precio": 2790,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C100",
+      "descripcion": "BACTERIAS",
+      "unidad": "KG",
+      "precio": 1583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C110",
+      "descripcion": "CARBONATO INORGANICO DE FERTILIZACION",
+      "unidad": "KG",
+      "precio": 1583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C120",
+      "descripcion": "COBRE P DE CLORURO DE CULL HUMA",
+      "unidad": "KG",
+      "precio": 1583,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C130",
+      "descripcion": "SUPERFOSFATO 16 DE FOSFORO",
+      "unidad": "KG",
+      "precio": 600,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C140",
+      "descripcion": "SUPERFOSFATO CONCENTR DE CALCIO",
+      "unidad": "KG",
+      "precio": 278,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C150",
+      "descripcion": "ESPECIFICA DE CARBONO ALTO CALCIO",
+      "unidad": "KG",
+      "precio": 278,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C160",
+      "descripcion": "FERTILIZANTE FOSFORICO",
+      "unidad": "KG",
+      "precio": 278,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C170",
+      "descripcion": "FERTILIZANTE NITROGENADO",
+      "unidad": "KG",
+      "precio": 278,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C180",
+      "descripcion": "FERTILIZANTE POTASICO FOSFORICO 50:50",
+      "unidad": "KG",
+      "precio": 725,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C190",
+      "descripcion": "FERTILIZANTE FOSFORICA",
+      "unidad": "KG",
+      "precio": 2356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C200",
+      "descripcion": "FERTILIZANTE NITROGENADO",
+      "unidad": "KG",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C210",
+      "descripcion": "FERTILIZANTE NITRATO SODICO AMONIO",
+      "unidad": "KG",
+      "precio": 663,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C220",
+      "descripcion": "FERTILIZANTE POTASICO",
+      "unidad": "KG",
+      "precio": 663,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C230",
+      "descripcion": "FERTILIZANTE POTASICO",
+      "unidad": "KG",
+      "precio": 663,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C240",
+      "descripcion": "FERTILIZANTE POTASICO",
+      "unidad": "KG",
+      "precio": 1075,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C250",
+      "descripcion": "FERTILIZANTE POTASICO 60 AMONIO",
+      "unidad": "KG",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C260",
+      "descripcion": "FERTILIZANTE POTASICO 80 AMONIO",
+      "unidad": "KG",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C270",
+      "descripcion": "FERTILIZANTE RICO FOSFOR Y POTASICO",
+      "unidad": "KG",
+      "precio": 1356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C280",
+      "descripcion": "FERTILIZANTE RICO FOSFORO 80 AMONIO",
+      "unidad": "KG",
+      "precio": 591,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C290",
+      "descripcion": "FERTILIZANTE RICO EN",
+      "unidad": "KG",
+      "precio": 591,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C300",
+      "descripcion": "FERTILIZANTE BALANCEADO PROCEDENTE DEL AMBIENTE",
+      "unidad": "KG",
+      "precio": 2356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C310",
+      "descripcion": "FERTILIZANTE LENTA ENTREGA PROCEDENTE",
+      "unidad": "KG",
+      "precio": 2356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C320",
+      "descripcion": "FERTILIZANTE LENTA ENTREGA RICA AMONIO",
+      "unidad": "KG",
+      "precio": 2356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C330",
+      "descripcion": "FERTILIZANTE LENTA ENTREGA PROCEDENTE AMONIO",
+      "unidad": "KG",
+      "precio": 2356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C340",
+      "descripcion": "FERTILIZANTE LENTA ENTREGA PROCEDENTE AMONIO",
+      "unidad": "KG",
+      "precio": 2356,
+      "tipo": "material"
+    },
+    {
+      "codigo": "C350",
+      "descripcion": "FERTILIZANTE COMPLETA RICO AMONIO",
+      "unidad": "KG",
+      "precio": 1356,
+      "tipo": "material"
+    }
+  ]
+}

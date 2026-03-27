@@ -1,0 +1,424 @@
+{
+  "items": [
+    {
+      "codigo": "1031",
+      "descripcion": "AMP MATERIAL EMPALADO J3X4",
+      "unidad": "kg",
+      "precio": 1188,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1032",
+      "descripcion": "AMP MATERIAL EMPALADO 3X3X1/4",
+      "unidad": "kg",
+      "precio": 1188,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1033",
+      "descripcion": "AMP MATERIAL EMPALADO 3X3X5/16",
+      "unidad": "kg",
+      "precio": 1188,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1034",
+      "descripcion": "AMP SOLDADOR ESPECIAL",
+      "unidad": "kg",
+      "precio": 2000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1035",
+      "descripcion": "AMP SOLDADOR X MEDIO KILO",
+      "unidad": "kg",
+      "precio": 1000,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1036",
+      "descripcion": "AMP SOLDADURA ELECTRODO OXIDO",
+      "unidad": "kg",
+      "precio": 1800,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1037",
+      "descripcion": "AMP SOLDADURA ELECTRODO",
+      "unidad": "kg",
+      "precio": 1500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1038",
+      "descripcion": "AMP SOLD DL 1M",
+      "unidad": "m",
+      "precio": 1708,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1039",
+      "descripcion": "AMP SOLD VERTICAL",
+      "unidad": "kg",
+      "precio": 1708,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1040",
+      "descripcion": "AMP SOLD TECHO ML 150",
+      "unidad": "kg",
+      "precio": 1708,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1041",
+      "descripcion": "AMP SOLD VERTICAL ESPECIAL",
+      "unidad": "kg",
+      "precio": 1708,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1042",
+      "descripcion": "AMP SOLD TUBERIAS AGUA ASOS",
+      "unidad": "kg",
+      "precio": 19538,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1043",
+      "descripcion": "AMP SOLD TUBERIAS AQUA GI SOLUC",
+      "unidad": "kg",
+      "precio": 19538,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1044",
+      "descripcion": "AMP SOLD TUBERIAS REVESTIMIENTO",
+      "unidad": "kg",
+      "precio": 4813,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1045",
+      "descripcion": "AMP SOLD TUBERIA METALICA ESPECIAL",
+      "unidad": "kg",
+      "precio": 1875,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1046",
+      "descripcion": "AMP SOLD TUBO P65",
+      "unidad": "kg",
+      "precio": 1875,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1047",
+      "descripcion": "AMP POLICIA FER",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1048",
+      "descripcion": "AMP SUMINISTRO H",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1049",
+      "descripcion": "AMP POLICIA ELG",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1050",
+      "descripcion": "AMP POSICION A VALORAR",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1051",
+      "descripcion": "AMP POLICIAL ELK",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1052",
+      "descripcion": "AMP 2X1 X BLN",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1053",
+      "descripcion": "AMP 2X1 X 3/16",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1054",
+      "descripcion": "AMP COMP 2X1M",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1055",
+      "descripcion": "AMP COMP 3X3X6",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1056",
+      "descripcion": "AMP COMP 3X3M",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1057",
+      "descripcion": "AMP COMP 3X4M",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1058",
+      "descripcion": "AMP COMP 4X4M",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1059",
+      "descripcion": "AMP COMP 4X5M",
+      "unidad": "kg",
+      "precio": 785,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1060",
+      "descripcion": "AMP CUADRADO HUECO 2X2",
+      "unidad": "kg",
+      "precio": 2313,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1061",
+      "descripcion": "AMP CUADRADO HUECO H17",
+      "unidad": "kg",
+      "precio": 2313,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1062",
+      "descripcion": "AMP CUADRADO HUECO 3X3",
+      "unidad": "kg",
+      "precio": 902,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1063",
+      "descripcion": "AMP CUADRADO H DE BOBINA",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1064",
+      "descripcion": "AMP CUADRADO DE 1-15 KG",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1065",
+      "descripcion": "AMP CUADRADO METALICO NB",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1066",
+      "descripcion": "AMP CUADRADO H DE BOBINA",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1067",
+      "descripcion": "AMP CUADRADO METAL DE 1/4",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1068",
+      "descripcion": "AMP CUADRADO METALIC",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1069",
+      "descripcion": "AMP JA SERRA BAR DE BOBINA",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1070",
+      "descripcion": "AMP JA SERRA BAR DE 18M",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1071",
+      "descripcion": "AMP METAL VARA COMPLEJO COC",
+      "unidad": "kg",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1072",
+      "descripcion": "AMP METALITO ESTRUCTURA",
+      "unidad": "kg",
+      "precio": 2200,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1073",
+      "descripcion": "AMP PAC 32K 6 TORNILLOS",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1074",
+      "descripcion": "AMP PAC 50K 6 COMPLEJO",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1075",
+      "descripcion": "AMP PAC 50K 8 ACEROS",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1076",
+      "descripcion": "AMP PAC 50K DETONACION",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1077",
+      "descripcion": "AMP PAC 50K COMPLEJO S BASE",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1078",
+      "descripcion": "AMP PAC 50K 1x11K",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1079",
+      "descripcion": "AMP PAC 40K TORNILLOS",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1080",
+      "descripcion": "AMP PAC 50K ESPECIALES",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1081",
+      "descripcion": "AMP 50K TORNILLOS",
+      "unidad": "kg",
+      "precio": 950,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1082",
+      "descripcion": "AMP PUNTACION LIBRE ESPECIAL",
+      "unidad": "kg",
+      "precio": 49850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1083",
+      "descripcion": "AMP PROTECTION COMPLEJO",
+      "unidad": "kg",
+      "precio": 49850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1084",
+      "descripcion": "AMP PROTECTION MKT X-100",
+      "unidad": "kg",
+      "precio": 3188,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1085",
+      "descripcion": "AMP PROTECTION H",
+      "unidad": "kg",
+      "precio": 3188,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1086",
+      "descripcion": "AMP PROTECTION M60 GF-306",
+      "unidad": "kg",
+      "precio": 3188,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1087",
+      "descripcion": "AMP PROTECTION METALICA",
+      "unidad": "kg",
+      "precio": 2413,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1088",
+      "descripcion": "AMP PROTECTION LIBRE ESPECIAL",
+      "unidad": "kg",
+      "precio": 2413,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1089",
+      "descripcion": "AMP PROTECTION M 65 H1UM",
+      "unidad": "kg",
+      "precio": 2413,
+      "tipo": "material"
+    },
+    {
+      "codigo": "1090",
+      "descripcion": "AMP PROTECTION 6-15-KM",
+      "unidad": "kg",
+      "precio": 2413,
+      "tipo": "material"
+    }
+  ]
+}

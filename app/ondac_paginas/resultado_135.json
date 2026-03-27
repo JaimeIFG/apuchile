@@ -1,0 +1,158 @@
+{
+  "items": [
+    {
+      "codigo": "B2-1",
+      "descripcion": "ACUMULADOR ELÉCTRICO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 8080,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-2",
+      "descripcion": "ACUMULADOR ELÉCTRICO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 10624,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-3",
+      "descripcion": "ACUMULADOR ELÉCTRICO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 13568,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-4",
+      "descripcion": "ACUMULADOR ELÉCTRICO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 16896,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-5",
+      "descripcion": "ACUMULADOR ELÉCTRICO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 20608,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-6",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 24704,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-7",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 29184,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-8",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 34048,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-9",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 39296,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-10",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 44928,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-11",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 50944,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-12",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 57344,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-13",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 64128,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-14",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 71296,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B2-15",
+      "descripcion": "ACUMULADOR MIXTO SÓLIDO CHAPA ACERO",
+      "unidad": "m",
+      "precio": 78848,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B3-1",
+      "descripcion": "ACCESORIOS DE BAÑO",
+      "unidad": "m",
+      "precio": 86784,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B3-2",
+      "descripcion": "LAVADERO PORTÁTIL GRANDE",
+      "unidad": "m",
+      "precio": 1500,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B3-3",
+      "descripcion": "LAVADERO PORTÁTIL CHICO",
+      "unidad": "m",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B3-4",
+      "descripcion": "ARTICULARIOS CON ACCESORIOS",
+      "unidad": "m",
+      "precio": 1400,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B3-5",
+      "descripcion": "MANIJA ALUMINIO CROMADO PARA DUCHA",
+      "unidad": "m",
+      "precio": 570,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B3-6",
+      "descripcion": "MANIJA PLÁSTICA CHICA PARA BAÑO",
+      "unidad": "m",
+      "precio": 450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "B3-7",
+      "descripcion": "MANIJA PLASTICA CHICA PARA BAÑO",
+      "unidad": "m",
+      "precio": 680,
+      "tipo": "material"
+    }
+  ]
+}

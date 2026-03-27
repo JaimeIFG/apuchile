@@ -1,0 +1,382 @@
+{
+  "items": [
+    {
+      "codigo": "001",
+      "descripcion": "ACERO ESTUCTURADO DE COLMENAS",
+      "unidad": "m2",
+      "precio": 8145,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "002",
+      "descripcion": "ACERO ESTRUCTURADO PARA COLMENAS",
+      "unidad": "kg",
+      "precio": 2000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "003",
+      "descripcion": "ALAMBRE",
+      "unidad": "kg",
+      "precio": 3200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "004",
+      "descripcion": "ALAMBRE GALVANIZADO DULCE",
+      "unidad": "kg",
+      "precio": 1500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "005",
+      "descripcion": "ALAMBRE GALVANIZADO PARA",
+      "unidad": "kg",
+      "precio": 1600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "006",
+      "descripcion": "ALAMBRE PUAS",
+      "unidad": "kg",
+      "precio": 1300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "007",
+      "descripcion": "ESTACAS",
+      "unidad": "UN",
+      "precio": 600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "008",
+      "descripcion": "ESTACAS",
+      "unidad": "m",
+      "precio": 1500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "009",
+      "descripcion": "MALLA ACMA GALVANIZADA",
+      "unidad": "m2",
+      "precio": 2300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "010",
+      "descripcion": "CLAVOS",
+      "unidad": "kg",
+      "precio": 1500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "011",
+      "descripcion": "CANTONERIA GALVANIZADA",
+      "unidad": "m",
+      "precio": 5900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "012",
+      "descripcion": "ALAMBRON BISELADO",
+      "unidad": "m",
+      "precio": 720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "013",
+      "descripcion": "ALAMBRON CINCADO",
+      "unidad": "m",
+      "precio": 720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "014",
+      "descripcion": "ALAMBRON DE FIERRO LISO TREFILADO",
+      "unidad": "m",
+      "precio": 720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "015",
+      "descripcion": "AISLADORES",
+      "unidad": "UN",
+      "precio": 890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "016",
+      "descripcion": "AISLADOR DE REMATE",
+      "unidad": "UN",
+      "precio": 500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "017",
+      "descripcion": "AISLADOR MARIMBA",
+      "unidad": "UN",
+      "precio": 1200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "018",
+      "descripcion": "APOYO TIPO Y MANIJUELA",
+      "unidad": "m2",
+      "precio": 28700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "019",
+      "descripcion": "ARMADOR GANCHO",
+      "unidad": "UN",
+      "precio": 1800,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "020",
+      "descripcion": "ARMADOR Y GANCHO",
+      "unidad": "m2",
+      "precio": 1500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "021",
+      "descripcion": "ARNESES",
+      "unidad": "UN",
+      "precio": 35000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "022",
+      "descripcion": "ASEGURADOR V TENSOR",
+      "unidad": "m2",
+      "precio": 30000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "023",
+      "descripcion": "ASEGURADOR UNIVERSAL PARALELO",
+      "unidad": "UN",
+      "precio": 8710,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "024",
+      "descripcion": "BALIZA AILLUMM PJOA1 38mm Red 0.80m",
+      "unidad": "m2",
+      "precio": 5500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "025",
+      "descripcion": "BALIZA AILLUMM PJOA1 38mm Red 1.00m",
+      "unidad": "m2",
+      "precio": 6700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "026",
+      "descripcion": "BALIZA AILLUMM PJOA1 50mm Red 0.80m",
+      "unidad": "m2",
+      "precio": 7100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "027",
+      "descripcion": "BALIZA AILLUMM PJOA1 50mm Red 1.00m",
+      "unidad": "m2",
+      "precio": 8700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "028",
+      "descripcion": "BALIZA AILLUMM PJOA1 75mm Red 1",
+      "unidad": "m2",
+      "precio": 8250,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "029",
+      "descripcion": "BALIZA AILLUMM PJOA1 75mm Red 1",
+      "unidad": "m2",
+      "precio": 8950,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "030",
+      "descripcion": "BALIZA AILLUMM PJOA1 Tipo esp",
+      "unidad": "m2",
+      "precio": 5500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "031",
+      "descripcion": "BALIZA REFLECTANTE",
+      "unidad": "m2",
+      "precio": 14000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "032",
+      "descripcion": "BALIZA AILLUM BLASUB 180MM",
+      "unidad": "m2",
+      "precio": 29000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "033",
+      "descripcion": "BALIZA AILLUM BLASUB 180MM",
+      "unidad": "m2",
+      "precio": 25000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "034",
+      "descripcion": "BALIZA AILLUM BLASUB 210MM",
+      "unidad": "m2",
+      "precio": 26000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "035",
+      "descripcion": "BALIZA REGLAMENTARIA DOBLE",
+      "unidad": "m2",
+      "precio": 44000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "036",
+      "descripcion": "BALIZA SIMPLE",
+      "unidad": "m2",
+      "precio": 19200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "037",
+      "descripcion": "BALIZA EN HOJAS 14 MIL",
+      "unidad": "m2",
+      "precio": 140000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "038",
+      "descripcion": "BALIZA LENTICULAR 1 ML",
+      "unidad": "m2",
+      "precio": 34000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "039",
+      "descripcion": "BALIZA PREMATICA",
+      "unidad": "m2",
+      "precio": 32000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "040",
+      "descripcion": "BARIO DE CON Y Terminale",
+      "unidad": "m3",
+      "precio": 28000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "041",
+      "descripcion": "BARIO CAMA",
+      "unidad": "m3",
+      "precio": 65500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "042",
+      "descripcion": "BARIO DE 3.5L",
+      "unidad": "m3",
+      "precio": 25000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "043",
+      "descripcion": "BARIO GRANULADO",
+      "unidad": "m3",
+      "precio": 65000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "044",
+      "descripcion": "BARIO EN CANCHA",
+      "unidad": "m3",
+      "precio": 40000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "045",
+      "descripcion": "BARIO RADIE DE",
+      "unidad": "m3",
+      "precio": 50000,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "046",
+      "descripcion": "BARRO DESINTEGRADO CON GRANULADO",
+      "unidad": "m3",
+      "precio": 8500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "047",
+      "descripcion": "BARRO DESINTEGRADO GRANULADO",
+      "unidad": "m3",
+      "precio": 10500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "048",
+      "descripcion": "BAJE DE GRANITO",
+      "unidad": "m2",
+      "precio": 7540,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "049",
+      "descripcion": "BAJE DE LENDA",
+      "unidad": "m2",
+      "precio": 2100,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "050",
+      "descripcion": "BAJE DE LA CANCHA",
+      "unidad": "m2",
+      "precio": 4500,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "051",
+      "descripcion": "BAJE ESTANDAR CUNA NATURALEZA",
+      "unidad": "m2",
+      "precio": 5300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "052",
+      "descripcion": "BAJE ESTANDAR DE LA LADRILLO",
+      "unidad": "m2",
+      "precio": 5380,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "053",
+      "descripcion": "BAJE ESTANDAR LADRILLO",
+      "unidad": "m2",
+      "precio": 5341,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "054",
+      "descripcion": "BENOCOADOR",
+      "unidad": "m2",
+      "precio": 11200,
+      "tipo": "apu"
+    }
+  ]
+}

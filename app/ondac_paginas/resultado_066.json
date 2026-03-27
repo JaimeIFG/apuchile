@@ -1,0 +1,490 @@
+{
+  "items": [
+    {
+      "codigo": "00181",
+      "descripcion": "IMPERMEABILIZAR CON PINTURA",
+      "unidad": "M2",
+      "precio": 1539
+    },
+    {
+      "codigo": "00182",
+      "descripcion": "IMPERMEABILIZAR CON MANTA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2461
+    },
+    {
+      "codigo": "00183",
+      "descripcion": "CUARTEO MANO DE OBRA",
+      "unidad": "M2",
+      "precio": 362
+    },
+    {
+      "codigo": "00184",
+      "descripcion": "CUARTEO TERMINADO",
+      "unidad": "M2",
+      "precio": 522
+    },
+    {
+      "codigo": "00185",
+      "descripcion": "APLANADO FINO SOBRE MURO",
+      "unidad": "M2",
+      "precio": 653
+    },
+    {
+      "codigo": "00186",
+      "descripcion": "APLANADO DECORATIVO MATE",
+      "unidad": "M2",
+      "precio": 959
+    },
+    {
+      "codigo": "00187",
+      "descripcion": "APLANADO DECORATIVO M2",
+      "unidad": "M2",
+      "precio": 1027
+    },
+    {
+      "codigo": "00188",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00189",
+      "descripcion": "IMPERMEABILIZAR CON COALTAR",
+      "unidad": "M2",
+      "precio": 1935
+    },
+    {
+      "codigo": "00190",
+      "descripcion": "IMPERMEABILIZAR CON MANTA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2461
+    },
+    {
+      "codigo": "00191",
+      "descripcion": "CUARTEO MANO DE OBRA",
+      "unidad": "M2",
+      "precio": 362
+    },
+    {
+      "codigo": "00192",
+      "descripcion": "CUARTEO TERMINADO",
+      "unidad": "M2",
+      "precio": 522
+    },
+    {
+      "codigo": "00193",
+      "descripcion": "APLANADO FINO SOBRE MURO",
+      "unidad": "M2",
+      "precio": 653
+    },
+    {
+      "codigo": "00194",
+      "descripcion": "APLANADO DECORATIVO MATE",
+      "unidad": "M2",
+      "precio": 959
+    },
+    {
+      "codigo": "00195",
+      "descripcion": "APLANADO DECORATIVO M2",
+      "unidad": "M2",
+      "precio": 1027
+    },
+    {
+      "codigo": "00196",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00197",
+      "descripcion": "IMPERMEABILIZAR CON MANTA CERAMICA",
+      "unidad": "M2",
+      "precio": 2971
+    },
+    {
+      "codigo": "00198",
+      "descripcion": "IMPERMEABILIZAR CON COALTAR",
+      "unidad": "M2",
+      "precio": 1935
+    },
+    {
+      "codigo": "00199",
+      "descripcion": "INSTALACION CONSTRUCCION MOLDEADA",
+      "unidad": "M2",
+      "precio": 6239
+    },
+    {
+      "codigo": "00200",
+      "descripcion": "INSTALACION CONSTRUCCION MOLDEADA",
+      "unidad": "M2",
+      "precio": 6239
+    },
+    {
+      "codigo": "00201",
+      "descripcion": "BROCHA DE LA OBRA SOBRE M 3 25 MM",
+      "unidad": "M2",
+      "precio": 3393
+    },
+    {
+      "codigo": "00202",
+      "descripcion": "BROCHA DE LA OBRA SOBRE M 3 25 MM",
+      "unidad": "M2",
+      "precio": 3393
+    },
+    {
+      "codigo": "00203",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00204",
+      "descripcion": "IMPERMEABILIZAR CON POLIETILENO Y CONCRETO",
+      "unidad": "M2",
+      "precio": 1186
+    },
+    {
+      "codigo": "00205",
+      "descripcion": "IMPERMEABILIZAR CON COALTAR",
+      "unidad": "M2",
+      "precio": 1935
+    },
+    {
+      "codigo": "00206",
+      "descripcion": "APLANADO FINO SOBRE MURO",
+      "unidad": "M2",
+      "precio": 653
+    },
+    {
+      "codigo": "00207",
+      "descripcion": "IMPERMEABILIZAR APLICACION DE PINTURA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2209
+    },
+    {
+      "codigo": "00208",
+      "descripcion": "IMPERMEABILIZAR APLICACION DE PINTURA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2209
+    },
+    {
+      "codigo": "00209",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00210",
+      "descripcion": "IMPERMEABILIZAR CON DOBLE EMULSION",
+      "unidad": "M2",
+      "precio": 1271
+    },
+    {
+      "codigo": "00211",
+      "descripcion": "IMPERMEABILIZAR CON DOBLE EMULSION",
+      "unidad": "M2",
+      "precio": 1271
+    },
+    {
+      "codigo": "00212",
+      "descripcion": "INSTALACION CONSTRUCCION MOLDEADA",
+      "unidad": "M2",
+      "precio": 6239
+    },
+    {
+      "codigo": "00213",
+      "descripcion": "INSTALACION CONSTRUCCION MOLDEADA",
+      "unidad": "M2",
+      "precio": 6239
+    },
+    {
+      "codigo": "00214",
+      "descripcion": "BROCHA DE LA OBRA SOBRE M 3 25 MM",
+      "unidad": "M2",
+      "precio": 3393
+    },
+    {
+      "codigo": "00215",
+      "descripcion": "BROCHA DE LA OBRA SOBRE M 3 25 MM",
+      "unidad": "M2",
+      "precio": 3393
+    },
+    {
+      "codigo": "00216",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00217",
+      "descripcion": "IMPERMEABILIZAR CON DOBLE EMULSION",
+      "unidad": "M2",
+      "precio": 1271
+    },
+    {
+      "codigo": "00218",
+      "descripcion": "IMPERMEABILIZAR CON DOBLE EMULSION",
+      "unidad": "M2",
+      "precio": 1271
+    },
+    {
+      "codigo": "00219",
+      "descripcion": "INSTALACION CONSTRUCCION MOLDEADA",
+      "unidad": "M2",
+      "precio": 6239
+    },
+    {
+      "codigo": "00220",
+      "descripcion": "INSTALACION CONSTRUCCION MOLDEADA",
+      "unidad": "M2",
+      "precio": 6239
+    },
+    {
+      "codigo": "00221",
+      "descripcion": "BROCHA DE LA OBRA SOBRE M 3 25 MM",
+      "unidad": "M2",
+      "precio": 3393
+    },
+    {
+      "codigo": "00222",
+      "descripcion": "BROCHA DE LA OBRA SOBRE M 3 25 MM",
+      "unidad": "M2",
+      "precio": 3393
+    },
+    {
+      "codigo": "00223",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00224",
+      "descripcion": "IMPERMEABILIZAR MALLA ASFALTICA-COALTAR",
+      "unidad": "M2",
+      "precio": 3393
+    },
+    {
+      "codigo": "00225",
+      "descripcion": "IMPERMEABILIZAR CON DOBLE EMULSION",
+      "unidad": "M2",
+      "precio": 1271
+    },
+    {
+      "codigo": "00226",
+      "descripcion": "CUARTEO TERMINADO",
+      "unidad": "M2",
+      "precio": 522
+    },
+    {
+      "codigo": "00227",
+      "descripcion": "APLANADO FINO SOBRE MURO",
+      "unidad": "M2",
+      "precio": 653
+    },
+    {
+      "codigo": "00228",
+      "descripcion": "APLANADO DECORATIVO MATE",
+      "unidad": "M2",
+      "precio": 959
+    },
+    {
+      "codigo": "00229",
+      "descripcion": "IMPERMEABILIZAR COL MANTA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2461
+    },
+    {
+      "codigo": "00230",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00231",
+      "descripcion": "IMPERMEABILIZAR MEMBRANA ASFALTICA 3.5MM SBS",
+      "unidad": "M2",
+      "precio": 2646
+    },
+    {
+      "codigo": "00232",
+      "descripcion": "IMPERMEABILIZAR MALLA ASFALTICA",
+      "unidad": "M2",
+      "precio": 1516
+    },
+    {
+      "codigo": "00233",
+      "descripcion": "CUARTEO TERMINADO",
+      "unidad": "M2",
+      "precio": 522
+    },
+    {
+      "codigo": "00234",
+      "descripcion": "APLANADO FINO SOBRE MURO",
+      "unidad": "M2",
+      "precio": 653
+    },
+    {
+      "codigo": "00235",
+      "descripcion": "APLANADO DECORATIVO MATE",
+      "unidad": "M2",
+      "precio": 959
+    },
+    {
+      "codigo": "00236",
+      "descripcion": "IMPERMEABILIZAR COL MANTA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2461
+    },
+    {
+      "codigo": "00237",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00238",
+      "descripcion": "IMPERMEABILIZAR SEGUNDA ACEITE DOBLE",
+      "unidad": "M2",
+      "precio": 1341
+    },
+    {
+      "codigo": "00239",
+      "descripcion": "IMPERMEABILIZAR SEGUNDA ACEITE DOBLE",
+      "unidad": "M2",
+      "precio": 1341
+    },
+    {
+      "codigo": "00240",
+      "descripcion": "CUARTEO TERMINADO",
+      "unidad": "M2",
+      "precio": 522
+    },
+    {
+      "codigo": "00241",
+      "descripcion": "APLANADO FINO SOBRE MURO",
+      "unidad": "M2",
+      "precio": 653
+    },
+    {
+      "codigo": "00242",
+      "descripcion": "APLANADO DECORATIVO MATE",
+      "unidad": "M2",
+      "precio": 959
+    },
+    {
+      "codigo": "00243",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00244",
+      "descripcion": "IMPERMEABILIZAR SEGUNDO ACEITE ALCANTARILLADO",
+      "unidad": "M2",
+      "precio": 1082
+    },
+    {
+      "codigo": "00245",
+      "descripcion": "IMPERMEABILIZAR SEGUNDA ACEITE DOBLE",
+      "unidad": "M2",
+      "precio": 1341
+    },
+    {
+      "codigo": "00246",
+      "descripcion": "APLANADO FINO SOBRE MURO",
+      "unidad": "M2",
+      "precio": 653
+    },
+    {
+      "codigo": "00247",
+      "descripcion": "APLANADO DECORATIVO MATE",
+      "unidad": "M2",
+      "precio": 959
+    },
+    {
+      "codigo": "00248",
+      "descripcion": "APLANADO DECORATIVO M2",
+      "unidad": "M2",
+      "precio": 1027
+    },
+    {
+      "codigo": "00249",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00250",
+      "descripcion": "IMPERMEABILIZAR DOBLE ACEITE COALTAR",
+      "unidad": "M2",
+      "precio": 2302
+    },
+    {
+      "codigo": "00251",
+      "descripcion": "IMPERMEABILIZAR CON DOBLE EMULSION",
+      "unidad": "M2",
+      "precio": 1271
+    },
+    {
+      "codigo": "00252",
+      "descripcion": "APLANADO DECORATIVO MATE",
+      "unidad": "M2",
+      "precio": 959
+    },
+    {
+      "codigo": "00253",
+      "descripcion": "IMPERMEABILIZAR APLICACION DE PINTURA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2209
+    },
+    {
+      "codigo": "00254",
+      "descripcion": "IMPERMEABILIZAR SEGUNDA ACEITE DOBLE",
+      "unidad": "M2",
+      "precio": 1341
+    },
+    {
+      "codigo": "00255",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    },
+    {
+      "codigo": "00256",
+      "descripcion": "IMPERMEABILIZAR SOBRE CONCRETO",
+      "unidad": "M2",
+      "precio": 1362
+    },
+    {
+      "codigo": "00257",
+      "descripcion": "IMPERMEABILIZAR DOBLE ACEITE COALTAR",
+      "unidad": "M2",
+      "precio": 2302
+    },
+    {
+      "codigo": "00258",
+      "descripcion": "INSTALACION CONSTRUCCION MOLDEADA",
+      "unidad": "M2",
+      "precio": 6239
+    },
+    {
+      "codigo": "00259",
+      "descripcion": "IMPERMEABILIZAR APLICACION DE PINTURA ASFALTICA",
+      "unidad": "M2",
+      "precio": 2209
+    },
+    {
+      "codigo": "00260",
+      "descripcion": "IMPERMEABILIZAR SEGUNDA ACEITE DOBLE",
+      "unidad": "M2",
+      "precio": 1341
+    },
+    {
+      "codigo": "00261",
+      "descripcion": "LENTES SOCIALES E(11)",
+      "unidad": "PZ",
+      "precio": 370
+    }
+  ]
+}

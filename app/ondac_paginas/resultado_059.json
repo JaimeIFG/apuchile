@@ -1,0 +1,557 @@
+{
+  "items": [
+    {
+      "codigo": "30390",
+      "descripcion": "CUBIERTA LOSA ALIVIANADA TERMINAL",
+      "unidad": "m2",
+      "precio": 8956,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30391",
+      "descripcion": "CUBIERTA LOSA ALIVIANADA C/IMPERMEABILIZANTE",
+      "unidad": "m2",
+      "precio": 9847,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30392",
+      "descripcion": "PLACA COMPLETA 2° + 3°",
+      "unidad": "m2",
+      "precio": 1345,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30393",
+      "descripcion": "MOLDAJES METALICOS P/LOSA",
+      "unidad": "m2",
+      "precio": 2495,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30394",
+      "descripcion": "CARPINTERO TERMINADOR",
+      "unidad": "h",
+      "precio": 2190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30395",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30400",
+      "descripcion": "CUBIERTA DE BRONZE POLISOL",
+      "unidad": "m2",
+      "precio": 8319,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30401",
+      "descripcion": "CUBIERTA LOSA ALIVIANADA POLISOL",
+      "unidad": "m2",
+      "precio": 7932,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30402",
+      "descripcion": "COLABORACION SIN VIET SLIM",
+      "unidad": "m2",
+      "precio": 1492,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30403",
+      "descripcion": "MOLDAJES METALICOS P/LOSA",
+      "unidad": "m2",
+      "precio": 2495,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30404",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30410",
+      "descripcion": "CUBIERTA LOSA ALIVIANADA LIVIANA",
+      "unidad": "m2",
+      "precio": 7894,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30411",
+      "descripcion": "PLACA CRUZADA",
+      "unidad": "m2",
+      "precio": 1847,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30412",
+      "descripcion": "COLABORACION SIN VIET SLIM",
+      "unidad": "m2",
+      "precio": 1492,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30413",
+      "descripcion": "MOLDAJE METALICOS",
+      "unidad": "m2",
+      "precio": 1845,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30414",
+      "descripcion": "CARPINTERO TERMINADOR",
+      "unidad": "h",
+      "precio": 2190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30415",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30420",
+      "descripcion": "CUBIERTA CON COPPER SOLIDEX",
+      "unidad": "m2",
+      "precio": 8413,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30421",
+      "descripcion": "CUBIERTA POLISOL",
+      "unidad": "m2",
+      "precio": 1795,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30422",
+      "descripcion": "CHAPA",
+      "unidad": "kg",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30423",
+      "descripcion": "VIGA COMPLETA 2° + 3°",
+      "unidad": "m2",
+      "precio": 1345,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30424",
+      "descripcion": "MOLDAJE METALICOS P/LOSA",
+      "unidad": "m2",
+      "precio": 2495,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30425",
+      "descripcion": "CARPINTERO TERMINADOR",
+      "unidad": "h",
+      "precio": 2190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30426",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30430",
+      "descripcion": "CUBIERTA CON TUBO DE LOMO",
+      "unidad": "m2",
+      "precio": 8333,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30431",
+      "descripcion": "TUBO LOMO GALVANIZADO",
+      "unidad": "ml",
+      "precio": 1560,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30432",
+      "descripcion": "VIGA COMPLETA 2° + 3°",
+      "unidad": "m2",
+      "precio": 1345,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30433",
+      "descripcion": "MOLDAJE METALICOS P/LOSA",
+      "unidad": "m2",
+      "precio": 2495,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30434",
+      "descripcion": "CARPINTERO TERMINADOR",
+      "unidad": "h",
+      "precio": 2190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30435",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30440",
+      "descripcion": "CUBIERTA GALEON CON TRIBUILLA",
+      "unidad": "m2",
+      "precio": 8333,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30441",
+      "descripcion": "LAMINA GALEON",
+      "unidad": "ml",
+      "precio": 1560,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30442",
+      "descripcion": "ENTABLADO DE PINO CMAS",
+      "unidad": "m2",
+      "precio": 2580,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30443",
+      "descripcion": "CARPINTERO ESPECIALISTAS P/TUBERIA",
+      "unidad": "h",
+      "precio": 2190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30444",
+      "descripcion": "CARPINTERO CON HERRAMIENTAS",
+      "unidad": "h",
+      "precio": 2190,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30445",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30450",
+      "descripcion": "CUBIERTA CON LOS LIRICA",
+      "unidad": "m2",
+      "precio": 4509,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30451",
+      "descripcion": "ETERNIT",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30452",
+      "descripcion": "CUBIERTA DE PERFIL GALV CON LIRICA",
+      "unidad": "m2",
+      "precio": 1890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30453",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30454",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30455",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30456",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30460",
+      "descripcion": "CUBIERTA LAMINA CON POLIURETANO EN GALV",
+      "unidad": "m2",
+      "precio": 5702,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30461",
+      "descripcion": "LAMINA GALV ONDULADA",
+      "unidad": "m2",
+      "precio": 3567,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30462",
+      "descripcion": "POLIURETANO EXPANDIDO",
+      "unidad": "m2",
+      "precio": 1947,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30463",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30464",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30465",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30470",
+      "descripcion": "CUBIERTA DE IMPORT COLON 280 ETERNIT",
+      "unidad": "m2",
+      "precio": 5793,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30471",
+      "descripcion": "ETERNIT",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30472",
+      "descripcion": "CUBIERTA DE IMPORT COLON RICA",
+      "unidad": "m2",
+      "precio": 1890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30473",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30474",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30475",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30480",
+      "descripcion": "CUBIERTA DE IMPORT COLON 280 CHAPA",
+      "unidad": "m2",
+      "precio": 5793,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30481",
+      "descripcion": "CHAPA",
+      "unidad": "kg",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30482",
+      "descripcion": "CUBIERTA DE IMPORT COLON RICA",
+      "unidad": "m2",
+      "precio": 1890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30483",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30484",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30485",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30490",
+      "descripcion": "CUBIERTA LAMINA COLON 280 IMPORT TIPO A",
+      "unidad": "m2",
+      "precio": 5793,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30491",
+      "descripcion": "CHAPA",
+      "unidad": "kg",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30492",
+      "descripcion": "CUBIERTA DE IMPORT COLON RICA",
+      "unidad": "m2",
+      "precio": 1890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30493",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30494",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30495",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30500",
+      "descripcion": "CUBIERTA DE IMPORT COLON MACO PE GA",
+      "unidad": "m2",
+      "precio": 5793,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30501",
+      "descripcion": "CUBIERTA DE IMPORT COLON RICA PE GA",
+      "unidad": "m2",
+      "precio": 1890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30502",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30503",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30504",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30505",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30510",
+      "descripcion": "CUBIERTA GALEON COLON 380 ETERNIT",
+      "unidad": "m2",
+      "precio": 5793,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30511",
+      "descripcion": "ETERNIT",
+      "unidad": "m2",
+      "precio": 0,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30512",
+      "descripcion": "CUBIERTA DE GALEON COLON RICA",
+      "unidad": "m2",
+      "precio": 1890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30513",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30514",
+      "descripcion": "APOYO",
+      "unidad": "m",
+      "precio": 15390,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "30515",
+      "descripcion": "LEVES SOCIALES 0,5",
+      "unidad": "%",
+      "precio": 0,
+      "tipo": "apu"
+    }
+  ]
+}

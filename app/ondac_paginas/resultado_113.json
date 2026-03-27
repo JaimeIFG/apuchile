@@ -1,0 +1,151 @@
+{
+  "items": [
+    {
+      "codigo": "7298",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 70",
+      "unidad": "mt",
+      "precio": 4850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7299",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 95",
+      "unidad": "mt",
+      "precio": 6550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7300",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 120",
+      "unidad": "mt",
+      "precio": 8150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7301",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 150",
+      "unidad": "mt",
+      "precio": 10250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7302",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 185",
+      "unidad": "mt",
+      "precio": 12550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7303",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 240",
+      "unidad": "mt",
+      "precio": 16250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7304",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 300",
+      "unidad": "mt",
+      "precio": 20350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7305",
+      "descripción": "CABLE ELECTRICO UNIPOLAR 400",
+      "unidad": "mt",
+      "precio": 27150,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7306",
+      "descripcion": "CABLE ELECTRICO UNIPOLAR 500",
+      "unidad": "mt",
+      "precio": 33850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7307",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 16",
+      "unidad": "mt",
+      "precio": 1250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7308",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 25",
+      "unidad": "mt",
+      "precio": 1850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7309",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 35",
+      "unidad": "mt",
+      "precio": 2450,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7310",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 50",
+      "unidad": "mt",
+      "precio": 3350,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7311",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 70",
+      "unidad": "mt",
+      "precio": 4650,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7312",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 95",
+      "unidad": "mt",
+      "precio": 6250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7313",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 120",
+      "unidad": "mt",
+      "precio": 7850,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7314",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 150",
+      "unidad": "mt",
+      "precio": 9750,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7315",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 185",
+      "unidad": "mt",
+      "precio": 12050,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7316",
+      "descripcion": "CABLE ELECTRICO CONCENTRIC 240",
+      "unidad": "mt",
+      "precio": 15550,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7318",
+      "descripcion": "CABESTANTE PARA CABLES A CAJA",
+      "unidad": "un",
+      "precio": 2250,
+      "tipo": "material"
+    },
+    {
+      "codigo": "7319",
+      "descripcion": "CABESTANTE PARA CABLES B CAJA",
+      "unidad": "un",
+      "precio": 3150,
+      "tipo": "material"
+    }
+  ]
+}

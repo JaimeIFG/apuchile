@@ -1,0 +1,319 @@
+{
+  "items": [
+    {
+      "codigo": "8605",
+      "descripcion": "LADRILLO CERAMICO ESTRUCTURAL",
+      "unidad": "UN",
+      "precio": 146,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8606",
+      "descripcion": "LADRILLO CERAMICO ESTRUCTURAL PERFORADO",
+      "unidad": "UN",
+      "precio": 146,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8607",
+      "descripcion": "LADRILLO CERAMICO ESTRUCTURAL PERFORADO PRENSADO",
+      "unidad": "UN",
+      "precio": 168,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8608",
+      "descripcion": "LADRILLO CERAMICO ESTRUCTURAL RECOCIDO",
+      "unidad": "UN",
+      "precio": 115,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8609",
+      "descripcion": "LADRILLO CERAMICO CRUDO PARA CONSTRUCCION",
+      "unidad": "UN",
+      "precio": 119,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8610",
+      "descripcion": "ZINC PLANO 2,40",
+      "unidad": "",
+      "precio": 7939,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8611",
+      "descripcion": "CLAVOS COMUNES ACERO DIN 1151",
+      "unidad": "",
+      "precio": 2145,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8612",
+      "descripcion": "ZINC PLANO GALVANIZADO TIPO CALAMINA",
+      "unidad": "",
+      "precio": 7143,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8613",
+      "descripcion": "ZINC PLANO 55 X 1,5 MM",
+      "unidad": "",
+      "precio": 5995,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8614",
+      "descripcion": "CLAVO DE CABEZA CUADRADA DIN 1151",
+      "unidad": "",
+      "precio": 2254,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8615",
+      "descripcion": "CLAVO CABEZA PLANA DIN",
+      "unidad": "",
+      "precio": 1946,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8616",
+      "descripcion": "CLAVO COMUN ACERO DIN 1151",
+      "unidad": "",
+      "precio": 1939,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8617",
+      "descripcion": "TORNILLO CABEZA HEXAGONAL",
+      "unidad": "",
+      "precio": 2288,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8618",
+      "descripcion": "TORNILLO CABEZA PLANA",
+      "unidad": "",
+      "precio": 2195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8619",
+      "descripcion": "TORNILLO ROSCA CHAPA",
+      "unidad": "",
+      "precio": 2465,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8620",
+      "descripcion": "TORNILLO ROSCA MADERA",
+      "unidad": "",
+      "precio": 2139,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8621",
+      "descripcion": "ALAMBRE DE ACERO",
+      "unidad": "",
+      "precio": 4595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8622",
+      "descripcion": "ALAMBRE GALVANIZADO",
+      "unidad": "",
+      "precio": 4595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8623",
+      "descripcion": "ALAMBRE GALVANIZADO LISO",
+      "unidad": "",
+      "precio": 4595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8624",
+      "descripcion": "PERFIL ANGULAR 40 X 4",
+      "unidad": "",
+      "precio": 4595,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8625",
+      "descripcion": "PERFIL ANGULAR 50 X 5",
+      "unidad": "",
+      "precio": 4795,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8630",
+      "descripcion": "PEGAMENTO CIANOCRILATO",
+      "unidad": "UN",
+      "precio": 1872,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8631",
+      "descripcion": "PEGAMENTO CONTACTO",
+      "unidad": "",
+      "precio": 3666,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8632",
+      "descripcion": "PEGAMENTO EPOXIDO",
+      "unidad": "",
+      "precio": 4989,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8633",
+      "descripcion": "SOLDADURA ESTANO PLOMO",
+      "unidad": "",
+      "precio": 16135,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8634",
+      "descripcion": "SOLDADURA BRONCE",
+      "unidad": "",
+      "precio": 13265,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8635",
+      "descripcion": "MASILLA ACRILICA",
+      "unidad": "",
+      "precio": 1359,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8636",
+      "descripcion": "MASILLA PLASTICA",
+      "unidad": "",
+      "precio": 1359,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8637",
+      "descripcion": "MASILLA SINTETICA",
+      "unidad": "",
+      "precio": 1359,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8638",
+      "descripcion": "SILICONA NEUTRA TRANSPARENTE ESPECIAL",
+      "unidad": "",
+      "precio": 3565,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8639",
+      "descripcion": "SILICONA ACIDA TRANSPARENTE",
+      "unidad": "",
+      "precio": 2643,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8640",
+      "descripcion": "SILICONA ACRILICA",
+      "unidad": "",
+      "precio": 2643,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8641",
+      "descripcion": "MASILLA POLIURETANO",
+      "unidad": "",
+      "precio": 7643,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8642",
+      "descripcion": "MASILLA SINTETICA",
+      "unidad": "",
+      "precio": 7643,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8643",
+      "descripcion": "MASILLA PLASTICA AUTOMOTRIZ",
+      "unidad": "",
+      "precio": 2388,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8644",
+      "descripcion": "FIBRA DE VIDRIO TEJIDA AUTOCLAVE",
+      "unidad": "M2",
+      "precio": 11885,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8645",
+      "descripcion": "CINTA AISLANTE",
+      "unidad": "",
+      "precio": 1095,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8646",
+      "descripcion": "CINTA AISLANTE NEGRA",
+      "unidad": "",
+      "precio": 1095,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8647",
+      "descripcion": "CINTA COPIA ACETON BLANCO BLANCO",
+      "unidad": "",
+      "precio": 10143,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8648",
+      "descripcion": "CINTA COPIA ACETON BLANCO NEGRO",
+      "unidad": "",
+      "precio": 10143,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8649",
+      "descripcion": "CINTA COPIA ACETON BLANCO ROJO",
+      "unidad": "",
+      "precio": 10143,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8650",
+      "descripcion": "CLAVOS P/ 6MM",
+      "unidad": "",
+      "precio": 14195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8651",
+      "descripcion": "POLVOS P/ 4MM",
+      "unidad": "",
+      "precio": 14195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8652",
+      "descripcion": "CINTA COPIA ACETON NEGRO BLANCO",
+      "unidad": "",
+      "precio": 14195,
+      "tipo": "material"
+    },
+    {
+      "codigo": "8653",
+      "descripcion": "CINTA COPIA ACETON NEGRO NEGRO",
+      "unidad": "",
+      "precio": 14195,
+      "tipo": "material"
+    }
+  ]
+}

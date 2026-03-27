@@ -1,0 +1,291 @@
+{
+  "items": [
+    {
+      "codigo": "60001",
+      "descripcion": "EMPAREJADOMENTAL ECONOMICO",
+      "unidad": "M2",
+      "precio": 3194,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60002",
+      "descripcion": "HORMIGON SIMPLE H-5",
+      "unidad": "M3",
+      "precio": 88238,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60003",
+      "descripcion": "HORMIGON ARMADO H-20 CON MOLDAJE",
+      "unidad": "M3",
+      "precio": 168900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60004",
+      "descripcion": "REDUCCION TERREN.",
+      "unidad": "M3",
+      "precio": 1300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60005",
+      "descripcion": "EXCAVACION (E.S.)",
+      "unidad": "M3",
+      "precio": 1300,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60172",
+      "descripcion": "EMPAREJADOMENTALPINO",
+      "unidad": "M2",
+      "precio": 3214,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60173",
+      "descripcion": "APRETON",
+      "unidad": "M2",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60174",
+      "descripcion": "LINTS (ESCALON E.G.)",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60201",
+      "descripcion": "EMPELOTADOAMENTO VESTIDORES",
+      "unidad": "M2",
+      "precio": 3455,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60202",
+      "descripcion": "APRETON",
+      "unidad": "M3",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60203",
+      "descripcion": "LINTS ESCALON E.G.)",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60241",
+      "descripcion": "EMPAREJADOMENTAL SANITARIOS",
+      "unidad": "M2",
+      "precio": 3455,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60242",
+      "descripcion": "HORMIGON SIMPLE H5 EMPLANTE",
+      "unidad": "M3",
+      "precio": 76,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60243",
+      "descripcion": "INSTALACION SANITARIA UFS TIPO",
+      "unidad": "M",
+      "precio": 16,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60244",
+      "descripcion": "PINTURA ACRILICA",
+      "unidad": "M2",
+      "precio": 886,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60245",
+      "descripcion": "APRETON",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60246",
+      "descripcion": "LINTS (ESCALON E.G.)",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60364",
+      "descripcion": "EMPANTALLADO TIPO FACIAL CONVENCIO N",
+      "unidad": "M2",
+      "precio": 85350,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60365",
+      "descripcion": "ARMADURA DE ACERO",
+      "unidad": "KG",
+      "precio": 1890,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60366",
+      "descripcion": "JUNTA FLEJE 10MM",
+      "unidad": "M",
+      "precio": 7580,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60367",
+      "descripcion": "MOLDAJE CORRIENTE PARA MURI CARAS",
+      "unidad": "M2",
+      "precio": 6380,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60417",
+      "descripcion": "RELLENOS",
+      "unidad": "M3",
+      "precio": 2600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60418",
+      "descripcion": "COMPACTACION",
+      "unidad": "M3",
+      "precio": 3640,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60419",
+      "descripcion": "HORMIGON H-20 MEZCLA",
+      "unidad": "M3",
+      "precio": 168900,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60420",
+      "descripcion": "CANCHA METALICA",
+      "unidad": "M2",
+      "precio": 5360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60421",
+      "descripcion": "CANCHA CORRIENTE CON SOLDADURA",
+      "unidad": "M2",
+      "precio": 5360,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60422",
+      "descripcion": "APRETON",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60423",
+      "descripcion": "LINTS ESCALON E.G.)",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60702",
+      "descripcion": "EMPANTALLADO METALICO",
+      "unidad": "M2",
+      "precio": 83450,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60703",
+      "descripcion": "PLACA METALICA GALVANIZADA",
+      "unidad": "M2",
+      "precio": 28860,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60704",
+      "descripcion": "JUNTA DULCE EN FLEJE 10MM",
+      "unidad": "M",
+      "precio": 8560,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60705",
+      "descripcion": "MOLDAJE CORRIENTE POLIMECO CARAS",
+      "unidad": "M2",
+      "precio": 8560,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60417",
+      "descripcion": "RELLENOS",
+      "unidad": "M3",
+      "precio": 2600,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60418",
+      "descripcion": "COMPACTACION",
+      "unidad": "M3",
+      "precio": 3640,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60419",
+      "descripcion": "APRETON",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60420",
+      "descripcion": "LINTS ESCALON E.G.)",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60364",
+      "descripcion": "EMPILLERADOS 5-12 MM A 25-20",
+      "unidad": "M2",
+      "precio": 4753,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60365",
+      "descripcion": "EL PROGRAMA LINER 5-10 KG P ALCACIA",
+      "unidad": "M2",
+      "precio": 200,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60366",
+      "descripcion": "ALAMBRE RECOCIDO N8 60MM",
+      "unidad": "KG",
+      "precio": 1720,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60367",
+      "descripcion": "EMPOTRADO + LINZ",
+      "unidad": "M",
+      "precio": 700,
+      "tipo": "apu"
+    },
+    {
+      "codigo": "60368",
+      "descripcion": "LINTS ESCALON E.G.)",
+      "unidad": "",
+      "precio": 26,
+      "tipo": "apu"
+    }
+  ]
+}
