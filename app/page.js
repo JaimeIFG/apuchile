@@ -11,6 +11,7 @@ const FAMILIAS = [
   { codigo: "PC",  nombre: "Electricidad",                padre: "P"  },
   { codigo: "PD",  nombre: "Gas",                         padre: "P"  },
   { codigo: "PF",  nombre: "Accesorios de Baño",          padre: "P"  },
+  { codigo: "PE",  nombre: "Artefactos Sanitarios",       padre: "P"  },
   { codigo: "R",   nombre: "Obras Civiles",               padre: null },
   { codigo: "RB",  nombre: "Movimiento de Tierras",       padre: "R"  },
   { codigo: "RE",  nombre: "Estructuras y Obras Anexas",  padre: "R"  },
@@ -23,6 +24,7 @@ const FAMILIAS = [
   { codigo: "H",   nombre: "Pavimentos",                  padre: null },
   { codigo: "HA",  nombre: "Cerámicas",                   padre: "H"  },
   { codigo: "HC",  nombre: "Maderas",                     padre: "H"  },
+  { codigo: "HE",  nombre: "Alfombras",                   padre: "H"  },
   { codigo: "I",   nombre: "Cubiertas",                   padre: null },
   { codigo: "IA",  nombre: "Fibrocemento",                padre: "I"  },
   { codigo: "IB",  nombre: "Fierro Galvanizado",          padre: "I"  },
@@ -37,7 +39,9 @@ const FAMILIAS = [
   { codigo: "AA",  nombre: "Hormigones y Aislación",      padre: null },
   { codigo: "N",   nombre: "Quincallería",                padre: null },
   { codigo: "O",   nombre: "Obras de Urbanización",       padre: null },
+  { codigo: "QD",  nombre: "Juegos y Equipamiento",       padre: "O"  },
   { codigo: "S",   nombre: "Escaleras y Barandas",        padre: null },
+  { codigo: "FA",  nombre: "Pinturas y Barnices",         padre: null },
 ];
 
 const fmt = (n) => "$" + Math.round(n || 0).toLocaleString("es-CL");
