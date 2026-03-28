@@ -61,6 +61,7 @@ export default function Dashboard() {
   const [regionDetectada, setRegionDetectada] = useState(null);
   const [usuariosOnline, setUsuariosOnline] = useState(1);
   const canalRef = useRef(null);
+  const [sidebarAbierto, setSidebarAbierto] = useState(true);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -218,117 +219,144 @@ export default function Dashboard() {
     <div className="min-h-screen flex bg-gray-50">
 
       {/* Sidebar izquierdo */}
-      <aside className="w-64 bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen">
+      <aside style={{ width: sidebarAbierto ? "256px" : "72px", transition: "width 0.3s ease" }}
+        className="bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen relative overflow-hidden">
+
+        {/* Botón toggle */}
+        <button onClick={() => setSidebarAbierto(a => !a)}
+          style={{ transition: "transform 0.3s ease" }}
+          className="absolute top-5 -right-3 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full shadow flex items-center justify-center text-gray-400 hover:text-emerald-600 hover:border-emerald-400 transition-colors">
+          <span style={{ display: "inline-block", transform: sidebarAbierto ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.3s ease", fontSize: "10px" }}>◀</span>
+        </button>
+
         {/* Logo */}
-        <div className="px-6 py-5 border-b border-gray-100">
-          <span className="text-lg font-bold text-emerald-800">APU<span className="text-emerald-500">chile</span></span>
+        <div className="px-5 py-5 border-b border-gray-100 flex items-center gap-2 overflow-hidden">
+          {sidebarAbierto ? (
+            <span className="text-lg font-bold text-emerald-800 whitespace-nowrap">APU<span className="text-emerald-500">chile</span></span>
+          ) : (
+            <span className="text-lg font-bold text-emerald-600 mx-auto">A</span>
+          )}
         </div>
 
         {/* Perfil */}
-        <div className="px-5 py-6 border-b border-gray-100">
-          {/* Avatar */}
-          <div className="flex flex-col items-center mb-4">
+        <div className="py-6 border-b border-gray-100 overflow-hidden">
+          {/* Avatar — siempre visible con punto verde */}
+          <div className="flex flex-col items-center px-3 mb-4">
             <div className="relative group mb-3">
-              <div className="w-20 h-20 rounded-2xl bg-emerald-100 overflow-hidden flex items-center justify-center border-2 border-white shadow-md">
+              <div className={`${sidebarAbierto ? "w-20 h-20 rounded-2xl" : "w-11 h-11 rounded-xl"} bg-emerald-100 overflow-hidden flex items-center justify-center border-2 border-white shadow-md`}
+                style={{ transition: "width 0.3s ease, height 0.3s ease" }}>
                 {avatarUrl ? (
                   <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover"/>
                 ) : (
-                  <span className="text-3xl font-bold text-emerald-600">{nombre.charAt(0).toUpperCase()}</span>
+                  <span className={`${sidebarAbierto ? "text-3xl" : "text-lg"} font-bold text-emerald-600`}>{nombre.charAt(0).toUpperCase()}</span>
                 )}
               </div>
-              <button onClick={() => fileInputRef.current?.click()}
-                className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-medium">
-                {subiendoFoto ? "Subiendo..." : "Cambiar foto"}
-              </button>
+              {/* Punto verde conectado */}
+              <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white"/>
+              {sidebarAbierto && (
+                <button onClick={() => fileInputRef.current?.click()}
+                  className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-medium">
+                  {subiendoFoto ? "Subiendo..." : "Cambiar foto"}
+                </button>
+              )}
               <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={subirFoto}/>
             </div>
 
-            {editandoPerfil ? (
-              <div className="w-full space-y-2">
-                <input value={perfilForm.nombre} onChange={e => setPerfilForm(f => ({...f, nombre: e.target.value}))}
-                  placeholder="Nombre completo"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
-                <input value={perfilForm.profesion} onChange={e => setPerfilForm(f => ({...f, profesion: e.target.value}))}
-                  placeholder="Profesión (ej: Ingeniero Civil)"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
-                <input value={perfilForm.cargo} onChange={e => setPerfilForm(f => ({...f, cargo: e.target.value}))}
-                  placeholder="Cargo (ej: Jefe de Obra)"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
-                <div className="flex gap-2 pt-1">
-                  <button onClick={() => setEditandoPerfil(false)}
-                    className="flex-1 text-xs text-gray-400 border border-gray-200 rounded-lg py-1.5 hover:bg-gray-50">Cancelar</button>
-                  <button onClick={guardarPerfil}
-                    className="flex-1 text-xs bg-emerald-600 text-white rounded-lg py-1.5 hover:bg-emerald-700">Guardar</button>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center w-full">
-                <p className="font-semibold text-gray-800 text-sm truncate">{nombre}</p>
-                {profesion && <p className="text-xs text-gray-500 mt-0.5 truncate">{profesion}</p>}
-                {cargo && <p className="text-xs text-emerald-600 font-medium mt-0.5 truncate">{cargo}</p>}
-                {regionDetectada && (
-                  <p className="text-[11px] text-gray-400 mt-1 flex items-center justify-center gap-1">
-                    <span>📍</span>{regionDetectada}
-                  </p>
+            {/* Info perfil — solo si está abierto */}
+            {sidebarAbierto && (
+              <div style={{ opacity: sidebarAbierto ? 1 : 0, transition: "opacity 0.2s ease" }} className="w-full">
+                {editandoPerfil ? (
+                  <div className="w-full space-y-2">
+                    <input value={perfilForm.nombre} onChange={e => setPerfilForm(f => ({...f, nombre: e.target.value}))}
+                      placeholder="Nombre completo"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
+                    <input value={perfilForm.profesion} onChange={e => setPerfilForm(f => ({...f, profesion: e.target.value}))}
+                      placeholder="Profesión"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
+                    <input value={perfilForm.cargo} onChange={e => setPerfilForm(f => ({...f, cargo: e.target.value}))}
+                      placeholder="Cargo"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
+                    <div className="flex gap-2 pt-1">
+                      <button onClick={() => setEditandoPerfil(false)}
+                        className="flex-1 text-xs text-gray-400 border border-gray-200 rounded-lg py-1.5 hover:bg-gray-50">Cancelar</button>
+                      <button onClick={guardarPerfil}
+                        className="flex-1 text-xs bg-emerald-600 text-white rounded-lg py-1.5 hover:bg-emerald-700">Guardar</button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center w-full">
+                    <p className="font-semibold text-gray-800 text-sm truncate">{nombre}</p>
+                    {profesion && <p className="text-xs text-gray-500 mt-0.5 truncate">{profesion}</p>}
+                    {cargo && <p className="text-xs text-emerald-600 font-medium mt-0.5 truncate">{cargo}</p>}
+                    {regionDetectada && (
+                      <p className="text-[11px] text-gray-400 mt-1 flex items-center justify-center gap-1">
+                        <span>📍</span>{regionDetectada}
+                      </p>
+                    )}
+                    {ultimaConexion && (
+                      <p className="text-[10px] text-gray-300 mt-1">
+                        Última vez: {new Date(ultimaConexion).toLocaleString("es-CL", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}
+                      </p>
+                    )}
+                    <button onClick={() => setEditandoPerfil(true)}
+                      className="text-[11px] text-gray-400 hover:text-emerald-600 mt-2 transition-colors">
+                      Editar perfil
+                    </button>
+                  </div>
                 )}
-                {ultimaConexion && (
-                  <p className="text-[10px] text-gray-300 mt-1">
-                    Última vez: {new Date(ultimaConexion).toLocaleString("es-CL", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}
-                  </p>
-                )}
-                <button onClick={() => setEditandoPerfil(true)}
-                  className="text-[11px] text-gray-400 hover:text-emerald-600 mt-2 transition-colors">
-                  Editar perfil
-                </button>
               </div>
             )}
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
-              <p className="text-2xl font-bold text-emerald-600">{proyectos.length}</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">{proyectos.length === 1 ? "proyecto creado" : "proyectos creados"}</p>
-            </div>
-            <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
-              <div className="flex items-center justify-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"/>
-                <p className="text-2xl font-bold text-emerald-600">{usuariosOnline}</p>
+          {/* Stats — solo si está abierto */}
+          {sidebarAbierto && (
+            <div style={{ opacity: sidebarAbierto ? 1 : 0, transition: "opacity 0.2s ease" }} className="grid grid-cols-2 gap-2 px-3">
+              <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
+                <p className="text-2xl font-bold text-emerald-600">{proyectos.length}</p>
+                <p className="text-[11px] text-gray-400 mt-0.5">{proyectos.length === 1 ? "proyecto creado" : "proyectos creados"}</p>
               </div>
-              <p className="text-[11px] text-gray-400 mt-0.5">{usuariosOnline === 1 ? "usuario en línea" : "usuarios en línea"}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Indicadores UF/UTM */}
-        <div className="px-5 py-4 border-b border-gray-100">
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Valores en tiempo real</p>
-          {uf ? (
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-xs font-semibold text-gray-500">UF</span>
-                <span className="text-sm font-bold text-gray-700">${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
+                <div className="flex items-center justify-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"/>
+                  <p className="text-2xl font-bold text-emerald-600">{usuariosOnline}</p>
+                </div>
+                <p className="text-[11px] text-gray-400 mt-0.5">{usuariosOnline === 1 ? "en línea" : "en línea"}</p>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-xs font-semibold text-gray-500">UTM</span>
-                <span className="text-sm font-bold text-gray-700">${utm?.toLocaleString("es-CL") ?? "—"}</span>
-              </div>
-              {fecha && <p className="text-[10px] text-gray-300 text-right">Actualizado {fecha}</p>}
             </div>
-          ) : (
-            <p className="text-xs text-gray-300">Cargando...</p>
           )}
         </div>
+
+        {/* Indicadores UF/UTM — solo si está abierto */}
+        {sidebarAbierto && (
+          <div style={{ opacity: sidebarAbierto ? 1 : 0, transition: "opacity 0.2s ease" }} className="px-5 py-4 border-b border-gray-100">
+            <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Valores en tiempo real</p>
+            {uf ? (
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-semibold text-gray-500">UF</span>
+                  <span className="text-sm font-bold text-gray-700">${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-semibold text-gray-500">UTM</span>
+                  <span className="text-sm font-bold text-gray-700">${utm?.toLocaleString("es-CL") ?? "—"}</span>
+                </div>
+                {fecha && <p className="text-[10px] text-gray-300 text-right">Actualizado {fecha}</p>}
+              </div>
+            ) : (
+              <p className="text-xs text-gray-300">Cargando...</p>
+            )}
+          </div>
+        )}
 
         {/* Spacer */}
         <div className="flex-1"/>
 
         {/* Email + Cerrar sesión */}
-        <div className="px-5 py-4 border-t border-gray-100">
-          <p className="text-[11px] text-gray-400 truncate mb-3">{user?.email}</p>
+        <div className={`${sidebarAbierto ? "px-5" : "px-2"} py-4 border-t border-gray-100`}>
+          {sidebarAbierto && <p className="text-[11px] text-gray-400 truncate mb-3">{user?.email}</p>}
           <button onClick={cerrarSesion}
-            className="w-full flex items-center justify-center gap-2 text-xs text-red-400 hover:text-white hover:bg-red-500 border border-red-200 hover:border-red-500 rounded-xl py-2.5 transition-all">
-            <span>Cerrar sesión</span>
+            className={`w-full flex items-center justify-center gap-2 text-xs text-red-400 hover:text-white hover:bg-red-500 border border-red-200 hover:border-red-500 rounded-xl py-2.5 transition-all`}>
+            <span>{sidebarAbierto ? "Cerrar sesión" : "⏻"}</span>
           </button>
         </div>
       </aside>
