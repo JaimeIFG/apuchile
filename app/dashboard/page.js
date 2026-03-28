@@ -48,6 +48,7 @@ export default function Dashboard() {
   const [importLoading, setImportLoading] = useState(false);
   const importFileRef = useRef(null);
   const [confirmarEliminar, setConfirmarEliminar] = useState(null); // { id }
+  const [confirmarCancelarImport, setConfirmarCancelarImport] = useState(false);
   const { uf, utm, fecha } = useIndicadores();
 
   // Perfil editable
@@ -453,7 +454,7 @@ export default function Dashboard() {
           {importModal && (
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
               <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 relative">
-                <button onClick={() => setImportModal(null)}
+                <button onClick={() => setConfirmarCancelarImport(true)}
                   className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
                 <div className="text-center mb-6">
                   <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -522,6 +523,32 @@ export default function Dashboard() {
                     {importLoading ? "Subiendo..." : "Importar y abrir →"}
                   </button>
                 </div>
+
+                {/* Confirmar cancelar y eliminar proyecto recién creado */}
+                {confirmarCancelarImport && (
+                  <div className="absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center p-6 text-center">
+                    <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mb-3">
+                      <span className="text-2xl">🗑️</span>
+                    </div>
+                    <h3 className="text-base font-bold text-gray-800 mb-1">¿Eliminar proyecto?</h3>
+                    <p className="text-sm text-gray-500 mb-6">El proyecto se eliminará como si nunca se hubiera creado.</p>
+                    <div className="flex gap-3 w-full">
+                      <button onClick={() => setConfirmarCancelarImport(false)}
+                        className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                        No, cancelar
+                      </button>
+                      <button onClick={async () => {
+                        await supabase.from("proyectos").delete().eq("id", importModal.id);
+                        setProyectos(p => p.filter(x => x.id !== importModal.id));
+                        setConfirmarCancelarImport(false);
+                        setImportModal(null);
+                      }}
+                        className="flex-1 bg-red-500 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-red-600">
+                        Sí, eliminar
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
