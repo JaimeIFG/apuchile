@@ -386,7 +386,12 @@ function Home() {
 
     // 1. Subir a Supabase Storage
     const path = `${proyectoId}/${file.name}`;
-    await supabase.storage.from("anexos").upload(path, file, { upsert: true });
+    const { error: uploadError } = await supabase.storage.from("anexos").upload(path, file, { upsert: true });
+    if (uploadError) {
+      alert("Error al subir archivo: " + uploadError.message);
+      setProcesando(false);
+      return;
+    }
     setAnexos(prev => {
       const sin = prev.filter(a => a.name !== file.name);
       return [...sin, { name: file.name, size: file.size }];
