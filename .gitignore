@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scripts con API keys y datos de extracción
+app/extraer_faltantes.mjs
+app/extraer_faltantes_paginas/
+app/extraer_ondac copy.mjs
+app/ONDAC.pdf.pdf
