@@ -50,6 +50,8 @@ export default function Dashboard() {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [subiendoFoto, setSubiendoFoto] = useState(false);
   const fileInputRef = useRef(null);
+  const [ultimaConexion, setUltimaConexion] = useState(null);
+  const [regionDetectada, setRegionDetectada] = useState(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -58,8 +60,30 @@ export default function Dashboard() {
       const m = user.user_metadata || {};
       setPerfilForm({ nombre: m.nombre || "", profesion: m.profesion || "", cargo: m.cargo || "" });
       setAvatarUrl(m.avatar_url || null);
+
+      // Guardar última conexión y cargar la anterior
+      const ahora = new Date().toISOString();
+      const anterior = m.ultima_conexion || null;
+      setUltimaConexion(anterior);
+      supabase.auth.updateUser({ data: { ultima_conexion: ahora } });
+
       cargarProyectos(user.id);
     });
+
+    // Geolocalización automática
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async pos => {
+        const { latitude, longitude } = pos.coords;
+        try {
+          const res = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=es`
+          );
+          const data = await res.json();
+          const region = data.principalSubdivision || data.locality || null;
+          if (region) setRegionDetectada(region);
+        } catch {}
+      }, () => {}); // silenciar error si el usuario rechaza
+    }
   }, []);
 
   useInactividad(supabase, router, 10);
@@ -203,6 +227,16 @@ export default function Dashboard() {
                 <p className="font-semibold text-gray-800 text-sm truncate">{nombre}</p>
                 {profesion && <p className="text-xs text-gray-500 mt-0.5 truncate">{profesion}</p>}
                 {cargo && <p className="text-xs text-emerald-600 font-medium mt-0.5 truncate">{cargo}</p>}
+                {regionDetectada && (
+                  <p className="text-[11px] text-gray-400 mt-1 flex items-center justify-center gap-1">
+                    <span>📍</span>{regionDetectada}
+                  </p>
+                )}
+                {ultimaConexion && (
+                  <p className="text-[10px] text-gray-300 mt-1">
+                    Última vez: {new Date(ultimaConexion).toLocaleString("es-CL", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}
+                  </p>
+                )}
                 <button onClick={() => setEditandoPerfil(true)}
                   className="text-[11px] text-gray-400 hover:text-emerald-600 mt-2 transition-colors">
                   Editar perfil
