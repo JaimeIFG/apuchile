@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ONDAC_APUS } from '../ondac_data_nuevo.js';
 import { supabase } from '../lib/supabase';
 import { useInactividad } from '../lib/useInactividad';
+import { useIndicadores } from '../lib/useIndicadores';
 
 const APUS = ONDAC_APUS;
 
@@ -115,6 +116,8 @@ function Home() {
   const [apuActivo, setApuActivo] = useState(null);
   const [proyecto, setProyecto] = useState([]);
   const [expandedResumen, setExpandedResumen] = useState(null);
+  const [moneda, setMoneda] = useState("CLP");
+  const { uf, utm } = useIndicadores();
 
   // Auth + cargar proyecto
   useEffect(() => {
@@ -198,6 +201,14 @@ function Home() {
 
   const apuCalc = apuActivo ? calcAPU(apuActivo, cfg) : null;
 
+  // Formateo según moneda seleccionada
+  const fmtM = (n) => {
+    const v = n || 0;
+    if (moneda === "UF" && uf) return `${(v / uf).toFixed(2)} UF`;
+    if (moneda === "UTM" && utm) return `${(v / utm).toFixed(3)} UTM`;
+    return "$" + Math.round(v).toLocaleString("es-CL");
+  };
+
   const ZONAS = [
     { val: 0, label: "Metropolitana" },
     { val: 0.15, label: "Biobío / La Araucanía (+15%)" },
@@ -218,14 +229,33 @@ function Home() {
           <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">{zonaLabel}</span>
           {guardando && <span className="text-[10px] text-gray-400">Guardando...</span>}
         </div>
-        <nav className="flex gap-1">
-          {[["biblioteca","Biblioteca ONDAC"],["editor","Editor APU"],["config","Configuración"],["resumen","Resumen"]].map(([id,label])=>(
-            <button key={id} onClick={()=>setTab(id)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${tab===id?"bg-emerald-600 text-white":"text-gray-500 hover:bg-gray-100"}`}>
-              {label}{id==="resumen"&&proyecto.length>0?` (${proyecto.length})`:""}
-            </button>
-          ))}
-        </nav>
+        <div className="flex items-center gap-3">
+          {/* Indicadores UF/UTM */}
+          {uf && (
+            <div className="hidden lg:flex items-center gap-3 text-[11px] text-gray-400 bg-gray-50 border border-gray-100 rounded-lg px-3 py-1.5">
+              <span><span className="font-semibold text-gray-500">UF</span> ${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              <span className="text-gray-200">·</span>
+              <span><span className="font-semibold text-gray-500">UTM</span> ${utm?.toLocaleString("es-CL") ?? "—"}</span>
+            </div>
+          )}
+          {/* Selector moneda */}
+          <div className="flex bg-gray-100 rounded-lg p-0.5 gap-0.5">
+            {["CLP","UF","UTM"].map(m => (
+              <button key={m} onClick={() => setMoneda(m)}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${moneda === m ? "bg-white shadow text-emerald-700" : "text-gray-400 hover:text-gray-600"}`}>
+                {m}
+              </button>
+            ))}
+          </div>
+          <nav className="flex gap-1">
+            {[["biblioteca","Biblioteca ONDAC"],["editor","Editor APU"],["config","Configuración"],["resumen","Resumen"]].map(([id,label])=>(
+              <button key={id} onClick={()=>setTab(id)}
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${tab===id?"bg-emerald-600 text-white":"text-gray-500 hover:bg-gray-100"}`}>
+                {label}{id==="resumen"&&proyecto.length>0?` (${proyecto.length})`:""}
+              </button>
+            ))}
+          </nav>
+        </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
@@ -275,7 +305,7 @@ function Home() {
                       <div className="flex items-center gap-3 ml-4 shrink-0">
                         <div className="text-right">
                           <div className="text-xs text-gray-400">Precio unitario</div>
-                          <div className="font-semibold text-emerald-600">{fmt(total)}</div>
+                          <div className="font-semibold text-emerald-600">{fmtM(total)}</div>
                         </div>
                         <button onClick={()=>{setApuActivo(apu);setTab("editor");}}
                           className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-600 transition-colors">
@@ -313,7 +343,7 @@ function Home() {
                   <h2 className="text-base font-semibold text-gray-800">{apuActivo.desc || apuActivo.descripcion}</h2>
                 </div>
                 <div className="grid grid-cols-4 gap-3 mb-6">
-                  {[["Costo M.O. neto",fmt(apuCalc.moNet)],["Leyes Sociales",fmt(apuCalc.llssAmt)],["Materiales",fmt(apuCalc.mat)],["Precio unitario",fmt(apuCalc.total)]].map(([label,val],i)=>(
+                  {[["Costo M.O. neto",fmtM(apuCalc.moNet)],["Leyes Sociales",fmtM(apuCalc.llssAmt)],["Materiales",fmtM(apuCalc.mat)],["Precio unitario",fmtM(apuCalc.total)]].map(([label,val],i)=>(
                     <div key={i} className={`rounded-xl p-4 ${i===3?"bg-emerald-600 text-white":"bg-white border border-gray-200"}`}>
                       <div className={`text-[10px] uppercase tracking-wider mb-1 ${i===3?"text-emerald-100":"text-gray-400"}`}>{label}</div>
                       <div className={`text-lg font-semibold ${i===3?"text-white":"text-gray-800"}`}>{val}</div>
@@ -323,7 +353,7 @@ function Home() {
                 <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5">
                   <div className="flex justify-between items-center px-5 py-4 bg-emerald-50">
                     <span className="font-semibold text-emerald-800">Precio unitario total</span>
-                    <span className="text-xl font-bold text-emerald-600">{fmt(apuCalc.total)}</span>
+                    <span className="text-xl font-bold text-emerald-600">{fmtM(apuCalc.total)}</span>
                   </div>
                 </div>
 
@@ -350,8 +380,8 @@ function Home() {
                               <td className="px-4 py-2 text-gray-700">{ins.desc}</td>
                               <td className="px-4 py-2 text-right text-gray-700">{ins.cant}</td>
                               <td className="px-4 py-2 text-center text-gray-500">{ins.un}</td>
-                              <td className="px-4 py-2 text-right text-gray-600">{ins.punit > 0 ? fmt(ins.punit) : <span className="text-gray-300">—</span>}</td>
-                              <td className="px-4 py-2 text-right font-medium text-gray-800">{ins.punit > 0 ? fmt(ins.cant * ins.punit) : <span className="text-gray-300">—</span>}</td>
+                              <td className="px-4 py-2 text-right text-gray-600">{ins.punit > 0 ? fmtM(ins.punit) : <span className="text-gray-300">—</span>}</td>
+                              <td className="px-4 py-2 text-right font-medium text-gray-800">{ins.punit > 0 ? fmtM(ins.cant * ins.punit) : <span className="text-gray-300">—</span>}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -453,8 +483,8 @@ function Home() {
                                   onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
                                   className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs focus:outline-none focus:border-emerald-400"/>
                               </td>
-                              <td className="px-3 py-3 text-right text-gray-700">{fmt(total)}</td>
-                              <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmt(total * p.cantidad)}</td>
+                              <td className="px-3 py-3 text-right text-gray-700">{fmtM(total)}</td>
+                              <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmtM(total * p.cantidad)}</td>
                               <td className="px-3 py-3 text-right">
                                 <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
                                   className="text-red-400 hover:text-red-600 text-xs">x</button>
@@ -485,8 +515,8 @@ function Home() {
                                           </td>
                                           <td className="py-1 text-center text-gray-500">{ins.un}</td>
                                           <td className="py-1 text-right text-gray-600">{(ins.cant ?? 0).toFixed(3)}</td>
-                                          <td className="py-1 text-right text-gray-600">{fmt(ins.punit)}</td>
-                                          <td className="py-1 text-right font-medium text-gray-700">{fmt(ins.sub)}</td>
+                                          <td className="py-1 text-right text-gray-600">{fmtM(ins.punit)}</td>
+                                          <td className="py-1 text-right font-medium text-gray-700">{fmtM(ins.sub)}</td>
                                         </tr>
                                       ))}
                                     </tbody>
@@ -551,12 +581,12 @@ function Home() {
                   ].map(([label, val], i) => (
                     <div key={i} className="flex justify-between items-center px-5 py-3 border-b border-gray-100">
                       <span className="text-gray-500">{label}</span>
-                      <span className="font-medium">{fmt(val)}</span>
+                      <span className="font-medium">{fmtM(val)}</span>
                     </div>
                   ))}
                   <div className="flex justify-between items-center px-5 py-4 bg-emerald-600 text-white">
                     <span className="font-semibold">Total proyecto</span>
-                    <span className="text-xl font-bold">{fmt(resumen.total)}</span>
+                    <span className="text-xl font-bold">{fmtM(resumen.total)}</span>
                   </div>
                 </div>
               </>

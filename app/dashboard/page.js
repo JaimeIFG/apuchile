@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
+import { useIndicadores } from "../lib/useIndicadores";
 
 const REGIONES = [
   { label: "Región Metropolitana", zona: 0 },
@@ -40,6 +41,7 @@ export default function Dashboard() {
   const [nombreNuevo, setNombreNuevo] = useState("");
   const [meta, setMeta] = useState(META_INICIAL);
   const [creandoLoading, setCreandoLoading] = useState(false);
+  const { uf, utm, fecha } = useIndicadores();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -114,8 +116,26 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between">
+      <header className="bg-white border-b border-gray-100 px-8 py-3 flex items-center justify-between">
         <span className="text-xl font-bold text-emerald-800">APU<span className="text-emerald-500">chile</span></span>
+        {/* Indicadores financieros */}
+        <div className="hidden md:flex items-center gap-1 bg-gray-50 border border-gray-100 rounded-xl px-4 py-2">
+          {uf ? (
+            <>
+              <div className="flex items-center gap-2 pr-3 border-r border-gray-200">
+                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">UF</span>
+                <span className="text-sm font-bold text-gray-700">${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              </div>
+              <div className="flex items-center gap-2 pl-3">
+                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">UTM</span>
+                <span className="text-sm font-bold text-gray-700">${utm?.toLocaleString("es-CL") ?? "—"}</span>
+              </div>
+              {fecha && <span className="text-[10px] text-gray-300 ml-2">{fecha}</span>}
+            </>
+          ) : (
+            <span className="text-xs text-gray-300">Cargando indicadores...</span>
+          )}
+        </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-500">{user?.email}</span>
           <button onClick={cerrarSesion}
