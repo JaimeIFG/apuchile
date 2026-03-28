@@ -47,6 +47,7 @@ export default function Dashboard() {
   const [importFile, setImportFile] = useState(null);
   const [importLoading, setImportLoading] = useState(false);
   const importFileRef = useRef(null);
+  const [confirmarEliminar, setConfirmarEliminar] = useState(null); // { id }
   const { uf, utm, fecha } = useIndicadores();
 
   // Perfil editable
@@ -175,11 +176,16 @@ export default function Dashboard() {
 
   const abrirProyecto = (id) => router.push(`/proyecto?id=${id}`);
 
-  const eliminarProyecto = async (id, e) => {
+  const eliminarProyecto = (id, e) => {
     e.stopPropagation();
-    if (!confirm("¿Eliminar este proyecto?")) return;
-    await supabase.from("proyectos").delete().eq("id", id);
-    setProyectos(p => p.filter(x => x.id !== id));
+    setConfirmarEliminar({ id });
+  };
+
+  const confirmarEliminarProyecto = async () => {
+    if (!confirmarEliminar) return;
+    await supabase.from("proyectos").delete().eq("id", confirmarEliminar.id);
+    setProyectos(p => p.filter(x => x.id !== confirmarEliminar.id));
+    setConfirmarEliminar(null);
   };
 
   const cerrarSesion = async () => {
@@ -447,7 +453,7 @@ export default function Dashboard() {
           {importModal && (
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
               <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 relative">
-                <button onClick={() => { setImportModal(null); router.push(`/proyecto?id=${importModal.id}`); }}
+                <button onClick={() => setImportModal(null)}
                   className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
                 <div className="text-center mb-6">
                   <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -514,6 +520,29 @@ export default function Dashboard() {
                     }}
                     className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
                     {importLoading ? "Subiendo..." : "Importar y abrir →"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Modal confirmar eliminación */}
+          {confirmarEliminar && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+                <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-2xl">🗑️</span>
+                </div>
+                <h3 className="text-base font-bold text-gray-800 mb-1">¿Eliminar proyecto?</h3>
+                <p className="text-sm text-gray-500 mb-6">Esta acción no se puede deshacer. Se eliminará el proyecto y todos sus datos.</p>
+                <div className="flex gap-3">
+                  <button onClick={() => setConfirmarEliminar(null)}
+                    className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                    No, cancelar
+                  </button>
+                  <button onClick={confirmarEliminarProyecto}
+                    className="flex-1 bg-red-500 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-red-600">
+                    Sí, eliminar
                   </button>
                 </div>
               </div>
