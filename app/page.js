@@ -100,6 +100,7 @@ export default function Home() {
   const [familiaActiva, setFamiliaActiva] = useState(null);
   const [apuActivo, setApuActivo] = useState(null);
   const [proyecto, setProyecto] = useState([]);
+  const [expandedResumen, setExpandedResumen] = useState(null);
 
   const raices = FAMILIAS.filter((f) => !f.padre);
   const hijos = (padre) => FAMILIAS.filter((f) => f.padre === padre);
@@ -370,27 +371,69 @@ export default function Home() {
                     </thead>
                     <tbody>
                       {proyecto.map((p) => {
-                        const { total } = calcAPU(p, cfg);
+                        const { total, rows } = calcAPU(p, cfg);
                         const desc = p.desc || p.descripcion || "Sin descripción";
+                        const expanded = expandedResumen === p.id;
                         return (
-                          <tr key={p.id} className="border-b border-gray-100 hover:bg-gray-50">
-                            <td className="px-4 py-3">
-                              <div className="text-[10px] text-gray-400 font-mono">{p.codigo}</div>
-                              <div className="text-gray-700 leading-snug">{desc}</div>
-                            </td>
-                            <td className="px-3 py-3 text-center text-gray-500">{p.unidad}</td>
-                            <td className="px-3 py-3 text-right">
-                              <input type="number" value={p.cantidad} min={0.01} step={0.01}
-                                onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
-                                className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs focus:outline-none focus:border-emerald-400"/>
-                            </td>
-                            <td className="px-3 py-3 text-right text-gray-700">{fmt(total)}</td>
-                            <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmt(total * p.cantidad)}</td>
-                            <td className="px-3 py-3 text-right">
-                              <button onClick={()=>setProyecto(pr=>pr.filter(x=>x.id!==p.id))}
-                                className="text-red-400 hover:text-red-600 text-xs">x</button>
-                            </td>
-                          </tr>
+                          <>
+                            <tr key={p.id} className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${expanded ? "bg-emerald-50" : ""}`}
+                              onClick={(e) => { if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") setExpandedResumen(expanded ? null : p.id); }}>
+                              <td className="px-4 py-3">
+                                <div className="text-[10px] text-gray-400 font-mono">{p.codigo}</div>
+                                <div className="text-gray-700 leading-snug flex items-center gap-1">
+                                  <span>{desc}</span>
+                                  <span className="text-[10px] text-gray-400">{expanded ? "▲" : "▼"}</span>
+                                </div>
+                              </td>
+                              <td className="px-3 py-3 text-center text-gray-500">{p.unidad}</td>
+                              <td className="px-3 py-3 text-right">
+                                <input type="number" value={p.cantidad} min={0.01} step={0.01}
+                                  onClick={(e) => e.stopPropagation()}
+                                  onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
+                                  className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs focus:outline-none focus:border-emerald-400"/>
+                              </td>
+                              <td className="px-3 py-3 text-right text-gray-700">{fmt(total)}</td>
+                              <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmt(total * p.cantidad)}</td>
+                              <td className="px-3 py-3 text-right">
+                                <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
+                                  className="text-red-400 hover:text-red-600 text-xs">x</button>
+                              </td>
+                            </tr>
+                            {expanded && rows.length > 0 && (
+                              <tr key={p.id + "_detail"} className="bg-emerald-50 border-b border-emerald-100">
+                                <td colSpan={6} className="px-6 py-3">
+                                  <table className="w-full text-[11px]">
+                                    <thead>
+                                      <tr className="text-gray-400 border-b border-emerald-100">
+                                        <th className="text-left py-1 font-medium">Insumo</th>
+                                        <th className="text-center py-1 font-medium">Tipo</th>
+                                        <th className="text-center py-1 font-medium">Un.</th>
+                                        <th className="text-right py-1 font-medium">Cant.</th>
+                                        <th className="text-right py-1 font-medium">P. Unit.</th>
+                                        <th className="text-right py-1 font-medium">Subtotal</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {rows.map((ins, i) => (
+                                        <tr key={i} className="border-b border-emerald-50">
+                                          <td className="py-1 text-gray-700">{ins.desc}</td>
+                                          <td className="py-1 text-center">
+                                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-medium ${ins.tipo==="mo"?"bg-blue-100 text-blue-700":ins.tipo==="mat"?"bg-amber-100 text-amber-700":"bg-gray-100 text-gray-600"}`}>
+                                              {ins.tipo}
+                                            </span>
+                                          </td>
+                                          <td className="py-1 text-center text-gray-500">{ins.un}</td>
+                                          <td className="py-1 text-right text-gray-600">{(ins.cant ?? 0).toFixed(3)}</td>
+                                          <td className="py-1 text-right text-gray-600">{fmt(ins.punit)}</td>
+                                          <td className="py-1 text-right font-medium text-gray-700">{fmt(ins.sub)}</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            )}
+                          </>
                         );
                       })}
                     </tbody>
