@@ -126,7 +126,6 @@ export default function Home() {
 
   const agregarPartida = (apu) => {
     setProyecto((p) => [...p, { ...apu, cantidad: 1, id: Date.now() + Math.random() }]);
-    setTab("resumen");
   };
 
   const resumen = useMemo(() => {
@@ -397,6 +396,47 @@ export default function Home() {
                     </tbody>
                   </table>
                 </div>
+                {(() => {
+                  const matMap = {};
+                  proyecto.forEach((p) => {
+                    (p.insumos || []).filter(ins => ins.tipo === "mat").forEach((ins) => {
+                      const key = ins.desc;
+                      const qty = (ins.cant ?? 0) * (1 + (ins.perd ?? 0) / 100) * p.cantidad;
+                      if (!matMap[key]) matMap[key] = { desc: ins.desc, un: ins.un, total: 0 };
+                      matMap[key].total += qty;
+                    });
+                  });
+                  const mats = Object.values(matMap).filter(m => m.total > 0).sort((a,b) => a.desc.localeCompare(b.desc));
+                  if (mats.length === 0) return null;
+                  return (
+                    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5">
+                      <div className="px-5 py-3 bg-gray-50 border-b border-gray-200">
+                        <span className="font-semibold text-sm text-gray-700">Desglose de materiales</span>
+                        <span className="text-xs text-gray-400 ml-2">cantidades totales del proyecto</span>
+                      </div>
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="border-b border-gray-100">
+                            <th className="text-left px-4 py-2 text-[10px] uppercase text-gray-400 font-medium">Material</th>
+                            <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-center">Un.</th>
+                            <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-right">Cant. neta</th>
+                            <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-right">A comprar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {mats.map((m, i) => (
+                            <tr key={i} className="border-b border-gray-50 hover:bg-gray-50">
+                              <td className="px-4 py-2 text-gray-700">{m.desc}</td>
+                              <td className="px-3 py-2 text-center text-gray-500">{m.un}</td>
+                              <td className="px-3 py-2 text-right text-gray-600">{m.total.toFixed(3)}</td>
+                              <td className="px-3 py-2 text-right font-semibold text-emerald-700">{Math.ceil(m.total)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
                 <div className="bg-white border border-gray-200 rounded-xl overflow-hidden max-w-md ml-auto">
                   {[
                     ["Subtotal costo directo", resumen.cd],
