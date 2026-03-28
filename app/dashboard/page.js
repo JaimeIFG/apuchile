@@ -446,7 +446,9 @@ export default function Dashboard() {
           {/* Modal importar archivo al crear proyecto */}
           {importModal && (
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 relative">
+                <button onClick={() => { setImportModal(null); router.push(`/proyecto?id=${importModal.id}`); }}
+                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
                 <div className="text-center mb-6">
                   <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
                     <span className="text-2xl">📂</span>
