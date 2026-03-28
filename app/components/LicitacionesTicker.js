@@ -39,12 +39,19 @@ export default function LicitacionesTicker() {
   }, [licitaciones, pausado]);
 
   if (loading) return (
-    <div className="bg-emerald-800 text-emerald-300 text-xs px-4 py-2 flex items-center gap-2">
-      <span className="animate-pulse">●</span> Cargando licitaciones Mercado Público...
+    <div className="bg-emerald-900 text-emerald-400 text-xs px-4 py-2 flex items-center gap-2">
+      <span className="animate-pulse">●</span>
+      <span className="font-bold text-emerald-500">🏛️ Licitaciones</span>
+      <span>Cargando Mercado Público...</span>
     </div>
   );
 
-  if (licitaciones.length === 0) return null;
+  if (licitaciones.length === 0) return (
+    <div className="bg-emerald-900 text-emerald-500 text-xs px-4 py-2 flex items-center gap-2">
+      <span className="font-bold text-emerald-400">🏛️ Licitaciones MP</span>
+      <span>Sin resultados — agrega tu ticket en Vercel cuando llegue el correo</span>
+    </div>
+  );
 
   const lic = licitaciones[idx];
   const dias = diasRestantes(lic.cierre);
