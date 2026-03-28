@@ -245,51 +245,12 @@ function Home() {
 
     if (tipo === "plano") { setProcesando(false); return; }
 
-    // 2. Extraer texto según tipo de archivo
-    let texto = "";
-    const ext = file.name.split(".").pop().toLowerCase();
-    try {
-      if (ext === "pdf") {
-        const buf = await file.arrayBuffer();
-        const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
-        pdfjsLib.GlobalWorkerOptions.workerSrc = "";
-        const pdf = await pdfjsLib.getDocument({ data: buf, useWorkerFetch: false, isEvalSupported: false }).promise;
-        for (let i = 1; i <= Math.min(pdf.numPages, 20); i++) {
-          const page = await pdf.getPage(i);
-          const content = await page.getTextContent();
-          texto += content.items.map(s => s.str).join(" ") + "\n";
-        }
-      } else if (ext === "xlsx" || ext === "xls") {
-        const XLSX = (await import("xlsx")).default;
-        const buf = await file.arrayBuffer();
-        const wb = XLSX.read(buf);
-        wb.SheetNames.forEach(name => {
-          const sheet = wb.Sheets[name];
-          texto += XLSX.utils.sheet_to_csv(sheet) + "\n";
-        });
-      } else {
-        setProcesando(false);
-        alert("Formato no compatible para procesar. Solo PDF y Excel.");
-        return;
-      }
-    } catch (err) {
-      setProcesando(false);
-      alert("Error leyendo el archivo: " + err.message);
-      return;
-    }
-
-    if (!texto.trim()) {
-      setProcesando(false);
-      alert("No se pudo extraer texto del archivo. ¿Es un PDF escaneado?");
-      return;
-    }
-
-    // 3. Llamar API para cruzar con ONDAC
+    // 2. El servidor descarga desde Supabase, extrae texto y cruza con ONDAC
     try {
       const res = await fetch("/api/procesar-anexo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ texto, tipo }),
+        body: JSON.stringify({ storagePath: path, tipo }),
       });
       const data = await res.json();
       if (data.error) { alert("Error al procesar: " + data.error); }
