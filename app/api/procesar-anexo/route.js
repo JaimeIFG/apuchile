@@ -3,19 +3,12 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@supabase/supabase-js";
 import { ONDAC_APUS } from "../../ondac_data_nuevo.js";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
-// Lista compacta de APUs para el prompt
+// Lista compacta de APUs para el prompt (calculada una vez al importar, no usa env vars)
 const APU_LISTA = ONDAC_APUS.map(a => `${a.codigo}|${a.desc || a.descripcion}|${a.unidad}`).join("\n");
 
 async function extraerTexto(buffer, ext) {
   if (ext === "pdf") {
-    const pdfParse = (await import("pdf-parse/lib/pdf-parse.js")).default;
+    const pdfParse = (await import("pdf-parse")).default;
     const data = await pdfParse(Buffer.from(buffer));
     return data.text;
   }
@@ -33,6 +26,12 @@ async function extraerTexto(buffer, ext) {
 
 export async function POST(request) {
   try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const supabaseAdmin = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
+
     const { storagePath, tipo } = await request.json();
     if (!storagePath || !tipo) return NextResponse.json({ error: "Faltan parámetros" }, { status: 400 });
     if (tipo === "plano") return NextResponse.json({ partidas: [] });
