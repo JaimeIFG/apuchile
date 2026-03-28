@@ -62,6 +62,9 @@ export default function Dashboard() {
   const [usuariosOnline, setUsuariosOnline] = useState(1);
   const canalRef = useRef(null);
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
+  const [confirmarLogout, setConfirmarLogout] = useState(false);
+  const [guardandoSesion, setGuardandoSesion] = useState(false);
+  const [progresoGuardado, setProgresoGuardado] = useState(0);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -190,7 +193,23 @@ export default function Dashboard() {
     setConfirmarEliminar(null);
   };
 
-  const cerrarSesion = async () => {
+  const cerrarSesion = () => setConfirmarLogout(true);
+
+  const ejecutarCierreSesion = async () => {
+    setConfirmarLogout(false);
+    setGuardandoSesion(true);
+    setProgresoGuardado(0);
+    // Guardar última conexión y animar progreso
+    const pasos = [
+      { p: 20, fn: () => supabase.auth.updateUser({ data: { ultima_conexion: new Date().toISOString() } }) },
+      { p: 60, fn: () => new Promise(r => setTimeout(r, 400)) },
+      { p: 90, fn: () => new Promise(r => setTimeout(r, 300)) },
+      { p: 100, fn: () => new Promise(r => setTimeout(r, 200)) },
+    ];
+    for (const paso of pasos) {
+      await paso.fn();
+      setProgresoGuardado(paso.p);
+    }
     await supabase.auth.signOut();
     router.push("/login");
   };
@@ -222,10 +241,10 @@ export default function Dashboard() {
       <aside style={{ width: sidebarAbierto ? "256px" : "72px", transition: "width 0.3s ease" }}
         className="bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen relative overflow-hidden">
 
-        {/* Botón toggle */}
+        {/* Botón toggle - centrado verticalmente */}
         <button onClick={() => setSidebarAbierto(a => !a)}
-          style={{ transition: "transform 0.3s ease" }}
-          className="absolute top-5 -right-3 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full shadow flex items-center justify-center text-gray-400 hover:text-emerald-600 hover:border-emerald-400 transition-colors">
+          style={{ transition: "transform 0.3s ease", top: "50%", transform: "translateY(-50%)" }}
+          className="absolute -right-3 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full shadow flex items-center justify-center text-gray-400 hover:text-emerald-600 hover:border-emerald-400 transition-colors">
           <span style={{ display: "inline-block", transform: sidebarAbierto ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.3s ease", fontSize: "10px" }}>◀</span>
         </button>
 
@@ -387,6 +406,47 @@ export default function Dashboard() {
               </button>
             ))}
           </div>
+
+          {/* Modal confirmar cerrar sesión */}
+          {confirmarLogout && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+                <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-2xl">👋</span>
+                </div>
+                <h3 className="text-base font-bold text-gray-800 mb-1">¿Cerrar sesión?</h3>
+                <p className="text-sm text-gray-500 mb-6">Se guardará tu información antes de salir.</p>
+                <div className="flex gap-3">
+                  <button onClick={() => setConfirmarLogout(false)}
+                    className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                    Cancelar
+                  </button>
+                  <button onClick={ejecutarCierreSesion}
+                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700">
+                    Sí, salir
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Modal guardando al cerrar sesión */}
+          {guardandoSesion && (
+            <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+                <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-2xl">💾</span>
+                </div>
+                <h3 className="text-base font-bold text-gray-800 mb-1">Guardando información...</h3>
+                <p className="text-sm text-gray-500 mb-5">Un momento, estamos guardando tus datos.</p>
+                <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+                  <div className="h-3 bg-emerald-500 rounded-full"
+                    style={{ width: `${progresoGuardado}%`, transition: "width 0.4s ease" }}/>
+                </div>
+                <p className="text-xs text-gray-400 mt-2">{progresoGuardado}%</p>
+              </div>
+            </div>
+          )}
 
           {/* Modal nuevo proyecto */}
           {creando && (
