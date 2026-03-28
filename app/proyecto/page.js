@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ONDAC_APUS } from '../ondac_data_nuevo.js';
 import { supabase } from '../lib/supabase';
@@ -91,7 +91,11 @@ function Badge({ tipo }) {
   return <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${cls}`}>{label}</span>;
 }
 
-export default function Home() {
+export default function ProyectoPage() {
+  return <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50"><div className="text-gray-300 text-sm">Cargando...</div></div>}><Home /></Suspense>;
+}
+
+function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const proyectoId = searchParams.get("id");
