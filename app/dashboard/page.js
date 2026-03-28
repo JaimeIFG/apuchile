@@ -42,6 +42,11 @@ export default function Dashboard() {
   const [nombreNuevo, setNombreNuevo] = useState("");
   const [meta, setMeta] = useState(META_INICIAL);
   const [creandoLoading, setCreandoLoading] = useState(false);
+  const [importModal, setImportModal] = useState(null); // { id, nombre } del proyecto recién creado
+  const [importTipo, setImportTipo] = useState("eett");
+  const [importFile, setImportFile] = useState(null);
+  const [importLoading, setImportLoading] = useState(false);
+  const importFileRef = useRef(null);
   const { uf, utm, fecha } = useIndicadores();
 
   // Perfil editable
@@ -157,7 +162,15 @@ export default function Dashboard() {
       meta: metaGuardar,
     }).select().single();
     setCreandoLoading(false);
-    if (!error) router.push(`/proyecto?id=${data.id}`);
+    if (!error) {
+      setProyectos(prev => [data, ...prev]);
+      setCreando(false);
+      setNombreNuevo("");
+      setMeta(META_INICIAL);
+      setImportModal({ id: data.id, nombre: data.nombre });
+      setImportTipo("eett");
+      setImportFile(null);
+    }
   };
 
   const abrirProyecto = (id) => router.push(`/proyecto?id=${id}`);
@@ -425,6 +438,81 @@ export default function Dashboard() {
                       {creandoLoading ? "Creando..." : "Crear proyecto →"}
                     </button>
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Modal importar archivo al crear proyecto */}
+          {importModal && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
+                <div className="text-center mb-6">
+                  <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">📂</span>
+                  </div>
+                  <h2 className="text-lg font-bold text-gray-800">¡Proyecto creado!</h2>
+                  <p className="text-sm text-gray-500 mt-1">¿Quieres importar un archivo para comenzar?</p>
+                </div>
+
+                {/* Tipo de documento */}
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  {[
+                    { key: "eett", label: "EE.TT.", desc: "Especificación técnica", icon: "📋" },
+                    { key: "presupuesto", label: "Presupuesto", desc: "Cubicación / APU", icon: "💰" },
+                    { key: "plano", label: "Plano / CAD", desc: "DWG, DXF, PDF plano", icon: "📐" },
+                    { key: "otro", label: "Otro documento", desc: "Cualquier referencia", icon: "📄" },
+                  ].map(op => (
+                    <button key={op.key} onClick={() => setImportTipo(op.key)}
+                      className={`flex items-start gap-2 p-3 rounded-xl border text-left transition-all ${importTipo === op.key ? "border-emerald-500 bg-emerald-50" : "border-gray-200 hover:border-gray-300"}`}>
+                      <span className="text-lg">{op.icon}</span>
+                      <div>
+                        <p className="text-xs font-semibold text-gray-700">{op.label}</p>
+                        <p className="text-[10px] text-gray-400">{op.desc}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Drop zone */}
+                <div onClick={() => importFileRef.current?.click()}
+                  className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-colors mb-4 ${importFile ? "border-emerald-400 bg-emerald-50" : "border-gray-200 hover:border-emerald-300"}`}>
+                  <input ref={importFileRef} type="file" className="hidden"
+                    accept=".pdf,.xlsx,.xls,.dwg,.dxf"
+                    onChange={e => setImportFile(e.target.files[0] || null)} />
+                  {importFile ? (
+                    <div>
+                      <p className="text-sm font-medium text-emerald-700">✓ {importFile.name}</p>
+                      <p className="text-xs text-gray-400">{(importFile.size / 1024).toFixed(0)} KB</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="text-sm text-gray-500">Arrastra o haz clic para seleccionar</p>
+                      <p className="text-xs text-gray-400 mt-1">PDF, Excel (.xlsx), AutoCAD (.dwg, .dxf)</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex gap-3">
+                  <button onClick={() => { setImportModal(null); router.push(`/proyecto?id=${importModal.id}`); }}
+                    className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                    Comenzar manual
+                  </button>
+                  <button
+                    disabled={!importFile || importLoading}
+                    onClick={async () => {
+                      if (!importFile) return;
+                      setImportLoading(true);
+                      const path = `${importModal.id}/${importFile.name}`;
+                      const { error: upErr } = await supabase.storage.from("anexos").upload(path, importFile, { upsert: true });
+                      setImportLoading(false);
+                      if (upErr) { alert("Error al subir: " + upErr.message); return; }
+                      const tipoMap = { eett: "eett", presupuesto: "presupuesto", plano: "plano", otro: "eett" };
+                      router.push(`/proyecto?id=${importModal.id}&tab=anexos&archivo=${encodeURIComponent(path)}&tipo=${tipoMap[importTipo]}`);
+                    }}
+                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
+                    {importLoading ? "Subiendo..." : "Importar y abrir →"}
+                  </button>
                 </div>
               </div>
             </div>

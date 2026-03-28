@@ -110,7 +110,10 @@ function Home() {
     mo_m1: 6800, mo_m2: 5200, mo_ay: 3800, mo_inst: 9500,
   });
   const updateCfg = (k, v) => setCfg((c) => ({ ...c, [k]: parseFloat(v) || 0 }));
-  const [tab, setTab] = useState("biblioteca");
+  const tabParam = searchParams.get("tab");
+  const archivoParam = searchParams.get("archivo");
+  const tipoParam = searchParams.get("tipo");
+  const [tab, setTab] = useState(tabParam || "biblioteca");
   const [busqueda, setBusqueda] = useState("");
   const [familiaActiva, setFamiliaActiva] = useState(null);
   const [apuActivo, setApuActivo] = useState(null);
@@ -137,6 +140,21 @@ function Home() {
           setProyecto(data.datos || []);
           setProyectoMeta(data.meta || {});
           if (data.meta?.zona !== undefined) setCfg(c => ({ ...c, zona: data.meta.zona }));
+        }
+        // Si viene con archivo desde dashboard, auto-procesar
+        if (archivoParam && tipoParam) {
+          const ext = archivoParam.split(".").pop().toLowerCase();
+          setAnexos([{ name: archivoParam.split("/").pop(), size: 0 }]);
+          setProcesando(true);
+          fetch("/api/procesar-anexo", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ storagePath: archivoParam, tipo: tipoParam }),
+          }).then(r => r.json()).then(d => {
+            setProcesando(false);
+            if (d.error) alert("Error al procesar: " + d.error);
+            else setMatchesAnexo({ nombre: archivoParam.split("/").pop(), partidas: d.partidas || [] });
+          }).catch(() => setProcesando(false));
         }
       }
     });
