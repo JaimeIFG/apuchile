@@ -122,7 +122,11 @@ function Home() {
       setUserId(user.id);
       if (proyectoId) {
         const { data } = await supabase.from("proyectos").select("*").eq("id", proyectoId).single();
-        if (data) { setProyectoNombre(data.nombre); setProyecto(data.datos || []); }
+        if (data) {
+          setProyectoNombre(data.nombre);
+          setProyecto(data.datos || []);
+          if (data.meta?.zona !== undefined) setCfg(c => ({ ...c, zona: data.meta.zona }));
+        }
       }
     });
   }, [proyectoId]);
