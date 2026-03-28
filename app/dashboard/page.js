@@ -5,6 +5,7 @@ import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
 import { useIndicadores } from "../lib/useIndicadores";
 import LicitacionesTicker from "../components/LicitacionesTicker";
+import LoadingOverlay from "../components/LoadingOverlay";
 
 const REGIONES = [
   { label: "Región Metropolitana", zona: 0 },
@@ -229,8 +230,8 @@ export default function Dashboard() {
   const zonaPreview = REGIONES.find(r => r.label === meta.region);
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-gray-400 text-sm">Cargando...</div>
+    <div className="min-h-screen bg-gray-900">
+      <LoadingOverlay visible={true} mensaje="Cargando dashboard..." blur={false} />
     </div>
   );
 
@@ -430,23 +431,12 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Modal guardando al cerrar sesión */}
-          {guardandoSesion && (
-            <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
-                <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-2xl">💾</span>
-                </div>
-                <h3 className="text-base font-bold text-gray-800 mb-1">Guardando información...</h3>
-                <p className="text-sm text-gray-500 mb-5">Un momento, estamos guardando tus datos.</p>
-                <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
-                  <div className="h-3 bg-emerald-500 rounded-full"
-                    style={{ width: `${progresoGuardado}%`, transition: "width 0.4s ease" }}/>
-                </div>
-                <p className="text-xs text-gray-400 mt-2">{progresoGuardado}%</p>
-              </div>
-            </div>
-          )}
+          {/* Overlay guardando al cerrar sesión */}
+          <LoadingOverlay
+            visible={guardandoSesion}
+            progress={progresoGuardado}
+            mensaje={progresoGuardado < 30 ? "Guardando perfil..." : progresoGuardado < 70 ? "Sincronizando proyectos..." : progresoGuardado < 100 ? "Cerrando sesión..." : "¡Hasta pronto!"}
+          />
 
           {/* Modal nuevo proyecto */}
           {creando && (

@@ -5,6 +5,7 @@ import { ONDAC_APUS } from '../ondac_data_nuevo.js';
 import { supabase } from '../lib/supabase';
 import { useInactividad } from '../lib/useInactividad';
 import { useIndicadores } from '../lib/useIndicadores';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 const APUS = ONDAC_APUS;
 
@@ -94,7 +95,7 @@ function Badge({ tipo }) {
 }
 
 export default function ProyectoPage() {
-  return <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50"><div className="text-gray-300 text-sm">Cargando...</div></div>}><Home /></Suspense>;
+  return <Suspense fallback={<div className="min-h-screen bg-gray-900"><LoadingOverlay visible={true} mensaje="Cargando proyecto..." blur={false} /></div>}><Home /></Suspense>;
 }
 
 function Home() {
@@ -446,6 +447,9 @@ function Home() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 font-sans text-sm text-gray-800">
+      {/* Overlay de carga al procesar archivos */}
+      <LoadingOverlay visible={procesando} mensaje="Analizando documento con ONDAC..." />
+
       <header className="flex items-center justify-between px-5 py-3 bg-white border-b border-gray-200 shrink-0">
         <div className="flex items-center gap-3">
           <button onClick={() => router.push("/dashboard")} className="text-gray-400 hover:text-emerald-600 transition-colors text-xs">← Dashboard</button>
