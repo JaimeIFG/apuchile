@@ -1,5 +1,6 @@
 "use client";
 import { useState, useMemo } from "react";
+import ondacData from "./ondac_apus_desglose_completo.json";
 
 const APUS_RAW = [];
 
