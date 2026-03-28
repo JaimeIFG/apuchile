@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useEffect, Suspense } from "react";
+import { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ONDAC_APUS } from '../ondac_data_nuevo.js';
 import { supabase } from '../lib/supabase';
@@ -118,6 +118,10 @@ function Home() {
   const [expandedResumen, setExpandedResumen] = useState(null);
   const [moneda, setMoneda] = useState("CLP");
   const { uf, utm } = useIndicadores();
+  const [anexos, setAnexos] = useState([]);
+  const [procesando, setProcesando] = useState(false);
+  const [matchesAnexo, setMatchesAnexo] = useState(null); // { nombre, partidas[] }
+  const anexoInputRef = useRef(null);
 
   // Auth + cargar proyecto
   useEffect(() => {
@@ -218,6 +222,95 @@ function Home() {
   ];
   const zonaLabel = ZONAS.find((z) => z.val === cfg.zona)?.label ?? "Magallanes";
 
+  // Cargar anexos guardados cuando carga el proyecto
+  useEffect(() => {
+    if (!proyectoId) return;
+    supabase.storage.from("anexos").list(proyectoId + "/").then(({ data }) => {
+      if (data) setAnexos(data.map(f => ({ name: f.name, size: f.metadata?.size })));
+    });
+  }, [proyectoId]);
+
+  const subirYProcesar = async (file, tipo) => {
+    if (!file || !proyectoId) return;
+    setProcesando(true);
+    setMatchesAnexo(null);
+
+    // 1. Subir a Supabase Storage
+    const path = `${proyectoId}/${file.name}`;
+    await supabase.storage.from("anexos").upload(path, file, { upsert: true });
+    setAnexos(prev => {
+      const sin = prev.filter(a => a.name !== file.name);
+      return [...sin, { name: file.name, size: file.size }];
+    });
+
+    if (tipo === "plano") { setProcesando(false); return; }
+
+    // 2. Extraer texto según tipo de archivo
+    let texto = "";
+    const ext = file.name.split(".").pop().toLowerCase();
+    try {
+      if (ext === "pdf") {
+        const buf = await file.arrayBuffer();
+        const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "";
+        const pdf = await pdfjsLib.getDocument({ data: buf, useWorkerFetch: false, isEvalSupported: false }).promise;
+        for (let i = 1; i <= Math.min(pdf.numPages, 20); i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          texto += content.items.map(s => s.str).join(" ") + "\n";
+        }
+      } else if (ext === "xlsx" || ext === "xls") {
+        const XLSX = (await import("xlsx")).default;
+        const buf = await file.arrayBuffer();
+        const wb = XLSX.read(buf);
+        wb.SheetNames.forEach(name => {
+          const sheet = wb.Sheets[name];
+          texto += XLSX.utils.sheet_to_csv(sheet) + "\n";
+        });
+      } else {
+        setProcesando(false);
+        alert("Formato no compatible para procesar. Solo PDF y Excel.");
+        return;
+      }
+    } catch (err) {
+      setProcesando(false);
+      alert("Error leyendo el archivo: " + err.message);
+      return;
+    }
+
+    if (!texto.trim()) {
+      setProcesando(false);
+      alert("No se pudo extraer texto del archivo. ¿Es un PDF escaneado?");
+      return;
+    }
+
+    // 3. Llamar API para cruzar con ONDAC
+    try {
+      const res = await fetch("/api/procesar-anexo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ texto, tipo }),
+      });
+      const data = await res.json();
+      if (data.error) { alert("Error al procesar: " + data.error); }
+      else { setMatchesAnexo({ nombre: file.name, partidas: data.partidas || [] }); }
+    } catch (err) {
+      alert("Error de conexión: " + err.message);
+    }
+    setProcesando(false);
+  };
+
+  const confirmarPartidas = (seleccionadas) => {
+    const nuevas = seleccionadas.map(p => ({
+      ...p.apu,
+      cantidad: p.cantidad || 1,
+      id: Date.now() + Math.random(),
+    }));
+    setProyecto(prev => [...prev, ...nuevas]);
+    setMatchesAnexo(null);
+    setTab("resumen");
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-50 font-sans text-sm text-gray-800">
       <header className="flex items-center justify-between px-5 py-3 bg-white border-b border-gray-200 shrink-0">
@@ -248,7 +341,7 @@ function Home() {
             ))}
           </div>
           <nav className="flex gap-1">
-            {[["biblioteca","Biblioteca ONDAC"],["editor","Editor APU"],["config","Configuración"],["resumen","Resumen"]].map(([id,label])=>(
+            {[["biblioteca","Biblioteca ONDAC"],["editor","Editor APU"],["config","Configuración"],["resumen","Resumen"],["anexos","Anexos"]].map(([id,label])=>(
               <button key={id} onClick={()=>setTab(id)}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${tab===id?"bg-emerald-600 text-white":"text-gray-500 hover:bg-gray-100"}`}>
                 {label}{id==="resumen"&&proyecto.length>0?` (${proyecto.length})`:""}
@@ -593,6 +686,188 @@ function Home() {
             )}
           </div>
         )}
+
+        {tab === "anexos" && (
+          <div className="flex-1 overflow-y-auto p-5 max-w-3xl">
+            <h2 className="text-base font-semibold mb-2 text-gray-800">Anexos del proyecto</h2>
+            <p className="text-xs text-gray-400 mb-6">Sube documentos del proyecto. Los PDF y Excel pueden procesarse automáticamente con IA para detectar partidas ONDAC.</p>
+
+            {/* Zona de subida */}
+            <AnexoUploader onSubir={subirYProcesar} procesando={procesando} inputRef={anexoInputRef}/>
+
+            {/* Procesando indicator */}
+            {procesando && (
+              <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-5 flex items-center gap-4">
+                <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin shrink-0"/>
+                <div>
+                  <p className="text-sm font-medium text-emerald-700">Procesando documento...</p>
+                  <p className="text-xs text-emerald-500 mt-0.5">Extrayendo texto y cruzando con base ONDAC</p>
+                </div>
+              </div>
+            )}
+
+            {/* Resultados del procesamiento */}
+            {matchesAnexo && (
+              <MatchesReview
+                nombre={matchesAnexo.nombre}
+                partidas={matchesAnexo.partidas}
+                onConfirmar={confirmarPartidas}
+                onDescartar={() => setMatchesAnexo(null)}
+              />
+            )}
+
+            {/* Lista de anexos subidos */}
+            {anexos.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Archivos subidos</h3>
+                <div className="space-y-2">
+                  {anexos.map((a, i) => {
+                    const ext = a.name.split(".").pop().toLowerCase();
+                    const icon = ext === "pdf" ? "📄" : ext === "xlsx" || ext === "xls" ? "📊" : ext === "dwg" || ext === "dxf" ? "📐" : "📎";
+                    return (
+                      <div key={i} className="bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">{icon}</span>
+                          <div>
+                            <p className="text-sm text-gray-700 font-medium">{a.name}</p>
+                            {a.size && <p className="text-xs text-gray-400">{(a.size / 1024).toFixed(0)} KB</p>}
+                          </div>
+                        </div>
+                        <button
+                          onClick={async () => {
+                            const { data } = await supabase.storage.from("anexos").createSignedUrl(`${proyectoId}/${a.name}`, 60);
+                            if (data?.signedUrl) window.open(data.signedUrl, "_blank");
+                          }}
+                          className="text-xs text-emerald-600 hover:underline">
+                          Abrir
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Componente selector de archivo y tipo
+function AnexoUploader({ onSubir, procesando, inputRef }) {
+  const [tipo, setTipo] = useState("presupuesto");
+  const [archivoNombre, setArchivoNombre] = useState(null);
+  const [archivo, setArchivo] = useState(null);
+  const localRef = useRef(null);
+  const ref = inputRef || localRef;
+
+  const TIPOS = [
+    { id: "presupuesto", label: "Presupuesto / Cubicación", desc: "Detecta partidas y cantidades" },
+    { id: "especificacion", label: "Especificación técnica", desc: "Detecta partidas según los trabajos descritos" },
+    { id: "plano", label: "Plano / AutoCAD", desc: "Se guarda como referencia sin procesar" },
+  ];
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-5">
+      {/* Selector tipo */}
+      <div className="mb-5">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Tipo de documento</p>
+        <div className="grid grid-cols-3 gap-2">
+          {TIPOS.map(t => (
+            <button key={t.id} onClick={() => setTipo(t.id)}
+              className={`rounded-xl p-3 text-left border transition-all ${tipo === t.id ? "border-emerald-400 bg-emerald-50" : "border-gray-200 hover:border-gray-300"}`}>
+              <p className={`text-xs font-semibold ${tipo === t.id ? "text-emerald-700" : "text-gray-700"}`}>{t.label}</p>
+              <p className="text-[10px] text-gray-400 mt-0.5 leading-snug">{t.desc}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Zona drop */}
+      <div
+        onClick={() => ref.current?.click()}
+        onDragOver={e => e.preventDefault()}
+        onDrop={e => {
+          e.preventDefault();
+          const f = e.dataTransfer.files[0];
+          if (f) { setArchivo(f); setArchivoNombre(f.name); }
+        }}
+        className="border-2 border-dashed border-gray-200 hover:border-emerald-400 rounded-xl p-8 text-center cursor-pointer transition-colors">
+        <p className="text-2xl mb-2">📂</p>
+        <p className="text-sm text-gray-600 font-medium">{archivoNombre || "Arrastra o haz clic para seleccionar"}</p>
+        <p className="text-xs text-gray-400 mt-1">PDF, Excel (.xlsx), AutoCAD (.dwg, .dxf)</p>
+        <input ref={ref} type="file" accept=".pdf,.xlsx,.xls,.dwg,.dxf" className="hidden"
+          onChange={e => {
+            const f = e.target.files?.[0];
+            if (f) { setArchivo(f); setArchivoNombre(f.name); }
+          }}/>
+      </div>
+
+      <button
+        onClick={() => { if (archivo) onSubir(archivo, tipo); }}
+        disabled={!archivo || procesando}
+        className="mt-4 w-full bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-40 transition-colors">
+        {procesando ? "Procesando..." : tipo === "plano" ? "Subir archivo →" : "Subir y procesar con IA →"}
+      </button>
+    </div>
+  );
+}
+
+// Componente para revisar y confirmar matches
+function MatchesReview({ nombre, partidas, onConfirmar, onDescartar }) {
+  const [seleccion, setSeleccion] = useState(() => new Set(partidas.map((_, i) => i)));
+
+  const toggle = (i) => setSeleccion(s => {
+    const n = new Set(s);
+    n.has(i) ? n.delete(i) : n.add(i);
+    return n;
+  });
+
+  return (
+    <div className="mt-6 bg-white border border-emerald-200 rounded-xl overflow-hidden">
+      <div className="px-5 py-4 bg-emerald-50 border-b border-emerald-100 flex items-center justify-between">
+        <div>
+          <p className="font-semibold text-emerald-800 text-sm">Partidas detectadas en «{nombre}»</p>
+          <p className="text-xs text-emerald-600 mt-0.5">{partidas.length} coincidencias — selecciona las que quieres agregar al proyecto</p>
+        </div>
+        <button onClick={onDescartar} className="text-gray-400 hover:text-gray-600 text-sm">✕</button>
+      </div>
+
+      <div className="divide-y divide-gray-100">
+        {partidas.map((p, i) => (
+          <div key={i}
+            onClick={() => toggle(i)}
+            className={`px-5 py-3 flex items-start gap-3 cursor-pointer transition-colors ${seleccion.has(i) ? "bg-emerald-50" : "hover:bg-gray-50"}`}>
+            <div className={`mt-0.5 w-4 h-4 rounded border-2 shrink-0 flex items-center justify-center transition-colors ${seleccion.has(i) ? "bg-emerald-600 border-emerald-600" : "border-gray-300"}`}>
+              {seleccion.has(i) && <span className="text-white text-[10px]">✓</span>}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[10px] font-mono text-gray-400">{p.codigo}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${p.similitud >= 80 ? "bg-emerald-100 text-emerald-700" : p.similitud >= 65 ? "bg-amber-100 text-amber-700" : "bg-gray-100 text-gray-600"}`}>
+                  {p.similitud}% similar
+                </span>
+              </div>
+              <p className="text-sm text-gray-700 leading-snug">{p.desc}</p>
+              <p className="text-[11px] text-gray-400 mt-0.5 italic">"{p.texto_original}"</p>
+            </div>
+            <div className="text-right shrink-0">
+              <p className="text-xs font-semibold text-gray-600">{p.cantidad ?? "—"}</p>
+              <p className="text-[10px] text-gray-400">{p.unidad}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="px-5 py-4 bg-gray-50 border-t border-gray-100 flex gap-3 justify-end">
+        <button onClick={onDescartar} className="text-sm text-gray-500 hover:text-gray-700 px-4 py-2">Descartar</button>
+        <button
+          onClick={() => onConfirmar(partidas.filter((_, i) => seleccion.has(i)))}
+          disabled={seleccion.size === 0}
+          className="bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-xl hover:bg-emerald-700 disabled:opacity-40">
+          Agregar {seleccion.size} partida{seleccion.size !== 1 ? "s" : ""} al proyecto →
+        </button>
       </div>
     </div>
   );
