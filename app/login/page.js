@@ -7,11 +7,14 @@ const PAISES = ["Chile","Argentina","Bolivia","Brasil","Colombia","Ecuador","Par
 
 export default function LoginPage() {
   const router = useRouter();
-  const [modo, setModo] = useState("ingresar"); // "ingresar" | "registrar"
+  const [modo, setModo] = useState("ingresar");
   const [form, setForm] = useState({ nombre: "", correo: "", usuario: "", password: "", anio: "", pais: "Chile" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [verificando, setVerificando] = useState(false);
+  const [otpStep, setOtpStep] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -23,7 +26,12 @@ export default function LoginPage() {
       password: form.password,
     });
     setLoading(false);
-    if (error) { setError(error.message === "Invalid login credentials" ? "Correo o contraseña incorrectos" : error.message); return; }
+    if (error) {
+      if (error.message.includes("Invalid login credentials")) setError("Correo o contraseña incorrectos");
+      else if (error.message.includes("Email not confirmed")) setError("Debes confirmar tu correo antes de ingresar");
+      else setError(error.message);
+      return;
+    }
     router.push("/dashboard");
   };
 
@@ -33,6 +41,16 @@ export default function LoginPage() {
     if (!form.nombre || !form.correo || !form.usuario || !form.password || !form.anio) {
       setError("Completa todos los campos"); setLoading(false); return;
     }
+    if (form.password.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres"); setLoading(false); return;
+    }
+
+    // Verificar correo duplicado consultando usuarios existentes
+    const { data: existing } = await supabase.from("usuarios_publicos").select("correo").eq("correo", form.correo).maybeSingle();
+    if (existing) {
+      setError("Este correo ya está registrado. ¿Quieres ingresar?"); setLoading(false); return;
+    }
+
     const { error } = await supabase.auth.signUp({
       email: form.correo,
       password: form.password,
@@ -41,25 +59,76 @@ export default function LoginPage() {
       }
     });
     setLoading(false);
-    if (error) { setError(error.message); return; }
-    setVerificando(true);
+    if (error) {
+      if (error.message.includes("already registered") || error.message.includes("User already registered"))
+        setError("Este correo ya está registrado. ¿Quieres ingresar?");
+      else setError(error.message);
+      return;
+    }
+    setOtpStep(true);
   };
 
-  if (verificando) {
+  const verificarOtp = async () => {
+    if (otp.length !== 6) { setOtpError("Ingresa el código de 6 dígitos"); return; }
+    setOtpError(""); setOtpLoading(true);
+    const { error } = await supabase.auth.verifyOtp({
+      email: form.correo,
+      token: otp,
+      type: "signup",
+    });
+    setOtpLoading(false);
+    if (error) {
+      if (error.message.includes("expired")) setOtpError("El código expiró. Regístrate nuevamente para recibir uno nuevo.");
+      else if (error.message.includes("invalid")) setOtpError("Código incorrecto, revisa tu correo.");
+      else setOtpError(error.message);
+      return;
+    }
+    router.push("/dashboard");
+  };
+
+  // Pantalla de verificación OTP
+  if (otpStep) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="bg-white rounded-2xl shadow-lg p-10 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5">
-            <span className="text-3xl">✉️</span>
+      <div className="min-h-screen flex">
+        <div className="hidden lg:flex lg:w-1/2 bg-emerald-800 flex-col items-center justify-center px-16 text-white">
+          <span className="text-4xl font-bold tracking-tight mb-6">APU<span className="text-emerald-300">chile</span></span>
+          <p className="text-emerald-200 text-center text-sm">Casi listo — confirma tu correo para activar tu cuenta</p>
+        </div>
+        <div className="w-full lg:w-1/2 flex items-center justify-center px-8 bg-white">
+          <div className="w-full max-w-md text-center">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span className="text-3xl">✉️</span>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Revisa tu correo</h2>
+            <p className="text-gray-400 text-sm mb-8">
+              Enviamos un código de 6 dígitos a <strong className="text-gray-600">{form.correo}</strong>
+            </p>
+            <div className="flex gap-2 justify-center mb-6">
+              {[0,1,2,3,4,5].map(i => (
+                <input key={i} type="text" maxLength={1} inputMode="numeric"
+                  value={otp[i] || ""}
+                  onChange={e => {
+                    const val = e.target.value.replace(/\D/g, "");
+                    const arr = otp.split("");
+                    arr[i] = val;
+                    setOtp(arr.join("").slice(0, 6));
+                    if (val && i < 5) document.getElementById(`otp-${i+1}`)?.focus();
+                  }}
+                  onKeyDown={e => { if (e.key === "Backspace" && !otp[i] && i > 0) document.getElementById(`otp-${i-1}`)?.focus(); }}
+                  id={`otp-${i}`}
+                  className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+              ))}
+            </div>
+            {otpError && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg mb-4">{otpError}</p>}
+            <button onClick={verificarOtp} disabled={otpLoading || otp.length !== 6}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mb-4">
+              {otpLoading ? "Verificando..." : "Verificar código →"}
+            </button>
+            <button onClick={() => { setOtpStep(false); setOtp(""); setOtpError(""); }}
+              className="text-gray-400 text-xs hover:text-gray-600">
+              Volver al registro
+            </button>
           </div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Revisa tu correo</h2>
-          <p className="text-gray-500 text-sm mb-6">
-            Te enviamos un enlace de verificación a <strong>{form.correo}</strong>. Confirma tu cuenta para poder ingresar.
-          </p>
-          <button onClick={() => { setVerificando(false); setModo("ingresar"); }}
-            className="text-emerald-600 text-sm underline">
-            Ya verifiqué → Ingresar
-          </button>
         </div>
       </div>
     );
@@ -67,7 +136,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Panel izquierdo — branding */}
+      {/* Panel izquierdo */}
       <div className="hidden lg:flex lg:w-1/2 bg-emerald-800 flex-col items-center justify-center px-16 text-white">
         <div className="mb-8">
           <span className="text-4xl font-bold tracking-tight">APU<span className="text-emerald-300">chile</span></span>
@@ -85,15 +154,12 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Panel derecho — formulario */}
+      {/* Panel derecho */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-8 bg-white">
         <div className="w-full max-w-md">
-          {/* Logo móvil */}
           <div className="lg:hidden text-center mb-8">
             <span className="text-3xl font-bold text-emerald-800">APU<span className="text-emerald-500">chile</span></span>
           </div>
-
-          {/* Tabs */}
           <div className="flex bg-gray-100 rounded-xl p-1 mb-8">
             {[["ingresar","Ingresar"],["registrar","Registrarse"]].map(([m, label]) => (
               <button key={m} onClick={() => { setModo(m); setError(""); }}
@@ -166,7 +232,17 @@ export default function LoginPage() {
                   </select>
                 </div>
               </div>
-              {error && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
+              {error && (
+                <div className="bg-red-50 px-3 py-2 rounded-lg flex items-center justify-between">
+                  <p className="text-red-500 text-xs">{error}</p>
+                  {error.includes("ya está registrado") && (
+                    <button type="button" onClick={() => { setModo("ingresar"); setError(""); }}
+                      className="text-emerald-600 text-xs font-medium underline ml-2 shrink-0">
+                      Ingresar →
+                    </button>
+                  )}
+                </div>
+              )}
               <button type="submit" disabled={loading}
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50">
                 {loading ? "Creando cuenta..." : "Crear cuenta →"}
