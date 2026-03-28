@@ -70,7 +70,7 @@ export default function LoginPage() {
   };
 
   const verificarOtp = async () => {
-    if (otp.trim().length < 6) { setOtpError("Ingresa el código completo"); return; }
+    if (otp.trim().length < 8) { setOtpError("Ingresa el código completo (8 dígitos)"); return; }
     setOtpError(""); setOtpLoading(true);
     const { error } = await supabase.auth.verifyOtp({
       email: form.correo,
@@ -112,13 +112,13 @@ export default function LoginPage() {
               maxLength={8}
               value={otp}
               onChange={e => setOtp(e.target.value.replace(/\D/g, "").slice(0, 8))}
-              onKeyDown={e => { if (e.key === "Enter" && otp.length >= 6) verificarOtp(); }}
+              onKeyDown={e => { if (e.key === "Enter" && otp.length >= 8) verificarOtp(); }}
               placeholder="Pega o escribe el código"
               className="w-full text-center text-3xl font-bold tracking-[0.4em] border-2 border-gray-200 rounded-xl px-4 py-5 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 text-gray-800 mb-2"/>
             <p className="text-xs text-gray-400 mb-6">Puedes pegar el código directamente con Ctrl+V</p>
 
             {otpError && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg mb-4">{otpError}</p>}
-            <button onClick={verificarOtp} disabled={otpLoading || otp.length < 6}
+            <button onClick={verificarOtp} disabled={otpLoading || otp.length < 8}
               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mb-4">
               {otpLoading ? "Verificando..." : "Verificar código →"}
             </button>
