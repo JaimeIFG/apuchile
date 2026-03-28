@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
+import { useInactividad } from "../lib/useInactividad";
 
 const REGIONES = [
   { label: "Región Metropolitana", zona: 0 },
@@ -83,6 +84,8 @@ export default function Dashboard() {
     await supabase.from("proyectos").delete().eq("id", id);
     setProyectos(p => p.filter(x => x.id !== id));
   };
+
+  useInactividad(supabase, router, 10);
 
   const cerrarSesion = async () => {
     await supabase.auth.signOut();

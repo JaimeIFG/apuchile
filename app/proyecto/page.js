@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ONDAC_APUS } from '../ondac_data_nuevo.js';
 import { supabase } from '../lib/supabase';
+import { useInactividad } from '../lib/useInactividad';
 
 const APUS = ONDAC_APUS;
 
@@ -131,7 +132,10 @@ function Home() {
     });
   }, [proyectoId]);
 
-  // Autoguardado cada vez que cambia el proyecto
+  // Auto-logout por inactividad (10 min)
+  useInactividad(supabase, router, 10);
+
+  // Autoguardado cada vez que cambia el proyecto (debounce 1.5s)
   useEffect(() => {
     if (!proyectoId || !userId) return;
     const timer = setTimeout(async () => {
@@ -141,6 +145,19 @@ function Home() {
     }, 1500);
     return () => clearTimeout(timer);
   }, [proyecto]);
+
+  // Guardar inmediatamente al cerrar o salir de la pestaña
+  useEffect(() => {
+    if (!proyectoId || !userId) return;
+    const guardarAhora = () => {
+      navigator.sendBeacon(
+        `/api/guardar?id=${proyectoId}`,
+        JSON.stringify({ datos: proyecto })
+      );
+    };
+    window.addEventListener("beforeunload", guardarAhora);
+    return () => window.removeEventListener("beforeunload", guardarAhora);
+  }, [proyectoId, userId, proyecto]);
 
   const raices = FAMILIAS.filter((f) => !f.padre);
   const hijos = (padre) => FAMILIAS.filter((f) => f.padre === padre);
