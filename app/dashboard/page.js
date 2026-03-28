@@ -52,6 +52,8 @@ export default function Dashboard() {
   const fileInputRef = useRef(null);
   const [ultimaConexion, setUltimaConexion] = useState(null);
   const [regionDetectada, setRegionDetectada] = useState(null);
+  const [usuariosOnline, setUsuariosOnline] = useState(1);
+  const canalRef = useRef(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -68,7 +70,24 @@ export default function Dashboard() {
       supabase.auth.updateUser({ data: { ultima_conexion: ahora } });
 
       cargarProyectos(user.id);
+
+      // Presencia en tiempo real
+      const canal = supabase.channel("presencia-global", {
+        config: { presence: { key: user.id } }
+      });
+      canalRef.current = canal;
+      canal.on("presence", { event: "sync" }, () => {
+        const estado = canal.presenceState();
+        setUsuariosOnline(Object.keys(estado).length);
+      });
+      canal.subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          await canal.track({ user_id: user.id, en: new Date().toISOString() });
+        }
+      });
     });
+
+    return () => { if (canalRef.current) supabase.removeChannel(canalRef.current); };
 
     // Geolocalización automática
     if (navigator.geolocation) {
@@ -246,9 +265,18 @@ export default function Dashboard() {
           </div>
 
           {/* Stats */}
-          <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
-            <p className="text-2xl font-bold text-emerald-600">{proyectos.length}</p>
-            <p className="text-[11px] text-gray-400 mt-0.5">{proyectos.length === 1 ? "proyecto creado" : "proyectos creados"}</p>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
+              <p className="text-2xl font-bold text-emerald-600">{proyectos.length}</p>
+              <p className="text-[11px] text-gray-400 mt-0.5">{proyectos.length === 1 ? "proyecto creado" : "proyectos creados"}</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
+              <div className="flex items-center justify-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"/>
+                <p className="text-2xl font-bold text-emerald-600">{usuariosOnline}</p>
+              </div>
+              <p className="text-[11px] text-gray-400 mt-0.5">{usuariosOnline === 1 ? "usuario en línea" : "usuarios en línea"}</p>
+            </div>
           </div>
         </div>
 
