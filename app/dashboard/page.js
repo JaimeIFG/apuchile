@@ -219,7 +219,7 @@ export default function Dashboard() {
 
         {/* Indicadores UF/UTM */}
         <div className="px-5 py-4 border-b border-gray-100">
-          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Indicadores</p>
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-3">Valores en tiempo real</p>
           {uf ? (
             <div className="space-y-2">
               <div className="flex justify-between items-center">
@@ -380,6 +380,14 @@ export default function Dashboard() {
                 {proyectos.map(p => {
                   const m = p.meta || {};
                   const dc = m.diasCorridos || diasCorridos(m.fechaInicio, m.fechaTermino);
+                  const zona = m.zona ?? 0;
+                  // Estimar total: CD con zona × (1 + GG18% + util10%) × (1 + IVA19%)
+                  const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
+                  const total = cd * 1.28 * 1.19; // GG+util ≈ 28%, IVA 19%
+                  const fmtCLP = n => n >= 1e6
+                    ? `$${(n / 1e6).toFixed(1)}M`
+                    : n > 0 ? `$${Math.round(n).toLocaleString("es-CL")}` : null;
+                  const montoLabel = fmtCLP(total);
                   return (
                     <button key={p.id} onClick={() => abrirProyecto(p.id)}
                       className="bg-white border border-gray-200 rounded-2xl p-5 text-left hover:border-emerald-300 hover:shadow-md transition-all group">
@@ -390,7 +398,10 @@ export default function Dashboard() {
                           ✕
                         </button>
                       </div>
-                      <div className="font-semibold text-gray-800 text-sm mb-2 truncate">{p.nombre}</div>
+                      <div className="font-semibold text-gray-800 text-sm mb-1 truncate">{p.nombre}</div>
+                      {montoLabel && (
+                        <div className="text-base font-bold text-emerald-600 mb-2">{montoLabel}</div>
+                      )}
                       {(m.region || m.mandante || m.responsable) && (
                         <div className="space-y-0.5 mb-2">
                           {m.region && <p className="text-xs text-gray-400 truncate">{m.region}</p>}
