@@ -3,25 +3,17 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@supabase/supabase-js";
 import { ONDAC_APUS } from "../../ondac_data_nuevo.js";
 
-// Lista compacta de APUs para el prompt (calculada una vez al importar, no usa env vars)
+// Lista compacta de APUs para el prompt
 const APU_LISTA = ONDAC_APUS.map(a => `${a.codigo}|${a.desc || a.descripcion}|${a.unidad}`).join("\n");
 
-async function extraerTexto(buffer, ext) {
-  if (ext === "pdf") {
-    const { extractText } = await import("unpdf");
-    const { text } = await extractText(new Uint8Array(buffer), { mergePages: true });
-    return Array.isArray(text) ? text.join("\n") : text;
-  }
-  if (ext === "xlsx" || ext === "xls") {
-    const XLSX = (await import("xlsx")).default;
-    const wb = XLSX.read(Buffer.from(buffer));
-    let texto = "";
-    wb.SheetNames.forEach(name => {
-      texto += XLSX.utils.sheet_to_csv(wb.Sheets[name]) + "\n";
-    });
-    return texto;
-  }
-  return null;
+async function extraerTextoExcel(buffer) {
+  const XLSX = (await import("xlsx")).default;
+  const wb = XLSX.read(Buffer.from(buffer));
+  let texto = "";
+  wb.SheetNames.forEach(name => {
+    texto += XLSX.utils.sheet_to_csv(wb.Sheets[name]) + "\n";
+  });
+  return texto;
 }
 
 export async function POST(request) {
@@ -47,22 +39,12 @@ export async function POST(request) {
 
     const ext = storagePath.split(".").pop().toLowerCase();
     const buffer = await fileData.arrayBuffer();
-
-    // 2. Extraer texto
-    const texto = await extraerTexto(buffer, ext);
-    if (!texto) return NextResponse.json({ error: "Formato no compatible" }, { status: 400 });
-    if (!texto.trim()) return NextResponse.json({ error: "No se pudo extraer texto. ¿Es un PDF escaneado?" }, { status: 400 });
-
-    // 3. Prompt según tipo
     const esPresupuesto = tipo === "presupuesto";
-    const prompt = `Eres un experto en construcción chileno. Se te entrega texto extraído de un ${esPresupuesto ? "presupuesto o cubicación de obra" : "documento de especificaciones técnicas"}.
-Tu tarea es identificar las partidas de obra y cruzarlas con la base de datos ONDAC 2017.
+
+    const promptBase = `Eres un experto en construcción chileno. Analiza este documento (${esPresupuesto ? "presupuesto o cubicación de obra" : "especificaciones técnicas"}) e identifica las partidas de obra, cruzándolas con la base de datos ONDAC 2017.
 
 BASE DE DATOS ONDAC (formato: CODIGO|DESCRIPCION|UNIDAD):
 ${APU_LISTA}
-
-TEXTO DEL DOCUMENTO:
-${texto.slice(0, 14000)}
 
 Devuelve SOLO un JSON válido con este formato, sin texto adicional:
 {
@@ -79,11 +61,42 @@ Devuelve SOLO un JSON válido con este formato, sin texto adicional:
 }
 Solo incluye coincidencias con similitud >= ${esPresupuesto ? "60" : "55"}. Máximo 30 partidas.`;
 
-    const message = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 4000,
-      messages: [{ role: "user", content: prompt }],
-    });
+    let message;
+
+    if (ext === "pdf") {
+      // Enviar PDF directamente a Claude (soporta PDFs escaneados y digitales)
+      const base64 = Buffer.from(buffer).toString("base64");
+      message = await client.beta.messages.create({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 4000,
+        betas: ["pdfs-2024-09-25"],
+        messages: [{
+          role: "user",
+          content: [
+            {
+              type: "document",
+              source: {
+                type: "base64",
+                media_type: "application/pdf",
+                data: base64,
+              },
+            },
+            { type: "text", text: promptBase },
+          ],
+        }],
+      });
+    } else if (ext === "xlsx" || ext === "xls") {
+      // Excel: extraer texto y enviar como texto
+      const texto = await extraerTextoExcel(buffer);
+      if (!texto.trim()) return NextResponse.json({ error: "No se pudo extraer texto del Excel" }, { status: 400 });
+      message = await client.messages.create({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 4000,
+        messages: [{ role: "user", content: promptBase + "\n\nCONTENIDO DEL EXCEL:\n" + texto.slice(0, 14000) }],
+      });
+    } else {
+      return NextResponse.json({ error: "Formato no compatible" }, { status: 400 });
+    }
 
     const responseText = message.content[0]?.text || "";
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
