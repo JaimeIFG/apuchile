@@ -120,8 +120,10 @@ function Home() {
   const { uf, utm } = useIndicadores();
   const [anexos, setAnexos] = useState([]);
   const [procesando, setProcesando] = useState(false);
-  const [matchesAnexo, setMatchesAnexo] = useState(null); // { nombre, partidas[] }
+  const [matchesAnexo, setMatchesAnexo] = useState(null);
   const anexoInputRef = useRef(null);
+  const [proyectoMeta, setProyectoMeta] = useState({});
+  const [editandoProyecto, setEditandoProyecto] = useState(false);
 
   // Auth + cargar proyecto
   useEffect(() => {
@@ -133,6 +135,7 @@ function Home() {
         if (data) {
           setProyectoNombre(data.nombre);
           setProyecto(data.datos || []);
+          setProyectoMeta(data.meta || {});
           if (data.meta?.zona !== undefined) setCfg(c => ({ ...c, zona: data.meta.zona }));
         }
       }
@@ -222,6 +225,152 @@ function Home() {
   ];
   const zonaLabel = ZONAS.find((z) => z.val === cfg.zona)?.label ?? "Magallanes";
 
+  const guardarEdicionProyecto = async (nuevoNombre, nuevaMeta) => {
+    if (!proyectoId) return;
+    await supabase.from("proyectos").update({
+      nombre: nuevoNombre,
+      meta: nuevaMeta,
+      updated_at: new Date().toISOString()
+    }).eq("id", proyectoId);
+    setProyectoNombre(nuevoNombre);
+    setProyectoMeta(nuevaMeta);
+    if (nuevaMeta?.zona !== undefined) setCfg(c => ({ ...c, zona: nuevaMeta.zona }));
+    setEditandoProyecto(false);
+  };
+
+  const exportarPDF = async () => {
+    const { default: jsPDF } = await import("jspdf");
+    const { default: autoTable } = await import("jspdf-autotable");
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    const ancho = doc.internal.pageSize.getWidth();
+
+    // Encabezado
+    doc.setFillColor(6, 95, 70);
+    doc.rect(0, 0, ancho, 28, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("APUchile", 14, 12);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("Análisis de Precios Unitarios", 14, 19);
+    doc.setFontSize(11);
+    doc.text(proyectoNombre, ancho - 14, 12, { align: "right" });
+    doc.setFontSize(8);
+    doc.text(new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" }), ancho - 14, 19, { align: "right" });
+
+    // Info del proyecto
+    let y = 36;
+    doc.setTextColor(30, 30, 30);
+    const infoItems = [
+      proyectoMeta.mandante && ["Mandante", proyectoMeta.mandante],
+      proyectoMeta.region && ["Región", proyectoMeta.region],
+      proyectoMeta.responsable && ["Responsable", proyectoMeta.responsable],
+      proyectoMeta.fechaInicio && ["Inicio", new Date(proyectoMeta.fechaInicio).toLocaleDateString("es-CL")],
+      proyectoMeta.fechaTermino && ["Término", new Date(proyectoMeta.fechaTermino).toLocaleDateString("es-CL")],
+      proyectoMeta.diasCorridos && ["Plazo", `${proyectoMeta.diasCorridos} días corridos`],
+    ].filter(Boolean);
+
+    if (infoItems.length > 0) {
+      doc.setFillColor(247, 250, 249);
+      doc.rect(14, y - 4, ancho - 28, infoItems.length * 6 + 4, "F");
+      infoItems.forEach(([label, val]) => {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8);
+        doc.setTextColor(80, 80, 80);
+        doc.text(label + ":", 18, y);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(30, 30, 30);
+        doc.text(val, 50, y);
+        y += 6;
+      });
+      y += 4;
+    }
+
+    // Tabla de partidas
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(6, 95, 70);
+    doc.text("Partidas del presupuesto", 14, y + 4);
+    y += 8;
+
+    const filas = proyecto.map(p => {
+      const { total } = calcAPU(p, cfg);
+      return [
+        p.codigo,
+        (p.desc || p.descripcion || "").substring(0, 55),
+        p.unidad,
+        p.cantidad,
+        "$" + Math.round(total).toLocaleString("es-CL"),
+        "$" + Math.round(total * p.cantidad).toLocaleString("es-CL"),
+      ];
+    });
+
+    autoTable(doc, {
+      startY: y,
+      head: [["Código", "Descripción", "Un.", "Cant.", "V. Unit.", "V. Total"]],
+      body: filas,
+      styles: { fontSize: 7.5, cellPadding: 2.5 },
+      headStyles: { fillColor: [6, 95, 70], textColor: 255, fontStyle: "bold" },
+      alternateRowStyles: { fillColor: [245, 250, 248] },
+      columnStyles: {
+        0: { cellWidth: 20 },
+        1: { cellWidth: 75 },
+        2: { cellWidth: 12, halign: "center" },
+        3: { cellWidth: 15, halign: "right" },
+        4: { cellWidth: 28, halign: "right" },
+        5: { cellWidth: 28, halign: "right" },
+      },
+    });
+
+    // Totales
+    const finalY = doc.lastAutoTable.finalY + 6;
+    const totalesData = [
+      ["Subtotal Costo Directo", resumen.cd],
+      [`Gastos Generales (${cfg.gg}%)`, resumen.gg],
+      [`Utilidad (${cfg.util}%)`, resumen.util],
+      ["Subtotal Neto", resumen.neto],
+      [`IVA (${cfg.iva}%)`, resumen.iva],
+      ["TOTAL PROYECTO", resumen.total],
+    ];
+
+    autoTable(doc, {
+      startY: finalY,
+      body: totalesData.map(([label, val], i) => [
+        label,
+        "$" + Math.round(val).toLocaleString("es-CL"),
+      ]),
+      styles: { fontSize: 8.5, cellPadding: 3 },
+      columnStyles: {
+        0: { cellWidth: 100 },
+        1: { cellWidth: 40, halign: "right" },
+      },
+      bodyStyles: { fillColor: false },
+      didParseCell: (data) => {
+        if (data.row.index === totalesData.length - 1) {
+          data.cell.styles.fillColor = [6, 95, 70];
+          data.cell.styles.textColor = 255;
+          data.cell.styles.fontStyle = "bold";
+          data.cell.styles.fontSize = 10;
+        }
+      },
+      margin: { left: ancho - 155 },
+      tableWidth: 140,
+    });
+
+    // Pie de página
+    const totalPags = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPags; i++) {
+      doc.setPage(i);
+      doc.setFontSize(7);
+      doc.setTextColor(160, 160, 160);
+      doc.text("Generado por APUchile · apuchile.vercel.app", 14, 292);
+      doc.text(`Página ${i} de ${totalPags}`, ancho - 14, 292, { align: "right" });
+    }
+
+    doc.save(`${proyectoNombre.replace(/\s+/g, "_")}_presupuesto.pdf`);
+  };
+
   // Cargar anexos guardados cuando carga el proyecto
   useEffect(() => {
     if (!proyectoId) return;
@@ -279,9 +428,22 @@ function Home() {
           <button onClick={() => router.push("/dashboard")} className="text-gray-400 hover:text-emerald-600 transition-colors text-xs">← Dashboard</button>
           <span className="text-gray-200">|</span>
           <span className="text-base font-semibold text-emerald-600 tracking-tight">APU<span className="text-gray-400 font-normal">chile</span></span>
-          <span className="text-gray-700 font-medium text-sm">{proyectoNombre}</span>
-          <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">{zonaLabel}</span>
-          {guardando && <span className="text-[10px] text-gray-400">Guardando...</span>}
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <span className="text-gray-700 font-medium text-sm">{proyectoNombre}</span>
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">{zonaLabel}</span>
+              <button onClick={() => setEditandoProyecto(true)}
+                className="text-[11px] text-gray-400 hover:text-emerald-600 transition-colors">✏️</button>
+              {guardando && <span className="text-[10px] text-gray-400">Guardando...</span>}
+            </div>
+            {(proyectoMeta.mandante || proyectoMeta.responsable || proyectoMeta.diasCorridos) && (
+              <div className="flex items-center gap-3 text-[10px] text-gray-400 mt-0.5">
+                {proyectoMeta.mandante && <span>{proyectoMeta.mandante}</span>}
+                {proyectoMeta.responsable && <span>· {proyectoMeta.responsable}</span>}
+                {proyectoMeta.diasCorridos && <span>· {proyectoMeta.diasCorridos} días</span>}
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex items-center gap-3">
           {/* Indicadores UF/UTM */}
@@ -494,7 +656,15 @@ function Home() {
 
         {tab === "resumen" && (
           <div className="flex-1 overflow-y-auto p-5">
-            <h2 className="text-base font-semibold mb-5 text-gray-800">Resumen del proyecto</h2>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-base font-semibold text-gray-800">Resumen del proyecto</h2>
+              {proyecto.length > 0 && (
+                <button onClick={exportarPDF}
+                  className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium hover:bg-emerald-700 transition-colors">
+                  📄 Exportar PDF
+                </button>
+              )}
+            </div>
             {proyecto.length === 0 ? (
               <div className="text-center py-20 text-gray-400">
                 <p className="mb-2">No hay partidas agregadas</p>
@@ -710,6 +880,123 @@ function Home() {
             )}
           </div>
         )}
+      </div>
+
+      {/* Modal editar proyecto */}
+      {editandoProyecto && (
+        <EditarProyectoModal
+          nombre={proyectoNombre}
+          meta={proyectoMeta}
+          onGuardar={guardarEdicionProyecto}
+          onCerrar={() => setEditandoProyecto(false)}
+        />
+      )}
+    </div>
+  );
+}
+
+// Modal editar proyecto
+const REGIONES_EDIT = [
+  { label: "Región Metropolitana", zona: 0 },
+  { label: "Arica y Parinacota", zona: 0.10 },
+  { label: "Tarapacá", zona: 0.10 },
+  { label: "Antofagasta", zona: 0.10 },
+  { label: "Atacama", zona: 0.10 },
+  { label: "Coquimbo", zona: 0.05 },
+  { label: "Valparaíso", zona: 0.05 },
+  { label: "O'Higgins", zona: 0.05 },
+  { label: "Maule", zona: 0.05 },
+  { label: "Ñuble", zona: 0.10 },
+  { label: "Biobío", zona: 0.15 },
+  { label: "La Araucanía", zona: 0.15 },
+  { label: "Los Ríos", zona: 0.15 },
+  { label: "Los Lagos", zona: 0.20 },
+  { label: "Aysén", zona: 0.30 },
+  { label: "Magallanes", zona: 0.25 },
+];
+
+function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
+  const [form, setForm] = useState({
+    nombre: nombre || "",
+    region: meta.region || "",
+    mandante: meta.mandante || "",
+    fechaInicio: meta.fechaInicio || "",
+    fechaTermino: meta.fechaTermino || "",
+    responsable: meta.responsable || "",
+  });
+
+  const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const dias = (() => {
+    if (!form.fechaInicio || !form.fechaTermino) return null;
+    const d = Math.round((new Date(form.fechaTermino) - new Date(form.fechaInicio)) / 86400000);
+    return d > 0 ? d : null;
+  })();
+
+  const handleGuardar = () => {
+    const regionInfo = REGIONES_EDIT.find(r => r.label === form.region);
+    const nuevaMeta = {
+      region: form.region,
+      mandante: form.mandante,
+      fechaInicio: form.fechaInicio,
+      fechaTermino: form.fechaTermino,
+      responsable: form.responsable,
+      zona: regionInfo ? regionInfo.zona : meta.zona ?? 0,
+      diasCorridos: dias,
+    };
+    onGuardar(form.nombre, nuevaMeta);
+  };
+
+  const inputCls = "w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100";
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-base font-bold text-gray-800">Editar proyecto</h3>
+            <button onClick={onCerrar} className="text-gray-400 hover:text-gray-600">✕</button>
+          </div>
+          <div className="space-y-3">
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Nombre del proyecto</label>
+              <input value={form.nombre} onChange={e => setF("nombre", e.target.value)} className={inputCls}/>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Región</label>
+              <select value={form.region} onChange={e => setF("region", e.target.value)} className={inputCls + " bg-white"}>
+                <option value="">Selecciona...</option>
+                {REGIONES_EDIT.map(r => <option key={r.label} value={r.label}>{r.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Mandante</label>
+              <input value={form.mandante} onChange={e => setF("mandante", e.target.value)} className={inputCls} placeholder="Nombre del mandante"/>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs font-medium text-gray-600 mb-1 block">Fecha inicio</label>
+                <input type="date" value={form.fechaInicio} onChange={e => setF("fechaInicio", e.target.value)} className={inputCls}/>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-600 mb-1 block">Fecha término</label>
+                <input type="date" value={form.fechaTermino} onChange={e => setF("fechaTermino", e.target.value)} className={inputCls}/>
+              </div>
+            </div>
+            {dias && <p className="text-xs text-emerald-600">Plazo: <strong>{dias} días corridos</strong></p>}
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Persona a cargo</label>
+              <input value={form.responsable} onChange={e => setF("responsable", e.target.value)} className={inputCls} placeholder="Nombre del responsable"/>
+            </div>
+          </div>
+          <div className="flex gap-3 mt-6">
+            <button onClick={onCerrar} className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50">Cancelar</button>
+            <button onClick={handleGuardar} disabled={!form.nombre.trim()}
+              className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
+              Guardar cambios
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
