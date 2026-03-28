@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
+  const [modoTexto, setModoTexto] = useState(false); // fallback campo único
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -100,31 +101,71 @@ export default function LoginPage() {
               <span className="text-3xl">✉️</span>
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Revisa tu correo</h2>
-            <p className="text-gray-400 text-sm mb-8">
-              Enviamos un código de 6 dígitos a <strong className="text-gray-600">{form.correo}</strong>
+            <p className="text-gray-500 text-sm mb-1">
+              Enviamos un código de 6 dígitos a
             </p>
-            <div className="flex gap-2 justify-center mb-6">
-              {[0,1,2,3,4,5].map(i => (
-                <input key={i} type="text" maxLength={1} inputMode="numeric"
-                  value={otp[i] || ""}
-                  onChange={e => {
-                    const val = e.target.value.replace(/\D/g, "");
-                    const arr = otp.split("");
-                    arr[i] = val;
-                    setOtp(arr.join("").slice(0, 6));
-                    if (val && i < 5) document.getElementById(`otp-${i+1}`)?.focus();
-                  }}
-                  onKeyDown={e => { if (e.key === "Backspace" && !otp[i] && i > 0) document.getElementById(`otp-${i-1}`)?.focus(); }}
-                  id={`otp-${i}`}
-                  className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
-              ))}
-            </div>
+            <p className="font-semibold text-gray-800 mb-2">{form.correo}</p>
+            <p className="text-xs text-gray-400 mb-8">Revisa también la carpeta de spam o correo no deseado</p>
+
+            {modoTexto ? (
+              /* Campo único — más fácil para pegar */
+              <div className="mb-6">
+                <input
+                  autoFocus
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={6}
+                  value={otp}
+                  onChange={e => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                  onKeyDown={e => { if (e.key === "Enter" && otp.length === 6) verificarOtp(); }}
+                  placeholder="Ingresa o pega el código aquí"
+                  className="w-full text-center text-2xl font-bold tracking-[0.5em] border-2 border-gray-200 rounded-xl px-4 py-4 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                <button onClick={() => { setModoTexto(false); setOtp(""); }}
+                  className="text-xs text-gray-400 hover:text-emerald-600 mt-2 block mx-auto">
+                  Volver a los cuadros separados
+                </button>
+              </div>
+            ) : (
+              /* 6 cuadros con soporte de pegado */
+              <div className="mb-2">
+                <div className="flex gap-2 justify-center mb-2">
+                  {[0,1,2,3,4,5].map(i => (
+                    <input key={i} type="text" maxLength={1} inputMode="numeric"
+                      value={otp[i] || ""}
+                      onChange={e => {
+                        const val = e.target.value.replace(/\D/g, "");
+                        const arr = otp.padEnd(6, " ").split("");
+                        arr[i] = val;
+                        setOtp(arr.join("").trimEnd().slice(0, 6));
+                        if (val && i < 5) document.getElementById(`otp-${i+1}`)?.focus();
+                      }}
+                      onKeyDown={e => {
+                        if (e.key === "Backspace" && !otp[i] && i > 0) document.getElementById(`otp-${i-1}`)?.focus();
+                      }}
+                      onPaste={e => {
+                        e.preventDefault();
+                        const pegado = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+                        setOtp(pegado);
+                        const nextIdx = Math.min(pegado.length, 5);
+                        document.getElementById(`otp-${nextIdx}`)?.focus();
+                      }}
+                      id={`otp-${i}`}
+                      className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 text-gray-800"/>
+                  ))}
+                </div>
+                <button onClick={() => { setModoTexto(true); setOtp(""); }}
+                  className="text-xs text-gray-400 hover:text-emerald-600 block mx-auto mt-1">
+                  ¿No puedes pegarlo? Haz clic aquí para ingresar manualmente
+                </button>
+              </div>
+            )}
+
             {otpError && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg mb-4">{otpError}</p>}
-            <button onClick={verificarOtp} disabled={otpLoading || otp.length !== 6}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mb-4">
+            <button onClick={verificarOtp} disabled={otpLoading || otp.trim().length !== 6}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mb-4 mt-4">
               {otpLoading ? "Verificando..." : "Verificar código →"}
             </button>
-            <button onClick={() => { setOtpStep(false); setOtp(""); setOtpError(""); }}
+            <button onClick={() => { setOtpStep(false); setOtp(""); setOtpError(""); setModoTexto(false); }}
               className="text-gray-400 text-xs hover:text-gray-600">
               Volver al registro
             </button>
