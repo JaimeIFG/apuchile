@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
 import { useIndicadores } from "../lib/useIndicadores";
+import LicitacionesTicker from "../components/LicitacionesTicker";
 
 const REGIONES = [
   { label: "Región Metropolitana", zona: 0 },
@@ -251,8 +252,10 @@ export default function Dashboard() {
       </aside>
 
       {/* Contenido principal */}
-      <div className="flex-1 overflow-y-auto">
-        <main className="max-w-4xl mx-auto px-8 py-10">
+      <div className="flex-1 overflow-y-auto flex flex-col">
+        {/* Ticker licitaciones */}
+        <LicitacionesTicker />
+        <main className="max-w-4xl mx-auto px-8 py-10 flex-1 w-full">
           {/* Saludo */}
           <div className="mb-10">
             <h1 className="text-3xl font-bold text-gray-800">{saludo}, {nombre}</h1>
