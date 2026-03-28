@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ['pdf-parse', 'xlsx'],
+  serverExternalPackages: ['unpdf', 'xlsx'],
 };
 
 export default nextConfig;

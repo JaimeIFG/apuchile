@@ -8,9 +8,9 @@ const APU_LISTA = ONDAC_APUS.map(a => `${a.codigo}|${a.desc || a.descripcion}|${
 
 async function extraerTexto(buffer, ext) {
   if (ext === "pdf") {
-    const pdfParse = (await import("pdf-parse")).default;
-    const data = await pdfParse(Buffer.from(buffer));
-    return data.text;
+    const { extractText } = await import("unpdf");
+    const { text } = await extractText(new Uint8Array(buffer), { mergePages: true });
+    return Array.isArray(text) ? text.join("\n") : text;
   }
   if (ext === "xlsx" || ext === "xls") {
     const XLSX = (await import("xlsx")).default;
