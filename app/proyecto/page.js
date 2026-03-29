@@ -1270,12 +1270,99 @@ function MatchesReview({ nombre, partidas, onConfirmar, onDescartar }) {
   );
 }
 
+// ── CPM: algoritmo paso adelante/atrás ────────────────────────────────────
+function computeCPM(items, predecessors, getDur) {
+  if (!items.length) return {};
+  const byId = Object.fromEntries(items.map(i => [i.id, i]));
+  const succs = Object.fromEntries(items.map(i => [i.id, []]));
+  items.forEach(i => (predecessors[i.id] || []).forEach(pid => { if (succs[pid]) succs[pid].push(i.id); }));
+
+  // Kahn topological sort
+  const inDeg = Object.fromEntries(items.map(i => [i.id, (predecessors[i.id] || []).filter(pid => byId[pid]).length]));
+  const queue = items.filter(i => inDeg[i.id] === 0).map(i => i.id);
+  const order = [];
+  while (queue.length) {
+    const id = queue.shift(); order.push(id);
+    succs[id].forEach(s => { if (--inDeg[s] === 0) queue.push(s); });
+  }
+  const finalOrder = order.length === items.length ? order : items.map(i => i.id); // fallback si hay ciclo
+
+  // Paso adelante: ES / EF
+  const ES = {}, EF = {};
+  finalOrder.forEach(id => {
+    const preds = (predecessors[id] || []).filter(pid => byId[pid]);
+    ES[id] = preds.length ? Math.max(...preds.map(pid => EF[pid] ?? 0)) : 0;
+    EF[id] = ES[id] + getDur(byId[id]);
+  });
+
+  const durTotal = Math.max(...Object.values(EF));
+
+  // Paso atrás: LF / LS
+  const LF = {}, LS = {};
+  [...finalOrder].reverse().forEach(id => {
+    const s = succs[id].filter(sid => byId[sid]);
+    LF[id] = s.length ? Math.min(...s.map(sid => LS[sid] ?? durTotal)) : durTotal;
+    LS[id] = LF[id] - getDur(byId[id]);
+  });
+
+  // Float y ruta crítica
+  const result = {};
+  finalOrder.forEach(id => {
+    const float = Math.round((LS[id] - ES[id]) * 10) / 10;
+    result[id] = { es: ES[id], ef: EF[id], ls: LS[id], lf: LF[id], float, critical: float < 0.5 };
+  });
+  return result;
+}
+
+// ── Reglas constructivas chilenas para auto-sugerir dependencias ───────────
+function sugerirPorReglas(itemsConFase) {
+  const deps = Object.fromEntries(itemsConFase.map(i => [i.id, []]));
+
+  // Agrupa por fase
+  const porFase = {};
+  itemsConFase.forEach(i => { (porFase[i.fase] = porFase[i.fase] || []).push(i); });
+  const fases = Object.keys(porFase).map(Number).sort((a, b) => a - b);
+
+  // Entre fases consecutivas: items de fase N+1 dependen del item más largo de fase N (gate)
+  for (let i = 1; i < fases.length; i++) {
+    const prev = porFase[fases[i - 1]];
+    const gate = prev.reduce((m, x) => (x.duracionCalc || 1) >= (m.duracionCalc || 1) ? x : m);
+    porFase[fases[i]].forEach(curr => { deps[curr.id] = [gate.id]; });
+  }
+
+  // Reglas específicas por prefijo de código ONDAC (sucesor depende de predecesor)
+  const REGLAS = [
+    ["RE","I"],["RE","IA"],["RE","IB"],["RE","S"],  // estructuras → cubierta/escaleras
+    ["RC","RD"],                                       // sub-bases → pavimentos viales
+    ["PA","GA"],["PB","GA"],["PC","GA"],["PD","GA"],  // instalaciones rough → muros
+    ["KA","GA"],["KB","GA"],                           // marcos puertas/ventanas → revestimientos
+    ["GA","FA"],["GB","FA"],["HA","FA"],               // revest. muros/cielos/pisos → pintura
+    ["FA","W"],["FA","PE"],["FA","PF"],["FA","N"],     // pintura → equipamiento/quincallería
+    ["RD","HA"],["RD","HC"],                           // pavimentos exteriores → pisos interiores
+  ];
+
+  itemsConFase.forEach(curr => {
+    const cc = (curr.familia || curr.codigo || "").toUpperCase();
+    itemsConFase.forEach(prev => {
+      if (prev.id === curr.id) return;
+      const pc = (prev.familia || prev.codigo || "").toUpperCase();
+      if (REGLAS.some(([p, s]) => pc.startsWith(p) && cc.startsWith(s))) {
+        if (!deps[curr.id].includes(prev.id)) deps[curr.id].push(prev.id);
+      }
+    });
+  });
+
+  return deps;
+}
+
 // ── Carta Gantt ────────────────────────────────────────────────────────────
 function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
-  const [duraciones, setDuraciones] = useState({});
-  const [editingId, setEditingId] = useState(null);
-
-  const getDur = (item) => duraciones[item.id] ?? calcDuracionAuto(item, item.cantidad, cfg);
+  const [duraciones, setDuraciones]   = useState({});
+  const [predecessors, setPredecessors] = useState({});   // { [id]: [id, …] }
+  const [modoEdicion, setModoEdicion]   = useState(false);
+  const [popover, setPopover]           = useState(null);  // { id, x, y }
+  const [cargandoIA, setCargandoIA]     = useState(false);
+  const [msgSugerencia, setMsgSugerencia] = useState(null); // feedback string
 
   function calcDuracionAuto(apu, cantidad, cfgLocal) {
     const { moNet } = calcAPU(apu, cfgLocal);
@@ -1285,14 +1372,14 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
     return Math.max(1, Math.min(Math.ceil(totalMO / jornal), 90));
   }
 
+  const getDur = (item) => duraciones[item.id] ?? calcDuracionAuto(item, item.cantidad, cfg);
+
+  // Items con fase + posición secuencial (fallback sin CPM)
   const items = useMemo(() => {
     if (!proyecto.length) return [];
     const withFase = proyecto.map(p => ({ ...p, fase: getFase(p) }));
     const porFase = {};
-    withFase.forEach(p => {
-      if (!porFase[p.fase]) porFase[p.fase] = [];
-      porFase[p.fase].push(p);
-    });
+    withFase.forEach(p => { (porFase[p.fase] = porFase[p.fase] || []).push(p); });
     let diaActual = 0;
     const result = [];
     Object.keys(porFase).map(Number).sort((a,b)=>a-b).forEach(fase => {
@@ -1307,7 +1394,68 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
     return result;
   }, [proyecto, cfg, duraciones]);
 
-  const totalDias = items.length ? Math.max(...items.map(i => i.inicioCalc + i.duracionCalc)) : 30;
+  // CPM: sólo se activa cuando hay dependencias definidas
+  const hasDeps = useMemo(() => Object.values(predecessors).some(p => p.length > 0), [predecessors]);
+
+  const cpm = useMemo(() => {
+    if (!hasDeps || !items.length) return {};
+    return computeCPM(items, predecessors, getDur);
+  }, [items, predecessors, hasDeps, duraciones]);
+
+  // Posición efectiva de cada barra
+  const getPos   = (item) => hasDeps ? (cpm[item.id]?.es    ?? item.inicioCalc)               : item.inicioCalc;
+  const getFloat = (item) => hasDeps ? (cpm[item.id]?.float ?? 0)                              : 0;
+  const getCrit  = (item) => hasDeps && (cpm[item.id]?.critical ?? false);
+
+  const totalDias = useMemo(() => {
+    if (!items.length) return 30;
+    return hasDeps && Object.keys(cpm).length
+      ? Math.max(...items.map(i => cpm[i.id]?.ef ?? (i.inicioCalc + getDur(i))))
+      : Math.max(...items.map(i => i.inicioCalc + getDur(i)));
+  }, [items, cpm, hasDeps, duraciones]);
+
+  // Sugerir dependencias por reglas (instantáneo, sin API)
+  const sugerirReglas = () => {
+    const deps = sugerirPorReglas(items);
+    setPredecessors(deps);
+    setMsgSugerencia("✓ Dependencias sugeridas por reglas constructivas chilenas");
+    setTimeout(() => setMsgSugerencia(null), 4000);
+  };
+
+  // Sugerir dependencias con IA (llama a /api/sugerir-dependencias)
+  const sugerirIA = async () => {
+    setCargandoIA(true);
+    setMsgSugerencia(null);
+    try {
+      const res = await fetch("/api/sugerir-dependencias", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ partidas: items.map(i => ({ id: i.id, codigo: i.codigo, familia: i.familia, desc: i.desc, descripcion: i.descripcion })) }),
+      });
+      const data = await res.json();
+      if (data.error || data.source === "no_key") {
+        // API no disponible: usar reglas locales como fallback
+        sugerirReglas();
+        setMsgSugerencia("⚠️ Sin créditos API — se aplicaron reglas constructivas locales");
+      } else {
+        // Merge: IA + reglas base
+        const reglas = sugerirPorReglas(items);
+        const merged = {};
+        items.forEach(i => {
+          const ia   = data.predecessors[i.id] || [];
+          const base = reglas[i.id] || [];
+          const union = [...new Set([...ia, ...base])].filter(pid => items.some(x => x.id === pid));
+          merged[i.id] = union;
+        });
+        setPredecessors(merged);
+        setMsgSugerencia("✨ Dependencias mejoradas con IA + reglas constructivas");
+      }
+    } catch { sugerirReglas(); }
+    setCargandoIA(false);
+    setTimeout(() => setMsgSugerencia(null), 5000);
+  };
+
+  const limpiarDeps = () => { setPredecessors({}); setMsgSugerencia("Dependencias eliminadas"); setTimeout(() => setMsgSugerencia(null), 2000); };
 
   const fechaBase = useMemo(() => {
     if (proyectoMeta?.fechaInicio) return new Date(proyectoMeta.fechaInicio + "T00:00:00");
@@ -1395,39 +1543,61 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
       doc.text(s.label, x + 1, HEADER_Y + 4.5);
     });
 
+    // Leyenda ruta crítica si aplica
+    if (hasDeps) {
+      const rgbCrit = hexToRgb("#ef4444");
+      doc.setFillColor(rgbCrit.r, rgbCrit.g, rgbCrit.b);
+      doc.rect(lx, 23.5, 3, 3, "F");
+      doc.setTextColor(60, 60, 60);
+      doc.text("Ruta crítica", lx + 4, 26.3);
+    }
+
     // Rows
     items.forEach((item, idx) => {
       const y = START_Y + idx * ROW_H;
-      if (y + ROW_H > H - 12) return; // skip if off page
+      if (y + ROW_H > H - 12) return;
 
-      // Alternating bg
-      if (idx % 2 === 0) {
-        doc.setFillColor(252, 252, 252);
-        doc.rect(0, y, W, ROW_H, "F");
-      }
+      const crit     = getCrit(item);
+      const esDay    = getPos(item);
+      const durDay   = getDur(item);
+      const floatDay = getFloat(item);
 
-      // Partida name
+      if (idx % 2 === 0) { doc.setFillColor(252,252,252); doc.rect(0, y, W, ROW_H, "F"); }
+      // Critical row highlight
+      if (crit) { doc.setFillColor(255,245,245); doc.rect(0, y, W, ROW_H, "F"); }
+
       const desc = (item.desc || item.descripcion || "").substring(0, 38);
-      doc.setTextColor(50, 50, 50);
-      doc.setFontSize(6); doc.setFont("helvetica","normal");
+      doc.setTextColor(crit ? 180 : 50, 50, 50);
+      doc.setFontSize(6); doc.setFont("helvetica", crit ? "bold" : "normal");
       doc.text(`${item.codigo}  ${desc}`, 3, y + ROW_H * 0.65);
 
-      // Duration
-      doc.setTextColor(100, 100, 100);
-      doc.text(String(item.duracionCalc), LEFT - 3, y + ROW_H * 0.65, { align:"right" });
+      doc.setTextColor(100,100,100); doc.setFont("helvetica","normal");
+      doc.text(String(durDay), LEFT - 3, y + ROW_H * 0.65, { align:"right" });
 
-      // Bar
-      const barX = LEFT + item.inicioCalc * pxPerDia;
-      const barW = Math.max(item.duracionCalc * pxPerDia - 1, 2);
+      // Float bar (dashed look using thin rect)
+      if (floatDay > 0) {
+        const fx = LEFT + (esDay + durDay) * pxPerDia;
+        const fw = Math.max(floatDay * pxPerDia - 1, 1);
+        const info = FASES_INFO[item.fase];
+        const rgb = hexToRgb(info?.color || "#10b981");
+        doc.setFillColor(rgb.r, rgb.g, rgb.b, 0.2);
+        doc.setDrawColor(rgb.r, rgb.g, rgb.b);
+        doc.setLineWidth(0.3);
+        doc.setLineDashPattern([1, 1], 0);
+        doc.rect(fx, y + 2, fw, ROW_H - 4, "S");
+        doc.setLineDashPattern([], 0);
+      }
+
+      // Main bar
+      const barX = LEFT + esDay * pxPerDia;
+      const barW = Math.max(durDay * pxPerDia - 1, 2);
       const info = FASES_INFO[item.fase];
-      const rgb = hexToRgb(info?.color || "#10b981");
+      const rgb = crit ? hexToRgb("#ef4444") : hexToRgb(info?.color || "#10b981");
       doc.setFillColor(rgb.r, rgb.g, rgb.b);
       doc.roundedRect(barX, y + 1.5, barW, ROW_H - 3, 0.8, 0.8, "F");
 
-      // Label on bar
       if (barW > 20) {
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(5);
+        doc.setTextColor(255,255,255); doc.setFontSize(5);
         doc.text(desc.substring(0, Math.floor(barW / 2)), barX + 1.5, y + ROW_H * 0.65);
       }
     });
@@ -1454,57 +1624,145 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
     );
   }
 
+  const critCount = items.filter(i => getCrit(i)).length;
+
   return (
     <div className="flex-1 overflow-hidden flex flex-col anim-fade-up">
+
       {/* Toolbar */}
-      <div className="px-5 py-3 border-b border-gray-200 bg-white flex items-center justify-between shrink-0 gap-4">
-        <div>
+      <div className="px-4 py-2.5 border-b border-gray-200 bg-white flex items-center gap-3 shrink-0 flex-wrap">
+        <div className="shrink-0">
           <h2 className="text-sm font-semibold text-gray-800">Carta Gantt</h2>
-          <p className="text-xs text-gray-400">{items.length} partidas · <strong className="text-gray-600">{totalDias} días corridos</strong> estimados{proyectoMeta?.fechaInicio ? ` desde ${new Date(proyectoMeta.fechaInicio+"T00:00:00").toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"})}` : ""}</p>
+          <p className="text-xs text-gray-400">
+            {items.length} partidas ·{" "}
+            <strong className={hasDeps ? "text-emerald-600" : "text-gray-600"}>{totalDias}d</strong>
+            {hasDeps && critCount > 0 && (
+              <span className="ml-2 text-red-500 font-medium">· {critCount} en ruta crítica</span>
+            )}
+          </p>
         </div>
-        {/* Leyenda */}
-        <div className="hidden lg:flex items-center gap-3 flex-wrap flex-1 justify-center">
+
+        {/* Leyenda fases */}
+        <div className="hidden xl:flex items-center gap-2 flex-wrap flex-1 justify-center">
           {fasesUsadas.map(f => {
             const info = FASES_INFO[f];
             if (!info) return null;
             return (
-              <span key={f} className="flex items-center gap-1.5 text-[11px] text-gray-600">
-                <span className="w-3 h-3 rounded-sm shrink-0" style={{ background: info.color }}/>
+              <span key={f} className="flex items-center gap-1 text-[10px] text-gray-500">
+                <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: info.color }}/>
                 {info.label}
               </span>
             );
           })}
+          {hasDeps && (
+            <>
+              <span className="flex items-center gap-1 text-[10px] text-red-500 font-semibold">
+                <span className="w-2.5 h-2.5 rounded-sm bg-red-500 shrink-0"/>Ruta crítica
+              </span>
+              <span className="flex items-center gap-1 text-[10px] text-gray-400">
+                <span className="w-6 h-2.5 rounded-sm shrink-0" style={{ background: "repeating-linear-gradient(90deg,#d1d5db 0,#d1d5db 3px,transparent 3px,transparent 6px)" }}/>Float
+              </span>
+            </>
+          )}
         </div>
-        <button onClick={exportarGanttPDF}
-          className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-emerald-700 shrink-0">
-          📄 Exportar PDF
-        </button>
+
+        {/* Acciones dependencias */}
+        <div className="flex items-center gap-2 shrink-0 ml-auto">
+          {hasDeps && (
+            <button onClick={limpiarDeps}
+              className="text-[11px] text-gray-400 hover:text-red-500 btn-press px-2 py-1.5 rounded-lg hover:bg-red-50 transition-colors">
+              ✕ Limpiar
+            </button>
+          )}
+          <button onClick={() => setModoEdicion(m => !m)}
+            className={`text-[11px] px-3 py-1.5 rounded-lg border btn-press transition-colors ${modoEdicion ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
+            {modoEdicion ? "✓ Editando deps" : "Editar deps"}
+          </button>
+          <button onClick={sugerirReglas}
+            className="text-[11px] px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 btn-press transition-colors">
+            ⚡ Sugerir reglas
+          </button>
+          <button onClick={sugerirIA} disabled={cargandoIA}
+            className="text-[11px] px-3 py-1.5 rounded-lg bg-violet-600 text-white btn-primary hover:bg-violet-700 disabled:opacity-50 flex items-center gap-1.5">
+            {cargandoIA ? <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"/> : "✨"}
+            {cargandoIA ? "Analizando..." : "Mejorar con IA"}
+          </button>
+          <button onClick={exportarGanttPDF}
+            className="text-[11px] px-3 py-1.5 rounded-lg bg-emerald-600 text-white btn-primary hover:bg-emerald-700 flex items-center gap-1.5">
+            📄 PDF
+          </button>
+        </div>
       </div>
+
+      {/* Mensaje feedback */}
+      {msgSugerencia && (
+        <div className="px-4 py-2 bg-emerald-50 border-b border-emerald-100 text-xs text-emerald-700 anim-slide-down font-medium">
+          {msgSugerencia}
+        </div>
+      )}
 
       {/* Chart */}
       <div className="flex-1 overflow-auto">
-        <div className="flex" style={{ minWidth: LEFT_W + DUR_W + TW }}>
+        <div className="flex" style={{ minWidth: LEFT_W + (modoEdicion ? DEPS_W : 0) + DUR_W + TW }}>
 
-          {/* Col: nombre partida */}
+          {/* Col: nombre */}
           <div className="shrink-0 border-r border-gray-200 bg-white" style={{ width: LEFT_W, position:"sticky", left:0, zIndex:20 }}>
-            <div className="h-10 border-b border-gray-200 px-4 flex items-center bg-gray-50">
+            <div className="h-10 border-b border-gray-200 px-3 flex items-center bg-gray-50">
               <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Partida</span>
             </div>
-            {items.map((item, idx) => (
-              <div key={item.id}
-                className={`border-b border-gray-100 px-3 flex items-center gap-2 ${idx%2===0?"bg-white":"bg-gray-50/40"}`}
-                style={{ height: ROW_PX }}>
-                <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: FASES_INFO[item.fase]?.color || "#10b981" }}/>
-                <div className="min-w-0 overflow-hidden">
-                  <div className="text-[9px] font-mono text-gray-400 leading-none mb-0.5">{item.codigo}</div>
-                  <div className="text-[11px] text-gray-700 truncate">{item.desc || item.descripcion}</div>
+            {items.map((item, idx) => {
+              const crit = getCrit(item);
+              return (
+                <div key={item.id}
+                  className={`border-b border-gray-100 px-3 flex items-center gap-2 ${idx%2===0?"bg-white":"bg-gray-50/40"} ${crit?"border-l-2 border-l-red-400":""}`}
+                  style={{ height: ROW_PX }}>
+                  <span className="w-2 h-2 rounded-sm shrink-0" style={{ background: crit ? "#ef4444" : (FASES_INFO[item.fase]?.color || "#10b981") }}/>
+                  <div className="min-w-0">
+                    <div className="text-[9px] font-mono text-gray-400 leading-none">{item.codigo}</div>
+                    <div className="text-[11px] text-gray-700 truncate leading-tight">{item.desc || item.descripcion}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {/* Col: duración (editable) */}
-          <div className="shrink-0 border-r border-gray-200 bg-white" style={{ width: DUR_W, position:"sticky", left: LEFT_W, zIndex:20 }}>
+          {/* Col: predecesoras (solo en modo edición) */}
+          {modoEdicion && (
+            <div className="shrink-0 border-r border-gray-200 bg-white" style={{ width: DEPS_W, position:"sticky", left: LEFT_W, zIndex:20 }}>
+              <div className="h-10 border-b border-gray-200 px-2 flex items-center bg-violet-50">
+                <span className="text-[10px] font-semibold text-violet-500 uppercase tracking-wider">Predecesoras</span>
+              </div>
+              {items.map((item, idx) => {
+                const preds = (predecessors[item.id] || []).map(pid => items.find(x => x.id === pid)).filter(Boolean);
+                return (
+                  <div key={item.id}
+                    className={`border-b border-gray-100 px-2 flex items-center gap-1 flex-wrap ${idx%2===0?"bg-white":"bg-gray-50/40"}`}
+                    style={{ height: ROW_PX, minHeight: ROW_PX }}>
+                    {preds.map(pred => (
+                      <span key={pred.id}
+                        className="flex items-center gap-0.5 text-[9px] bg-violet-100 text-violet-700 px-1.5 py-0.5 rounded-full font-mono leading-none">
+                        {pred.codigo}
+                        <button onClick={() => setPredecessors(p => ({ ...p, [item.id]: (p[item.id]||[]).filter(id => id !== pred.id) }))}
+                          className="ml-0.5 text-violet-400 hover:text-red-500 leading-none">×</button>
+                      </span>
+                    ))}
+                    <button
+                      onClick={e => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        setPopover(popover?.id === item.id ? null : { id: item.id, x: rect.left, y: rect.bottom + 4 });
+                      }}
+                      className="w-5 h-5 rounded-full bg-gray-100 hover:bg-violet-100 text-gray-500 hover:text-violet-600 text-[11px] flex items-center justify-center btn-press shrink-0">
+                      +
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Col: duración */}
+          <div className="shrink-0 border-r border-gray-200 bg-white"
+            style={{ width: DUR_W, position:"sticky", left: LEFT_W + (modoEdicion ? DEPS_W : 0), zIndex:20 }}>
             <div className="h-10 border-b border-gray-200 flex items-center justify-center bg-gray-50">
               <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Días</span>
             </div>
@@ -1512,78 +1770,127 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
               <div key={item.id}
                 className={`border-b border-gray-100 flex items-center justify-center ${idx%2===0?"bg-white":"bg-gray-50/40"}`}
                 style={{ height: ROW_PX }}>
-                <input
-                  type="number" min={1} max={365}
-                  value={getDur(item)}
+                <input type="number" min={1} max={365} value={getDur(item)}
                   onChange={e => setDuraciones(d => ({ ...d, [item.id]: Math.max(1, parseInt(e.target.value)||1) }))}
-                  onFocus={() => setEditingId(item.id)}
-                  onBlur={() => setEditingId(null)}
-                  className={`w-11 text-center text-xs py-1 rounded-lg border input-focus focus:outline-none ${editingId===item.id?"border-emerald-400 bg-emerald-50":"border-gray-200"}`}
-                />
+                  className="w-11 text-center text-xs py-1 rounded-lg border border-gray-200 input-focus focus:outline-none focus:border-emerald-400"/>
               </div>
             ))}
           </div>
 
           {/* Timeline */}
-          <div className="overflow-visible relative" style={{ width: TW }}>
+          <div className="relative" style={{ width: TW }}>
             {/* Semana headers */}
             <div className="h-10 border-b border-gray-200 bg-white relative" style={{ width: TW, position:"sticky", top:0, zIndex:10 }}>
-              {semanas.map((s, i) => (
+              {semanas.map((s,i) => (
                 <div key={i} className="absolute top-0 bottom-0 border-l border-gray-100" style={{ left: s.dia * PX }}/>
               ))}
-              {semanas.map((s, i) => (
-                <span key={`l${i}`} className="absolute bottom-2 text-[9px] text-gray-400 pl-1" style={{ left: s.dia * PX }}>
-                  {s.label}
-                </span>
+              {semanas.map((s,i) => (
+                <span key={`l${i}`} className="absolute bottom-1.5 text-[9px] text-gray-400 pl-1" style={{ left: s.dia * PX }}>{s.label}</span>
               ))}
             </div>
 
-            {/* Rows */}
-            {items.map((item, idx) => (
-              <div key={item.id}
-                className={`border-b border-gray-100 relative ${idx%2===0?"bg-white":"bg-gray-50/30"}`}
-                style={{ height: ROW_PX, width: TW }}>
-                {/* Grid lines */}
-                {semanas.map((s,i) => (
-                  <div key={i} className="absolute top-0 bottom-0 border-l border-gray-100" style={{ left: s.dia * PX }}/>
-                ))}
-                {/* Bar */}
-                <div
-                  className="absolute rounded-md flex items-center overflow-hidden"
-                  style={{
-                    left: item.inicioCalc * PX + 2,
-                    top: 6,
-                    bottom: 6,
-                    width: Math.max(getDur(item) * PX - 4, 6),
-                    background: FASES_INFO[item.fase]?.color || "#10b981",
-                    opacity: 0.82,
-                    transition: "width 0.3s cubic-bezier(0.16,1,0.3,1), left 0.3s cubic-bezier(0.16,1,0.3,1)",
-                  }}>
-                  {getDur(item) * PX > 50 && (
-                    <span className="text-white text-[9px] font-medium px-2 truncate leading-none">
-                      {(item.desc || item.descripcion || "").substring(0, Math.floor(getDur(item) * PX / 7))}
-                    </span>
+            {/* Filas */}
+            {items.map((item, idx) => {
+              const crit    = getCrit(item);
+              const barLeft = getPos(item) * PX + 2;
+              const barW    = Math.max(getDur(item) * PX - 4, 6);
+              const floatW  = Math.max(getFloat(item) * PX - 2, 0);
+              const barColor = crit ? "#ef4444" : (FASES_INFO[item.fase]?.color || "#10b981");
+              return (
+                <div key={item.id}
+                  className={`border-b border-gray-100 relative ${idx%2===0?"bg-white":"bg-gray-50/30"}`}
+                  style={{ height: ROW_PX, width: TW }}>
+                  {semanas.map((s,i) => (
+                    <div key={i} className="absolute top-0 bottom-0 border-l border-gray-100" style={{ left: s.dia*PX }}/>
+                  ))}
+                  {/* Float (dashed, detrás de la barra) */}
+                  {floatW > 0 && (
+                    <div className="absolute rounded-md"
+                      style={{
+                        left: barLeft + barW,
+                        top: 8, bottom: 8,
+                        width: floatW,
+                        background: `repeating-linear-gradient(90deg,${barColor}40 0,${barColor}40 4px,transparent 4px,transparent 8px)`,
+                        borderRadius: "0 4px 4px 0",
+                        transition: "width 0.3s cubic-bezier(0.16,1,0.3,1), left 0.3s cubic-bezier(0.16,1,0.3,1)",
+                      }}/>
+                  )}
+                  {/* Barra principal */}
+                  <div className="absolute rounded-md flex items-center overflow-hidden"
+                    style={{
+                      left: barLeft, top: 6, bottom: 6, width: barW,
+                      background: barColor,
+                      opacity: crit ? 1 : 0.82,
+                      boxShadow: crit ? `0 0 0 1px ${barColor}60` : "none",
+                      transition: "width 0.35s cubic-bezier(0.16,1,0.3,1), left 0.35s cubic-bezier(0.16,1,0.3,1)",
+                    }}>
+                    {barW > 50 && (
+                      <span className="text-white text-[9px] font-medium px-2 truncate leading-none select-none">
+                        {(item.desc || item.descripcion || "").substring(0, Math.floor(barW / 7))}
+                      </span>
+                    )}
+                  </div>
+                  {/* Float badge */}
+                  {hasDeps && floatW === 0 && crit && barW > 24 && (
+                    <div className="absolute flex items-center" style={{ left: barLeft + 4, top: 8, bottom: 8 }}>
+                      <span className="text-[8px] text-white font-bold opacity-70 leading-none">★</span>
+                    </div>
                   )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* Footer resumen fases */}
-      <div className="border-t border-gray-200 bg-gray-50 px-5 py-2 flex items-center gap-6 shrink-0 overflow-x-auto">
+      {/* Popover selección predecesoras */}
+      {popover && (
+        <div className="fixed inset-0 z-50" onClick={() => setPopover(null)}>
+          <div className="absolute bg-white border border-gray-200 rounded-xl shadow-2xl p-3 w-72 z-50 anim-scale-in"
+            style={{ top: Math.min(popover.y, window.innerHeight - 280), left: Math.min(popover.x, window.innerWidth - 290) }}
+            onClick={e => e.stopPropagation()}>
+            <p className="text-xs font-semibold text-gray-600 mb-2">Selecciona predecesoras de <span className="text-violet-600">{items.find(i=>i.id===popover.id)?.codigo}</span></p>
+            <div className="space-y-0.5 max-h-52 overflow-y-auto">
+              {items.filter(i => i.id !== popover.id).map(item => {
+                const checked = (predecessors[popover.id] || []).includes(item.id);
+                return (
+                  <label key={item.id} className="flex items-center gap-2 text-xs cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded-lg">
+                    <input type="checkbox" checked={checked}
+                      onChange={e => setPredecessors(p => ({
+                        ...p,
+                        [popover.id]: e.target.checked
+                          ? [...(p[popover.id]||[]), item.id]
+                          : (p[popover.id]||[]).filter(id => id !== item.id)
+                      }))}
+                      className="rounded accent-violet-600"/>
+                    <span className="font-mono text-[10px] text-gray-400 shrink-0">{item.codigo}</span>
+                    <span className="text-gray-600 truncate">{(item.desc||item.descripcion||"").substring(0,32)}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Footer fases */}
+      <div className="border-t border-gray-200 bg-gray-50 px-4 py-2 flex items-center gap-5 shrink-0 overflow-x-auto">
         {fasesUsadas.map(f => {
           const info = FASES_INFO[f];
           const itemsFase = items.filter(i => i.fase === f);
-          const durFase = Math.max(...itemsFase.map(i => getDur(i)));
-          const inicioFase = Math.min(...itemsFase.map(i => i.inicioCalc));
+          const inicio = hasDeps
+            ? Math.min(...itemsFase.map(i => cpm[i.id]?.es ?? i.inicioCalc))
+            : Math.min(...itemsFase.map(i => i.inicioCalc));
+          const fin = hasDeps
+            ? Math.max(...itemsFase.map(i => cpm[i.id]?.ef ?? (i.inicioCalc + getDur(i))))
+            : Math.max(...itemsFase.map(i => i.inicioCalc + getDur(i)));
+          const critFase = itemsFase.some(i => getCrit(i));
           return (
-            <div key={f} className="flex items-center gap-2 shrink-0">
-              <span className="w-3 h-3 rounded-sm" style={{ background: info?.color }}/>
+            <div key={f} className="flex items-center gap-1.5 shrink-0">
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: critFase ? "#ef4444" : info?.color }}/>
               <div>
-                <p className="text-[10px] font-semibold text-gray-600">{info?.label}</p>
-                <p className="text-[9px] text-gray-400">{itemsFase.length} partidas · {durFase}d · desde día {inicioFase+1}</p>
+                <p className="text-[10px] font-semibold text-gray-600">{info?.label}{critFase && <span className="ml-1 text-red-400">★</span>}</p>
+                <p className="text-[9px] text-gray-400">{itemsFase.length} partidas · {fin-inicio}d · día {inicio+1}→{fin}</p>
               </div>
             </div>
           );
@@ -1594,7 +1901,8 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
 }
 
 const LEFT_W = 260;
-const DUR_W = 64;
+const DEPS_W = 160;
+const DUR_W  = 64;
 const ROW_PX = 40;
 
 function hexToRgb(hex) {
