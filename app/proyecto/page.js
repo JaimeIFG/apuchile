@@ -1933,6 +1933,14 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
 
   const templates = useMemo(() => getTemplatesParaProyecto(proyecto), [proyecto]);
 
+  // proyectoMeta es un objeto {mandante, region, responsable, ...}
+  const metaStr = [
+    proyectoMeta?.mandante,
+    proyectoMeta?.region,
+    proyectoMeta?.responsable,
+    proyectoMeta?.diasCorridos ? `${proyectoMeta.diasCorridos} días corridos` : null,
+  ].filter(Boolean).join(" · ") || "";
+
   const toggle = (key) => setExpandidos(prev => ({ ...prev, [key]: !prev[key] }));
 
   // ── Merge custom IA improvements with base templates ──────────────────────
@@ -1978,9 +1986,9 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       doc.setFont("helvetica", "normal");
       const nombreLimpio = (proyectoNombre || "Proyecto").substring(0, 60);
       doc.text(nombreLimpio, ML, 40);
-      if (proyectoMeta) {
+      if (metaStr) {
         doc.setFontSize(10);
-        doc.text(proyectoMeta.substring(0, 80), ML, 50);
+        doc.text(metaStr.substring(0, 80), ML, 50);
       }
       doc.setTextColor(200, 255, 230);
       doc.setFontSize(9);
@@ -2202,7 +2210,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
         <div className="bg-emerald-600 rounded-2xl p-6 text-white anim-scale-in">
           <div className="text-xs uppercase tracking-widest text-emerald-200 mb-2 font-medium">Especificaciones Técnicas</div>
           <h1 className="text-xl font-bold leading-snug mb-1">{proyectoNombre || "Proyecto"}</h1>
-          {proyectoMeta && <p className="text-sm text-emerald-100 mb-3">{proyectoMeta}</p>}
+          {metaStr && <p className="text-sm text-emerald-100 mb-3">{metaStr}</p>}
           <div className="flex gap-4 text-xs text-emerald-200 border-t border-emerald-500 pt-3 mt-3">
             <span>📋 {templates.length} capítulos</span>
             <span>📦 {proyecto.length} partidas</span>
