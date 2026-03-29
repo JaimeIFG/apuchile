@@ -51,6 +51,37 @@ const FAMILIAS = [
 
 const fmt = (n) => "$" + Math.round(n || 0).toLocaleString("es-CL");
 
+// ── Carta Gantt: fases y helpers ───────────────────────────────────────────
+const FASE_ORDEN = {
+  V:1,VA:1,VB:1,VC:1,
+  RB:2,RA:2,R:2,
+  RE:3,RC:3,AA:3,
+  I:4,IA:4,IB:4,S:4,
+  P:5,PA:5,PB:5,PC:5,PD:5,
+  K:6,KA:6,KB:6,
+  G:7,GA:7,GB:7,H:7,HA:7,HC:7,HE:7,RD:7,
+  FA:8,PE:8,PF:8,
+  W:9,N:9,
+  O:10,QD:10,
+};
+const FASES_INFO = [
+  null,
+  { label:"Demolición",     color:"#ef4444", light:"#fee2e2" },
+  { label:"Obras civiles",  color:"#f97316", light:"#ffedd5" },
+  { label:"Estructura",     color:"#f59e0b", light:"#fef3c7" },
+  { label:"Cubierta",       color:"#eab308", light:"#fef9c3" },
+  { label:"Instalaciones",  color:"#3b82f6", light:"#dbeafe" },
+  { label:"Carpintería",    color:"#8b5cf6", light:"#ede9fe" },
+  { label:"Revestimientos", color:"#10b981", light:"#d1fae5" },
+  { label:"Terminaciones",  color:"#14b8a6", light:"#ccfbf1" },
+  { label:"Equipamiento",   color:"#ec4899", light:"#fce7f3" },
+  { label:"Urbanización",   color:"#6b7280", light:"#f3f4f6" },
+];
+function getFase(apu) {
+  const fam = (apu.familia || apu.codigo || "").toUpperCase();
+  return FASE_ORDEN[fam.substring(0,2)] || FASE_ORDEN[fam[0]] || 7;
+}
+
 function calcAPU(apu, cfg) {
   const zona = cfg.zona;
   const llss = cfg.llss / 100;
@@ -463,6 +494,7 @@ function Home() {
   const TABS_RAIL = [
     { id: "biblioteca",  icon: "📚", label: "Biblioteca"  },
     { id: "resumen",     icon: "📋", label: "Presupuesto" },
+    { id: "gantt",       icon: "📅", label: "Gantt"       },
     { id: "editor",      icon: "🔧", label: "Editor APU"  },
     { id: "anexos",      icon: "📎", label: "Anexos"      },
     { id: "config",      icon: "⚙️", label: "Config"      },
@@ -636,6 +668,17 @@ function Home() {
                 </div>
               </main>
             </>
+          )}
+
+          {/* GANTT */}
+          {tab === "gantt" && (
+            <GanttView
+              proyecto={proyecto}
+              cfg={cfg}
+              proyectoNombre={proyectoNombre}
+              proyectoMeta={proyectoMeta}
+              onGoTo={setTab}
+            />
           )}
 
           {/* EDITOR APU */}
@@ -1225,4 +1268,338 @@ function MatchesReview({ nombre, partidas, onConfirmar, onDescartar }) {
       </div>
     </div>
   );
+}
+
+// ── Carta Gantt ────────────────────────────────────────────────────────────
+function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
+  const [duraciones, setDuraciones] = useState({});
+  const [editingId, setEditingId] = useState(null);
+
+  const getDur = (item) => duraciones[item.id] ?? calcDuracionAuto(item, item.cantidad, cfg);
+
+  function calcDuracionAuto(apu, cantidad, cfgLocal) {
+    const { moNet } = calcAPU(apu, cfgLocal);
+    const totalMO = moNet * cantidad;
+    if (totalMO === 0) return 2;
+    const jornal = cfgLocal.mo_m1 * 8 * 2;
+    return Math.max(1, Math.min(Math.ceil(totalMO / jornal), 90));
+  }
+
+  const items = useMemo(() => {
+    if (!proyecto.length) return [];
+    const withFase = proyecto.map(p => ({ ...p, fase: getFase(p) }));
+    const porFase = {};
+    withFase.forEach(p => {
+      if (!porFase[p.fase]) porFase[p.fase] = [];
+      porFase[p.fase].push(p);
+    });
+    let diaActual = 0;
+    const result = [];
+    Object.keys(porFase).map(Number).sort((a,b)=>a-b).forEach(fase => {
+      let maxDur = 0;
+      porFase[fase].forEach(p => {
+        const dur = duraciones[p.id] ?? calcDuracionAuto(p, p.cantidad, cfg);
+        result.push({ ...p, fase, inicioCalc: diaActual, duracionCalc: dur });
+        maxDur = Math.max(maxDur, dur);
+      });
+      diaActual += maxDur;
+    });
+    return result;
+  }, [proyecto, cfg, duraciones]);
+
+  const totalDias = items.length ? Math.max(...items.map(i => i.inicioCalc + i.duracionCalc)) : 30;
+
+  const fechaBase = useMemo(() => {
+    if (proyectoMeta?.fechaInicio) return new Date(proyectoMeta.fechaInicio + "T00:00:00");
+    return new Date();
+  }, [proyectoMeta]);
+
+  const semanas = useMemo(() => {
+    const s = [];
+    const total = Math.ceil(totalDias / 7) + 2;
+    for (let i = 0; i < total; i++) {
+      const d = new Date(fechaBase);
+      d.setDate(d.getDate() + i * 7);
+      s.push({
+        dia: i * 7,
+        label: d.toLocaleDateString("es-CL", { day:"2-digit", month:"short" }),
+      });
+    }
+    return s;
+  }, [totalDias, fechaBase]);
+
+  const PX = totalDias > 150 ? 5 : totalDias > 90 ? 8 : totalDias > 45 ? 12 : 16;
+  const TW = Math.max(totalDias * PX + 80, 500);
+
+  const fasesUsadas = useMemo(() => [...new Set(items.map(i => i.fase))].sort((a,b)=>a-b), [items]);
+
+  const exportarGanttPDF = async () => {
+    if (!items.length) return;
+    const { default: jsPDF } = await import("jspdf");
+    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+    const W = doc.internal.pageSize.getWidth();   // 297mm
+    const H = doc.internal.pageSize.getHeight();  // 210mm
+
+    // Header
+    doc.setFillColor(6, 95, 70);
+    doc.rect(0, 0, W, 22, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14); doc.setFont("helvetica","bold");
+    doc.text("APUchile · Carta Gantt", 10, 10);
+    doc.setFontSize(9); doc.setFont("helvetica","normal");
+    doc.text(proyectoNombre, 10, 17);
+    doc.setFontSize(8);
+    doc.text(`Duración estimada: ${totalDias} días corridos`, W - 10, 10, { align:"right" });
+    const fechaStr = fechaBase.toLocaleDateString("es-CL", { day:"2-digit", month:"long", year:"numeric" });
+    doc.text(`Inicio: ${fechaStr}`, W - 10, 17, { align:"right" });
+
+    // Layout
+    const LEFT = 75;    // ancho columna nombre
+    const BAR_AREA = W - LEFT - 10;  // ancho zona timeline
+    const ROW_H = 7;
+    const HEADER_Y = 28;
+    const START_Y = HEADER_Y + 7;
+
+    // Fases legend
+    let lx = 10;
+    doc.setFontSize(6.5);
+    fasesUsadas.forEach(f => {
+      const info = FASES_INFO[f];
+      if (!info) return;
+      const rgb = hexToRgb(info.color);
+      doc.setFillColor(rgb.r, rgb.g, rgb.b);
+      doc.rect(lx, 23.5, 3, 3, "F");
+      doc.setTextColor(60, 60, 60);
+      doc.text(info.label, lx + 4, 26.3);
+      lx += 4 + doc.getTextWidth(info.label) + 4;
+    });
+
+    // Column headers
+    doc.setFillColor(245, 247, 250);
+    doc.rect(0, HEADER_Y, W, 7, "F");
+    doc.setTextColor(100, 100, 100);
+    doc.setFontSize(6.5); doc.setFont("helvetica","bold");
+    doc.text("Partida", 3, HEADER_Y + 4.5);
+    doc.text("Días", LEFT - 10, HEADER_Y + 4.5, { align:"right" });
+
+    // Week headers in timeline
+    const pxPerDia = BAR_AREA / totalDias;
+    semanas.forEach(s => {
+      const x = LEFT + s.dia * pxPerDia;
+      if (x > W - 5) return;
+      doc.setDrawColor(220, 220, 220);
+      doc.setLineWidth(0.2);
+      doc.line(x, HEADER_Y, x, H - 10);
+      doc.setTextColor(140, 140, 140);
+      doc.setFontSize(5.5); doc.setFont("helvetica","normal");
+      doc.text(s.label, x + 1, HEADER_Y + 4.5);
+    });
+
+    // Rows
+    items.forEach((item, idx) => {
+      const y = START_Y + idx * ROW_H;
+      if (y + ROW_H > H - 12) return; // skip if off page
+
+      // Alternating bg
+      if (idx % 2 === 0) {
+        doc.setFillColor(252, 252, 252);
+        doc.rect(0, y, W, ROW_H, "F");
+      }
+
+      // Partida name
+      const desc = (item.desc || item.descripcion || "").substring(0, 38);
+      doc.setTextColor(50, 50, 50);
+      doc.setFontSize(6); doc.setFont("helvetica","normal");
+      doc.text(`${item.codigo}  ${desc}`, 3, y + ROW_H * 0.65);
+
+      // Duration
+      doc.setTextColor(100, 100, 100);
+      doc.text(String(item.duracionCalc), LEFT - 3, y + ROW_H * 0.65, { align:"right" });
+
+      // Bar
+      const barX = LEFT + item.inicioCalc * pxPerDia;
+      const barW = Math.max(item.duracionCalc * pxPerDia - 1, 2);
+      const info = FASES_INFO[item.fase];
+      const rgb = hexToRgb(info?.color || "#10b981");
+      doc.setFillColor(rgb.r, rgb.g, rgb.b);
+      doc.roundedRect(barX, y + 1.5, barW, ROW_H - 3, 0.8, 0.8, "F");
+
+      // Label on bar
+      if (barW > 20) {
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(5);
+        doc.text(desc.substring(0, Math.floor(barW / 2)), barX + 1.5, y + ROW_H * 0.65);
+      }
+    });
+
+    // Footer
+    doc.setDrawColor(200, 200, 200);
+    doc.line(0, H - 8, W, H - 8);
+    doc.setTextColor(160, 160, 160);
+    doc.setFontSize(6.5); doc.setFont("helvetica","normal");
+    doc.text("Generado por APUchile · apuchile.vercel.app · Duración estimada, sujeta a ajuste por el proyectista", 10, H - 4);
+
+    doc.save(`${proyectoNombre.replace(/\s+/g,"_")}_gantt.pdf`);
+  };
+
+  if (!proyecto.length) {
+    return (
+      <div className="flex-1 flex items-center justify-center anim-fade-in">
+        <div className="text-center text-gray-400">
+          <p className="text-5xl mb-4">📅</p>
+          <p className="text-base font-medium text-gray-500 mb-2">No hay partidas en el proyecto</p>
+          <button onClick={() => onGoTo("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca ONDAC</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 overflow-hidden flex flex-col anim-fade-up">
+      {/* Toolbar */}
+      <div className="px-5 py-3 border-b border-gray-200 bg-white flex items-center justify-between shrink-0 gap-4">
+        <div>
+          <h2 className="text-sm font-semibold text-gray-800">Carta Gantt</h2>
+          <p className="text-xs text-gray-400">{items.length} partidas · <strong className="text-gray-600">{totalDias} días corridos</strong> estimados{proyectoMeta?.fechaInicio ? ` desde ${new Date(proyectoMeta.fechaInicio+"T00:00:00").toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"})}` : ""}</p>
+        </div>
+        {/* Leyenda */}
+        <div className="hidden lg:flex items-center gap-3 flex-wrap flex-1 justify-center">
+          {fasesUsadas.map(f => {
+            const info = FASES_INFO[f];
+            if (!info) return null;
+            return (
+              <span key={f} className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                <span className="w-3 h-3 rounded-sm shrink-0" style={{ background: info.color }}/>
+                {info.label}
+              </span>
+            );
+          })}
+        </div>
+        <button onClick={exportarGanttPDF}
+          className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-emerald-700 shrink-0">
+          📄 Exportar PDF
+        </button>
+      </div>
+
+      {/* Chart */}
+      <div className="flex-1 overflow-auto">
+        <div className="flex" style={{ minWidth: LEFT_W + DUR_W + TW }}>
+
+          {/* Col: nombre partida */}
+          <div className="shrink-0 border-r border-gray-200 bg-white" style={{ width: LEFT_W, position:"sticky", left:0, zIndex:20 }}>
+            <div className="h-10 border-b border-gray-200 px-4 flex items-center bg-gray-50">
+              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Partida</span>
+            </div>
+            {items.map((item, idx) => (
+              <div key={item.id}
+                className={`border-b border-gray-100 px-3 flex items-center gap-2 ${idx%2===0?"bg-white":"bg-gray-50/40"}`}
+                style={{ height: ROW_PX }}>
+                <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: FASES_INFO[item.fase]?.color || "#10b981" }}/>
+                <div className="min-w-0 overflow-hidden">
+                  <div className="text-[9px] font-mono text-gray-400 leading-none mb-0.5">{item.codigo}</div>
+                  <div className="text-[11px] text-gray-700 truncate">{item.desc || item.descripcion}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Col: duración (editable) */}
+          <div className="shrink-0 border-r border-gray-200 bg-white" style={{ width: DUR_W, position:"sticky", left: LEFT_W, zIndex:20 }}>
+            <div className="h-10 border-b border-gray-200 flex items-center justify-center bg-gray-50">
+              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Días</span>
+            </div>
+            {items.map((item, idx) => (
+              <div key={item.id}
+                className={`border-b border-gray-100 flex items-center justify-center ${idx%2===0?"bg-white":"bg-gray-50/40"}`}
+                style={{ height: ROW_PX }}>
+                <input
+                  type="number" min={1} max={365}
+                  value={getDur(item)}
+                  onChange={e => setDuraciones(d => ({ ...d, [item.id]: Math.max(1, parseInt(e.target.value)||1) }))}
+                  onFocus={() => setEditingId(item.id)}
+                  onBlur={() => setEditingId(null)}
+                  className={`w-11 text-center text-xs py-1 rounded-lg border input-focus focus:outline-none ${editingId===item.id?"border-emerald-400 bg-emerald-50":"border-gray-200"}`}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Timeline */}
+          <div className="overflow-visible relative" style={{ width: TW }}>
+            {/* Semana headers */}
+            <div className="h-10 border-b border-gray-200 bg-white relative" style={{ width: TW, position:"sticky", top:0, zIndex:10 }}>
+              {semanas.map((s, i) => (
+                <div key={i} className="absolute top-0 bottom-0 border-l border-gray-100" style={{ left: s.dia * PX }}/>
+              ))}
+              {semanas.map((s, i) => (
+                <span key={`l${i}`} className="absolute bottom-2 text-[9px] text-gray-400 pl-1" style={{ left: s.dia * PX }}>
+                  {s.label}
+                </span>
+              ))}
+            </div>
+
+            {/* Rows */}
+            {items.map((item, idx) => (
+              <div key={item.id}
+                className={`border-b border-gray-100 relative ${idx%2===0?"bg-white":"bg-gray-50/30"}`}
+                style={{ height: ROW_PX, width: TW }}>
+                {/* Grid lines */}
+                {semanas.map((s,i) => (
+                  <div key={i} className="absolute top-0 bottom-0 border-l border-gray-100" style={{ left: s.dia * PX }}/>
+                ))}
+                {/* Bar */}
+                <div
+                  className="absolute rounded-md flex items-center overflow-hidden"
+                  style={{
+                    left: item.inicioCalc * PX + 2,
+                    top: 6,
+                    bottom: 6,
+                    width: Math.max(getDur(item) * PX - 4, 6),
+                    background: FASES_INFO[item.fase]?.color || "#10b981",
+                    opacity: 0.82,
+                    transition: "width 0.3s cubic-bezier(0.16,1,0.3,1), left 0.3s cubic-bezier(0.16,1,0.3,1)",
+                  }}>
+                  {getDur(item) * PX > 50 && (
+                    <span className="text-white text-[9px] font-medium px-2 truncate leading-none">
+                      {(item.desc || item.descripcion || "").substring(0, Math.floor(getDur(item) * PX / 7))}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Footer resumen fases */}
+      <div className="border-t border-gray-200 bg-gray-50 px-5 py-2 flex items-center gap-6 shrink-0 overflow-x-auto">
+        {fasesUsadas.map(f => {
+          const info = FASES_INFO[f];
+          const itemsFase = items.filter(i => i.fase === f);
+          const durFase = Math.max(...itemsFase.map(i => getDur(i)));
+          const inicioFase = Math.min(...itemsFase.map(i => i.inicioCalc));
+          return (
+            <div key={f} className="flex items-center gap-2 shrink-0">
+              <span className="w-3 h-3 rounded-sm" style={{ background: info?.color }}/>
+              <div>
+                <p className="text-[10px] font-semibold text-gray-600">{info?.label}</p>
+                <p className="text-[9px] text-gray-400">{itemsFase.length} partidas · {durFase}d · desde día {inicioFase+1}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+const LEFT_W = 260;
+const DUR_W = 64;
+const ROW_PX = 40;
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return { r, g, b };
 }
