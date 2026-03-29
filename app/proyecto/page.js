@@ -1067,12 +1067,14 @@ const REGIONES_EDIT = [
 
 function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
   const [form, setForm] = useState({
-    nombre: nombre || "",
-    region: meta.region || "",
-    mandante: meta.mandante || "",
+    nombre:      nombre || "",
+    region:      meta.region      || "",
+    mandante:    meta.mandante    || "",
+    direccion:   meta.direccion   || "",
     fechaInicio: meta.fechaInicio || "",
-    fechaTermino: meta.fechaTermino || "",
+    fechaTermino:meta.fechaTermino|| "",
     responsable: meta.responsable || "",
+    logoEmpresa: meta.logoEmpresa || "",
   });
 
   const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -1083,15 +1085,25 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
     return d > 0 ? d : null;
   })();
 
+  const handleLogo = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setF("logoEmpresa", ev.target.result);
+    reader.readAsDataURL(file);
+  };
+
   const handleGuardar = () => {
     const regionInfo = REGIONES_EDIT.find(r => r.label === form.region);
     const nuevaMeta = {
-      region: form.region,
-      mandante: form.mandante,
-      fechaInicio: form.fechaInicio,
+      region:       form.region,
+      mandante:     form.mandante,
+      direccion:    form.direccion,
+      fechaInicio:  form.fechaInicio,
       fechaTermino: form.fechaTermino,
-      responsable: form.responsable,
-      zona: regionInfo ? regionInfo.zona : meta.zona ?? 0,
+      responsable:  form.responsable,
+      logoEmpresa:  form.logoEmpresa,
+      zona:         regionInfo ? regionInfo.zona : meta.zona ?? 0,
       diasCorridos: dias,
     };
     onGuardar(form.nombre, nuevaMeta);
@@ -1109,9 +1121,34 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
             <button onClick={onCerrar} className="text-gray-400 hover:text-gray-600 btn-press w-7 h-7 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors">✕</button>
           </div>
           <div className="space-y-3">
+            {/* Logo empresa */}
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Logo empresa</label>
+              <div className="flex items-center gap-3">
+                {form.logoEmpresa
+                  ? <img src={form.logoEmpresa} alt="logo" className="h-10 w-auto rounded border border-gray-200 object-contain bg-gray-50 px-1"/>
+                  : <div className="h-10 w-16 rounded border border-dashed border-gray-300 flex items-center justify-center text-gray-300 text-xs">Logo</div>
+                }
+                <label className="cursor-pointer text-xs text-emerald-600 border border-emerald-200 px-3 py-1.5 rounded-lg hover:bg-emerald-50 btn-press">
+                  {form.logoEmpresa ? "Cambiar" : "Subir imagen"}
+                  <input type="file" accept="image/*" className="hidden" onChange={handleLogo}/>
+                </label>
+                {form.logoEmpresa && (
+                  <button onClick={() => setF("logoEmpresa", "")} className="text-xs text-red-400 hover:text-red-600 btn-press">Quitar</button>
+                )}
+              </div>
+            </div>
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Nombre del proyecto</label>
               <input value={form.nombre} onChange={e => setF("nombre", e.target.value)} className={inputCls + " input-focus"}/>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Mandante / Propietario</label>
+              <input value={form.mandante} onChange={e => setF("mandante", e.target.value)} className={inputCls + " input-focus"} placeholder="Nombre del mandante"/>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">Dirección de la obra</label>
+              <input value={form.direccion} onChange={e => setF("direccion", e.target.value)} className={inputCls + " input-focus"} placeholder="Ej: Av. Francisco Sampaio N°580, Porvenir"/>
             </div>
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Región</label>
@@ -1119,10 +1156,6 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
                 <option value="">Selecciona...</option>
                 {REGIONES_EDIT.map(r => <option key={r.label} value={r.label}>{r.label}</option>)}
               </select>
-            </div>
-            <div>
-              <label className="text-xs font-medium text-gray-600 mb-1 block">Mandante</label>
-              <input value={form.mandante} onChange={e => setF("mandante", e.target.value)} className={inputCls + " input-focus"} placeholder="Nombre del mandante"/>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -1923,6 +1956,25 @@ function hexToRgb(hex) {
   return { r, g, b };
 }
 
+// ── Textos fijos EE.TT. chilenas (extraídos de documentos reales CFT Magallanes) ──
+const EETT_GENERALIDADES = `Las presentes especificaciones técnicas son de carácter general. Se consideran mínimas y tienen por objeto complementar los planos de arquitectura y de detalles.
+
+La obra considera la reposición, modificación, instalación, etc., de elementos. Todos los materiales deberán cumplir con las exigencias fijadas por las normas INN, leyes, ordenanzas o reglamentos vigentes y deberán cumplir con las instrucciones dadas por los fabricantes de los elementos que se especifican. Todos los procesos constructivos deberán cumplir las Normas chilenas.
+
+Ante cualquier discrepancia entre los planos, especificaciones, aclaraciones u otro documento que componga el legajo de antecedentes para la construcción se deberá consultar mediante libro de obras. Los planos de arquitectura, instalaciones, especificaciones técnicas y demás documentos que componen la carpeta técnica de obra, se complementan entre sí de modo que las partidas, materiales o especificaciones de obras pueden estar incluidas indistintamente en cualquiera de ellos.
+
+Los planos y especificaciones deberán estar permanentemente en obra y los planos plastificados para evitar deterioro y deformaciones.
+
+Todos los materiales deberán ser nuevos y de primera calidad. Los materiales indicados en las especificaciones técnicas podrán ser modificados a solicitud del contratista con el consentimiento del arquitecto y la autorización de la Inspección Técnica de la Obra.
+
+El material de demolición y todo material con características de escombros deberá ser llevado fuera del recinto de la obra a botadero autorizado, debiendo archivarse los documentos que acrediten dicha faena.
+
+Se da cumplimiento a las normas de impacto de ruido y polvo de acuerdo con el Art. 5.8.3 de la OGUC.`;
+
+const EETT_ORDEN_PRELACION = `Los planos de arquitectura, ingeniería estructural, instalaciones, especificaciones técnicas, etc., se complementan entre sí, en forma tal, que las partidas, obras y materiales, puedan estar indistintamente expresadas en cualquiera de ello. Cualquier mención de las especificaciones que no se incluyan en los planos, o que haya sido contemplada en los planos y omitida en las especificaciones, se considera incluida en ambos y es parte integrante del contrato.
+
+En caso de discordancia entre los planos de Arquitectura, Cálculo e Instalaciones, ninguno tendrá preferencia y se deberá consultar a la Unidad Técnica la duda antes de la ejecución de la obra. En general, los planos de detalle priman sobre los planos generales y las cotas prevalecen sobre el dibujo de los planos. No se debe medir a escala en los planos.`;
+
 // ── EE.TT. View ────────────────────────────────────────────────────────────
 function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
   const [expandidos, setExpandidos] = useState({});
@@ -1933,13 +1985,16 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
 
   const templates = useMemo(() => getTemplatesParaProyecto(proyecto), [proyecto]);
 
-  // proyectoMeta es un objeto {mandante, region, responsable, ...}
-  const metaStr = [
-    proyectoMeta?.mandante,
-    proyectoMeta?.region,
-    proyectoMeta?.responsable,
-    proyectoMeta?.diasCorridos ? `${proyectoMeta.diasCorridos} días corridos` : null,
-  ].filter(Boolean).join(" · ") || "";
+  // Campos del proyecto
+  const logo       = proyectoMeta?.logoEmpresa || null;
+  const mandante   = proyectoMeta?.mandante    || "";
+  const direccion  = proyectoMeta?.direccion   || "";
+  const fechaDoc   = (() => {
+    if (proyectoMeta?.fechaInicio)
+      return new Date(proyectoMeta.fechaInicio).toLocaleDateString("es-CL", { month:"long", year:"numeric" });
+    return new Date().toLocaleDateString("es-CL", { month:"long", year:"numeric" });
+  })();
+  const plazo = proyectoMeta?.diasCorridos ? `${proyectoMeta.diasCorridos} días corridos` : "";
 
   const toggle = (key) => setExpandidos(prev => ({ ...prev, [key]: !prev[key] }));
 
@@ -1955,124 +2010,159 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       const { jsPDF } = jsPDFModule;
       const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
       const PW = 210, PH = 297;
-      const ML = 20, MR = 20, MT = 25, MB = 20;
+      const ML = 25, MR = 25, MT = 25, MB = 20;
       const CW = PW - ML - MR;
       let y = MT;
 
       const checkPage = (h) => {
-        if (y + h > PH - MB) { doc.addPage(); y = MT; }
+        if (y + h > PH - MB - 10) { doc.addPage(); y = MT; }
       };
 
-      const writeWrap = (text, x, startY, maxW, lineH, fontSize, color) => {
-        doc.setFontSize(fontSize);
-        doc.setTextColor(...color);
-        const lines = doc.splitTextToSize(String(text || ""), maxW);
-        lines.forEach(line => {
-          checkPage(lineH);
-          doc.text(line, x, y);
-          y += lineH;
-        });
-        return y;
-      };
-
-      // ── Portada ──────────────────────────────────────────────────────────
-      doc.setFillColor(5, 150, 105);
-      doc.rect(0, 0, PW, 60, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(20);
-      doc.text("ESPECIFICACIONES TÉCNICAS", ML, 28);
-      doc.setFontSize(13);
-      doc.setFont("helvetica", "normal");
-      const nombreLimpio = (proyectoNombre || "Proyecto").substring(0, 60);
-      doc.text(nombreLimpio, ML, 40);
-      if (metaStr) {
-        doc.setFontSize(10);
-        doc.text(metaStr.substring(0, 80), ML, 50);
+      // ── PAGE 1: Portada ──────────────────────────────────────────────────
+      // Logo empresa (top left)
+      if (logo) {
+        try {
+          const imgFmt = logo.startsWith("data:image/png") ? "PNG" : "JPEG";
+          doc.addImage(logo, imgFmt, ML, y, 40, 20);
+          y += 26;
+        } catch { /* logo inválido, omitir */ }
       }
-      doc.setTextColor(200, 255, 230);
-      doc.setFontSize(9);
-      const fecha = new Date().toLocaleDateString("es-CL", { day:"2-digit", month:"long", year:"numeric" });
-      doc.text(`Generado: ${fecha}`, ML, 57);
 
-      y = 75;
-      doc.setTextColor(50, 50, 50);
-
-      // ── Índice ────────────────────────────────────────────────────────────
+      // Título
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(12);
-      doc.setTextColor(5, 150, 105);
-      doc.text("ÍNDICE", ML, y);
+      doc.setFontSize(16);
+      doc.setTextColor(20, 20, 20);
+      doc.text("ESPECIFICACIONES TÉCNICAS", ML, y);
+      y += 7;
+      doc.setDrawColor(60, 60, 60);
+      doc.setLineWidth(0.6);
+      doc.line(ML, y, PW - MR, y);
+      y += 10;
+
+      // Nombre proyecto (destacado)
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.setTextColor(20, 20, 20);
+      const nombreLines = doc.splitTextToSize(proyectoNombre || "Proyecto", CW);
+      nombreLines.forEach(line => { doc.text(line, ML, y); y += 7; });
       y += 8;
-      doc.setFontSize(9);
-      doc.setFont("helvetica", "normal");
-      doc.setTextColor(80, 80, 80);
-      templates.forEach((t, i) => {
-        checkPage(6);
-        doc.text(`${t.capitulo}.  ${t.data.titulo}`, ML + 4, y);
-        y += 5.5;
+
+      // Tabla portada
+      const tableRows = [
+        ["PROYECTO",    proyectoNombre || "—"],
+        ["PROPIETARIO", mandante       || "—"],
+        ["DIRECCIÓN",   direccion      || "—"],
+        ["FECHA",       fechaDoc       || "—"],
+      ];
+      const col1W = 42;
+      const rowH  = 9;
+      tableRows.forEach(([lbl, val], i) => {
+        if (i % 2 === 0) {
+          doc.setFillColor(248, 248, 248);
+          doc.rect(ML, y - 6, CW, rowH, "F");
+        }
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9);
+        doc.setTextColor(80, 80, 80);
+        doc.text(lbl, ML + 2, y);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(20, 20, 20);
+        const valLines = doc.splitTextToSize(String(val), CW - col1W - 4);
+        doc.text(valLines[0] || "", ML + col1W, y);
+        doc.setDrawColor(220, 220, 220);
+        doc.setLineWidth(0.2);
+        doc.line(ML, y + rowH - 6, ML + CW, y + rowH - 6);
+        y += rowH;
       });
 
-      // ── Capítulos ─────────────────────────────────────────────────────────
+      y += 8;
+      doc.setFont("helvetica", "italic");
+      doc.setFontSize(8);
+      doc.setTextColor(160, 160, 160);
+      const fechaGen = new Date().toLocaleDateString("es-CL", { day:"2-digit", month:"long", year:"numeric" });
+      doc.text(`Generado por APUchile · ${fechaGen}`, ML, y);
+
+      // ── PAGE 2: Generalidades + Orden de Prelación ──────────────────────
+      doc.addPage();
+      y = MT;
+
+      const printSection = (titulo, texto) => {
+        checkPage(20);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.setTextColor(20, 20, 20);
+        doc.text(titulo, ML, y);
+        y += 5;
+        doc.setDrawColor(80, 80, 80);
+        doc.setLineWidth(0.4);
+        doc.line(ML, y, PW - MR, y);
+        y += 7;
+        texto.split("\n\n").filter(Boolean).forEach(p => {
+          const lines = doc.splitTextToSize(p.trim(), CW);
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(9);
+          doc.setTextColor(40, 40, 40);
+          lines.forEach(line => { checkPage(5.5); doc.text(line, ML, y); y += 5.5; });
+          y += 3;
+        });
+        y += 6;
+      };
+
+      printSection("I.  GENERALIDADES",       EETT_GENERALIDADES);
+      printSection("II.  ORDEN DE PRELACIÓN", EETT_ORDEN_PRELACION);
+
+      // ── Capítulos ────────────────────────────────────────────────────────
+      const PDF_SECCIONES = [
+        { key: "descripcion",   label: "1.  DESCRIPCIÓN" },
+        { key: "materiales",    label: "2.  MATERIALES Y EQUIPOS" },
+        { key: "ejecucion",     label: "3.  EJECUCIÓN" },
+        { key: "medicion_pago", label: "4.  MEDICIÓN Y PAGO" },
+      ];
+
       templates.forEach(({ codigo, capitulo, data }) => {
         doc.addPage();
         y = MT;
 
-        // Título capítulo
-        doc.setFillColor(240, 253, 244);
-        doc.rect(ML - 3, y - 5, CW + 6, 14, "F");
-        doc.setDrawColor(5, 150, 105);
-        doc.setLineWidth(0.5);
-        doc.line(ML - 3, y - 5, ML - 3, y + 9);
+        // Encabezado capítulo
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(13);
-        doc.setTextColor(5, 100, 70);
-        doc.text(`${capitulo}.  ${data.titulo.toUpperCase()}`, ML + 2, y + 3);
-        y += 18;
+        doc.setFontSize(12);
+        doc.setTextColor(20, 20, 20);
+        doc.text(`${capitulo}.  ${data.titulo.toUpperCase()}`, ML, y);
+        y += 5;
+        doc.setDrawColor(80, 80, 80);
+        doc.setLineWidth(0.5);
+        doc.line(ML, y, PW - MR, y);
+        y += 8;
 
         // Normas
         if (data.normas?.length) {
           doc.setFont("helvetica", "italic");
           doc.setFontSize(8);
           doc.setTextColor(100, 100, 100);
-          doc.text("Normas: " + data.normas.join(" · "), ML, y);
+          doc.text("Normas aplicables: " + data.normas.join(" · "), ML, y);
           y += 7;
         }
 
-        const SECCIONES = [
-          { key: "descripcion",    label: "1. DESCRIPCIÓN" },
-          { key: "materiales",     label: "2. MATERIALES Y EQUIPOS" },
-          { key: "ejecucion",      label: "3. EJECUCIÓN" },
-          { key: "medicion_pago",  label: "4. MEDICIÓN Y PAGO" },
-        ];
-
-        SECCIONES.forEach(({ key, label }) => {
+        // Secciones
+        PDF_SECCIONES.forEach(({ key, label }) => {
           const texto = getSeccion(codigo, key);
           if (!texto) return;
-
-          // Subtítulo sección
-          checkPage(12);
+          checkPage(14);
           doc.setFont("helvetica", "bold");
           doc.setFontSize(9);
-          doc.setTextColor(5, 150, 105);
+          doc.setTextColor(40, 40, 40);
           doc.text(label, ML, y);
-          y += 5;
-          doc.setDrawColor(200, 240, 220);
-          doc.setLineWidth(0.3);
-          doc.line(ML, y, ML + CW, y);
           y += 4;
-
-          // Texto
+          doc.setDrawColor(180, 180, 180);
+          doc.setLineWidth(0.2);
+          doc.line(ML, y, PW - MR, y);
+          y += 5;
           doc.setFont("helvetica", "normal");
           doc.setFontSize(9);
           doc.setTextColor(50, 50, 50);
           const lines = doc.splitTextToSize(texto, CW);
-          lines.forEach(line => {
-            checkPage(5);
-            doc.text(line, ML, y);
-            y += 5;
-          });
-          y += 4;
+          lines.forEach(line => { checkPage(5.5); doc.text(line, ML, y); y += 5.5; });
+          y += 5;
         });
       });
 
@@ -2080,19 +2170,20 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       const totalPages = doc.getNumberOfPages();
       for (let i = 1; i <= totalPages; i++) {
         doc.setPage(i);
+        doc.setFont("helvetica", "normal");
         doc.setFontSize(8);
         doc.setTextColor(180, 180, 180);
-        doc.text(`APUchile · ${proyectoNombre || ""}`, ML, PH - 10);
-        doc.text(`Página ${i} de ${totalPages}`, PW - MR - 22, PH - 10);
-        doc.setDrawColor(220, 220, 220);
+        doc.setDrawColor(210, 210, 210);
         doc.setLineWidth(0.3);
         doc.line(ML, PH - 14, PW - MR, PH - 14);
+        doc.text(proyectoNombre || "", ML, PH - 9);
+        doc.text(`Página ${i} de ${totalPages}`, PW - MR - 22, PH - 9);
       }
 
-      doc.save(`${(proyectoNombre || "proyecto").replace(/\s+/g,"_")}_EETT.pdf`);
+      doc.save(`${(proyectoNombre || "proyecto").replace(/\s+/g, "_")}_EETT.pdf`);
     } catch (err) {
       console.error("Error exportando EE.TT. PDF:", err);
-      alert("Error al generar el PDF. Verifica que jsPDF esté instalado.");
+      alert("Error al generar el PDF: " + err.message);
     } finally {
       setExportando(false);
     }
@@ -2206,20 +2297,74 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       {/* ── Documento ── */}
       <div className="max-w-3xl mx-auto px-5 py-6 space-y-4">
 
-        {/* Portada del documento */}
-        <div className="bg-emerald-600 rounded-2xl p-6 text-white anim-scale-in">
-          <div className="text-xs uppercase tracking-widest text-emerald-200 mb-2 font-medium">Especificaciones Técnicas</div>
-          <h1 className="text-xl font-bold leading-snug mb-1">{proyectoNombre || "Proyecto"}</h1>
-          {metaStr && <p className="text-sm text-emerald-100 mb-3">{metaStr}</p>}
-          <div className="flex gap-4 text-xs text-emerald-200 border-t border-emerald-500 pt-3 mt-3">
+        {/* ── Portada del documento ── */}
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-scale-in shadow-sm">
+          {/* Cabecera */}
+          <div className="px-6 pt-5 pb-4 border-b border-gray-100">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Especificaciones Técnicas</p>
+                <h1 className="text-base font-bold text-gray-900 leading-snug">{proyectoNombre || "Proyecto"}</h1>
+              </div>
+              {logo && (
+                <img src={logo} alt="Logo empresa" className="h-12 w-auto object-contain rounded shrink-0" />
+              )}
+            </div>
+          </div>
+          {/* Tabla de datos */}
+          <div className="divide-y divide-gray-50">
+            {[
+              ["Proyecto",    proyectoNombre || "—"],
+              ["Propietario", mandante       || "—"],
+              ["Dirección",   direccion      || "—"],
+              ["Fecha",       fechaDoc       || "—"],
+            ].map(([lbl, val]) => (
+              <div key={lbl} className="flex items-baseline px-6 py-2.5 even:bg-gray-50/50">
+                <span className="w-28 shrink-0 text-[11px] font-semibold text-gray-500">{lbl}</span>
+                <span className="text-[11px] text-gray-800 leading-snug">{val}</span>
+              </div>
+            ))}
+          </div>
+          {/* Stats footer */}
+          <div className="px-6 py-2.5 bg-gray-50 border-t border-gray-100 flex gap-5 text-[11px] text-gray-400">
             <span>📋 {templates.length} capítulos</span>
             <span>📦 {proyecto.length} partidas</span>
             <span>📅 {new Date().toLocaleDateString("es-CL")}</span>
           </div>
         </div>
 
-        {/* Índice */}
+        {/* ── I. Generalidades ── */}
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-fade-up delay-50">
+          <button
+            onClick={() => toggle("__generalidades__")}
+            className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors text-left">
+            <span className="flex-1 text-[11px] font-bold text-gray-600 uppercase tracking-wider">I.  Generalidades</span>
+            <span className={`text-gray-400 text-xs transition-transform duration-200 ${expandidos["__generalidades__"] ? "rotate-90" : ""}`}>▶</span>
+          </button>
+          {expandidos["__generalidades__"] && (
+            <div className="border-t border-gray-100 px-6 py-4 accordion-item">
+              <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap">{EETT_GENERALIDADES}</p>
+            </div>
+          )}
+        </div>
+
+        {/* ── II. Orden de Prelación ── */}
         <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-fade-up delay-100">
+          <button
+            onClick={() => toggle("__orden_prelacion__")}
+            className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors text-left">
+            <span className="flex-1 text-[11px] font-bold text-gray-600 uppercase tracking-wider">II.  Orden de Prelación</span>
+            <span className={`text-gray-400 text-xs transition-transform duration-200 ${expandidos["__orden_prelacion__"] ? "rotate-90" : ""}`}>▶</span>
+          </button>
+          {expandidos["__orden_prelacion__"] && (
+            <div className="border-t border-gray-100 px-6 py-4 accordion-item">
+              <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap">{EETT_ORDEN_PRELACION}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Índice */}
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-fade-up delay-150">
           <div className="px-5 py-3 bg-gray-50 border-b border-gray-200 flex items-center gap-2">
             <span className="text-gray-400 text-sm">📑</span>
             <span className="font-semibold text-xs text-gray-600 uppercase tracking-wide">Índice</span>
