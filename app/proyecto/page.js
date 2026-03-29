@@ -188,8 +188,23 @@ function Home() {
     return () => window.removeEventListener("beforeunload", guardarAhora);
   }, [proyectoId, userId, proyecto]);
 
+  const [famAbierta, setFamAbierta] = useState(null);
+
   const raices = FAMILIAS.filter((f) => !f.padre);
   const hijos = (padre) => FAMILIAS.filter((f) => f.padre === padre);
+
+  const conteoFamilia = useMemo(() => {
+    const map = {};
+    APUS.forEach(a => {
+      const fam = (a.familia || "").toUpperCase();
+      FAMILIAS.forEach(f => {
+        if (fam === f.codigo || fam.startsWith(f.codigo)) {
+          map[f.codigo] = (map[f.codigo] || 0) + 1;
+        }
+      });
+    });
+    return map;
+  }, []);
 
   const apusFiltrados = useMemo(() => {
     let list = APUS;
@@ -445,134 +460,171 @@ function Home() {
     setTab("resumen");
   };
 
+  const TABS_RAIL = [
+    { id: "biblioteca",  icon: "📚", label: "Biblioteca"  },
+    { id: "resumen",     icon: "📋", label: "Presupuesto" },
+    { id: "editor",      icon: "🔧", label: "Editor APU"  },
+    { id: "anexos",      icon: "📎", label: "Anexos"      },
+    { id: "config",      icon: "⚙️", label: "Config"      },
+  ];
+
   return (
-    <div className="flex flex-col h-screen bg-gray-50 font-sans text-sm text-gray-800">
-      {/* Overlay de carga al procesar archivos */}
+    <div className="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
       <LoadingOverlay visible={procesando} mensaje="Analizando documento con ONDAC..." />
 
-      <header className="flex items-center justify-between px-5 py-3 bg-white border-b border-gray-200 shrink-0">
-        <div className="flex items-center gap-3">
-          <button onClick={() => router.push("/dashboard")} className="text-gray-400 hover:text-emerald-600 transition-colors text-xs">← Dashboard</button>
-          <span className="text-gray-200">|</span>
-          <span className="text-base font-semibold text-emerald-600 tracking-tight">APU<span className="text-gray-400 font-normal">chile</span></span>
-          <div className="flex flex-col">
+      {/* ── Rail lateral ── */}
+      <div className="w-[68px] bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-1 shrink-0 shadow-sm z-10">
+        <div className="mb-3 text-center leading-none select-none">
+          <div className="text-[11px] font-black text-emerald-600">APU</div>
+          <div className="text-[9px] text-gray-400 font-medium">chile</div>
+        </div>
+        {TABS_RAIL.map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)} title={t.label}
+            className={`relative w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all ${tab === t.id ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200" : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"}`}>
+            <span className="text-lg leading-none">{t.icon}</span>
+            <span className="text-[9px] font-medium leading-none">{t.label}</span>
+            {t.id === "resumen" && proyecto.length > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-emerald-500 text-white text-[9px] rounded-full flex items-center justify-center font-bold">{proyecto.length}</span>
+            )}
+          </button>
+        ))}
+        <div className="flex-1" />
+        <button onClick={() => router.push("/dashboard")} title="Volver al dashboard"
+          className="w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-all">
+          <span className="text-lg leading-none">🏠</span>
+          <span className="text-[9px] font-medium">Inicio</span>
+        </button>
+      </div>
+
+      {/* ── Área principal ── */}
+      <div className="flex flex-col flex-1 overflow-hidden">
+
+        {/* Header */}
+        <header className="bg-white border-b border-gray-200 px-5 py-3 flex items-center justify-between shrink-0">
+          <div>
             <div className="flex items-center gap-2">
-              <span className="text-gray-700 font-medium text-sm">{proyectoNombre}</span>
+              <span className="font-semibold text-gray-800">{proyectoNombre}</span>
               <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">{zonaLabel}</span>
-              <button onClick={() => setEditandoProyecto(true)}
-                className="text-[11px] text-gray-400 hover:text-emerald-600 transition-colors">✏️</button>
-              {guardando && <span className="text-[10px] text-gray-400">Guardando...</span>}
+              <button onClick={() => setEditandoProyecto(true)} className="text-gray-300 hover:text-emerald-500 transition-colors text-xs">✏️</button>
+              {guardando && <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Guardando...</span>}
             </div>
             {(proyectoMeta.mandante || proyectoMeta.responsable || proyectoMeta.diasCorridos) && (
-              <div className="flex items-center gap-3 text-[10px] text-gray-400 mt-0.5">
+              <div className="flex items-center gap-2 text-[11px] text-gray-400 mt-0.5">
                 {proyectoMeta.mandante && <span>{proyectoMeta.mandante}</span>}
                 {proyectoMeta.responsable && <span>· {proyectoMeta.responsable}</span>}
                 {proyectoMeta.diasCorridos && <span>· {proyectoMeta.diasCorridos} días</span>}
               </div>
             )}
           </div>
-        </div>
-        <div className="flex items-center gap-3">
-          {/* Indicadores UF/UTM */}
-          {uf && (
-            <div className="hidden lg:flex items-center gap-3 text-[11px] text-gray-400 bg-gray-50 border border-gray-100 rounded-lg px-3 py-1.5">
-              <span><span className="font-semibold text-gray-500">UF</span> ${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              <span className="text-gray-200">·</span>
-              <span><span className="font-semibold text-gray-500">UTM</span> ${utm?.toLocaleString("es-CL") ?? "—"}</span>
+          <div className="flex items-center gap-3">
+            {uf && (
+              <div className="hidden lg:flex items-center gap-2 text-[11px] text-gray-500 bg-gray-50 border border-gray-100 rounded-lg px-3 py-1.5">
+                <span><span className="font-semibold text-gray-600">UF</span> ${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="text-gray-200">·</span>
+                <span><span className="font-semibold text-gray-600">UTM</span> ${utm?.toLocaleString("es-CL") ?? "—"}</span>
+              </div>
+            )}
+            <div className="flex bg-gray-100 rounded-lg p-0.5 gap-0.5">
+              {["CLP","UF","UTM"].map(m => (
+                <button key={m} onClick={() => setMoneda(m)}
+                  className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${moneda === m ? "bg-white shadow text-emerald-700" : "text-gray-400 hover:text-gray-600"}`}>
+                  {m}
+                </button>
+              ))}
             </div>
-          )}
-          {/* Selector moneda */}
-          <div className="flex bg-gray-100 rounded-lg p-0.5 gap-0.5">
-            {["CLP","UF","UTM"].map(m => (
-              <button key={m} onClick={() => setMoneda(m)}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${moneda === m ? "bg-white shadow text-emerald-700" : "text-gray-400 hover:text-gray-600"}`}>
-                {m}
-              </button>
-            ))}
           </div>
-          <nav className="flex gap-1">
-            {[["biblioteca","Biblioteca ONDAC"],["editor","Editor APU"],["config","Configuración"],["resumen","Resumen"],["anexos","Anexos"]].map(([id,label])=>(
-              <button key={id} onClick={()=>setTab(id)}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${tab===id?"bg-emerald-600 text-white":"text-gray-500 hover:bg-gray-100"}`}>
-                {label}{id==="resumen"&&proyecto.length>0?` (${proyecto.length})`:""}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </header>
+        </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {tab === "biblioteca" && (
-          <div className="flex flex-1 overflow-hidden">
-            <aside className="w-56 bg-white border-r border-gray-200 overflow-y-auto shrink-0 py-3">
-              <div className="px-3 mb-2 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Familias ONDAC</div>
-              <button onClick={()=>setFamiliaActiva(null)}
-                className={`w-full text-left px-3 py-1.5 text-xs transition-colors ${!familiaActiva?"bg-emerald-50 text-emerald-700 font-medium":"text-gray-500 hover:bg-gray-50"}`}>
-                Todas las partidas
-              </button>
-              {raices.map((r) => (
-                <div key={r.codigo}>
-                  <button onClick={()=>setFamiliaActiva(r.codigo)}
-                    className={`w-full text-left px-3 py-1.5 text-xs font-medium transition-colors ${familiaActiva===r.codigo?"bg-emerald-50 text-emerald-700":"text-gray-700 hover:bg-gray-50"}`}>
-                    {r.nombre}
+        {/* ── Contenido según tab ── */}
+        <div className="flex flex-1 overflow-hidden">
+
+          {/* BIBLIOTECA */}
+          {tab === "biblioteca" && (
+            <>
+              {/* Sidebar acordeón */}
+              <aside className="w-56 bg-white border-r border-gray-100 flex flex-col overflow-hidden shrink-0">
+                <div className="px-3 py-2.5 border-b border-gray-100">
+                  <input placeholder="Filtrar categorías..."
+                    className="w-full border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-emerald-400" />
+                </div>
+                <div className="flex-1 overflow-y-auto py-1">
+                  <button onClick={() => { setFamiliaActiva(null); setFamAbierta(null); }}
+                    className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between transition-colors ${!familiaActiva ? "bg-emerald-50 text-emerald-700 border-r-2 border-emerald-500" : "text-gray-600 hover:bg-gray-50"}`}>
+                    <span>Todas las partidas</span>
+                    <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{APUS.length}</span>
                   </button>
-                  {hijos(r.codigo).map((h) => (
-                    <button key={h.codigo} onClick={()=>setFamiliaActiva(h.codigo)}
-                      className={`w-full text-left pl-6 pr-3 py-1 text-[11px] transition-colors ${familiaActiva===h.codigo?"bg-emerald-50 text-emerald-600":"text-gray-500 hover:bg-gray-50"}`}>
-                      {h.nombre}
-                    </button>
+                  {raices.map(r => (
+                    <div key={r.codigo}>
+                      <button onClick={() => setFamAbierta(famAbierta === r.codigo ? null : r.codigo)}
+                        className={`w-full text-left px-3 py-2 text-xs font-medium flex items-center justify-between transition-colors ${familiaActiva === r.codigo || hijos(r.codigo).some(h => h.codigo === familiaActiva) ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50"}`}>
+                        <span className="truncate pr-1">{r.nombre}</span>
+                        <div className="flex items-center gap-1 shrink-0">
+                          {conteoFamilia[r.codigo] > 0 && <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{conteoFamilia[r.codigo]}</span>}
+                          <span className="text-gray-400 text-[10px]">{famAbierta === r.codigo ? "▾" : "▸"}</span>
+                        </div>
+                      </button>
+                      {famAbierta === r.codigo && hijos(r.codigo).map(h => (
+                        <button key={h.codigo} onClick={() => setFamiliaActiva(h.codigo)}
+                          className={`w-full text-left pl-6 pr-3 py-1.5 text-[11px] flex items-center justify-between transition-colors ${familiaActiva === h.codigo ? "text-emerald-600 font-semibold bg-emerald-50 border-r-2 border-emerald-400" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"}`}>
+                          <span className="flex items-center gap-1"><span className="text-gray-300">›</span> {h.nombre}</span>
+                          {conteoFamilia[h.codigo] > 0 && <span className="text-[10px] text-gray-400">{conteoFamilia[h.codigo]}</span>}
+                        </button>
+                      ))}
+                    </div>
                   ))}
                 </div>
-              ))}
-            </aside>
-            <main className="flex-1 overflow-y-auto p-5">
-              <div className="mb-4 flex gap-3 items-center">
-                <input value={busqueda} onChange={(e)=>setBusqueda(e.target.value)}
-                  placeholder="Buscar partida por nombre o código..."
-                  className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-400"/>
-                <span className="text-xs text-gray-400 shrink-0">{apusFiltrados.length} partidas</span>
-              </div>
-              <div className="grid gap-2">
-                {apusFiltrados.slice(0,100).map((apu, idx) => {
-                  const { total } = calcAPU(apu, cfg);
-                  const desc = apu.desc || apu.descripcion || "Sin descripción";
-                  return (
-                    <div key={`${apu.codigo}_${idx}`} className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:border-emerald-300 transition-colors">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span className="text-[10px] font-mono text-gray-400">{apu.codigo}</span>
-                          <span className="text-[10px] text-gray-400">{apu.unidad}</span>
-                        </div>
-                        <div className="text-sm text-gray-800 leading-snug">{desc}</div>
-                      </div>
-                      <div className="flex items-center gap-3 ml-4 shrink-0">
-                        <div className="text-right">
-                          <div className="text-xs text-gray-400">Precio unitario</div>
-                          <div className="font-semibold text-emerald-600">{fmtM(total)}</div>
-                        </div>
-                        <button onClick={()=>{setApuActivo(apu);setTab("editor");}}
-                          className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-600 transition-colors">
-                          Ver APU
-                        </button>
-                        <button onClick={()=>agregarPartida(apu)}
-                          className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors">
-                          + Agregar
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-                {apusFiltrados.length > 100 && (
-                  <div className="text-center py-4 text-xs text-gray-400">
-                    Mostrando 100 de {apusFiltrados.length} — usa el buscador para filtrar
-                  </div>
-                )}
-              </div>
-            </main>
-          </div>
-        )}
+              </aside>
 
-        {tab === "editor" && (
+              {/* Lista partidas */}
+              <main className="flex-1 overflow-y-auto">
+                <div className="px-4 py-3 border-b border-gray-200 bg-white flex gap-3 items-center sticky top-0 z-10">
+                  <input value={busqueda} onChange={e => setBusqueda(e.target.value)}
+                    placeholder="Buscar partida por nombre o código..."
+                    className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-emerald-400 shadow-sm" />
+                  <span className="text-xs text-gray-400 shrink-0">{apusFiltrados.length} partidas</span>
+                </div>
+                <div className="p-4 grid gap-2">
+                  {apusFiltrados.slice(0,100).map((apu, idx) => {
+                    const { total } = calcAPU(apu, cfg);
+                    const desc = apu.desc || apu.descripcion || "Sin descripción";
+                    return (
+                      <div key={`${apu.codigo}_${idx}`} className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:border-emerald-300 hover:shadow-sm transition-all group">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-[10px] font-mono bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">{apu.codigo}</span>
+                            <span className="text-[10px] text-gray-400 font-medium">{apu.unidad}</span>
+                          </div>
+                          <div className="text-sm text-gray-800 leading-snug font-medium">{desc}</div>
+                        </div>
+                        <div className="flex items-center gap-3 ml-4 shrink-0">
+                          <div className="text-right">
+                            <div className="text-[10px] text-gray-400">Precio unitario</div>
+                            <div className="font-bold text-emerald-600">{fmtM(total)}</div>
+                          </div>
+                          <button onClick={() => { setApuActivo(apu); setTab("editor"); }}
+                            className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-600 opacity-0 group-hover:opacity-100 transition-all">
+                            Ver APU
+                          </button>
+                          <button onClick={() => agregarPartida(apu)}
+                            className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm">
+                            + Agregar
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {apusFiltrados.length > 100 && (
+                    <div className="text-center py-4 text-xs text-gray-400">
+                      Mostrando 100 de {apusFiltrados.length} — usa el buscador para filtrar
+                    </div>
+                  )}
+                </div>
+              </main>
+            </>
+          )}
+
+          {/* EDITOR APU */}
+          {tab === "editor" && (
           <div className="flex-1 overflow-y-auto p-5">
             {!apuActivo ? (
               <div className="text-center py-20 text-gray-400">
@@ -641,7 +693,8 @@ function Home() {
           </div>
         )}
 
-        {tab === "config" && (
+          {/* CONFIG */}
+          {tab === "config" && (
           <div className="flex-1 overflow-y-auto p-5 max-w-2xl">
             <h2 className="text-base font-semibold mb-5 text-gray-800">Configuración del proyecto</h2>
             <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
@@ -681,7 +734,8 @@ function Home() {
           </div>
         )}
 
-        {tab === "resumen" && (
+          {/* RESUMEN */}
+          {tab === "resumen" && (
           <div className="flex-1 overflow-y-auto p-5">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-base font-semibold text-gray-800">Resumen del proyecto</h2>
@@ -845,7 +899,8 @@ function Home() {
           </div>
         )}
 
-        {tab === "anexos" && (
+          {/* ANEXOS */}
+          {tab === "anexos" && (
           <div className="flex-1 overflow-y-auto p-5 max-w-3xl">
             <h2 className="text-base font-semibold mb-2 text-gray-800">Anexos del proyecto</h2>
             <p className="text-xs text-gray-400 mb-6">Sube documentos del proyecto. Los PDF y Excel pueden procesarse automáticamente con IA para detectar partidas ONDAC.</p>
@@ -907,7 +962,8 @@ function Home() {
             )}
           </div>
         )}
-      </div>
+        </div>{/* fin contenido según tab */}
+      </div>{/* fin área principal */}
 
       {/* Modal editar proyecto */}
       {editandoProyecto && (
