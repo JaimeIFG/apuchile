@@ -387,7 +387,7 @@ export default function Dashboard() {
         <LicitacionesTicker />
         <main className="max-w-4xl mx-auto px-8 py-10 flex-1 w-full">
           {/* Saludo */}
-          <div className="mb-10">
+          <div className="mb-10 anim-fade-up">
             <h1 className="text-3xl font-bold text-gray-800">{saludo}, {nombre}</h1>
             <p className="text-gray-400 mt-1 text-sm">¿En qué proyecto trabajamos hoy?</p>
           </div>
@@ -395,14 +395,15 @@ export default function Dashboard() {
           {/* Acciones principales */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             {[
-              { icon: "＋", label: "Nuevo proyecto", color: "bg-emerald-600 text-white hover:bg-emerald-700", action: () => setCreando(true) },
-              { icon: "📂", label: "Mis proyectos", color: "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200", action: () => document.getElementById("mis-proyectos").scrollIntoView({ behavior: "smooth" }) },
-              { icon: "📄", label: "Importar documento", color: "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200", action: () => alert("Próximamente") },
-              { icon: "⚙️", label: "Configuración", color: "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200", action: () => alert("Próximamente") },
+              { icon: "＋", label: "Nuevo proyecto", color: "bg-emerald-600 text-white", action: () => setCreando(true), primary: true },
+              { icon: "📂", label: "Mis proyectos", color: "bg-white text-gray-700 border border-gray-200", action: () => document.getElementById("mis-proyectos").scrollIntoView({ behavior: "smooth" }) },
+              { icon: "📄", label: "Importar documento", color: "bg-white text-gray-700 border border-gray-200", action: () => alert("Próximamente") },
+              { icon: "⚙️", label: "Configuración", color: "bg-white text-gray-700 border border-gray-200", action: () => alert("Próximamente") },
             ].map((c, i) => (
               <button key={i} onClick={c.action}
-                className={`${c.color} rounded-2xl p-6 flex flex-col items-center justify-center gap-3 transition-all shadow-sm hover:shadow-md aspect-square`}>
-                <span className="text-3xl">{c.icon}</span>
+                className={`${c.color} rounded-2xl p-6 flex flex-col items-center justify-center gap-3 aspect-square shadow-sm anim-fade-up ${c.primary ? "btn-primary" : "card-hover"}`}
+                style={{ animationDelay: `${i * 60 + 80}ms` }}>
+                <span className={`text-3xl transition-transform duration-200 ${c.primary ? "group-hover:scale-110" : ""}`}>{c.icon}</span>
                 <span className="text-sm font-medium text-center leading-tight">{c.label}</span>
               </button>
             ))}
@@ -410,8 +411,8 @@ export default function Dashboard() {
 
           {/* Modal confirmar cerrar sesión */}
           {confirmarLogout && (
-            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 anim-fade-in" style={{backdropFilter:"blur(6px)", background:"rgba(0,0,0,0.35)"}}>
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center anim-scale-in">
                 <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
                   <span className="text-2xl">👋</span>
                 </div>
@@ -419,11 +420,11 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-500 mb-6">Se guardará tu información antes de salir.</p>
                 <div className="flex gap-3">
                   <button onClick={() => setConfirmarLogout(false)}
-                    className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                    className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50 btn-press">
                     Cancelar
                   </button>
                   <button onClick={ejecutarCierreSesion}
-                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700">
+                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary">
                     Sí, salir
                   </button>
                 </div>
@@ -440,8 +441,8 @@ export default function Dashboard() {
 
           {/* Modal nuevo proyecto */}
           {creando && (
-            <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="fixed inset-0 flex items-center justify-center z-50 p-4 anim-fade-in" style={{backdropFilter:"blur(6px)", background:"rgba(0,0,0,0.3)"}}>
+              <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto anim-scale-in">
                 <div className="p-8">
                   <h3 className="text-lg font-bold text-gray-800 mb-6">Nuevo proyecto</h3>
 
@@ -515,11 +516,11 @@ export default function Dashboard() {
 
                   <div className="flex gap-3">
                     <button onClick={cerrarModal}
-                      className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                      className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50 btn-press">
                       Cancelar
                     </button>
                     <button onClick={crearProyecto} disabled={!nombreNuevo.trim() || creandoLoading}
-                      className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
+                      className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium disabled:opacity-50 btn-primary">
                       {creandoLoading ? "Creando..." : "Crear proyecto →"}
                     </button>
                   </div>
@@ -530,8 +531,8 @@ export default function Dashboard() {
 
           {/* Modal importar archivo al crear proyecto */}
           {importModal && (
-            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 relative">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 anim-fade-in" style={{backdropFilter:"blur(6px)", background:"rgba(0,0,0,0.45)"}}>
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 relative anim-scale-in">
                 <button onClick={() => setConfirmarCancelarImport(true)}
                   className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
                 <div className="text-center mb-6">
@@ -582,7 +583,7 @@ export default function Dashboard() {
 
                 <div className="flex gap-3">
                   <button onClick={() => { setImportModal(null); router.push(`/proyecto?id=${importModal.id}`); }}
-                    className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                    className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50 btn-press">
                     Comenzar manual
                   </button>
                   <button
@@ -597,7 +598,7 @@ export default function Dashboard() {
                       const tipoMap = { eett: "eett", presupuesto: "presupuesto", plano: "plano", otro: "eett" };
                       router.push(`/proyecto?id=${importModal.id}&tab=anexos&archivo=${encodeURIComponent(path)}&tipo=${tipoMap[importTipo]}`);
                     }}
-                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
+                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium disabled:opacity-50 btn-primary">
                     {importLoading ? "Subiendo..." : "Importar y abrir →"}
                   </button>
                 </div>
@@ -633,8 +634,8 @@ export default function Dashboard() {
 
           {/* Modal confirmar eliminación */}
           {confirmarEliminar && (
-            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 anim-fade-in" style={{backdropFilter:"blur(6px)", background:"rgba(0,0,0,0.45)"}}>
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center anim-scale-in">
                 <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-3">
                   <span className="text-2xl">🗑️</span>
                 </div>
@@ -642,11 +643,11 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-500 mb-6">Esta acción no se puede deshacer. Se eliminará el proyecto y todos sus datos.</p>
                 <div className="flex gap-3">
                   <button onClick={() => setConfirmarEliminar(null)}
-                    className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50">
+                    className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50 btn-press">
                     No, cancelar
                   </button>
                   <button onClick={confirmarEliminarProyecto}
-                    className="flex-1 bg-red-500 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-red-600">
+                    className="flex-1 bg-red-500 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-red-600 btn-press">
                     Sí, eliminar
                   </button>
                 </div>
@@ -656,34 +657,34 @@ export default function Dashboard() {
 
           {/* Proyectos recientes */}
           <div id="mis-proyectos">
-            <h2 className="text-base font-semibold text-gray-700 mb-4">Proyectos recientes</h2>
+            <h2 className="text-base font-semibold text-gray-700 mb-4 anim-fade-up delay-300">Proyectos recientes</h2>
             {proyectos.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-2xl p-12 text-center">
+              <div className="bg-white border border-gray-200 rounded-2xl p-12 text-center anim-fade-up delay-350">
                 <p className="text-gray-400 text-sm mb-3">No tienes proyectos aún</p>
-                <button onClick={() => setCreando(true)} className="text-emerald-600 text-sm underline">
+                <button onClick={() => setCreando(true)} className="text-emerald-600 text-sm underline btn-press">
                   Crea tu primer proyecto
                 </button>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {proyectos.map(p => {
+                {proyectos.map((p, idx) => {
                   const m = p.meta || {};
                   const dc = m.diasCorridos || diasCorridos(m.fechaInicio, m.fechaTermino);
                   const zona = m.zona ?? 0;
-                  // Estimar total: CD con zona × (1 + GG18% + util10%) × (1 + IVA19%)
                   const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
-                  const total = cd * 1.28 * 1.19; // GG+util ≈ 28%, IVA 19%
+                  const total = cd * 1.28 * 1.19;
                   const fmtCLP = n => n >= 1e6
                     ? `$${(n / 1e6).toFixed(1)}M`
                     : n > 0 ? `$${Math.round(n).toLocaleString("es-CL")}` : null;
                   const montoLabel = fmtCLP(total);
                   return (
                     <button key={p.id} onClick={() => abrirProyecto(p.id)}
-                      className="bg-white border border-gray-200 rounded-2xl p-5 text-left hover:border-emerald-300 hover:shadow-md transition-all group">
+                      className="bg-white border border-gray-200 rounded-2xl p-5 text-left group card-hover anim-fade-up"
+                      style={{ animationDelay: `${350 + idx * 60}ms`, borderColor: undefined }}>
                       <div className="flex items-start justify-between mb-3">
-                        <span className="text-2xl">📋</span>
+                        <span className="text-2xl transition-transform duration-200 group-hover:scale-110">📋</span>
                         <button onClick={e => eliminarProyecto(p.id, e)}
-                          className="text-gray-300 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                          className="text-gray-300 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition-all duration-150 hover:scale-110 btn-press">
                           ✕
                         </button>
                       </div>
