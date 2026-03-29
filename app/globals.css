@@ -88,3 +88,43 @@ body {
 }
 .btn-primary:hover  { box-shadow: 0 4px 14px -2px rgba(5,150,105,0.35); }
 .btn-primary:active { transform: scale(0.97); box-shadow: none; }
+
+/* ── Botones del rail de navegación ── */
+.rail-btn {
+  transition: background-color 0.15s ease,
+              color 0.15s ease,
+              box-shadow 0.15s ease,
+              transform 0.12s cubic-bezier(0.16,1,0.3,1);
+}
+.rail-btn:active { transform: scale(0.88); }
+
+/* ── Acordeón sidebar ── */
+@keyframes accordionSlide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.accordion-item {
+  animation: accordionSlide 0.2s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* ── Rotación flecha acordeón ── */
+.arrow-open  { transform: rotate(90deg); transition: transform 0.2s cubic-bezier(0.16,1,0.3,1); }
+.arrow-close { transform: rotate(0deg);  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1); }
+
+/* ── Highlight de fila de tabla ── */
+.row-hover {
+  transition: background-color 0.12s ease;
+}
+
+/* ── Drop zone de archivos ── */
+.dropzone {
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.dropzone:hover { box-shadow: 0 0 0 4px rgba(5,150,105,0.08); }
+.dropzone-drag  { border-color: #059669 !important; background-color: #f0fdf4 !important; }
+
+/* ── Focus ring suave en inputs ── */
+.input-focus {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-focus:focus { box-shadow: 0 0 0 3px rgba(5,150,105,0.12); }

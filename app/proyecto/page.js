@@ -478,19 +478,20 @@ function Home() {
           <div className="text-[11px] font-black text-emerald-600">APU</div>
           <div className="text-[9px] text-gray-400 font-medium">chile</div>
         </div>
-        {TABS_RAIL.map(t => (
+        {TABS_RAIL.map((t, i) => (
           <button key={t.id} onClick={() => setTab(t.id)} title={t.label}
-            className={`relative w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all ${tab === t.id ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200" : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"}`}>
-            <span className="text-lg leading-none">{t.icon}</span>
+            style={{ animationDelay: `${i * 40}ms` }}
+            className={`relative w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 rail-btn anim-fade-up ${tab === t.id ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 shadow-sm" : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"}`}>
+            <span className={`text-lg leading-none transition-transform duration-150 ${tab === t.id ? "scale-110" : "scale-100"}`}>{t.icon}</span>
             <span className="text-[9px] font-medium leading-none">{t.label}</span>
             {t.id === "resumen" && proyecto.length > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-emerald-500 text-white text-[9px] rounded-full flex items-center justify-center font-bold">{proyecto.length}</span>
+              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-emerald-500 text-white text-[9px] rounded-full flex items-center justify-center font-bold shadow-sm">{proyecto.length}</span>
             )}
           </button>
         ))}
         <div className="flex-1" />
         <button onClick={() => router.push("/dashboard")} title="Volver al dashboard"
-          className="w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-all">
+          className="w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 text-gray-400 hover:bg-red-50 hover:text-red-400 rail-btn">
           <span className="text-lg leading-none">🏠</span>
           <span className="text-[9px] font-medium">Inicio</span>
         </button>
@@ -500,13 +501,19 @@ function Home() {
       <div className="flex flex-col flex-1 overflow-hidden">
 
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-5 py-3 flex items-center justify-between shrink-0">
+        <header className="bg-white border-b border-gray-200 px-5 py-3 flex items-center justify-between shrink-0 anim-fade-up">
           <div>
             <div className="flex items-center gap-2">
               <span className="font-semibold text-gray-800">{proyectoNombre}</span>
               <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">{zonaLabel}</span>
-              <button onClick={() => setEditandoProyecto(true)} className="text-gray-300 hover:text-emerald-500 transition-colors text-xs">✏️</button>
-              {guardando && <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Guardando...</span>}
+              <button onClick={() => setEditandoProyecto(true)}
+                className="text-gray-300 hover:text-emerald-500 transition-colors text-xs hover:scale-110 transition-transform">✏️</button>
+              {guardando && (
+                <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full anim-fade-in flex items-center gap-1">
+                  <span className="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"/>
+                  Guardando...
+                </span>
+              )}
             </div>
             {(proyectoMeta.mandante || proyectoMeta.responsable || proyectoMeta.diasCorridos) && (
               <div className="flex items-center gap-2 text-[11px] text-gray-400 mt-0.5">
@@ -518,7 +525,7 @@ function Home() {
           </div>
           <div className="flex items-center gap-3">
             {uf && (
-              <div className="hidden lg:flex items-center gap-2 text-[11px] text-gray-500 bg-gray-50 border border-gray-100 rounded-lg px-3 py-1.5">
+              <div className="hidden lg:flex items-center gap-2 text-[11px] text-gray-500 bg-gray-50 border border-gray-100 rounded-lg px-3 py-1.5 anim-fade-in delay-200">
                 <span><span className="font-semibold text-gray-600">UF</span> ${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 <span className="text-gray-200">·</span>
                 <span><span className="font-semibold text-gray-600">UTM</span> ${utm?.toLocaleString("es-CL") ?? "—"}</span>
@@ -527,7 +534,7 @@ function Home() {
             <div className="flex bg-gray-100 rounded-lg p-0.5 gap-0.5">
               {["CLP","UF","UTM"].map(m => (
                 <button key={m} onClick={() => setMoneda(m)}
-                  className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${moneda === m ? "bg-white shadow text-emerald-700" : "text-gray-400 hover:text-gray-600"}`}>
+                  className={`px-2.5 py-1 rounded-md text-[11px] font-semibold btn-press ${moneda === m ? "bg-white shadow text-emerald-700" : "text-gray-400 hover:text-gray-600"}`}>
                   {m}
                 </button>
               ))}
@@ -542,53 +549,60 @@ function Home() {
           {tab === "biblioteca" && (
             <>
               {/* Sidebar acordeón */}
-              <aside className="w-56 bg-white border-r border-gray-100 flex flex-col overflow-hidden shrink-0">
+              <aside className="w-56 bg-white border-r border-gray-100 flex flex-col overflow-hidden shrink-0 anim-fade-up">
                 <div className="px-3 py-2.5 border-b border-gray-100">
                   <input placeholder="Filtrar categorías..."
-                    className="w-full border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-emerald-400" />
+                    className="w-full border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs input-focus focus:outline-none focus:border-emerald-400" />
                 </div>
                 <div className="flex-1 overflow-y-auto py-1">
                   <button onClick={() => { setFamiliaActiva(null); setFamAbierta(null); }}
-                    className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between transition-colors ${!familiaActiva ? "bg-emerald-50 text-emerald-700 border-r-2 border-emerald-500" : "text-gray-600 hover:bg-gray-50"}`}>
+                    className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between transition-colors duration-100 ${!familiaActiva ? "bg-emerald-50 text-emerald-700 border-r-2 border-emerald-500" : "text-gray-600 hover:bg-gray-50"}`}>
                     <span>Todas las partidas</span>
                     <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{APUS.length}</span>
                   </button>
-                  {raices.map(r => (
-                    <div key={r.codigo}>
-                      <button onClick={() => setFamAbierta(famAbierta === r.codigo ? null : r.codigo)}
-                        className={`w-full text-left px-3 py-2 text-xs font-medium flex items-center justify-between transition-colors ${familiaActiva === r.codigo || hijos(r.codigo).some(h => h.codigo === familiaActiva) ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50"}`}>
-                        <span className="truncate pr-1">{r.nombre}</span>
-                        <div className="flex items-center gap-1 shrink-0">
-                          {conteoFamilia[r.codigo] > 0 && <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{conteoFamilia[r.codigo]}</span>}
-                          <span className="text-gray-400 text-[10px]">{famAbierta === r.codigo ? "▾" : "▸"}</span>
-                        </div>
-                      </button>
-                      {famAbierta === r.codigo && hijos(r.codigo).map(h => (
-                        <button key={h.codigo} onClick={() => setFamiliaActiva(h.codigo)}
-                          className={`w-full text-left pl-6 pr-3 py-1.5 text-[11px] flex items-center justify-between transition-colors ${familiaActiva === h.codigo ? "text-emerald-600 font-semibold bg-emerald-50 border-r-2 border-emerald-400" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"}`}>
-                          <span className="flex items-center gap-1"><span className="text-gray-300">›</span> {h.nombre}</span>
-                          {conteoFamilia[h.codigo] > 0 && <span className="text-[10px] text-gray-400">{conteoFamilia[h.codigo]}</span>}
+                  {raices.map(r => {
+                    const estaAbierta = famAbierta === r.codigo;
+                    const tieneActiva = familiaActiva === r.codigo || hijos(r.codigo).some(h => h.codigo === familiaActiva);
+                    return (
+                      <div key={r.codigo}>
+                        <button onClick={() => setFamAbierta(estaAbierta ? null : r.codigo)}
+                          className={`w-full text-left px-3 py-2 text-xs font-medium flex items-center justify-between transition-colors duration-100 ${tieneActiva ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50"}`}>
+                          <span className="truncate pr-1">{r.nombre}</span>
+                          <div className="flex items-center gap-1 shrink-0">
+                            {conteoFamilia[r.codigo] > 0 && <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{conteoFamilia[r.codigo]}</span>}
+                            <span className={`text-gray-400 text-[10px] inline-block ${estaAbierta ? "arrow-open" : "arrow-close"}`}>▸</span>
+                          </div>
                         </button>
-                      ))}
-                    </div>
-                  ))}
+                        {estaAbierta && hijos(r.codigo).map((h, hi) => (
+                          <button key={h.codigo} onClick={() => setFamiliaActiva(h.codigo)}
+                            style={{ animationDelay: `${hi * 25}ms` }}
+                            className={`accordion-item w-full text-left pl-6 pr-3 py-1.5 text-[11px] flex items-center justify-between transition-colors duration-100 ${familiaActiva === h.codigo ? "text-emerald-600 font-semibold bg-emerald-50 border-r-2 border-emerald-400" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"}`}>
+                            <span className="flex items-center gap-1"><span className="text-gray-300">›</span> {h.nombre}</span>
+                            {conteoFamilia[h.codigo] > 0 && <span className="text-[10px] text-gray-400">{conteoFamilia[h.codigo]}</span>}
+                          </button>
+                        ))}
+                      </div>
+                    );
+                  })}
                 </div>
               </aside>
 
               {/* Lista partidas */}
               <main className="flex-1 overflow-y-auto">
-                <div className="px-4 py-3 border-b border-gray-200 bg-white flex gap-3 items-center sticky top-0 z-10">
+                <div className="px-4 py-3 border-b border-gray-200 bg-white flex gap-3 items-center sticky top-0 z-10 shadow-sm">
                   <input value={busqueda} onChange={e => setBusqueda(e.target.value)}
                     placeholder="Buscar partida por nombre o código..."
-                    className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-emerald-400 shadow-sm" />
-                  <span className="text-xs text-gray-400 shrink-0">{apusFiltrados.length} partidas</span>
+                    className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm input-focus focus:outline-none focus:border-emerald-400 shadow-sm" />
+                  <span className="text-xs text-gray-400 shrink-0 tabular-nums">{apusFiltrados.length} partidas</span>
                 </div>
                 <div className="p-4 grid gap-2">
                   {apusFiltrados.slice(0,100).map((apu, idx) => {
                     const { total } = calcAPU(apu, cfg);
                     const desc = apu.desc || apu.descripcion || "Sin descripción";
                     return (
-                      <div key={`${apu.codigo}_${idx}`} className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:border-emerald-300 hover:shadow-sm transition-all group">
+                      <div key={`${apu.codigo}_${idx}`}
+                        style={{ animationDelay: `${Math.min(idx, 12) * 25}ms` }}
+                        className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between card-hover anim-fade-up group">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="text-[10px] font-mono bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">{apu.codigo}</span>
@@ -602,11 +616,12 @@ function Home() {
                             <div className="font-bold text-emerald-600">{fmtM(total)}</div>
                           </div>
                           <button onClick={() => { setApuActivo(apu); setTab("editor"); }}
-                            className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-600 opacity-0 group-hover:opacity-100 transition-all">
+                            className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600 opacity-0 group-hover:opacity-100 btn-press"
+                            style={{ transition: "opacity 0.15s ease, transform 0.12s cubic-bezier(0.16,1,0.3,1), background-color 0.15s ease" }}>
                             Ver APU
                           </button>
                           <button onClick={() => agregarPartida(apu)}
-                            className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm">
+                            className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm btn-primary hover:bg-emerald-700">
                             + Agregar
                           </button>
                         </div>
@@ -625,35 +640,31 @@ function Home() {
 
           {/* EDITOR APU */}
           {tab === "editor" && (
-          <div className="flex-1 overflow-y-auto p-5">
+          <div className="flex-1 overflow-y-auto p-5 anim-fade-up">
             {!apuActivo ? (
-              <div className="text-center py-20 text-gray-400">
-                <p className="text-base mb-2">Ninguna partida seleccionada</p>
-                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline">Ir a la biblioteca</button>
+              <div className="text-center py-20 text-gray-400 anim-fade-in">
+                <p className="text-4xl mb-4">🔧</p>
+                <p className="text-base mb-2 font-medium text-gray-500">Ninguna partida seleccionada</p>
+                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca</button>
               </div>
             ) : (
               <>
-                <div className="mb-5">
+                <div className="mb-5 anim-fade-up">
                   <div className="text-xs text-gray-400 mb-1">{apuActivo.codigo} · {apuActivo.unidad}</div>
                   <h2 className="text-base font-semibold text-gray-800">{apuActivo.desc || apuActivo.descripcion}</h2>
                 </div>
                 <div className="grid grid-cols-4 gap-3 mb-6">
                   {[["Costo M.O. neto",fmtM(apuCalc.moNet)],["Leyes Sociales",fmtM(apuCalc.llssAmt)],["Materiales",fmtM(apuCalc.mat)],["Precio unitario",fmtM(apuCalc.total)]].map(([label,val],i)=>(
-                    <div key={i} className={`rounded-xl p-4 ${i===3?"bg-emerald-600 text-white":"bg-white border border-gray-200"}`}>
+                    <div key={i} style={{ animationDelay: `${i * 50 + 60}ms` }}
+                      className={`rounded-xl p-4 anim-scale-in ${i===3?"bg-emerald-600 text-white shadow-lg shadow-emerald-200":"bg-white border border-gray-200"}`}>
                       <div className={`text-[10px] uppercase tracking-wider mb-1 ${i===3?"text-emerald-100":"text-gray-400"}`}>{label}</div>
                       <div className={`text-lg font-semibold ${i===3?"text-white":"text-gray-800"}`}>{val}</div>
                     </div>
                   ))}
                 </div>
-                <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5">
-                  <div className="flex justify-between items-center px-5 py-4 bg-emerald-50">
-                    <span className="font-semibold text-emerald-800">Precio unitario total</span>
-                    <span className="text-xl font-bold text-emerald-600">{fmtM(apuCalc.total)}</span>
-                  </div>
-                </div>
 
                 {apuActivo.insumos && apuActivo.insumos.length > 0 && (
-                  <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5">
+                  <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5 anim-fade-up delay-200">
                     <div className="px-5 py-3 bg-blue-50 border-b border-blue-100 flex items-center gap-2">
                       <span className="text-blue-500">📋</span>
                       <span className="font-semibold text-blue-800 text-sm">Desglose de insumos ONDAC 2017</span>
@@ -671,7 +682,7 @@ function Home() {
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                           {apuActivo.insumos.map((ins, idx) => (
-                            <tr key={idx} className="hover:bg-blue-50 transition-colors">
+                            <tr key={idx} className="row-hover hover:bg-blue-50">
                               <td className="px-4 py-2 text-gray-700">{ins.desc}</td>
                               <td className="px-4 py-2 text-right text-gray-700">{ins.cant}</td>
                               <td className="px-4 py-2 text-center text-gray-500">{ins.un}</td>
@@ -685,7 +696,7 @@ function Home() {
                   </div>
                 )}
                 <button onClick={()=>agregarPartida(apuActivo)}
-                  className="w-full py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors">
+                  className="w-full py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 btn-primary anim-fade-up delay-300">
                   + Agregar esta partida al proyecto
                 </button>
               </>
@@ -696,8 +707,8 @@ function Home() {
           {/* CONFIG */}
           {tab === "config" && (
           <div className="flex-1 overflow-y-auto p-5 max-w-2xl">
-            <h2 className="text-base font-semibold mb-5 text-gray-800">Configuración del proyecto</h2>
-            <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
+            <h2 className="text-base font-semibold mb-5 text-gray-800 anim-fade-up">Configuración del proyecto</h2>
+            <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4 anim-fade-up delay-50">
               <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Zona y parámetros</div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -716,7 +727,7 @@ function Home() {
                 ))}
               </div>
             </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-5">
+            <div className="bg-white border border-gray-200 rounded-xl p-5 anim-fade-up delay-100">
               <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Valores hora mano de obra ($/hr)</div>
               <div className="grid grid-cols-2 gap-4">
                 {[["mo_m1","Maestro primera"],["mo_m2","Maestro segunda"],["mo_ay","Ayudante"],["mo_inst","Instalador SEC"]].map(([k,label])=>(
@@ -736,20 +747,21 @@ function Home() {
 
           {/* RESUMEN */}
           {tab === "resumen" && (
-          <div className="flex-1 overflow-y-auto p-5">
+          <div className="flex-1 overflow-y-auto p-5 anim-fade-up">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-base font-semibold text-gray-800">Resumen del proyecto</h2>
               {proyecto.length > 0 && (
                 <button onClick={exportarPDF}
-                  className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium hover:bg-emerald-700 transition-colors">
+                  className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-emerald-700">
                   📄 Exportar PDF
                 </button>
               )}
             </div>
             {proyecto.length === 0 ? (
-              <div className="text-center py-20 text-gray-400">
-                <p className="mb-2">No hay partidas agregadas</p>
-                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline">Ir a la biblioteca ONDAC</button>
+              <div className="text-center py-20 text-gray-400 anim-fade-in">
+                <p className="text-4xl mb-4">📋</p>
+                <p className="mb-2 font-medium text-gray-500">No hay partidas agregadas</p>
+                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca ONDAC</button>
               </div>
             ) : (
               <>
@@ -772,13 +784,13 @@ function Home() {
                         const expanded = expandedResumen === p.id;
                         return (
                           <>
-                            <tr key={p.id} className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${expanded ? "bg-emerald-50" : ""}`}
+                            <tr key={p.id} className={`border-b border-gray-100 row-hover cursor-pointer ${expanded ? "bg-emerald-50" : "hover:bg-gray-50"}`}
                               onClick={(e) => { if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") setExpandedResumen(expanded ? null : p.id); }}>
                               <td className="px-4 py-3">
                                 <div className="text-[10px] text-gray-400 font-mono">{p.codigo}</div>
                                 <div className="text-gray-700 leading-snug flex items-center gap-1">
                                   <span>{desc}</span>
-                                  <span className="text-[10px] text-gray-400">{expanded ? "▲" : "▼"}</span>
+                                  <span className={`text-[10px] text-gray-400 inline-block ${expanded ? "arrow-open" : "arrow-close"}`}>▸</span>
                                 </div>
                               </td>
                               <td className="px-3 py-3 text-center text-gray-500">{p.unidad}</td>
@@ -786,13 +798,13 @@ function Home() {
                                 <input type="number" value={p.cantidad} min={0.01} step={0.01}
                                   onClick={(e) => e.stopPropagation()}
                                   onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
-                                  className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs focus:outline-none focus:border-emerald-400"/>
+                                  className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-emerald-400"/>
                               </td>
                               <td className="px-3 py-3 text-right text-gray-700">{fmtM(total)}</td>
                               <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmtM(total * p.cantidad)}</td>
                               <td className="px-3 py-3 text-right">
                                 <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
-                                  className="text-red-400 hover:text-red-600 text-xs">x</button>
+                                  className="text-gray-300 hover:text-red-500 text-xs btn-press transition-colors px-1">✕</button>
                               </td>
                             </tr>
                             {expanded && rows.length > 0 && (
@@ -876,7 +888,7 @@ function Home() {
                     </div>
                   );
                 })()}
-                <div className="bg-white border border-gray-200 rounded-xl overflow-hidden max-w-md ml-auto">
+                <div className="bg-white border border-gray-200 rounded-xl overflow-hidden max-w-md ml-auto anim-fade-up shadow-sm">
                   {[
                     ["Subtotal costo directo", resumen.cd],
                     [`Gastos Generales (${cfg.gg}%)`, resumen.gg],
@@ -884,14 +896,14 @@ function Home() {
                     ["Subtotal neto", resumen.neto],
                     [`IVA (${cfg.iva}%)`, resumen.iva],
                   ].map(([label, val], i) => (
-                    <div key={i} className="flex justify-between items-center px-5 py-3 border-b border-gray-100">
+                    <div key={i} className="flex justify-between items-center px-5 py-3 border-b border-gray-100 row-hover hover:bg-gray-50">
                       <span className="text-gray-500">{label}</span>
-                      <span className="font-medium">{fmtM(val)}</span>
+                      <span className="font-medium tabular-nums">{fmtM(val)}</span>
                     </div>
                   ))}
                   <div className="flex justify-between items-center px-5 py-4 bg-emerald-600 text-white">
                     <span className="font-semibold">Total proyecto</span>
-                    <span className="text-xl font-bold">{fmtM(resumen.total)}</span>
+                    <span className="text-xl font-bold tabular-nums">{fmtM(resumen.total)}</span>
                   </div>
                 </div>
               </>
@@ -901,7 +913,7 @@ function Home() {
 
           {/* ANEXOS */}
           {tab === "anexos" && (
-          <div className="flex-1 overflow-y-auto p-5 max-w-3xl">
+          <div className="flex-1 overflow-y-auto p-5 max-w-3xl anim-fade-up">
             <h2 className="text-base font-semibold mb-2 text-gray-800">Anexos del proyecto</h2>
             <p className="text-xs text-gray-400 mb-6">Sube documentos del proyecto. Los PDF y Excel pueden procesarse automáticamente con IA para detectar partidas ONDAC.</p>
 
@@ -938,9 +950,10 @@ function Home() {
                     const ext = a.name.split(".").pop().toLowerCase();
                     const icon = ext === "pdf" ? "📄" : ext === "xlsx" || ext === "xls" ? "📊" : ext === "dwg" || ext === "dxf" ? "📐" : "📎";
                     return (
-                      <div key={i} className="bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between">
+                      <div key={i} style={{ animationDelay: `${i * 40}ms` }}
+                        className="bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between card-hover anim-fade-up">
                         <div className="flex items-center gap-3">
-                          <span className="text-xl">{icon}</span>
+                          <span className="text-xl transition-transform duration-150 group-hover:scale-110">{icon}</span>
                           <div>
                             <p className="text-sm text-gray-700 font-medium">{a.name}</p>
                             {a.size && <p className="text-xs text-gray-400">{(a.size / 1024).toFixed(0)} KB</p>}
@@ -951,8 +964,8 @@ function Home() {
                             const { data } = await supabase.storage.from("anexos").createSignedUrl(`${proyectoId}/${a.name}`, 60);
                             if (data?.signedUrl) window.open(data.signedUrl, "_blank");
                           }}
-                          className="text-xs text-emerald-600 hover:underline">
-                          Abrir
+                          className="text-xs text-emerald-600 hover:text-emerald-700 btn-press font-medium">
+                          Abrir →
                         </button>
                       </div>
                     );
@@ -1033,49 +1046,54 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
   const inputCls = "w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100";
 
   return (
-    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 flex items-center justify-center z-50 p-4 anim-fade-in"
+      style={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.25)" }}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto anim-scale-in">
         <div className="p-6">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-bold text-gray-800">Editar proyecto</h3>
-            <button onClick={onCerrar} className="text-gray-400 hover:text-gray-600">✕</button>
+            <button onClick={onCerrar} className="text-gray-400 hover:text-gray-600 btn-press w-7 h-7 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors">✕</button>
           </div>
           <div className="space-y-3">
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Nombre del proyecto</label>
-              <input value={form.nombre} onChange={e => setF("nombre", e.target.value)} className={inputCls}/>
+              <input value={form.nombre} onChange={e => setF("nombre", e.target.value)} className={inputCls + " input-focus"}/>
             </div>
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Región</label>
-              <select value={form.region} onChange={e => setF("region", e.target.value)} className={inputCls + " bg-white"}>
+              <select value={form.region} onChange={e => setF("region", e.target.value)} className={inputCls + " bg-white input-focus"}>
                 <option value="">Selecciona...</option>
                 {REGIONES_EDIT.map(r => <option key={r.label} value={r.label}>{r.label}</option>)}
               </select>
             </div>
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Mandante</label>
-              <input value={form.mandante} onChange={e => setF("mandante", e.target.value)} className={inputCls} placeholder="Nombre del mandante"/>
+              <input value={form.mandante} onChange={e => setF("mandante", e.target.value)} className={inputCls + " input-focus"} placeholder="Nombre del mandante"/>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs font-medium text-gray-600 mb-1 block">Fecha inicio</label>
-                <input type="date" value={form.fechaInicio} onChange={e => setF("fechaInicio", e.target.value)} className={inputCls}/>
+                <input type="date" value={form.fechaInicio} onChange={e => setF("fechaInicio", e.target.value)} className={inputCls + " input-focus"}/>
               </div>
               <div>
                 <label className="text-xs font-medium text-gray-600 mb-1 block">Fecha término</label>
-                <input type="date" value={form.fechaTermino} onChange={e => setF("fechaTermino", e.target.value)} className={inputCls}/>
+                <input type="date" value={form.fechaTermino} onChange={e => setF("fechaTermino", e.target.value)} className={inputCls + " input-focus"}/>
               </div>
             </div>
-            {dias && <p className="text-xs text-emerald-600">Plazo: <strong>{dias} días corridos</strong></p>}
+            {dias && (
+              <p className="text-xs text-emerald-600 anim-fade-in bg-emerald-50 px-3 py-2 rounded-lg">
+                Plazo: <strong>{dias} días corridos</strong>
+              </p>
+            )}
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Persona a cargo</label>
-              <input value={form.responsable} onChange={e => setF("responsable", e.target.value)} className={inputCls} placeholder="Nombre del responsable"/>
+              <input value={form.responsable} onChange={e => setF("responsable", e.target.value)} className={inputCls + " input-focus"} placeholder="Nombre del responsable"/>
             </div>
           </div>
           <div className="flex gap-3 mt-6">
-            <button onClick={onCerrar} className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50">Cancelar</button>
+            <button onClick={onCerrar} className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50 btn-press">Cancelar</button>
             <button onClick={handleGuardar} disabled={!form.nombre.trim()}
-              className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
+              className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary hover:bg-emerald-700 disabled:opacity-40">
               Guardar cambios
             </button>
           </div>
@@ -1099,6 +1117,8 @@ function AnexoUploader({ onSubir, procesando, inputRef }) {
     { id: "plano", label: "Plano / AutoCAD", desc: "Se guarda como referencia sin procesar" },
   ];
 
+  const [dragging, setDragging] = useState(false);
+
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5">
       {/* Selector tipo */}
@@ -1107,7 +1127,8 @@ function AnexoUploader({ onSubir, procesando, inputRef }) {
         <div className="grid grid-cols-3 gap-2">
           {TIPOS.map(t => (
             <button key={t.id} onClick={() => setTipo(t.id)}
-              className={`rounded-xl p-3 text-left border transition-all ${tipo === t.id ? "border-emerald-400 bg-emerald-50" : "border-gray-200 hover:border-gray-300"}`}>
+              className={`rounded-xl p-3 text-left border btn-press ${tipo === t.id ? "border-emerald-400 bg-emerald-50 shadow-sm" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"}`}
+              style={{ transition: "border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.12s cubic-bezier(0.16,1,0.3,1)" }}>
               <p className={`text-xs font-semibold ${tipo === t.id ? "text-emerald-700" : "text-gray-700"}`}>{t.label}</p>
               <p className="text-[10px] text-gray-400 mt-0.5 leading-snug">{t.desc}</p>
             </button>
@@ -1118,14 +1139,16 @@ function AnexoUploader({ onSubir, procesando, inputRef }) {
       {/* Zona drop */}
       <div
         onClick={() => ref.current?.click()}
-        onDragOver={e => e.preventDefault()}
+        onDragOver={e => { e.preventDefault(); setDragging(true); }}
+        onDragLeave={() => setDragging(false)}
         onDrop={e => {
           e.preventDefault();
+          setDragging(false);
           const f = e.dataTransfer.files[0];
           if (f) { setArchivo(f); setArchivoNombre(f.name); }
         }}
-        className="border-2 border-dashed border-gray-200 hover:border-emerald-400 rounded-xl p-8 text-center cursor-pointer transition-colors">
-        <p className="text-2xl mb-2">📂</p>
+        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer dropzone ${dragging ? "dropzone-drag" : archivoNombre ? "border-emerald-300 bg-emerald-50" : "border-gray-200 hover:border-emerald-400"}`}>
+        <p className={`text-2xl mb-2 transition-transform duration-150 ${dragging ? "scale-125" : "scale-100"}`}>📂</p>
         <p className="text-sm text-gray-600 font-medium">{archivoNombre || "Arrastra o haz clic para seleccionar"}</p>
         <p className="text-xs text-gray-400 mt-1">PDF, Excel (.xlsx), AutoCAD (.dwg, .dxf)</p>
         <input ref={ref} type="file" accept=".pdf,.xlsx,.xls,.dwg,.dxf" className="hidden"
@@ -1138,7 +1161,7 @@ function AnexoUploader({ onSubir, procesando, inputRef }) {
       <button
         onClick={() => { if (archivo) onSubir(archivo, tipo); }}
         disabled={!archivo || procesando}
-        className="mt-4 w-full bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-40 transition-colors">
+        className="mt-4 w-full bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary hover:bg-emerald-700 disabled:opacity-40">
         {procesando ? "Procesando..." : tipo === "plano" ? "Subir archivo →" : "Subir y procesar con IA →"}
       </button>
     </div>
