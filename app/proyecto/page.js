@@ -2295,119 +2295,159 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       )}
 
       {/* ── Documento ── */}
-      <div className="max-w-3xl mx-auto px-5 py-6 space-y-4">
+      <div className="max-w-3xl mx-auto px-5 py-6 space-y-3">
 
-        {/* ── Portada del documento ── */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-scale-in shadow-sm">
-          {/* Cabecera */}
-          <div className="px-6 pt-5 pb-4 border-b border-gray-100">
-            <div className="flex items-start justify-between gap-4">
+        {/* ── HEADER / PORTADA ── */}
+        <div className="rounded-2xl overflow-hidden anim-scale-in shadow-lg"
+          style={{background:"linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 55%,#2563eb 100%)"}}>
+          <div className="px-6 pt-5 pb-0 relative overflow-hidden">
+            {/* dot grid overlay */}
+            <div className="absolute inset-0 opacity-10 pointer-events-none"
+              style={{backgroundImage:"radial-gradient(rgba(255,255,255,.8) 1px,transparent 1px)",backgroundSize:"20px 20px"}}/>
+            <div className="relative z-10 flex items-start justify-between gap-4 mb-4">
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Especificaciones Técnicas</p>
-                <h1 className="text-base font-bold text-gray-900 leading-snug">{proyectoNombre || "Proyecto"}</h1>
+                <p className="text-[9px] font-extrabold tracking-[.18em] uppercase text-white/50 mb-2 flex items-center gap-2">
+                  <span className="inline-block w-5 h-0.5 bg-orange-400 rounded shrink-0"/>
+                  Especificaciones Técnicas · ONDAC 2017
+                </p>
+                {/* Biggest text on card — 22px */}
+                <h1 className="text-[22px] font-black text-white leading-tight tracking-tight mb-1.5">
+                  {proyectoNombre || "Proyecto"}
+                </h1>
+                <p className="text-[11px] text-white/50 font-medium truncate">
+                  {[mandante, direccion].filter(Boolean).join(" · ") || "Sin datos del mandante"}
+                </p>
               </div>
-              {logo && (
-                <img src={logo} alt="Logo empresa" className="h-12 w-auto object-contain rounded shrink-0" />
-              )}
+              {logo
+                ? <img src={logo} alt="Logo" className="h-9 w-auto object-contain rounded-lg shrink-0 opacity-90"/>
+                : <div className="w-14 h-8 rounded-lg shrink-0 flex items-center justify-center text-[9px] font-bold text-white/30 border border-white/15">LOGO</div>
+              }
             </div>
           </div>
-          {/* Tabla de datos */}
-          <div className="divide-y divide-gray-50">
+          {/* Stats strip — orange values */}
+          <div className="flex border-t border-white/10">
+            {[
+              { v: templates.length,  k: "Capítulos" },
+              { v: proyecto.length,   k: "Partidas" },
+              { v: plazo || "—",      k: "Plazo" },
+              { v: fechaDoc,          k: "Fecha" },
+            ].map(({ v, k }) => (
+              <div key={k} className="flex-1 text-center py-2.5 border-r border-white/10 last:border-r-0">
+                <div className="text-[15px] font-black text-orange-400 leading-tight tracking-tight">{v}</div>
+                <div className="text-[8px] font-bold uppercase tracking-[.1em] text-white/35 mt-0.5">{k}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── FICHA DE DATOS ── */}
+        <div className="bg-white rounded-2xl overflow-hidden anim-fade-up shadow-sm" style={{borderBottom:"3px solid #2563eb"}}>
+          <div className="grid grid-cols-2">
             {[
               ["Proyecto",    proyectoNombre || "—"],
               ["Propietario", mandante       || "—"],
               ["Dirección",   direccion      || "—"],
               ["Fecha",       fechaDoc       || "—"],
-            ].map(([lbl, val]) => (
-              <div key={lbl} className="flex items-baseline px-6 py-2.5 even:bg-gray-50/50">
-                <span className="w-28 shrink-0 text-[11px] font-semibold text-gray-500">{lbl}</span>
-                <span className="text-[11px] text-gray-800 leading-snug">{val}</span>
+            ].map(([lbl, val], i) => (
+              <div key={lbl}
+                className={`px-5 py-3 border-b border-gray-100 transition-colors hover:bg-blue-50/30 ${i % 2 === 0 ? "border-r border-gray-100" : ""}`}>
+                {/* Label: 9px vivid blue */}
+                <div className="text-[9px] font-extrabold uppercase tracking-[.1em] text-blue-600 mb-1">{lbl}</div>
+                {/* Value: 12.5px dark */}
+                <div className="text-[12.5px] font-semibold text-slate-800 leading-snug">{val}</div>
               </div>
             ))}
           </div>
-          {/* Stats footer */}
-          <div className="px-6 py-2.5 bg-gray-50 border-t border-gray-100 flex gap-5 text-[11px] text-gray-400">
-            <span>📋 {templates.length} capítulos</span>
-            <span>📦 {proyecto.length} partidas</span>
-            <span>📅 {new Date().toLocaleDateString("es-CL")}</span>
-          </div>
         </div>
 
-        {/* ── I. Generalidades ── */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-fade-up delay-50">
+        {/* ── I. GENERALIDADES ── */}
+        <div className="bg-white rounded-2xl overflow-hidden anim-fade-up shadow-sm">
           <button
             onClick={() => toggle("__generalidades__")}
-            className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors text-left">
-            <span className="flex-1 text-[11px] font-bold text-gray-600 uppercase tracking-wider">I.  Generalidades</span>
-            <span className={`text-gray-400 text-xs transition-transform duration-200 ${expandidos["__generalidades__"] ? "rotate-90" : ""}`}>▶</span>
+            className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 transition-colors text-left border-l-[3px] border-transparent hover:border-cyan-500">
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 flex items-center justify-center text-sm shrink-0">📄</div>
+            <div className="flex-1">
+              <div className="text-[11px] font-extrabold uppercase tracking-[.08em] text-slate-700">I. Generalidades</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">7 puntos · Normativa general chilena</div>
+            </div>
+            <span className={`text-slate-300 text-base transition-transform duration-200 ${expandidos["__generalidades__"] ? "rotate-90" : ""}`}>›</span>
           </button>
           {expandidos["__generalidades__"] && (
             <div className="border-t border-gray-100 px-6 py-4 accordion-item">
-              <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap">{EETT_GENERALIDADES}</p>
+              <p className="text-[11.5px] text-slate-500 leading-relaxed whitespace-pre-wrap">{EETT_GENERALIDADES}</p>
             </div>
           )}
         </div>
 
-        {/* ── II. Orden de Prelación ── */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-fade-up delay-100">
+        {/* ── II. ORDEN DE PRELACIÓN ── */}
+        <div className="bg-white rounded-2xl overflow-hidden anim-fade-up shadow-sm">
           <button
             onClick={() => toggle("__orden_prelacion__")}
-            className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors text-left">
-            <span className="flex-1 text-[11px] font-bold text-gray-600 uppercase tracking-wider">II.  Orden de Prelación</span>
-            <span className={`text-gray-400 text-xs transition-transform duration-200 ${expandidos["__orden_prelacion__"] ? "rotate-90" : ""}`}>▶</span>
+            className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 transition-colors text-left border-l-[3px] border-transparent hover:border-cyan-500">
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 flex items-center justify-center text-sm shrink-0">⚖️</div>
+            <div className="flex-1">
+              <div className="text-[11px] font-extrabold uppercase tracking-[.08em] text-slate-700">II. Orden de Prelación</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">Planos de arquitectura vs. especificaciones</div>
+            </div>
+            <span className={`text-slate-300 text-base transition-transform duration-200 ${expandidos["__orden_prelacion__"] ? "rotate-90" : ""}`}>›</span>
           </button>
           {expandidos["__orden_prelacion__"] && (
             <div className="border-t border-gray-100 px-6 py-4 accordion-item">
-              <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap">{EETT_ORDEN_PRELACION}</p>
+              <p className="text-[11.5px] text-slate-500 leading-relaxed whitespace-pre-wrap">{EETT_ORDEN_PRELACION}</p>
             </div>
           )}
         </div>
 
-        {/* Índice */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-fade-up delay-150">
-          <div className="px-5 py-3 bg-gray-50 border-b border-gray-200 flex items-center gap-2">
-            <span className="text-gray-400 text-sm">📑</span>
-            <span className="font-semibold text-xs text-gray-600 uppercase tracking-wide">Índice</span>
+        {/* ── ÍNDICE ── */}
+        <div className="bg-white rounded-2xl overflow-hidden anim-fade-up shadow-sm">
+          <div className="px-5 py-3 border-b border-gray-100">
+            <span className="text-[9px] font-extrabold uppercase tracking-[.12em] text-slate-400">Índice de capítulos</span>
           </div>
-          <div className="px-5 py-3 divide-y divide-gray-50">
+          <div className="px-5 py-2 divide-y divide-gray-50">
             {templates.map(({ codigo, capitulo, data }) => (
               <button key={codigo}
-                onClick={() => { document.getElementById(`eett-cap-${codigo}`)?.scrollIntoView({ behavior:"smooth", block:"start" }); }}
-                className="w-full flex items-center gap-3 py-2 text-left hover:text-emerald-600 transition-colors group row-hover">
-                <span className="w-6 h-6 rounded-md bg-emerald-50 text-emerald-600 text-[11px] font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-100 transition-colors">{capitulo}</span>
-                <span className="text-xs text-gray-700 group-hover:text-emerald-600">{data.titulo}</span>
-                <span className="ml-auto text-[10px] text-gray-300 font-mono">{codigo}</span>
+                onClick={() => document.getElementById(`eett-cap-${codigo}`)?.scrollIntoView({behavior:"smooth",block:"start"})}
+                className="w-full flex items-center gap-3 py-2 text-left hover:text-blue-600 transition-colors group">
+                <span className="w-6 h-6 rounded-md bg-blue-600 text-white text-[10px] font-black flex items-center justify-center shrink-0 group-hover:bg-blue-700 transition-colors">{capitulo}</span>
+                <span className="text-[12px] font-medium text-slate-700 group-hover:text-blue-600 flex-1">{data.titulo}</span>
+                <span className="text-[10px] text-slate-300 font-mono">{codigo}</span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Capítulos */}
+        {/* ── CAPÍTULOS ── */}
         {templates.map(({ codigo, capitulo, data }, tIdx) => {
-          const isOpen = expandidos[codigo] !== false; // default open
+          const isOpen = expandidos[codigo] !== false;
           return (
             <div key={codigo} id={`eett-cap-${codigo}`}
-              style={{ animationDelay: `${tIdx * 40}ms` }}
-              className="bg-white border border-gray-200 rounded-2xl overflow-hidden anim-fade-up">
-              {/* Encabezado capítulo */}
+              style={{animationDelay:`${tIdx * 40}ms`}}
+              className="bg-white rounded-2xl overflow-hidden anim-fade-up shadow-sm">
+
+              {/* Chapter header */}
               <button
                 onClick={() => toggle(codigo)}
-                className="w-full flex items-center gap-3 px-5 py-4 hover:bg-gray-50 transition-colors text-left">
-                <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0">{capitulo}</span>
-                <div className="flex-1">
-                  <span className="font-semibold text-gray-800 text-sm">{data.titulo}</span>
+                className="w-full flex items-center gap-3.5 px-5 py-4 hover:bg-slate-50 transition-colors text-left">
+                {/* Orange badge — vivid with shadow */}
+                <span className="w-9 h-9 rounded-xl text-white text-[13px] font-black flex items-center justify-center shrink-0"
+                  style={{background:"linear-gradient(135deg,#f97316,#c2410c)",boxShadow:"0 4px 12px rgba(249,115,22,.35)"}}>
+                  {capitulo}
+                </span>
+                <div className="flex-1 min-w-0">
+                  {/* Chapter title: 14px — second hierarchy level */}
+                  <div className="text-[14px] font-extrabold text-slate-900 uppercase tracking-[.01em] leading-snug">{data.titulo}</div>
                   {data.normas?.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-1">
+                    <div className="flex flex-wrap gap-1.5 mt-1.5">
                       {data.normas.map(n => (
-                        <span key={n} className="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">{n}</span>
+                        <span key={n} className="text-[9px] font-extrabold bg-cyan-100 text-cyan-700 border border-cyan-200 px-1.5 py-0.5 rounded">{n}</span>
                       ))}
                     </div>
                   )}
                 </div>
-                <span className={`text-gray-400 text-xs transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}>▶</span>
+                <span className={`text-slate-300 text-base transition-transform duration-200 ${isOpen ? "rotate-90" : ""}`}>›</span>
               </button>
 
-              {/* Contenido secciones */}
+              {/* Sections */}
               {isOpen && (
                 <div className="border-t border-gray-100 divide-y divide-gray-50 accordion-item">
                   {SECCION_INFO.map(({ key, label, icon }) => {
@@ -2415,15 +2455,18 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
                     if (!texto) return null;
                     const isCustom = templatesExtra[codigo]?.[key];
                     return (
-                      <div key={key} className="px-5 py-4">
+                      <div key={key} className="px-5 py-3.5 pl-[72px]">
+                        {/* Section label: 9px vivid blue + fade line */}
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm">{icon}</span>
-                          <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">{label}</span>
+                          <span className="text-sm shrink-0">{icon}</span>
+                          <span className="text-[9px] font-extrabold uppercase tracking-[.12em] text-blue-600">{label}</span>
+                          <div className="flex-1 h-px rounded" style={{background:"linear-gradient(90deg,#dbeafe,transparent)"}}/>
                           {isCustom && (
-                            <span className="ml-auto text-[10px] bg-purple-50 text-purple-500 px-2 py-0.5 rounded-full font-medium">✨ IA</span>
+                            <span className="text-[9px] bg-purple-50 text-purple-500 px-2 py-0.5 rounded-full font-bold shrink-0">✨ IA</span>
                           )}
                         </div>
-                        <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap">{texto}</p>
+                        {/* Body: 11.5px muted */}
+                        <p className="text-[11.5px] text-slate-500 leading-[1.7] whitespace-pre-wrap">{texto}</p>
                       </div>
                     );
                   })}
@@ -2433,10 +2476,15 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
           );
         })}
 
-        {/* Footer doc */}
-        <div className="text-center py-6 text-[11px] text-gray-300 anim-fade-in delay-400">
-          Generado por APUchile · Base ONDAC 2017 · {new Date().getFullYear()}
+        {/* ── FOOTER DOC ── */}
+        <div className="rounded-xl py-3 px-5 flex justify-between items-center anim-fade-in" style={{background:"#1e3a8a"}}>
+          <span className="text-[10px] font-bold text-blue-400 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-orange-400 inline-block shrink-0"/>
+            APUchile · Base ONDAC 2017
+          </span>
+          <span className="text-[10px] font-semibold text-blue-600">{new Date().getFullYear()}</span>
         </div>
+
       </div>
     </div>
   );
