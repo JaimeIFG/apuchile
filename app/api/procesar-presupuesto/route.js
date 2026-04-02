@@ -1,4 +1,24 @@
 import { NextResponse } from "next/server";
+import { pathToFileURL } from "url";
+import { resolve } from "path";
+
+// Polyfills para pdfjs en Node.js
+if (typeof globalThis.DOMMatrix === "undefined") {
+  globalThis.DOMMatrix = class DOMMatrix {
+    constructor(init) {
+      this.a=1;this.b=0;this.c=0;this.d=1;this.e=0;this.f=0;
+      if(Array.isArray(init)&&init.length>=6)[this.a,this.b,this.c,this.d,this.e,this.f]=init;
+    }
+    transformPoint(p){return{x:this.a*p.x+this.c*p.y+this.e,y:this.b*p.x+this.d*p.y+this.f};}
+    multiply(){return this;}
+  };
+}
+if (typeof globalThis.Path2D === "undefined") globalThis.Path2D = class Path2D {};
+if (typeof globalThis.ImageData === "undefined") {
+  globalThis.ImageData = class ImageData {
+    constructor(w,h){this.width=w;this.height=h;this.data=new Uint8ClampedArray(w*h*4);}
+  };
+}
 
 export async function POST(req) {
   try {
@@ -7,12 +27,38 @@ export async function POST(req) {
     if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
 
     const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    const data = new Uint8Array(arrayBuffer);
 
-    const pdfParse = (await import("pdf-parse/lib/pdf-parse.js")).default;
-    const pdfData = await pdfParse(buffer);
+    const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
 
-    const fullText = pdfData.text;
+    // Apuntar al worker local para evitar el error de workerSrc
+    const workerPath = resolve(process.cwd(), "node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs");
+    pdfjsLib.GlobalWorkerOptions.workerSrc = pathToFileURL(workerPath).href;
+
+    const pdf = await pdfjsLib.getDocument({
+      data,
+      useWorkerFetch: false,
+      isEvalSupported: false,
+      useSystemFonts: true,
+      disableFontFace: true,
+    }).promise;
+
+    let fullText = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      // Reconstruir líneas agrupando por posición Y
+      const lineMap = {};
+      for (const item of content.items) {
+        const y = Math.round(item.transform[5]);
+        if (!lineMap[y]) lineMap[y] = [];
+        lineMap[y].push({ x: item.transform[4], text: item.str });
+      }
+      const sortedYs = Object.keys(lineMap).map(Number).sort((a,b) => b - a);
+      for (const y of sortedYs) {
+        fullText += lineMap[y].sort((a,b) => a.x - b.x).map(i => i.text).join(" ") + "\n";
+      }
+    }
 
     // Parsear el texto
     const items = parseBudgetText(fullText);
