@@ -331,6 +331,7 @@ function ObraDetail() {
   const [bitacora,  setBitacora]  = useState([]);
   const [fotos,     setFotos]     = useState([]);
   const [presupuesto, setPresupuesto] = useState([]);
+  const [editingCell, setEditingCell] = useState(null); // {id, field}
 
   const [mDoc, setMDoc]   = useState(false);
   const [mPago,setMPago]  = useState(false);
@@ -386,6 +387,25 @@ function ObraDetail() {
   const delBit  = async id => { await supabase.from("obra_bitacora").delete().eq("id",id);     setBitacora(p=>p.filter(x=>x.id!==id)); };
   const delFoto = async id => { await supabase.from("obra_fotos").delete().eq("id",id);        setFotos(p=>p.filter(x=>x.id!==id)); };
   const delPresupuesto = async id => { await supabase.from("obra_presupuesto").delete().eq("id",id); setPresupuesto(p=>p.filter(x=>x.id!==id)); };
+  const updatePresupuesto = async (id, field, rawVal) => {
+    const num = parseFloat(String(rawVal).replace(/\./g,"").replace(",",".")) || 0;
+    // Recalcular valor_total si cambia cantidad o valor_unitario
+    const updated = presupuesto.map(p => {
+      if (p.id !== id) return p;
+      const next = { ...p, [field]: num };
+      if (field === "cantidad" || field === "valor_unitario") {
+        next.valor_total = (next.cantidad || 0) * (next.valor_unitario || 0);
+      }
+      return next;
+    });
+    setPresupuesto(updated);
+    setEditingCell(null);
+    const item = updated.find(p => p.id === id);
+    await supabase.from("obra_presupuesto").update({
+      [field]: num,
+      valor_total: item.valor_total,
+    }).eq("id", id);
+  };
 
   if (loading) return (
     <div style={{ minHeight:"100vh", background:"#f8fafc", display:"flex", alignItems:"center",
@@ -1049,67 +1069,164 @@ function ObraDetail() {
             <div>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 }}>
                 <div>
-                  <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Presupuesto</h2>
+                  <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>💰 Presupuesto</h2>
                   <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>
-                    {presupuesto.length} partidas · Cargadas desde presupuesto de licitación
+                    {presupuesto.length>0 ? `${presupuesto.length} partidas · Haz clic en Cantidad o V. Unitario para editar` : "Importa tu presupuesto desde Excel o PDF"}
                   </p>
                 </div>
-                <button onClick={()=>setMPresupuesto(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
-                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Cargar presupuesto</button>
+                <div style={{ display:"flex", gap:8 }}>
+                  {presupuesto.length>0 && (
+                    <button onClick={async()=>{ if(!confirm("¿Limpiar todo el presupuesto actual?"))return; await supabase.from("obra_presupuesto").delete().eq("obra_id",obraId); setPresupuesto([]); }}
+                      style={{ background:"#fff", color:"#ef4444", border:"1px solid #fca5a5", borderRadius:10,
+                        padding:"8px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>🗑 Limpiar</button>
+                  )}
+                  <button onClick={()=>setMPresupuesto(true)}
+                    style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                      padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>
+                    {presupuesto.length>0?"↑ Reimportar":"＋ Importar presupuesto"}
+                  </button>
+                </div>
               </div>
 
-              {presupuesto.length===0?<EmptyState icon="💰" msg="Sin partidas — carga un presupuesto en PDF"/>:(
+              {presupuesto.length===0 ? (
+                <EmptyState icon="💰" msg="Sin partidas — importa tu presupuesto desde Excel (.xlsx) o PDF"/>
+              ) : (
                 <div>
-                  {/* Agrupar por sección */}
-                  {[...new Set(presupuesto.map(p=>p.seccion))].map(seccion=>(
-                    <div key={seccion} style={{ marginBottom:20 }}>
-                      <div style={{ background:"#f8fafc", padding:"10px 14px", borderRadius:8, marginBottom:8,
-                        fontSize:12, fontWeight:700, color:"#475569" }}>{seccion}</div>
-                      <div style={{ border:"1px solid #e2e8f0", borderRadius:12, overflow:"hidden" }}>
-                        <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
-                          <thead style={{ background:"#f9fafb" }}>
-                            <tr>
-                              {["Item","Partida","Unidad","Cantidad","V. Unitario","V. Total",""].map(h=>(
-                                <th key={h} style={{ padding:"9px 10px", fontWeight:600, color:"#64748b",
-                                  textAlign:"left", borderBottom:"1px solid #e2e8f0", whiteSpace:"nowrap" }}>{h}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {presupuesto.filter(p=>p.seccion===seccion).map((p,i)=>(
-                              <tr key={p.id} style={{ background:i%2===0?"#fff":"#f9fafb", borderBottom:"1px solid #f1f5f9" }}>
-                                <td style={{ padding:"8px 10px", color:"#64748b" }}>{p.item}</td>
-                                <td style={{ padding:"8px 10px", color:"#1e293b" }}>{p.partida}</td>
-                                <td style={{ padding:"8px 10px", color:"#64748b" }}>{p.unidad}</td>
-                                <td style={{ padding:"8px 10px", textAlign:"right", color:"#64748b" }}>{p.cantidad}</td>
-                                <td style={{ padding:"8px 10px", textAlign:"right", color:"#64748b" }}>${Math.round(p.valor_unitario).toLocaleString("es-CL")}</td>
-                                <td style={{ padding:"8px 10px", textAlign:"right", fontWeight:600, color:"#059669" }}>${Math.round(p.valor_total).toLocaleString("es-CL")}</td>
-                                <td style={{ padding:"8px 10px", textAlign:"center" }}>
-                                  <button onClick={()=>delPresupuesto(p.id)}
-                                    style={{ background:"none", border:"none", color:"#fca5a5",
-                                      cursor:"pointer", fontSize:12 }}>✕</button>
-                                </td>
+                  {[...new Set(presupuesto.map(p=>p.seccion))].map(seccion=>{
+                    const items = presupuesto.filter(p=>p.seccion===seccion);
+                    const subtotal = items.reduce((s,p)=>s+(p.valor_total||0),0);
+                    return (
+                      <div key={seccion} style={{ marginBottom:20 }}>
+                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+                          background:"linear-gradient(90deg,#f0fdf4,#f8fafc)", padding:"10px 14px",
+                          borderRadius:8, marginBottom:0, borderLeft:"3px solid #059669" }}>
+                          <span style={{ fontSize:12, fontWeight:700, color:"#065f46" }}>{seccion}</span>
+                          <span style={{ fontSize:11, fontWeight:600, color:"#059669" }}>
+                            ${Math.round(subtotal).toLocaleString("es-CL")}
+                          </span>
+                        </div>
+                        <div style={{ border:"1px solid #e2e8f0", borderTop:"none", borderRadius:"0 0 10px 10px", overflow:"hidden" }}>
+                          <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
+                            <thead style={{ background:"#f9fafb" }}>
+                              <tr>
+                                {["Ítem","Partida","Un.","Cantidad","V. Unitario","V. Total",""].map((h,i)=>(
+                                  <th key={i} style={{ padding:"8px 10px", fontWeight:600, color:"#64748b",
+                                    textAlign: i>=3&&i<=5 ? "right" : "left",
+                                    borderBottom:"1px solid #e2e8f0", whiteSpace:"nowrap", fontSize:11 }}>{h}</th>
+                                ))}
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody>
+                              {items.map((p,i)=>{
+                                const editCant = editingCell?.id===p.id && editingCell?.field==="cantidad";
+                                const editUnit = editingCell?.id===p.id && editingCell?.field==="valor_unitario";
+                                return (
+                                  <tr key={p.id} style={{ background:i%2===0?"#fff":"#fafafa",
+                                    borderBottom:"1px solid #f1f5f9", transition:"background .1s" }}
+                                    onMouseEnter={e=>e.currentTarget.style.background="#f0fdf4"}
+                                    onMouseLeave={e=>e.currentTarget.style.background=i%2===0?"#fff":"#fafafa"}>
+                                    <td style={{ padding:"7px 10px", color:"#94a3b8", fontSize:11 }}>{p.item}</td>
+                                    <td style={{ padding:"7px 10px", color:"#1e293b", maxWidth:280,
+                                      overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{p.partida}</td>
+                                    <td style={{ padding:"7px 10px", color:"#64748b" }}>{p.unidad}</td>
+                                    {/* Cantidad — editable */}
+                                    <td style={{ padding:"4px 6px", textAlign:"right" }}>
+                                      {editCant ? (
+                                        <input autoFocus defaultValue={p.cantidad ?? ""}
+                                          onBlur={e=>updatePresupuesto(p.id,"cantidad",e.target.value)}
+                                          onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
+                                          style={{ width:70, textAlign:"right", border:"1.5px solid #059669",
+                                            borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
+                                      ) : (
+                                        <span onClick={()=>setEditingCell({id:p.id,field:"cantidad"})}
+                                          title="Clic para editar"
+                                          style={{ cursor:"pointer", padding:"3px 8px", borderRadius:6, display:"inline-block",
+                                            color: p.cantidad ? "#374151" : "#cbd5e1",
+                                            border:"1px dashed #e2e8f0", minWidth:50, textAlign:"right",
+                                            background: p.cantidad ? "transparent" : "#fafafa" }}>
+                                          {p.cantidad ?? "—"}
+                                        </span>
+                                      )}
+                                    </td>
+                                    {/* Valor unitario — editable */}
+                                    <td style={{ padding:"4px 6px", textAlign:"right" }}>
+                                      {editUnit ? (
+                                        <input autoFocus defaultValue={p.valor_unitario ?? ""}
+                                          onBlur={e=>updatePresupuesto(p.id,"valor_unitario",e.target.value)}
+                                          onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
+                                          style={{ width:90, textAlign:"right", border:"1.5px solid #059669",
+                                            borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
+                                      ) : (
+                                        <span onClick={()=>setEditingCell({id:p.id,field:"valor_unitario"})}
+                                          title="Clic para editar"
+                                          style={{ cursor:"pointer", padding:"3px 8px", borderRadius:6, display:"inline-block",
+                                            color: p.valor_unitario ? "#374151" : "#cbd5e1",
+                                            border:"1px dashed #e2e8f0", minWidth:70, textAlign:"right",
+                                            background: p.valor_unitario ? "transparent" : "#fafafa" }}>
+                                          {p.valor_unitario ? "$"+Math.round(p.valor_unitario).toLocaleString("es-CL") : "—"}
+                                        </span>
+                                      )}
+                                    </td>
+                                    {/* Valor total — calculado */}
+                                    <td style={{ padding:"7px 10px", textAlign:"right", fontWeight:600,
+                                      color: p.valor_total ? "#059669" : "#cbd5e1" }}>
+                                      {p.valor_total ? "$"+Math.round(p.valor_total).toLocaleString("es-CL") : "—"}
+                                    </td>
+                                    <td style={{ padding:"7px 8px", textAlign:"center" }}>
+                                      <button onClick={()=>delPresupuesto(p.id)}
+                                        style={{ background:"none", border:"none", color:"#fca5a5",
+                                          cursor:"pointer", fontSize:13, lineHeight:1 }}>✕</button>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
 
-                  {/* Totales */}
-                  <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:12,
-                    padding:"16px", marginTop:20 }}>
-                    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:16 }}>
-                      <div>
-                        <p style={{ fontSize:11, color:"#64748b", textTransform:"uppercase", fontWeight:600, margin:0 }}>Costo Directo</p>
-                        <p style={{ fontSize:18, fontWeight:700, color:"#1e293b", margin:"4px 0 0" }}>
-                          ${presupuesto.reduce((sum,p)=>sum+(p.valor_total||0),0).toLocaleString("es-CL")}
-                        </p>
+                  {/* Resumen financiero */}
+                  {(()=>{
+                    const cd = presupuesto.reduce((s,p)=>s+(p.valor_total||0),0);
+                    const gg = cd * 0.25;
+                    const ut = cd * 0.15;
+                    const neto = cd + gg + ut;
+                    const iva = neto * 0.19;
+                    const total = neto + iva;
+                    const row = (label,val,bold,green) => (
+                      <div key={label} style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+                        padding:"9px 0", borderBottom:"1px solid #f1f5f9" }}>
+                        <span style={{ fontSize:13, color: green?"#065f46":"#374151", fontWeight: bold?700:400 }}>{label}</span>
+                        <span style={{ fontSize:13, fontWeight: bold?800:500, color: green?"#059669":"#1e293b" }}>
+                          ${Math.round(val).toLocaleString("es-CL")}
+                        </span>
                       </div>
-                    </div>
-                  </div>
+                    );
+                    return (
+                      <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:14,
+                        padding:"18px 22px", marginTop:8 }}>
+                        <h3 style={{ fontSize:13, fontWeight:700, color:"#065f46", margin:"0 0 12px",
+                          textTransform:"uppercase", letterSpacing:".04em" }}>📊 Resumen Financiero</h3>
+                        {row("Costo Directo", cd)}
+                        {row("Gastos Generales (25%)", gg)}
+                        {row("Utilidades (15%)", ut)}
+                        {row("Costo Neto", neto, true)}
+                        {row("IVA (19%)", iva)}
+                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", paddingTop:10, marginTop:4 }}>
+                          <span style={{ fontSize:15, fontWeight:800, color:"#065f46" }}>TOTAL</span>
+                          <span style={{ fontSize:18, fontWeight:800, color:"#059669" }}>
+                            ${Math.round(total).toLocaleString("es-CL")}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  <p style={{ fontSize:11, color:"#94a3b8", marginTop:10, textAlign:"center" }}>
+                    ✏️ Haz clic en <strong>Cantidad</strong> o <strong>V. Unitario</strong> para editar · El total se calcula automáticamente
+                  </p>
                 </div>
               )}
             </div>
@@ -1472,89 +1589,185 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
   const [file, setFile] = useState(null);
   const [saving, setSaving] = useState(false);
   const [prog, setProg] = useState("");
+  const [preview, setPreview] = useState(null); // items antes de guardar
+  const [error, setError] = useState("");
 
-  const save = async () => {
+  const isExcel = file && (file.name.endsWith(".xlsx") || file.name.endsWith(".xls"));
+  const isPDF   = file && file.name.endsWith(".pdf");
+
+  const procesar = async () => {
     if (!file) return;
     setSaving(true);
+    setError("");
+    setPreview(null);
     try {
-      setProg("Analizando PDF...");
-      const data = await extractBudgetFromPDF(file);
-
-      setProg("Guardando partidas...");
-      // Insertar todas las partidas
-      const items = data.items.map((item, idx) => ({
-        ...item,
-        obra_id: obraId,
-        orden: idx + 1,
-      }));
-
-      const { data: saved, error } = await supabase
-        .from("obra_presupuesto")
-        .insert(items)
-        .select();
-
-      if (!error && saved) {
-        setProg("");
-        onSave(saved);
+      let data;
+      if (isExcel) {
+        setProg("Leyendo Excel…");
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await fetch("/api/procesar-presupuesto-excel", { method:"POST", body:formData });
+        if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error||"Error al procesar Excel"); }
+        data = await res.json();
       } else {
-        setProg("Error al guardar");
+        setProg("Analizando PDF…");
+        data = await extractBudgetFromPDF(file);
       }
+
+      if (!data.items || data.items.length === 0) {
+        setError("No se encontraron partidas. Revisa el formato del archivo.");
+        setSaving(false); setProg(""); return;
+      }
+
+      setPreview(data.items);
+      setProg("");
     } catch (e) {
-      console.error("Error:", e);
-      setProg(`Error: ${e.message}`);
+      setError(e.message);
     }
     setSaving(false);
   };
 
+  const guardar = async () => {
+    if (!preview) return;
+    setSaving(true);
+    setProg("Guardando partidas…");
+    // Borrar presupuesto anterior
+    await supabase.from("obra_presupuesto").delete().eq("obra_id", obraId);
+    // Insertar nuevas partidas en lotes de 50
+    const items = preview.map((item,idx) => ({ ...item, obra_id:obraId, orden:idx+1 }));
+    const batchSize = 50;
+    let all = [];
+    for (let i=0; i<items.length; i+=batchSize) {
+      const { data:saved } = await supabase.from("obra_presupuesto").insert(items.slice(i,i+batchSize)).select();
+      if (saved) all = [...all, ...saved];
+    }
+    setProg(""); setSaving(false);
+    onSave(all);
+  };
+
   return (
-    <Modal title="💰 Cargar Presupuesto" onClose={onClose}>
-      <div style={{ display: "grid", gap: 14 }}>
-        <div
-          style={{
-            border: "2px dashed #e2e8f0",
-            borderRadius: 12,
-            padding: "24px",
-            background: "#fafafa",
-            cursor: "pointer",
-            textAlign: "center",
-          }}
-          onClick={() => document.getElementById("presupuesto-input").click()}
-        >
-          <input
-            id="presupuesto-input"
-            type="file"
-            accept="application/pdf"
-            style={{ display: "none" }}
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-          />
-          {file ? (
-            <div>
-              <div style={{ fontSize: 22, marginBottom: 4 }}>📄</div>
-              <p style={{ fontSize: 13, fontWeight: 600, color: "#065f46", margin: 0 }}>{file.name}</p>
-              <p style={{ fontSize: 10, color: "#94a3b8", margin: "3px 0 0" }}>
-                Presupuesto PDF seleccionado
-              </p>
-            </div>
-          ) : (
-            <div>
-              <div style={{ fontSize: 32, marginBottom: 6 }}>📊</div>
-              <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>
-                Click para seleccionar PDF<br />
-                <span style={{ fontSize: 10 }}>Presupuesto de licitación en PDF</span>
-              </p>
-            </div>
-          )}
-        </div>
+    <Modal title="💰 Importar Presupuesto" onClose={onClose}>
+      <div style={{ display:"grid", gap:14, minWidth:460 }}>
 
-        {prog && <p style={{ fontSize: 11, color: "#059669", margin: 0 }}>⏳ {prog}</p>}
+        {!preview ? (
+          <>
+            {/* Zona de drop */}
+            <div style={{ border:"2px dashed #e2e8f0", borderRadius:12, padding:"28px 20px",
+              background:"#fafafa", cursor:"pointer", textAlign:"center",
+              transition:"border-color .15s, background .15s" }}
+              onClick={()=>document.getElementById("presupuesto-input").click()}
+              onMouseEnter={e=>{ e.currentTarget.style.borderColor="#059669"; e.currentTarget.style.background="#f0fdf4"; }}
+              onMouseLeave={e=>{ e.currentTarget.style.borderColor="#e2e8f0"; e.currentTarget.style.background="#fafafa"; }}>
+              <input id="presupuesto-input" type="file"
+                accept=".xlsx,.xls,.pdf"
+                style={{ display:"none" }}
+                onChange={e=>{ setFile(e.target.files?.[0]||null); setError(""); setPreview(null); }}/>
+              {file ? (
+                <div>
+                  <div style={{ fontSize:28, marginBottom:6 }}>{isExcel?"📊":"📄"}</div>
+                  <p style={{ fontSize:13, fontWeight:700, color:"#065f46", margin:0 }}>{file.name}</p>
+                  <p style={{ fontSize:11, color:"#94a3b8", margin:"4px 0 0" }}>
+                    {isExcel ? "Excel detectado — extracción automática de partidas" : "PDF detectado — extracción por texto"}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <div style={{ fontSize:36, marginBottom:8 }}>📂</div>
+                  <p style={{ fontSize:13, fontWeight:600, color:"#374151", margin:"0 0 6px" }}>
+                    Selecciona tu presupuesto
+                  </p>
+                  <div style={{ display:"flex", gap:8, justifyContent:"center", flexWrap:"wrap" }}>
+                    {[["📊","Excel .xlsx","Recomendado","#d1fae5","#065f46"],
+                      ["📄","PDF","Texto extraíble","#dbeafe","#1d4ed8"]].map(([ic,lb,sub,bg,col])=>(
+                      <div key={lb} style={{ background:bg, color:col, borderRadius:8, padding:"6px 12px",
+                        fontSize:11, fontWeight:600 }}>{ic} {lb} <span style={{ opacity:.7 }}>· {sub}</span></div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
-        <ModalActions
-          onClose={onClose}
-          onSave={save}
-          saving={saving}
-          disabled={!file}
-          label="Procesar presupuesto →"
-        />
+            {/* Tip Excel */}
+            {isExcel && (
+              <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10, padding:"10px 14px",
+                fontSize:12, color:"#065f46" }}>
+                ✅ <strong>Excel detectado.</strong> La app leerá automáticamente: Ítem, Partida, Unidad,
+                Cantidad, Valor Unitario y Valor Total. Si no hay valores ingresados, los podrás editar
+                directamente en la tabla después de importar.
+              </div>
+            )}
+
+            {error && (
+              <div style={{ background:"#fff5f5", border:"1px solid #fca5a5", borderRadius:10,
+                padding:"10px 14px", fontSize:12, color:"#b91c1c" }}>
+                ⚠️ {error}
+              </div>
+            )}
+
+            {prog && <p style={{ fontSize:11, color:"#059669", margin:0, textAlign:"center" }}>⏳ {prog}</p>}
+
+            <ModalActions onClose={onClose} onSave={procesar} saving={saving}
+              disabled={!file} label={saving ? "Procesando…" : "Procesar →"}/>
+          </>
+        ) : (
+          <>
+            {/* Vista previa de partidas */}
+            <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10,
+              padding:"10px 14px", fontSize:12, color:"#065f46" }}>
+              ✅ Se encontraron <strong>{preview.length} partidas</strong> en {[...new Set(preview.map(p=>p.seccion))].length} secciones.
+              {preview.every(p=>!p.valor_total) && " Los valores están en blanco — podrás editarlos en la tabla."}
+            </div>
+
+            {/* Preview tabla */}
+            <div style={{ maxHeight:280, overflowY:"auto", border:"1px solid #e2e8f0", borderRadius:10 }}>
+              <table style={{ width:"100%", borderCollapse:"collapse", fontSize:11 }}>
+                <thead style={{ background:"#f9fafb", position:"sticky", top:0 }}>
+                  <tr>
+                    {["Ítem","Partida","Un.","Cantidad","V. Unitario","V. Total"].map(h=>(
+                      <th key={h} style={{ padding:"7px 10px", fontWeight:600, color:"#64748b",
+                        textAlign:"left", borderBottom:"1px solid #e2e8f0" }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {preview.slice(0,50).map((p,i)=>(
+                    <tr key={i} style={{ background:i%2===0?"#fff":"#f9fafb", borderBottom:"1px solid #f1f5f9" }}>
+                      <td style={{ padding:"6px 10px", color:"#94a3b8" }}>{p.item}</td>
+                      <td style={{ padding:"6px 10px", color:"#1e293b", maxWidth:220,
+                        overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{p.partida}</td>
+                      <td style={{ padding:"6px 10px", color:"#64748b" }}>{p.unidad}</td>
+                      <td style={{ padding:"6px 10px", textAlign:"right", color:"#64748b" }}>{p.cantidad??""}</td>
+                      <td style={{ padding:"6px 10px", textAlign:"right", color:"#64748b" }}>
+                        {p.valor_unitario ? "$"+Math.round(p.valor_unitario).toLocaleString("es-CL") : ""}
+                      </td>
+                      <td style={{ padding:"6px 10px", textAlign:"right", fontWeight:600, color:"#059669" }}>
+                        {p.valor_total ? "$"+Math.round(p.valor_total).toLocaleString("es-CL") : "—"}
+                      </td>
+                    </tr>
+                  ))}
+                  {preview.length>50 && (
+                    <tr><td colSpan={6} style={{ padding:"8px", textAlign:"center",
+                      color:"#94a3b8", fontSize:11 }}>…y {preview.length-50} partidas más</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <div style={{ display:"flex", gap:10 }}>
+              <button onClick={()=>{ setPreview(null); setFile(null); }}
+                style={{ background:"#f1f5f9", color:"#64748b", border:"none", borderRadius:10,
+                  padding:"11px 16px", fontSize:13, cursor:"pointer", fontFamily:"inherit" }}>
+                ← Cambiar archivo
+              </button>
+              <button onClick={guardar} disabled={saving}
+                style={{ flex:1, background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                  padding:"11px", fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"inherit",
+                  opacity: saving?0.7:1 }}>
+                {saving ? "⏳ Guardando…" : `✅ Importar ${preview.length} partidas →`}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </Modal>
   );
