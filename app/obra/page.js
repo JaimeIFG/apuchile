@@ -342,6 +342,7 @@ function ObraDetail() {
   const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
   const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
   const [expandedAnexo,setExpandedAnexo]=useState(null);  // bitacora_id expandido para mostrar preview adjuntos
+  const [presupuestoOpen,setPresupuestoOpen]=useState(false);  // desplegable presupuesto en resumen
 
   useInactividad(supabase, router, 10);
 
@@ -604,6 +605,60 @@ function ObraDetail() {
                   )}
                 </div>
               </div>
+
+              {presupuesto.length>0 && (
+                <div style={{ background:"#fff", border:"1.5px solid #e2e8f0", borderRadius:16,
+                  overflow:"hidden", marginBottom:16 }}>
+                  <button onClick={()=>setPresupuestoOpen(o=>!o)}
+                    style={{ width:"100%", background:"none", border:"none", cursor:"pointer",
+                      padding:"14px 20px", display:"flex", justifyContent:"space-between",
+                      alignItems:"center", fontFamily:"inherit" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                      <span style={{ fontSize:11, fontWeight:700, color:"#64748b",
+                        textTransform:"uppercase", letterSpacing:".05em" }}>💰 Presupuesto</span>
+                      <span style={{ fontSize:11, color:"#94a3b8" }}>
+                        {presupuesto.length} partidas · {fmtPeso(presupuesto.reduce((s,p)=>s+(p.valor_total||0),0))}
+                      </span>
+                    </div>
+                    <span style={{ fontSize:12, color:"#059669" }}>{presupuestoOpen?"▲":"▼"}</span>
+                  </button>
+                  {presupuestoOpen&&(
+                    <div style={{ borderTop:"1px solid #f1f5f9", maxHeight:340, overflowY:"auto" }}>
+                      {[...new Set(presupuesto.map(p=>p.seccion))].map(sec=>{
+                        const items=presupuesto.filter(p=>p.seccion===sec);
+                        const subtotal=items.reduce((s,p)=>s+(p.valor_total||0),0);
+                        return(
+                          <div key={sec}>
+                            <div style={{ padding:"8px 20px", background:"#f8fafc", fontSize:11,
+                              fontWeight:700, color:"#475569", display:"flex",
+                              justifyContent:"space-between" }}>
+                              <span>{sec}</span>
+                              <span>{fmtPeso(subtotal)}</span>
+                            </div>
+                            {items.map(p=>(
+                              <div key={p.id} style={{ padding:"7px 20px", display:"flex",
+                                justifyContent:"space-between", alignItems:"center",
+                                borderBottom:"1px solid #f8fafc", fontSize:12 }}>
+                                <span style={{ color:"#374151", flex:1, marginRight:12 }}>{p.item} · {p.partida}</span>
+                                <span style={{ color:"#059669", fontWeight:600, whiteSpace:"nowrap" }}>
+                                  {fmtPeso(p.valor_total)}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      })}
+                      <div style={{ padding:"12px 20px", background:"#f0fdf4", display:"flex",
+                        justifyContent:"space-between", borderTop:"2px solid #bbf7d0" }}>
+                        <span style={{ fontSize:13, fontWeight:700, color:"#065f46" }}>COSTO DIRECTO</span>
+                        <span style={{ fontSize:14, fontWeight:800, color:"#065f46" }}>
+                          {fmtPeso(presupuesto.reduce((s,p)=>s+(p.valor_total||0),0))}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {pagos.length>0 && (
                 <Section title="Últimos estados de pago"

@@ -1,5 +1,27 @@
 import { NextResponse } from "next/server";
 
+// Polyfills requeridos por pdfjs en Node.js
+if (typeof globalThis.DOMMatrix === "undefined") {
+  globalThis.DOMMatrix = class DOMMatrix {
+    constructor(init) {
+      this.a=1;this.b=0;this.c=0;this.d=1;this.e=0;this.f=0;
+      if(Array.isArray(init)&&init.length>=6){
+        [this.a,this.b,this.c,this.d,this.e,this.f]=init;
+      }
+    }
+    transformPoint(p){return{x:this.a*p.x+this.c*p.y+this.e,y:this.b*p.x+this.d*p.y+this.f};}
+    multiply(){return this;}
+  };
+}
+if (typeof globalThis.Path2D === "undefined") {
+  globalThis.Path2D = class Path2D {};
+}
+if (typeof globalThis.ImageData === "undefined") {
+  globalThis.ImageData = class ImageData {
+    constructor(w,h){this.width=w;this.height=h;this.data=new Uint8ClampedArray(w*h*4);}
+  };
+}
+
 export async function POST(req) {
   try {
     const formData = await req.formData();
@@ -8,11 +30,16 @@ export async function POST(req) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    // Cargar pdfjs en el servidor (sin worker)
     const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
     pdfjsLib.GlobalWorkerOptions.workerSrc = "";
 
-    const pdf = await pdfjsLib.getDocument({ data: buffer, useWorkerFetch: false, isEvalSupported: false, useSystemFonts: true }).promise;
+    const pdf = await pdfjsLib.getDocument({
+      data: buffer,
+      useWorkerFetch: false,
+      isEvalSupported: false,
+      useSystemFonts: true,
+      disableFontFace: true,
+    }).promise;
 
     let fullText = "";
     for (let i = 1; i <= pdf.numPages; i++) {
