@@ -28,13 +28,14 @@ export async function POST(req) {
     const file = formData.get("file");
     if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const arrayBuffer = await file.arrayBuffer();
+    const data = new Uint8Array(arrayBuffer);
 
     const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
     pdfjsLib.GlobalWorkerOptions.workerSrc = "";
 
     const pdf = await pdfjsLib.getDocument({
-      data: buffer,
+      data,
       useWorkerFetch: false,
       isEvalSupported: false,
       useSystemFonts: true,
