@@ -113,16 +113,12 @@ function exportBitacoraPDF(obra, bitacora, anexos) {
 </body>
 </html>`;
 
-  // Crear blob y descargar
-  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `bitacora_${obra?.nombre?.replace(/\s+/g, "_") || "obra"}.html`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  // Abrir en ventana nueva y disparar diálogo de impresión (Guardar como PDF)
+  const win = window.open("", "_blank");
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+  setTimeout(() => win.print(), 500);
 }
 
 // ── UI átomos ──────────────────────────────────────────────────────────────
@@ -345,6 +341,7 @@ function ObraDetail() {
   const [lightbox,setLb]  = useState(null);
   const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
   const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
+  const [expandedAnexo,setExpandedAnexo]=useState(null);  // bitacora_id expandido para mostrar preview adjuntos
 
   useInactividad(supabase, router, 10);
 
@@ -914,18 +911,35 @@ function ObraDetail() {
                           </div>
                           <p style={{ fontSize:13, color:"#374151", margin:0, lineHeight:1.6 }}>{b.descripcion}</p>
                           {bitAnexos.length>0&&(
-                            <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid #f1f5f9",
-                              display:"flex", gap:8, flexWrap:"wrap" }}>
-                              {bitAnexos.map(a=>(
-                                <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
-                                  title={a.nombre}
-                                  style={{ display:"inline-flex", alignItems:"center", gap:4,
-                                    fontSize:11, color:"#059669", textDecoration:"none",
-                                    background:"#f0fdf4", border:"1px solid #bbf7d0",
-                                    borderRadius:6, padding:"4px 8px", whiteSpace:"nowrap" }}>
-                                  {a.tipo==="foto"?"🖼️":"📎"} {a.nombre.substring(0,20)}…
-                                </a>
-                              ))}
+                            <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid #f1f5f9" }}>
+                              <button onClick={()=>setExpandedAnexo(expandedAnexo===b.id?null:b.id)}
+                                style={{ background:"none", border:"none", cursor:"pointer", padding:0,
+                                  fontSize:11, color:"#059669", fontWeight:600, display:"flex",
+                                  alignItems:"center", gap:5 }}>
+                                📎 {bitAnexos.length} adjunto{bitAnexos.length>1?"s":""} {expandedAnexo===b.id?"▲":"▼"}
+                              </button>
+                              {expandedAnexo===b.id&&(
+                                <div style={{ marginTop:8, display:"flex", gap:8, flexWrap:"wrap" }}>
+                                  {bitAnexos.map(a=>(
+                                    a.tipo==="foto" ? (
+                                      <div key={a.id} style={{ position:"relative" }}>
+                                        <img src={a.url} alt={a.nombre}
+                                          style={{ width:120, height:90, objectFit:"cover",
+                                            borderRadius:8, cursor:"pointer", border:"1px solid #e2e8f0" }}
+                                          onClick={()=>setLb({url:a.url,caption:a.nombre})}/>
+                                      </div>
+                                    ) : (
+                                      <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
+                                        style={{ display:"inline-flex", alignItems:"center", gap:5,
+                                          fontSize:11, color:"#059669", textDecoration:"none",
+                                          background:"#f0fdf4", border:"1px solid #bbf7d0",
+                                          borderRadius:8, padding:"8px 12px" }}>
+                                        📄 {a.nombre.length>25?a.nombre.substring(0,25)+"…":a.nombre}
+                                      </a>
+                                    )
+                                  ))}
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
