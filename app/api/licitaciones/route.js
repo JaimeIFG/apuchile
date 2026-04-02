@@ -40,11 +40,13 @@ export async function GET() {
     filtradas.sort((a, b) => new Date(a.FechaCierre) - new Date(b.FechaCierre));
 
     const licitaciones = filtradas.slice(0, 50).map(l => ({
-      codigo: l.CodigoExterno,
-      nombre: l.Nombre,
-      tipo: l.Tipo,
+      codigo:    l.CodigoExterno,
+      nombre:    l.Nombre,
+      tipo:      l.Tipo,
       organismo: l.Nombre_unidad_compradora || l.NombreOrganismo || l.CodigoOrganismo || "",
-      cierre: l.FechaCierre,
+      cierre:    l.FechaCierre,
+      region:    l.NombreRegion || l.Region || l.region || "",
+      monto:     l.MontoEstimado || l.Monto || l.MontoPesos || 0,
       url: `https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?qs=${l.CodigoExterno}`,
     }));
 

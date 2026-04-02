@@ -128,3 +128,36 @@ body {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .input-focus:focus { box-shadow: 0 0 0 3px rgba(5,150,105,0.12); }
+
+/* ── Ticker marquee (Licitaciones) ── */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: marqueeScroll 42s linear infinite;
+  will-change: transform;
+}
+.marquee-paused .marquee-track { animation-play-state: paused; }
+
+/* ── Shimmer sweep (headers) ── */
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+.shimmer-sweep {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.08) 50%, transparent 70%);
+  animation: shimmer 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Pulse dot ── */
+@keyframes pulseDot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .5; transform: scale(.85); }
+}
+.pulse-dot { animation: pulseDot 1.8s ease infinite; }

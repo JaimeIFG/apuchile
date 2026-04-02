@@ -229,6 +229,21 @@ export default function Dashboard() {
   const dias = diasCorridos(meta.fechaInicio, meta.fechaTermino);
   const zonaPreview = REGIONES.find(r => r.label === meta.region);
 
+  // Totales para stats row
+  const totalPartidas = proyectos.reduce((s, p) => s + (p.datos?.length || 0), 0);
+  const totalValorBruto = proyectos.reduce((s, p) => {
+    const zona = p.meta?.zona ?? 0;
+    const cd = (p.datos || []).reduce((ss, i) => ss + (i.precio || 0) * (1 + zona) * (i.cantidad || 1), 0);
+    return s + cd * 1.28 * 1.19;
+  }, 0);
+  const totalValorFmt = totalValorBruto >= 1e9
+    ? `$${(totalValorBruto / 1e9).toFixed(1)}B`
+    : totalValorBruto >= 1e6
+    ? `$${(totalValorBruto / 1e6).toFixed(1)}M`
+    : totalValorBruto > 0
+    ? `$${Math.round(totalValorBruto).toLocaleString("es-CL")}`
+    : "$0";
+
   if (loading) return (
     <div className="min-h-screen bg-gray-900">
       <LoadingOverlay visible={true} mensaje="Cargando dashboard..." blur={false} />
@@ -385,26 +400,86 @@ export default function Dashboard() {
       <div className="flex-1 overflow-y-auto flex flex-col">
         {/* Ticker licitaciones */}
         <LicitacionesTicker />
-        <main className="max-w-4xl mx-auto px-8 py-10 flex-1 w-full">
-          {/* Saludo */}
-          <div className="mb-10 anim-fade-up">
-            <h1 className="text-3xl font-bold text-gray-800">{saludo}, {nombre}</h1>
-            <p className="text-gray-400 mt-1 text-sm">¿En qué proyecto trabajamos hoy?</p>
+        <main className="max-w-4xl mx-auto px-8 py-6 flex-1 w-full">
+
+          {/* ── Header card ── */}
+          <div className="rounded-2xl overflow-hidden anim-scale-in mb-4"
+            style={{background:"linear-gradient(135deg,#065f46 0%,#059669 60%,#10b981 100%)",
+              boxShadow:"0 4px 20px rgba(6,95,70,.28)", padding:"20px 24px", position:"relative"}}>
+            <div style={{position:"absolute", inset:0, backgroundImage:"radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px)",
+              backgroundSize:"20px 20px", pointerEvents:"none"}}/>
+            <div className="shimmer-sweep"/>
+            <div style={{position:"relative", zIndex:1, display:"flex", alignItems:"center",
+              justifyContent:"space-between", gap:16, flexWrap:"wrap"}}>
+              <div>
+                <p style={{fontSize:9, fontWeight:700, textTransform:"uppercase", letterSpacing:".14em",
+                  color:"rgba(255,255,255,.55)", marginBottom:4}}>{saludo}</p>
+                <h1 style={{fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-.02em", lineHeight:1.2}}>
+                  {nombre}
+                </h1>
+                <p style={{fontSize:12, color:"rgba(255,255,255,.5)", marginTop:4}}>
+                  ¿En qué proyecto trabajamos hoy?
+                </p>
+              </div>
+              <div style={{display:"flex", flexDirection:"column", alignItems:"flex-end", gap:6}}>
+                <span style={{background:"rgba(255,255,255,.14)", border:"1px solid rgba(255,255,255,.18)",
+                  color:"rgba(255,255,255,.85)", borderRadius:99, padding:"4px 12px", fontSize:11, fontWeight:600}}>
+                  {new Date().toLocaleDateString("es-CL",{weekday:"long",day:"2-digit",month:"short",year:"numeric"})}
+                </span>
+                <div style={{display:"flex", gap:6}}>
+                  {uf && <span style={{background:"rgba(249,115,22,.2)", border:"1px solid rgba(249,115,22,.3)",
+                    color:"#fed7aa", borderRadius:99, padding:"4px 10px", fontSize:10.5, fontWeight:700}}>
+                    UF ${uf.toLocaleString("es-CL",{minimumFractionDigits:2,maximumFractionDigits:2})}
+                  </span>}
+                  {utm && <span style={{background:"rgba(8,145,178,.2)", border:"1px solid rgba(8,145,178,.3)",
+                    color:"#a5f3fc", borderRadius:99, padding:"4px 10px", fontSize:10.5, fontWeight:700}}>
+                    UTM ${utm?.toLocaleString("es-CL")}
+                  </span>}
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Acciones principales */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {/* ── Stats row ── */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             {[
-              { icon: "＋", label: "Nuevo proyecto", color: "bg-emerald-600 text-white", action: () => setCreando(true), primary: true },
-              { icon: "📂", label: "Mis proyectos", color: "bg-white text-gray-700 border border-gray-200", action: () => document.getElementById("mis-proyectos").scrollIntoView({ behavior: "smooth" }) },
-              { icon: "📄", label: "Importar documento", color: "bg-white text-gray-700 border border-gray-200", action: () => alert("Próximamente") },
-              { icon: "⚙️", label: "Configuración", color: "bg-white text-gray-700 border border-gray-200", action: () => alert("Próximamente") },
+              { num:proyectos.length, lbl:"Proyectos",   sub:"en tu cuenta",          color:"#059669", border:"#059669" },
+              { num:totalPartidas,    lbl:"Partidas",    sub:"en todos los proyectos", color:"#f97316", border:"#f97316" },
+              { num:totalValorFmt,    lbl:"Valor total", sub:"con utilidades + IVA",   color:"#0891b2", border:"#0891b2", isStr:true },
+              { num:usuariosOnline,   lbl:"En línea",    sub:"en este momento",        color:"#16a34a", border:"#16a34a", pulse:true },
+            ].map(({ num, lbl, sub, color, border, isStr, pulse }, i) => (
+              <div key={lbl} className="bg-white rounded-2xl shadow-sm anim-fade-up"
+                style={{padding:"14px 16px", borderBottom:`3px solid ${border}`, animationDelay:`${i*50}ms`}}>
+                <div style={{fontSize:24, fontWeight:900, color, lineHeight:1, marginBottom:3,
+                  display:"flex", alignItems:"center", gap:6}}>
+                  {pulse && <span className="pulse-dot" style={{display:"inline-block", width:8, height:8,
+                    borderRadius:"50%", background:color, flexShrink:0}}/>}
+                  {isStr ? num : num.toLocaleString("es-CL")}
+                </div>
+                <div style={{fontSize:9, textTransform:"uppercase", letterSpacing:".06em",
+                  fontWeight:700, color:"#64748b", marginBottom:2}}>{lbl}</div>
+                <div style={{fontSize:9.5, color:"#94a3b8"}}>{sub}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Acciones principales ── */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            {[
+              { icon:"＋", label:"Nuevo proyecto",  action:() => setCreando(true),
+                st:{background:"linear-gradient(135deg,#065f46,#059669)", borderBottom:"3px solid #34d399"}, txt:"#fff" },
+              { icon:"📂", label:"Mis proyectos",   action:() => document.getElementById("mis-proyectos")?.scrollIntoView({behavior:"smooth"}),
+                st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #059669"}, txt:"#374151" },
+              { icon:"📄", label:"Importar",         action:() => alert("Próximamente"),
+                st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
+              { icon:"⚙️", label:"Configuración",   action:() => alert("Próximamente"),
+                st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #64748b"}, txt:"#374151" },
             ].map((c, i) => (
               <button key={i} onClick={c.action}
-                className={`${c.color} rounded-2xl p-6 flex flex-col items-center justify-center gap-3 aspect-square shadow-sm anim-fade-up ${c.primary ? "btn-primary" : "card-hover"}`}
-                style={{ animationDelay: `${i * 60 + 80}ms` }}>
-                <span className={`text-3xl transition-transform duration-200 ${c.primary ? "group-hover:scale-110" : ""}`}>{c.icon}</span>
-                <span className="text-sm font-medium text-center leading-tight">{c.label}</span>
+                className="rounded-2xl flex flex-col items-center justify-center gap-3 aspect-square shadow-sm anim-fade-up card-hover btn-press"
+                style={{...c.st, padding:"18px 12px", animationDelay:`${i*50+100}ms`}}>
+                <span className="text-3xl">{c.icon}</span>
+                <span className="text-sm font-semibold text-center leading-tight" style={{color:c.txt}}>{c.label}</span>
               </button>
             ))}
           </div>
@@ -655,13 +730,19 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Proyectos recientes */}
+          {/* ── Proyectos recientes ── */}
           <div id="mis-proyectos">
-            <h2 className="text-base font-semibold text-gray-700 mb-4 anim-fade-up delay-300">Proyectos recientes</h2>
+            <div className="flex items-center justify-between mb-4 anim-fade-up delay-300">
+              <h2 className="text-[14px] font-bold text-gray-800">Proyectos recientes</h2>
+              {proyectos.length > 0 && (
+                <span className="text-[11px] font-semibold text-emerald-600">{proyectos.length} proyecto{proyectos.length !== 1 ? "s" : ""}</span>
+              )}
+            </div>
             {proyectos.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-2xl p-12 text-center anim-fade-up delay-350">
+              <div className="bg-white rounded-2xl p-12 text-center anim-fade-up delay-350"
+                style={{border:"1.5px solid #f1f5f9", borderBottom:"3px solid #059669"}}>
                 <p className="text-gray-400 text-sm mb-3">No tienes proyectos aún</p>
-                <button onClick={() => setCreando(true)} className="text-emerald-600 text-sm underline btn-press">
+                <button onClick={() => setCreando(true)} className="text-emerald-600 text-sm font-semibold underline btn-press">
                   Crea tu primer proyecto
                 </button>
               </div>
@@ -673,35 +754,37 @@ export default function Dashboard() {
                   const zona = m.zona ?? 0;
                   const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
                   const total = cd * 1.28 * 1.19;
-                  const fmtCLP = n => n >= 1e6
-                    ? `$${(n / 1e6).toFixed(1)}M`
-                    : n > 0 ? `$${Math.round(n).toLocaleString("es-CL")}` : null;
-                  const montoLabel = fmtCLP(total);
+                  const montoLabel = total >= 1e6
+                    ? `$${(total / 1e6).toFixed(1)}M`
+                    : total > 0 ? `$${Math.round(total).toLocaleString("es-CL")}` : null;
                   return (
                     <button key={p.id} onClick={() => abrirProyecto(p.id)}
-                      className="bg-white border border-gray-200 rounded-2xl p-5 text-left group card-hover anim-fade-up"
-                      style={{ animationDelay: `${350 + idx * 60}ms`, borderColor: undefined }}>
+                      className="bg-white rounded-2xl text-left group card-hover anim-fade-up"
+                      style={{animationDelay:`${350 + idx * 60}ms`, padding:20,
+                        border:"1.5px solid #f1f5f9", borderBottom:"3px solid #059669",
+                        boxShadow:"0 1px 4px rgba(0,0,0,.05)"}}>
                       <div className="flex items-start justify-between mb-3">
                         <span className="text-2xl transition-transform duration-200 group-hover:scale-110">📋</span>
                         <button onClick={e => eliminarProyecto(p.id, e)}
-                          className="text-gray-300 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition-all duration-150 hover:scale-110 btn-press">
-                          ✕
-                        </button>
+                          className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-all btn-press"
+                          style={{background:"#fee2e2", color:"#ef4444"}}>✕</button>
                       </div>
-                      <div className="font-semibold text-gray-800 text-sm mb-1 truncate">{p.nombre}</div>
+                      <div className="font-semibold text-sm mb-1 truncate" style={{color:"#1f2937"}}>{p.nombre}</div>
                       {montoLabel && (
-                        <div className="text-base font-bold text-emerald-600 mb-2">{montoLabel}</div>
+                        <div className="font-extrabold mb-2" style={{fontSize:18, color:"#059669"}}>{montoLabel}</div>
                       )}
-                      {(m.region || m.mandante || m.responsable) && (
+                      {(m.region || m.mandante) && (
                         <div className="space-y-0.5 mb-2">
-                          {m.region && <p className="text-xs text-gray-400 truncate">{m.region}</p>}
-                          {m.mandante && <p className="text-xs text-gray-400 truncate">{m.mandante}</p>}
-                          {m.responsable && <p className="text-xs text-gray-400 truncate">A cargo: {m.responsable}</p>}
+                          {m.region   && <p className="text-xs truncate" style={{color:"#94a3b8"}}>{m.region}</p>}
+                          {m.mandante && <p className="text-xs font-semibold truncate" style={{color:"#059669"}}>{m.mandante}</p>}
                         </div>
                       )}
-                      <div className="flex items-center justify-between text-xs text-gray-400 mt-2 pt-2 border-t border-gray-100">
+                      <div className="flex items-center justify-between text-xs pt-2"
+                        style={{borderTop:"1px solid #f1f5f9", marginTop:8, color:"#94a3b8"}}>
                         <span>{(p.datos || []).length} partidas</span>
-                        <span>{dc ? `${dc} días` : new Date(p.updated_at).toLocaleDateString("es-CL")}</span>
+                        <span style={{color:"#059669", fontWeight:600}}>
+                          {dc ? `${dc} días` : new Date(p.updated_at).toLocaleDateString("es-CL")}
+                        </span>
                       </div>
                     </button>
                   );
