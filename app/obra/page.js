@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
+import { extractBudgetFromPDF } from "../lib/extractPresupuesto";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -48,6 +49,80 @@ async function uploadFile(obraId, subfolder, file) {
   if (error) return { url: null, nombre: null, error: error.message };
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
   return { url: data.publicUrl, nombre: file.name, error: null };
+}
+
+function exportBitacoraPDF(obra, bitacora, anexos) {
+  if (typeof window === "undefined") return;
+
+  // Crear HTML para exportación
+  const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitácora - ${obra?.nombre || "Obra"}</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; }
+    h1 { color: #065f46; border-bottom: 2px solid #059669; padding-bottom: 10px; }
+    .proyecto-info { background: #f0fdf4; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
+    .entrada { page-break-inside: avoid; margin-bottom: 25px; border-left: 4px solid #059669; padding-left: 15px; }
+    .entrada-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .tipo { display: inline-block; background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+    .fecha-autor { color: #64748b; font-size: 13px; }
+    .descripcion { margin: 10px 0; color: #374151; }
+    .anexos { background: #f9fafb; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 12px; }
+    .anexos strong { color: #059669; }
+    .anexo-item { margin: 5px 0; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 12px; text-align: center; }
+    @media print { .entrada { page-break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <h1>📖 Bitácora de Obra</h1>
+  <div class="proyecto-info">
+    <strong>${obra?.nombre || "Obra sin nombre"}</strong><br>
+    ${obra?.ubicacion ? `📍 ${obra.ubicacion}<br>` : ""}
+    ${obra?.monto_contrato ? `💰 Monto: $${Math.round(obra.monto_contrato).toLocaleString("es-CL")}<br>` : ""}
+    ${obra?.estado ? `Estado: ${obra.estado}` : ""}
+  </div>
+
+  <div>
+    ${bitacora.map(b => {
+      const bitAnexos = anexos[b.id] || [];
+      return `
+    <div class="entrada">
+      <div class="entrada-header">
+        <span class="tipo">${b.tipo}</span>
+        <span class="fecha-autor">${b.autor ? `por ${b.autor}` : ""} ${b.fecha ? `· ${fmtFecha(b.fecha)}` : ""}</span>
+      </div>
+      <div class="descripcion">${b.descripcion.replace(/\n/g, "<br>")}</div>
+      ${bitAnexos.length > 0 ? `
+      <div class="anexos">
+        <strong>📎 Anexos:</strong>
+        ${bitAnexos.map(a => `<div class="anexo-item">• ${a.nombre}</div>`).join("")}
+      </div>
+      ` : ""}
+    </div>
+      `;
+    }).join("")}
+  </div>
+
+  <div class="footer">
+    Generado el ${new Date().toLocaleDateString("es-CL")} · Bitácora de Ejecución de Obras
+  </div>
+</body>
+</html>`;
+
+  // Crear blob y descargar
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `bitacora_${obra?.nombre?.replace(/\s+/g, "_") || "obra"}.html`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
 
 // ── UI átomos ──────────────────────────────────────────────────────────────
@@ -259,13 +334,17 @@ function ObraDetail() {
   const [garantias, setGarantias] = useState([]);
   const [bitacora,  setBitacora]  = useState([]);
   const [fotos,     setFotos]     = useState([]);
+  const [presupuesto, setPresupuesto] = useState([]);
 
   const [mDoc, setMDoc]   = useState(false);
   const [mPago,setMPago]  = useState(false);
   const [mGar, setMGar]   = useState(false);
   const [mBit, setMBit]   = useState(false);
   const [mFoto,setMFoto]  = useState(false);
+  const [mPresupuesto, setMPresupuesto] = useState(false);
   const [lightbox,setLb]  = useState(null);
+  const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
+  const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
 
   useInactividad(supabase, router, 10);
 
@@ -274,17 +353,23 @@ function ObraDetail() {
     supabase.auth.getUser().then(async ({ data:{ user } }) => {
       if (!user) { router.push("/login"); return; }
       setUserId(user.id);
-      const [oR, dR, pR, gR, bR, fR] = await Promise.all([
+      const [oR, dR, pR, gR, bR, fR, aR, presR] = await Promise.all([
         supabase.from("obras").select("*").eq("id", obraId).single(),
         supabase.from("obra_documentos").select("*").eq("obra_id", obraId).order("created_at",{ascending:false}),
         supabase.from("obra_estados_pago").select("*").eq("obra_id", obraId).order("fecha",{ascending:false}),
         supabase.from("obra_garantias").select("*").eq("obra_id", obraId).order("fecha_vencimiento"),
         supabase.from("obra_bitacora").select("*").eq("obra_id", obraId).order("fecha",{ascending:false}),
         supabase.from("obra_fotos").select("*").eq("obra_id", obraId).order("created_at",{ascending:false}),
+        supabase.from("obra_bitacora_anexos").select("*"),
+        supabase.from("obra_presupuesto").select("*").eq("obra_id", obraId).order("orden"),
       ]);
       if (oR.data) setObra(oR.data);
       setDocs(dR.data||[]); setPagos(pR.data||[]); setGarantias(gR.data||[]);
-      setBitacora(bR.data||[]); setFotos(fR.data||[]);
+      setBitacora(bR.data||[]); setFotos(fR.data||[]); setPresupuesto(presR.data||[]);
+      // Agrupar anexos por bitacora_id
+      const anexosMap = {};
+      (aR.data||[]).forEach(a=>{ if(!anexosMap[a.bitacora_id]) anexosMap[a.bitacora_id]=[]; anexosMap[a.bitacora_id].push(a); });
+      setAnexos(anexosMap);
       setLoading(false);
     });
   }, [obraId]);
@@ -302,6 +387,7 @@ function ObraDetail() {
   const delGar  = async id => { await supabase.from("obra_garantias").delete().eq("id",id);    setGarantias(p=>p.filter(x=>x.id!==id)); };
   const delBit  = async id => { await supabase.from("obra_bitacora").delete().eq("id",id);     setBitacora(p=>p.filter(x=>x.id!==id)); };
   const delFoto = async id => { await supabase.from("obra_fotos").delete().eq("id",id);        setFotos(p=>p.filter(x=>x.id!==id)); };
+  const delPresupuesto = async id => { await supabase.from("obra_presupuesto").delete().eq("id",id); setPresupuesto(p=>p.filter(x=>x.id!==id)); };
 
   if (loading) return (
     <div style={{ minHeight:"100vh", background:"#f8fafc", display:"flex", alignItems:"center",
@@ -333,6 +419,7 @@ function ObraDetail() {
     { id:"garantias", icon:"🔒", label:"Garantías"        },
     { id:"bitacora",  icon:"📖", label:"Bitácora"         },
     { id:"fotos",     icon:"📸", label:"Fotos", badge:fotos.length },
+    { id:"presupuesto", icon:"💰", label:"Presupuesto", badge:presupuesto.length },
   ];
 
   return (
@@ -644,10 +731,10 @@ function ObraDetail() {
                               </div>
                             </div>
                             {doc.archivo_url&&(
-                              <a href={doc.archivo_url} target="_blank" rel="noopener noreferrer"
+                              <button onClick={()=>setDocSelec(doc)}
                                 style={{ background:"#f0fdf4", color:"#059669", border:"1px solid #bbf7d0",
                                   borderRadius:7, padding:"4px 10px", fontSize:11, fontWeight:600,
-                                  textDecoration:"none", whiteSpace:"nowrap" }}>Ver →</a>
+                                  cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit" }}>Ver →</button>
                             )}
                             <button onClick={()=>delDoc(doc.id)}
                               style={{ background:"none", border:"none", color:"#fca5a5",
@@ -787,9 +874,16 @@ function ObraDetail() {
                   <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Bitácora de Obra</h2>
                   <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{bitacora.length} registros</p>
                 </div>
-                <button onClick={()=>setMBit(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
-                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nueva entrada</button>
+                <div style={{ display:"flex", gap:8 }}>
+                  {bitacora.length>0&&(
+                    <button onClick={()=>exportBitacoraPDF(obra,bitacora,anexos)}
+                      style={{ background:"#f8fafc", color:"#059669", border:"1px solid #e2e8f0", borderRadius:10,
+                        padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>📥 Exportar PDF</button>
+                  )}
+                  <button onClick={()=>setMBit(true)}
+                    style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                      padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nueva entrada</button>
+                </div>
               </div>
               {bitacora.length===0?<EmptyState icon="📖" msg="Sin registros en la bitácora"/>:(
                 <div style={{ position:"relative", paddingLeft:22 }}>
@@ -797,6 +891,7 @@ function ObraDetail() {
                     width:2, background:"#e2e8f0", borderRadius:2 }}/>
                   {bitacora.map(b=>{
                     const tc=TIPO_BIT_COLOR[b.tipo]||TIPO_BIT_COLOR.Observación;
+                    const bitAnexos=anexos[b.id]||[];
                     return (
                       <div key={b.id} style={{ marginBottom:14, position:"relative" }}>
                         <div style={{ position:"absolute", left:-19, top:5, width:10, height:10,
@@ -818,6 +913,21 @@ function ObraDetail() {
                             </div>
                           </div>
                           <p style={{ fontSize:13, color:"#374151", margin:0, lineHeight:1.6 }}>{b.descripcion}</p>
+                          {bitAnexos.length>0&&(
+                            <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid #f1f5f9",
+                              display:"flex", gap:8, flexWrap:"wrap" }}>
+                              {bitAnexos.map(a=>(
+                                <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
+                                  title={a.nombre}
+                                  style={{ display:"inline-flex", alignItems:"center", gap:4,
+                                    fontSize:11, color:"#059669", textDecoration:"none",
+                                    background:"#f0fdf4", border:"1px solid #bbf7d0",
+                                    borderRadius:6, padding:"4px 8px", whiteSpace:"nowrap" }}>
+                                  {a.tipo==="foto"?"🖼️":"📎"} {a.nombre.substring(0,20)}…
+                                </a>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </div>
                     );
@@ -865,6 +975,77 @@ function ObraDetail() {
             </div>
           )}
 
+          {/* ═══ PRESUPUESTO ═══ */}
+          {tab==="presupuesto" && (
+            <div>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 }}>
+                <div>
+                  <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Presupuesto</h2>
+                  <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>
+                    {presupuesto.length} partidas · Cargadas desde presupuesto de licitación
+                  </p>
+                </div>
+                <button onClick={()=>setMPresupuesto(true)}
+                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Cargar presupuesto</button>
+              </div>
+
+              {presupuesto.length===0?<EmptyState icon="💰" msg="Sin partidas — carga un presupuesto en PDF"/>:(
+                <div>
+                  {/* Agrupar por sección */}
+                  {[...new Set(presupuesto.map(p=>p.seccion))].map(seccion=>(
+                    <div key={seccion} style={{ marginBottom:20 }}>
+                      <div style={{ background:"#f8fafc", padding:"10px 14px", borderRadius:8, marginBottom:8,
+                        fontSize:12, fontWeight:700, color:"#475569" }}>{seccion}</div>
+                      <div style={{ border:"1px solid #e2e8f0", borderRadius:12, overflow:"hidden" }}>
+                        <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
+                          <thead style={{ background:"#f9fafb" }}>
+                            <tr>
+                              {["Item","Partida","Unidad","Cantidad","V. Unitario","V. Total",""].map(h=>(
+                                <th key={h} style={{ padding:"9px 10px", fontWeight:600, color:"#64748b",
+                                  textAlign:"left", borderBottom:"1px solid #e2e8f0", whiteSpace:"nowrap" }}>{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {presupuesto.filter(p=>p.seccion===seccion).map((p,i)=>(
+                              <tr key={p.id} style={{ background:i%2===0?"#fff":"#f9fafb", borderBottom:"1px solid #f1f5f9" }}>
+                                <td style={{ padding:"8px 10px", color:"#64748b" }}>{p.item}</td>
+                                <td style={{ padding:"8px 10px", color:"#1e293b" }}>{p.partida}</td>
+                                <td style={{ padding:"8px 10px", color:"#64748b" }}>{p.unidad}</td>
+                                <td style={{ padding:"8px 10px", textAlign:"right", color:"#64748b" }}>{p.cantidad}</td>
+                                <td style={{ padding:"8px 10px", textAlign:"right", color:"#64748b" }}>${Math.round(p.valor_unitario).toLocaleString("es-CL")}</td>
+                                <td style={{ padding:"8px 10px", textAlign:"right", fontWeight:600, color:"#059669" }}>${Math.round(p.valor_total).toLocaleString("es-CL")}</td>
+                                <td style={{ padding:"8px 10px", textAlign:"center" }}>
+                                  <button onClick={()=>delPresupuesto(p.id)}
+                                    style={{ background:"none", border:"none", color:"#fca5a5",
+                                      cursor:"pointer", fontSize:12 }}>✕</button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Totales */}
+                  <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:12,
+                    padding:"16px", marginTop:20 }}>
+                    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:16 }}>
+                      <div>
+                        <p style={{ fontSize:11, color:"#64748b", textTransform:"uppercase", fontWeight:600, margin:0 }}>Costo Directo</p>
+                        <p style={{ fontSize:18, fontWeight:700, color:"#1e293b", margin:"4px 0 0" }}>
+                          ${presupuesto.reduce((sum,p)=>sum+(p.valor_total||0),0).toLocaleString("es-CL")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
         </div>
       </div>
 
@@ -887,6 +1068,80 @@ function ObraDetail() {
         </div>
       )}
 
+      {/* Panel de previsualización de documentos */}
+      {docSelec && (
+        <>
+          <div style={{ position:"fixed", inset:0, zIndex:39, background:"rgba(0,0,0,.2)" }} onClick={()=>setDocSelec(null)}/>
+          <div style={{ position:"fixed", right:0, top:0, bottom:0, width:450, background:"#fff",
+            borderLeft:"1px solid #e2e8f0", display:"flex", flexDirection:"column",
+            boxShadow:"-4px 0 12px rgba(0,0,0,.08)", animation:"slideIn .3s ease", zIndex:40 }}>
+            <style>{`@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }`}</style>
+
+            {/* Header */}
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+              padding:"16px 20px", borderBottom:"1px solid #e2e8f0" }}>
+              <div style={{ fontSize:14, fontWeight:700, color:"#1e293b", overflow:"hidden",
+                textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                📄 {docSelec.nombre}
+              </div>
+              <button onClick={()=>setDocSelec(null)}
+                style={{ background:"#f1f5f9", border:"none", borderRadius:6,
+                  width:28, height:28, cursor:"pointer", fontSize:14, color:"#64748b" }}>✕</button>
+            </div>
+
+            {/* Body */}
+            <div style={{ flex:1, overflowY:"auto", display:"flex", alignItems:"center",
+              justifyContent:"center", padding:20, background:"#f8fafc" }}>
+              {docSelec.archivo_url?.endsWith(".pdf") ? (
+                <iframe src={docSelec.archivo_url} style={{ width:"100%", height:"100%",
+                  border:"none", borderRadius:8 }}/>
+              ) : docSelec.archivo_url?.match(/\.(jpg|jpeg|png|webp|gif)$/i) ? (
+                <img src={docSelec.archivo_url} alt="" style={{ maxWidth:"100%", maxHeight:"100%",
+                  objectFit:"contain", borderRadius:8, boxShadow:"0 2px 8px rgba(0,0,0,.1)" }}/>
+              ) : (
+                <div style={{ textAlign:"center", color:"#94a3b8" }}>
+                  <div style={{ fontSize:40, marginBottom:12 }}>📎</div>
+                  <div style={{ fontSize:12 }}>
+                    Tipo de archivo no previsualizable<br/>
+                    <span style={{ fontSize:11, color:"#cbd5e1" }}>(usa el botón descargar para verlo)</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Info */}
+            <div style={{ padding:"16px 20px", borderTop:"1px solid #e2e8f0", background:"#fff" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8, fontSize:12 }}>
+                <span style={{ color:"#64748b" }}>Categoría:</span>
+                <span style={{ color:"#1e293b", fontWeight:600 }}>{docSelec.categoria}</span>
+              </div>
+              {docSelec.fecha&&(
+                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8, fontSize:12 }}>
+                  <span style={{ color:"#64748b" }}>Fecha:</span>
+                  <span style={{ color:"#1e293b", fontWeight:600 }}>{fmtFecha(docSelec.fecha)}</span>
+                </div>
+              )}
+              {docSelec.descripcion&&(
+                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8, fontSize:12 }}>
+                  <span style={{ color:"#64748b" }}>Descripción:</span>
+                  <span style={{ color:"#1e293b", fontWeight:600 }}>{docSelec.descripcion}</span>
+                </div>
+              )}
+              <div style={{ marginTop:12, paddingTop:12, borderTop:"1px solid #e2e8f0" }}>
+                {docSelec.archivo_url&&(
+                  <a href={docSelec.archivo_url} download target="_blank" rel="noopener noreferrer"
+                    style={{ display:"inline-block", background:"#f0fdf4", color:"#059669",
+                      border:"1px solid #bbf7d0", borderRadius:8, padding:"8px 16px", fontSize:12,
+                      fontWeight:600, textDecoration:"none" }}>
+                    Descargar archivo →
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {/* Modals */}
       {mDoc  && <ModalDoc      obraId={obraId} catInicial={catActiva} onClose={()=>setMDoc(false)}
                   onSave={d=>{ setDocs(p=>[d,...p]); setMDoc(false); }}/>}
@@ -898,6 +1153,8 @@ function ObraDetail() {
                   onSave={b=>{ setBitacora(prev=>[b,...prev]); setMBit(false); }}/>}
       {mFoto && <ModalFotos    obraId={obraId} onClose={()=>setMFoto(false)}
                   onSave={f=>{ setFotos(prev=>[f,...prev]); }}/>}
+      {mPresupuesto && <ModalPresupuesto obraId={obraId} onClose={()=>setMPresupuesto(false)}
+                  onSave={items=>{ setPresupuesto(items); setMPresupuesto(false); }}/>}
     </div>
   );
 }
@@ -990,11 +1247,35 @@ function ModalGarantia({ obraId, onClose, onSave }) {
 
 function ModalBitacora({ obraId, userId, onClose, onSave }) {
   const [form,setForm]=useState({tipo:"Observación",descripcion:"",fecha:new Date().toISOString().split("T")[0],autor:""});
-  const [saving,setSaving]=useState(false); const set=(k,v)=>setForm(f=>({...f,[k]:v}));
+  const [files,setFiles]=useState([]);
+  const [saving,setSaving]=useState(false);
+  const [prog,setProg]=useState("");
+  const set=(k,v)=>setForm(f=>({...f,[k]:v}));
   const save=async()=>{
-    if(!form.descripcion.trim())return; setSaving(true);
+    if(!form.descripcion.trim())return;
+    setSaving(true);
     const{data,error}=await supabase.from("obra_bitacora").insert({obra_id:obraId,user_id:userId,...form}).select().single();
-    setSaving(false); if(!error&&data) onSave(data);
+    setSaving(false);
+    if(!error&&data){
+      // Subir archivos anexos si existen
+      if(files.length>0){
+        for(let i=0;i<files.length;i++){
+          const f=files[i];
+          setProg(`Subiendo archivo ${i+1}/${files.length}…`);
+          const res=await uploadFile(obraId,"bitacora_anexos",f);
+          if(!res.error){
+            await supabase.from("obra_bitacora_anexos").insert({
+              bitacora_id:data.id,
+              url:res.url,
+              nombre:f.name,
+              tipo:f.type.startsWith("image/")?"foto":"documento",
+            });
+          }
+        }
+        setProg("");
+      }
+      onSave(data);
+    }
   };
   return(
     <Modal title="📖 Nueva Entrada Bitácora" onClose={onClose}>
@@ -1019,6 +1300,34 @@ function ModalBitacora({ obraId, userId, onClose, onSave }) {
             rows={4} placeholder="Descripción del evento..."
             style={{...inputSt,resize:"vertical",lineHeight:1.6}}/>
         </InputRow>
+        <InputRow label="Anexos (opcional)">
+          <div style={{border:"2px dashed #e2e8f0",borderRadius:12,padding:"16px",
+            background:"#fafafa",cursor:"pointer",textAlign:"center"}}
+            onClick={()=>document.getElementById("anexo-input").click()}>
+            <input id="anexo-input" type="file" multiple style={{display:"none"}}
+              onChange={e=>setFiles(Array.from(e.target.files))}/>
+            {files.length>0?(
+              <div>
+                <div style={{fontSize:18,marginBottom:4}}>📎</div>
+                <p style={{fontSize:12,fontWeight:600,color:"#065f46",margin:0}}>
+                  {files.length} archivo{files.length>1?"s":""} seleccionado{files.length>1?"s":""}
+                </p>
+                <p style={{fontSize:9,color:"#94a3b8",margin:"3px 0 0",wordBreak:"break-word"}}>
+                  {files.map(f=>f.name).join(", ")}
+                </p>
+              </div>
+            ):(
+              <div>
+                <div style={{fontSize:20,marginBottom:4}}>📁</div>
+                <p style={{fontSize:11,color:"#94a3b8",margin:0}}>
+                  Fotos, PDFs, docs<br/>
+                  <span style={{fontSize:9}}>Click para subir anexos</span>
+                </p>
+              </div>
+            )}
+          </div>
+        </InputRow>
+        {prog&&<p style={{fontSize:11,color:"#059669",margin:0}}>⏳ {prog}</p>}
         <ModalActions onClose={onClose} onSave={save} saving={saving} disabled={!form.descripcion.trim()}/>
       </div>
     </Modal>
@@ -1078,6 +1387,98 @@ function ModalFotos({ obraId, onClose, onSave }) {
         {prog&&<p style={{fontSize:11,color:"#059669",margin:0}}>⏳ {prog}</p>}
         <ModalActions onClose={onClose} onSave={save} saving={saving}
           disabled={files.length===0} label={`Subir ${files.length||""}foto${files.length!==1?"s":""} →`}/>
+      </div>
+    </Modal>
+  );
+}
+
+function ModalPresupuesto({ obraId, onClose, onSave }) {
+  const [file, setFile] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [prog, setProg] = useState("");
+
+  const save = async () => {
+    if (!file) return;
+    setSaving(true);
+    try {
+      setProg("Analizando PDF...");
+      const data = await extractBudgetFromPDF(file);
+
+      setProg("Guardando partidas...");
+      // Insertar todas las partidas
+      const items = data.items.map((item, idx) => ({
+        ...item,
+        obra_id: obraId,
+        orden: idx + 1,
+      }));
+
+      const { data: saved, error } = await supabase
+        .from("obra_presupuesto")
+        .insert(items)
+        .select();
+
+      if (!error && saved) {
+        setProg("");
+        onSave(saved);
+      } else {
+        setProg("Error al guardar");
+      }
+    } catch (e) {
+      console.error("Error:", e);
+      setProg(`Error: ${e.message}`);
+    }
+    setSaving(false);
+  };
+
+  return (
+    <Modal title="💰 Cargar Presupuesto" onClose={onClose}>
+      <div style={{ display: "grid", gap: 14 }}>
+        <div
+          style={{
+            border: "2px dashed #e2e8f0",
+            borderRadius: 12,
+            padding: "24px",
+            background: "#fafafa",
+            cursor: "pointer",
+            textAlign: "center",
+          }}
+          onClick={() => document.getElementById("presupuesto-input").click()}
+        >
+          <input
+            id="presupuesto-input"
+            type="file"
+            accept="application/pdf"
+            style={{ display: "none" }}
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+          />
+          {file ? (
+            <div>
+              <div style={{ fontSize: 22, marginBottom: 4 }}>📄</div>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#065f46", margin: 0 }}>{file.name}</p>
+              <p style={{ fontSize: 10, color: "#94a3b8", margin: "3px 0 0" }}>
+                Presupuesto PDF seleccionado
+              </p>
+            </div>
+          ) : (
+            <div>
+              <div style={{ fontSize: 32, marginBottom: 6 }}>📊</div>
+              <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>
+                Click para seleccionar PDF<br />
+                <span style={{ fontSize: 10 }}>Presupuesto de licitación en PDF</span>
+              </p>
+            </div>
+          )}
+        </div>
+
+        {prog && <p style={{ fontSize: 11, color: "#059669", margin: 0 }}>⏳ {prog}</p>}
+
+        <ModalActions
+          onClose={onClose}
+          onSave={save}
+          saving={saving}
+          disabled={!file}
+          label="Procesar presupuesto →"
+        />
       </div>
     </Modal>
   );
