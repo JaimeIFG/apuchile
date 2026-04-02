@@ -1348,31 +1348,264 @@ function ModalDoc({ obraId, catInicial, onClose, onSave }) {
 
 function ModalPago({ obraId, onClose, onSave }) {
   const [form,setForm]=useState({nombre:"",tipo:"Estado de Pago",fecha:"",monto:"",numero_oficio:"",numero_estado_pago:"",unidad_pago:""});
-  const [file,setFile]=useState(null); const [saving,setSaving]=useState(false);
+  const [file,setFile]=useState(null);
+  const [saving,setSaving]=useState(false);
+  const [leyendo,setLeyendo]=useState(false);
+  const [partidas,setPartidas]=useState([]);
+  const [epError,setEpError]=useState("");
   const set=(k,v)=>setForm(f=>({...f,[k]:v}));
-  const save=async()=>{
-    if(!form.nombre.trim())return; setSaving(true);
-    let archivo_url=null,archivo_nombre=null;
-    if(file){const r=await uploadFile(obraId,"pagos",file);if(!r.error){archivo_url=r.url;archivo_nombre=r.nombre;}}
-    const{data,error}=await supabase.from("obra_estados_pago").insert({obra_id:obraId,...form,monto:form.monto?parseFloat(form.monto):null,archivo_url,archivo_nombre}).select().single();
-    setSaving(false); if(!error&&data) onSave(data);
+
+  const isExcel = file && (file.name.endsWith(".xlsx")||file.name.endsWith(".xls"));
+  const isPDF   = file && file.name.endsWith(".pdf");
+
+  const leerExcel = async (f) => {
+    if (!f || !(f.name.endsWith(".xlsx")||f.name.endsWith(".xls"))) return;
+    setLeyendo(true); setEpError(""); setPartidas([]);
+    try {
+      const fd = new FormData(); fd.append("file", f);
+      const res = await fetch("/api/procesar-ep-excel", { method:"POST", body:fd });
+      const data = await res.json();
+      if (data.error) { setEpError(data.error); setLeyendo(false); return; }
+      // Auto-fill form
+      if (data.meta.numeroEP) {
+        set("numero_estado_pago", data.meta.numeroEP);
+        if (!form.nombre) set("nombre", `Estado de Pago N°${data.meta.numeroEP}`);
+      }
+      if (data.meta.fecha) set("fecha", data.meta.fecha);
+      if (data.total) set("monto", String(Math.round(data.total)));
+      if (data.partidas?.length) setPartidas(data.partidas);
+    } catch(e) { setEpError(e.message); }
+    setLeyendo(false);
   };
-  return(
-    <Modal title="💰 Estado de Pago" onClose={onClose}>
-      <div style={{display:"grid",gap:14}}>
-        <InputRow label="Nombre"><input autoFocus value={form.nombre} onChange={e=>set("nombre",e.target.value)} style={inputSt} placeholder="Ej: Estado de Pago N°1"/></InputRow>
-        <Grid cols={2}>
-          <InputRow label="Tipo"><select value={form.tipo} onChange={e=>set("tipo",e.target.value)} style={selectSt}>{TIPOS_EP.map(t=><option key={t}>{t}</option>)}</select></InputRow>
-          <InputRow label="Fecha"><input type="date" value={form.fecha} onChange={e=>set("fecha",e.target.value)} style={inputSt}/></InputRow>
-          <InputRow label="Monto ($)"><input type="number" value={form.monto} onChange={e=>set("monto",e.target.value)} style={inputSt} placeholder="0"/></InputRow>
-          <InputRow label="Unidad de Pago"><input value={form.unidad_pago} onChange={e=>set("unidad_pago",e.target.value)} style={inputSt}/></InputRow>
-          <InputRow label="N° Estado de Pago"><input value={form.numero_estado_pago} onChange={e=>set("numero_estado_pago",e.target.value)} style={inputSt}/></InputRow>
-          <InputRow label="N° Oficio"><input value={form.numero_oficio} onChange={e=>set("numero_oficio",e.target.value)} style={inputSt}/></InputRow>
-        </Grid>
-        <InputRow label="Archivo adjunto"><FileDropZone id="pago-file" file={file} setFile={setFile}/></InputRow>
-        <ModalActions onClose={onClose} onSave={save} saving={saving} disabled={!form.nombre.trim()}/>
+
+  const handleFile = (f) => { setFile(f); leerExcel(f); };
+
+  const save = async () => {
+    if (!form.nombre.trim()) return; setSaving(true);
+    let archivo_url=null, archivo_nombre=null;
+    if (file) {
+      const r = await uploadFile(obraId,"pagos",file);
+      if (!r.error) { archivo_url=r.url; archivo_nombre=r.nombre; }
+    }
+    const partidas_json = partidas.length ? JSON.stringify(partidas) : null;
+    const {data,error} = await supabase.from("obra_estados_pago")
+      .insert({obra_id:obraId,...form, monto:form.monto?parseFloat(String(form.monto).replace(/\./g,"").replace(",",".")):null,
+        archivo_url, archivo_nombre, partidas_json})
+      .select().single();
+    setSaving(false);
+    if (!error && data) onSave(data);
+  };
+
+  const fmtN = v => v ? "$"+Math.round(v).toLocaleString("es-CL") : "—";
+  const hasPartidas = partidas.length > 0;
+  const hasMontosActuales = partidas.some(p=>p.monto_actual);
+  const hasColumnaAnterior = partidas.some(p=>p.cant_anterior!=null||p.monto_anterior!=null);
+
+  return (
+    <div style={{ position:"fixed", inset:0, zIndex:60, display:"flex", alignItems:"center",
+      justifyContent:"center", padding:16, backdropFilter:"blur(6px)", background:"rgba(0,0,0,.4)" }}>
+      <div style={{ background:"#fff", borderRadius:20, width:"100%",
+        maxWidth: hasPartidas ? 980 : 560,
+        boxShadow:"0 24px 60px rgba(0,0,0,.25)", maxHeight:"92vh",
+        display:"flex", flexDirection:"column", overflow:"hidden",
+        transition:"max-width .3s cubic-bezier(0.16,1,0.3,1)" }}>
+
+        {/* Header */}
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+          padding:"20px 24px 16px", borderBottom:"1px solid #f1f5f9", flexShrink:0 }}>
+          <h3 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>
+            💰 Estado de Pago
+            {hasPartidas && <span style={{ fontSize:11, fontWeight:500, color:"#059669",
+              marginLeft:10, background:"#d1fae5", padding:"2px 8px", borderRadius:99 }}>
+              {partidas.length} partidas leídas ✓
+            </span>}
+          </h3>
+          <button onClick={onClose} style={{ background:"#f1f5f9", border:"none", borderRadius:8,
+            width:28, height:28, cursor:"pointer", fontSize:13, color:"#64748b" }}>✕</button>
+        </div>
+
+        {/* Body — dos columnas cuando hay partidas */}
+        <div style={{ display:"flex", flex:1, overflow:"hidden" }}>
+
+          {/* Panel izquierdo — formulario */}
+          <div style={{ flex:"0 0 auto", width: hasPartidas ? 340 : "100%",
+            padding:"20px 24px", overflowY:"auto",
+            borderRight: hasPartidas ? "1px solid #f1f5f9" : "none" }}>
+            <div style={{ display:"grid", gap:13 }}>
+
+              <InputRow label="Nombre">
+                <input autoFocus value={form.nombre} onChange={e=>set("nombre",e.target.value)}
+                  style={inputSt} placeholder="Ej: Estado de Pago N°1"/>
+              </InputRow>
+
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                <InputRow label="Tipo">
+                  <select value={form.tipo} onChange={e=>set("tipo",e.target.value)} style={selectSt}>
+                    {TIPOS_EP.map(t=><option key={t}>{t}</option>)}
+                  </select>
+                </InputRow>
+                <InputRow label="Fecha">
+                  <input type="date" value={form.fecha} onChange={e=>set("fecha",e.target.value)} style={inputSt}/>
+                </InputRow>
+                <InputRow label="Monto ($)">
+                  <input value={form.monto} onChange={e=>set("monto",e.target.value)} style={inputSt} placeholder="0"/>
+                </InputRow>
+                <InputRow label="Unidad de Pago">
+                  <input value={form.unidad_pago} onChange={e=>set("unidad_pago",e.target.value)} style={inputSt}/>
+                </InputRow>
+                <InputRow label="N° Estado de Pago">
+                  <input value={form.numero_estado_pago} onChange={e=>set("numero_estado_pago",e.target.value)} style={inputSt}/>
+                </InputRow>
+                <InputRow label="N° Oficio">
+                  <input value={form.numero_oficio} onChange={e=>set("numero_oficio",e.target.value)} style={inputSt}/>
+                </InputRow>
+              </div>
+
+              {/* Zona de archivo */}
+              <InputRow label="Archivo adjunto (Excel o PDF)">
+                <div style={{ border:"2px dashed #e2e8f0", borderRadius:10, padding:"14px 12px",
+                  background:"#fafafa", cursor:"pointer", textAlign:"center",
+                  transition:"border-color .15s, background .15s" }}
+                  onClick={()=>document.getElementById("pago-file-inp").click()}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor="#059669";e.currentTarget.style.background="#f0fdf4";}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor="#e2e8f0";e.currentTarget.style.background="#fafafa";}}>
+                  <input id="pago-file-inp" type="file" accept=".xlsx,.xls,.pdf"
+                    style={{display:"none"}} onChange={e=>handleFile(e.target.files?.[0]||null)}/>
+                  {file ? (
+                    <div>
+                      <div style={{fontSize:20,marginBottom:3}}>{isExcel?"📊":"📄"}</div>
+                      <p style={{fontSize:11,fontWeight:700,color:"#065f46",margin:0}}>{file.name}</p>
+                      {leyendo && <p style={{fontSize:10,color:"#059669",margin:"4px 0 0"}}>⏳ Leyendo datos…</p>}
+                    </div>
+                  ) : (
+                    <div>
+                      <div style={{fontSize:22,marginBottom:4}}>📂</div>
+                      <p style={{fontSize:11,color:"#94a3b8",margin:0}}>
+                        <strong>Excel</strong> → lee partidas automáticamente<br/>
+                        <span style={{fontSize:10}}>.xlsx · .xls · .pdf</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </InputRow>
+
+              {epError && (
+                <div style={{background:"#fff5f5",border:"1px solid #fca5a5",borderRadius:8,
+                  padding:"8px 12px",fontSize:11,color:"#b91c1c"}}>⚠️ {epError}</div>
+              )}
+
+              {/* Resumen si hay partidas */}
+              {hasPartidas && hasMontosActuales && (
+                <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"12px 14px"}}>
+                  <p style={{fontSize:11,fontWeight:700,color:"#065f46",margin:"0 0 6px",textTransform:"uppercase"}}>
+                    Resumen EP
+                  </p>
+                  {hasColumnaAnterior && (
+                    <div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"4px 0",borderBottom:"1px solid #d1fae5"}}>
+                      <span style={{color:"#374151"}}>Monto anterior</span>
+                      <span style={{fontWeight:600}}>{fmtN(partidas.reduce((s,p)=>s+(p.monto_anterior||0),0))}</span>
+                    </div>
+                  )}
+                  <div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"4px 0",borderBottom:"1px solid #d1fae5"}}>
+                    <span style={{color:"#374151"}}>Este estado de pago</span>
+                    <span style={{fontWeight:600,color:"#059669"}}>{fmtN(partidas.reduce((s,p)=>s+(p.monto_actual||0),0))}</span>
+                  </div>
+                  <div style={{display:"flex",justifyContent:"space-between",fontSize:13,padding:"6px 0 0"}}>
+                    <span style={{fontWeight:700,color:"#065f46"}}>Total acumulado</span>
+                    <span style={{fontWeight:800,color:"#059669"}}>
+                      {fmtN(partidas.reduce((s,p)=>s+(p.monto_anterior||0)+(p.monto_actual||0),0))}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Botones */}
+            <div style={{display:"flex",gap:10,marginTop:18}}>
+              <button onClick={save} disabled={saving||!form.nombre.trim()}
+                style={{flex:1,background:"#059669",color:"#fff",border:"none",borderRadius:12,
+                  padding:"11px",fontSize:13,fontWeight:700,cursor:"pointer",
+                  opacity:!form.nombre.trim()?0.5:1,fontFamily:"inherit"}}>
+                {saving?"Guardando…":"Guardar →"}
+              </button>
+              <button onClick={onClose}
+                style={{background:"#f1f5f9",color:"#64748b",border:"none",borderRadius:12,
+                  padding:"11px 16px",fontSize:13,cursor:"pointer",fontFamily:"inherit"}}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+
+          {/* Panel derecho — tabla de partidas */}
+          {hasPartidas && (
+            <div style={{flex:1,overflowY:"auto",padding:"16px 20px",background:"#fafafa"}}>
+              <p style={{fontSize:12,fontWeight:700,color:"#065f46",margin:"0 0 12px",
+                textTransform:"uppercase",letterSpacing:".05em"}}>
+                📋 Desglose de Partidas
+              </p>
+              <div style={{border:"1px solid #e2e8f0",borderRadius:12,overflow:"hidden",background:"#fff"}}>
+                <table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}>
+                  <thead style={{background:"#f0fdf4"}}>
+                    <tr>
+                      {["Ítem","Descripción","Un.","Cant.","P. Unit.",
+                        ...(hasColumnaAnterior?["Ant.","Actual"]:["Monto"])
+                      ].map((h,i)=>(
+                        <th key={i} style={{padding:"8px 10px",fontWeight:700,color:"#065f46",
+                          textAlign:i>=3?"right":"left",borderBottom:"1px solid #d1fae5",
+                          whiteSpace:"nowrap",fontSize:10}}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {partidas.map((p,i)=>(
+                      <tr key={i} style={{background:i%2===0?"#fff":"#f9fafb",
+                        borderBottom:"1px solid #f1f5f9"}}>
+                        <td style={{padding:"6px 10px",color:"#94a3b8",whiteSpace:"nowrap"}}>{p.item}</td>
+                        <td style={{padding:"6px 10px",color:"#1e293b",maxWidth:200,
+                          overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}
+                          title={p.partida}>{p.partida}</td>
+                        <td style={{padding:"6px 10px",color:"#64748b"}}>{p.unidad}</td>
+                        <td style={{padding:"6px 10px",textAlign:"right",color:"#64748b"}}>
+                          {p.cant_actual??p.cant_contrato??""}</td>
+                        <td style={{padding:"6px 10px",textAlign:"right",color:"#64748b"}}>
+                          {p.precio_unitario?fmtN(p.precio_unitario):""}</td>
+                        {hasColumnaAnterior ? <>
+                          <td style={{padding:"6px 10px",textAlign:"right",color:"#94a3b8"}}>
+                            {p.monto_anterior?fmtN(p.monto_anterior):""}</td>
+                          <td style={{padding:"6px 10px",textAlign:"right",fontWeight:600,color:"#059669"}}>
+                            {p.monto_actual?fmtN(p.monto_actual):"—"}</td>
+                        </> : (
+                          <td style={{padding:"6px 10px",textAlign:"right",fontWeight:600,color:"#059669"}}>
+                            {p.monto_actual?fmtN(p.monto_actual):"—"}</td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                  {hasMontosActuales && (
+                    <tfoot style={{background:"#f0fdf4",borderTop:"2px solid #d1fae5"}}>
+                      <tr>
+                        <td colSpan={hasColumnaAnterior?5:4}
+                          style={{padding:"8px 10px",fontWeight:700,color:"#065f46",fontSize:12}}>
+                          TOTAL
+                        </td>
+                        {hasColumnaAnterior && (
+                          <td style={{padding:"8px 10px",textAlign:"right",fontWeight:700,color:"#94a3b8",fontSize:12}}>
+                            {fmtN(partidas.reduce((s,p)=>s+(p.monto_anterior||0),0))}
+                          </td>
+                        )}
+                        <td style={{padding:"8px 10px",textAlign:"right",fontWeight:800,color:"#059669",fontSize:13}}>
+                          {fmtN(partidas.reduce((s,p)=>s+(p.monto_actual||0),0))}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  )}
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </Modal>
+    </div>
   );
 }
 
