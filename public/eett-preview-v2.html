@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>EE.TT. · Blueprint — 5 Variaciones</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#e8edf2;padding:24px;color:#111}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid #dde3ea;padding:10px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;border-radius:0}
+.nav .label{font-size:12px;font-weight:800;color:#1e3a5f;margin-right:6px;letter-spacing:-.01em}
+.nav a{padding:6px 13px;border-radius:20px;font-size:11px;font-weight:700;text-decoration:none;border:1.5px solid transparent;transition:all .15s;white-space:nowrap}
+.nav a:hover{transform:translateY(-1px)}
+.na{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}.na:hover{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+.nb{background:#f0f9ff;color:#0369a1;border-color:#bae6fd}.nb:hover{background:#0c4a6e;color:#fff}
+.nc{background:#f8faff;color:#3b82f6;border-color:#dbeafe}.nc:hover{background:#1e40af;color:#fff}
+.nd{background:#f0fdf4;color:#065f46;border-color:#a7f3d0}.nd:hover{background:#064e3b;color:#fff}
+.ne{background:#fff7ed;color:#c2410c;border-color:#fed7aa}.ne:hover{background:#7c2d12;color:#fff}
+
+/* SECTION HEADER */
+.sh{display:flex;align-items:flex-start;gap:14px;margin:40px 0 14px;padding:0 2px}
+.sh-num{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-.02em}
+.sh h2{font-size:17px;font-weight:800;color:#111;margin-bottom:3px}
+.sh p{font-size:11px;color:#777;line-height:1.5}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle;letter-spacing:.05em;text-transform:uppercase}
+.b-new{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.b-data{background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd}
+.b-anim{background:#ecfdf5;color:#065f46;border:1px solid #6ee7b7}
+
+/* ANIMS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.97) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* ════════════ 3A — BLUEPRINT REFINED ════════════ */
+.v3a{max-width:760px;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px -8px rgba(30,58,95,.22);animation:fadeUp .4s .05s both}
+.v3a-head{background:linear-gradient(160deg,#1e3a5f 0%,#1e40af 60%,#1d4ed8 100%);padding:0;position:relative;overflow:hidden}
+.v3a-head-grid{position:absolute;inset:0;opacity:.07;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:24px 24px}
+.v3a-head-inner{position:relative;z-index:1;padding:22px 26px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.v3a-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(251,191,36,.18);border:1px solid rgba(251,191,36,.45);border-radius:4px;padding:3px 9px;font-size:9px;font-weight:800;color:#fbbf24;letter-spacing:.12em;text-transform:uppercase;margin-bottom:9px}
+.v3a-tag::before{content:'▲';font-size:7px}
+.v3a-head h1{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.25;margin-bottom:4px}
+.v3a-head .sub{font-size:11px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px}
+.v3a-head .sub span::before{content:'·';margin-right:6px;opacity:.4}
+.v3a-head .sub span:first-child::before{content:none}
+.v3a-logo{width:56px;height:30px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.5);font-weight:700;flex-shrink:0}
+/* Stats strip */
+.v3a-stats{background:rgba(0,0,0,.18);backdrop-filter:blur(4px);padding:10px 26px;display:flex;gap:0;border-top:1px solid rgba(255,255,255,.1);position:relative;z-index:1}
+.v3a-stat{flex:1;text-align:center;padding:2px 0}
+.v3a-stat+.v3a-stat{border-left:1px solid rgba(255,255,255,.1)}
+.v3a-stat .v{font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em}
+.v3a-stat .k{font-size:8px;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:1px}
+/* Table */
+.v3a-table{background:#fff}
+.v3a-row{display:flex;align-items:stretch;border-bottom:1px solid #e8edf4}
+.v3a-row:last-child{border-bottom:none}
+.v3a-row-k{width:120px;flex-shrink:0;background:#1e3a5f;padding:10px 14px;font-size:9px;font-weight:800;color:#93c5fd;letter-spacing:.09em;text-transform:uppercase;display:flex;align-items:center}
+.v3a-row-v{padding:10px 16px;font-size:11.5px;color:#1e293b;display:flex;align-items:center;background:#fff;line-height:1.4}
+/* Accordions */
+.v3a-acc{border-top:1px solid #e8edf4}
+.v3a-acc-h{padding:11px 20px;display:flex;align-items:center;gap:8px;cursor:pointer;background:#eff6ff;border-left:3px solid #1d4ed8;border-bottom:1px solid #dbeafe;transition:background .12s}
+.v3a-acc-h:hover{background:#dbeafe}
+.v3a-acc-h span{font-size:10px;font-weight:800;color:#1d4ed8;letter-spacing:.06em;text-transform:uppercase;flex:1}
+.v3a-acc-h .arr{font-size:9px;color:#93c5fd;transition:transform .2s}
+/* Chapters */
+.v3a-ch{border-top:2px solid #e2e8f0;background:#fff;transition:background .1s}
+.v3a-ch-h{padding:14px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s}
+.v3a-ch-h:hover{background:#f8fafc}
+.v3a-nbadge{width:32px;height:32px;background:#1e3a5f;color:#fbbf24;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0;letter-spacing:-.01em}
+.v3a-ch-info .title{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:.01em}
+.v3a-ch-info .normas{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.v3a-ch-info .norma{font-size:9px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:3px;padding:2px 6px;font-weight:700}
+.v3a-ch-arr{margin-left:auto;font-size:10px;color:#cbd5e1}
+.v3a-sec{padding:11px 20px 11px 64px;border-top:1px solid #f1f5f9}
+.v3a-sec-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#1d4ed8;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.v3a-sec-lbl::after{content:'';flex:1;height:1px;background:#e2e8f0}
+.v3a-sec p{font-size:11px;color:#334155;line-height:1.65}
+.v3a-foot{padding:10px 20px;background:#1e3a5f;display:flex;justify-content:space-between;font-size:9px;color:#64748b}
+.v3a-foot .r{color:#94a3b8}
+
+/* ════════════ 3B — BLUEPRINT + DATOS COMPLETOS ════════════ */
+.v3b{max-width:760px;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px -8px rgba(30,58,95,.22);animation:fadeUp .4s .05s both}
+.v3b-head{background:#0f172a;padding:20px 24px;display:flex;justify-content:space-between;align-items:flex-start;position:relative;overflow:hidden}
+.v3b-head::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#1d4ed8,#0ea5e9,#fbbf24)}
+.v3b-tag{font-size:8px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#64748b;margin-bottom:6px}
+.v3b-head h1{font-size:16px;font-weight:900;color:#f8fafc;letter-spacing:-.02em;line-height:1.2;margin-bottom:3px}
+.v3b-head .mandante{font-size:11px;color:#94a3b8}
+.v3b-logo{width:54px;height:28px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.3);font-weight:700;flex-shrink:0}
+/* stats bar */
+.v3b-stats{background:#1e293b;display:flex;border-bottom:1px solid rgba(255,255,255,.06)}
+.v3b-st{flex:1;padding:10px 16px;border-right:1px solid rgba(255,255,255,.06);text-align:center}
+.v3b-st:last-child{border-right:none}
+.v3b-st .v{font-size:13px;font-weight:800;color:#38bdf8;letter-spacing:-.01em}
+.v3b-st .k{font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:.09em;margin-top:2px}
+/* data grid 2col */
+.v3b-grid{background:#fff;display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid #1e3a5f}
+.v3b-cell{padding:10px 16px;border-bottom:1px solid #f1f5f9;border-right:1px solid #f1f5f9}
+.v3b-cell:nth-child(even){border-right:none}
+.v3b-cell .k{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:#0369a1;margin-bottom:3px}
+.v3b-cell .v{font-size:11px;color:#0f172a;font-weight:500}
+/* chip especial */
+.v3b-chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px}
+.chip-ok{background:#dcfce7;color:#166534}
+.chip-warn{background:#fef9c3;color:#854d0e}
+/* rest same as v3a */
+.v3b-acc-h{padding:11px 20px;display:flex;align-items:center;gap:8px;cursor:pointer;background:#f0f9ff;border-left:3px solid #0369a1;border-top:1px solid #e0f2fe;border-bottom:1px solid #e0f2fe;transition:background .12s}
+.v3b-acc-h:hover{background:#e0f2fe}
+.v3b-acc-h span{font-size:10px;font-weight:800;color:#0369a1;letter-spacing:.06em;text-transform:uppercase;flex:1}
+.v3b-acc-h .arr{font-size:9px;color:#7dd3fc}
+.v3b-ch{border-top:1px solid #e2e8f0;background:#fff}
+.v3b-ch-h{padding:14px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s}
+.v3b-ch-h:hover{background:#f8fafc}
+.v3b-nbadge{width:32px;height:32px;background:linear-gradient(135deg,#0c4a6e,#0369a1);color:#7dd3fc;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0}
+.v3b-ch-title{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:.01em}
+.v3b-ch-normas{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.v3b-norma{font-size:9px;background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;border-radius:3px;padding:2px 6px;font-weight:700}
+.v3b-sec{padding:11px 20px 11px 64px;border-top:1px solid #f1f5f9}
+.v3b-sec-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#0369a1;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.v3b-sec-lbl::after{content:'';flex:1;height:1px;background:#e0f2fe}
+.v3b-sec p{font-size:11px;color:#334155;line-height:1.65}
+.v3b-foot{padding:9px 20px;background:#0f172a;display:flex;justify-content:space-between;font-size:9px;color:#475569}
+
+/* ════════════ 3C — BLUEPRINT CLARO ════════════ */
+.v3c{max-width:760px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px -4px rgba(30,58,95,.14),0 0 0 1px rgba(30,58,95,.08);background:#fff;animation:scaleIn .4s .05s both}
+.v3c-head{padding:22px 26px 0;background:#fff;border-bottom:3px solid #1d4ed8}
+.v3c-head-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.v3c-tag{font-size:8px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#93c5fd;background:#1e3a5f;padding:3px 8px;border-radius:3px;margin-bottom:7px;display:inline-block}
+.v3c-head h1{font-size:16px;font-weight:800;color:#0f172a;letter-spacing:-.02em;line-height:1.25}
+.v3c-head .sub{font-size:11px;color:#64748b;margin-top:3px}
+.v3c-logo{width:54px;height:28px;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#1d4ed8;font-weight:700;flex-shrink:0}
+/* tab de datos */
+.v3c-tabs{display:flex;border-top:1px solid #e2e8f0;margin-top:0}
+.v3c-tab{flex:1;padding:8px 14px;text-align:center;border-right:1px solid #e2e8f0}
+.v3c-tab:last-child{border-right:none}
+.v3c-tab .k{font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.v3c-tab .v{font-size:11.5px;font-weight:700;color:#0f172a}
+/* table */
+.v3c-table{border-bottom:1px solid #e2e8f0}
+.v3c-row{display:flex;align-items:baseline;padding:9px 26px;border-bottom:1px solid #f8fafc;transition:background .1s}
+.v3c-row:hover{background:#f8faff}
+.v3c-row:last-child{border-bottom:none}
+.v3c-row .k{width:110px;flex-shrink:0;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#1d4ed8}
+.v3c-row .v{font-size:11.5px;color:#0f172a}
+/* acc */
+.v3c-acc-h{padding:11px 26px;display:flex;align-items:center;gap:8px;cursor:pointer;border-top:1px solid #e2e8f0;transition:background .12s}
+.v3c-acc-h:hover{background:#f8faff}
+.v3c-dot{width:7px;height:7px;border-radius:50%;background:#bfdbfe;border:2px solid #1d4ed8;flex-shrink:0}
+.v3c-acc-h span{font-size:10px;font-weight:800;color:#1e3a5f;text-transform:uppercase;letter-spacing:.07em;flex:1}
+.v3c-acc-h .arr{font-size:9px;color:#93c5fd}
+/* ch */
+.v3c-ch{border-top:1px solid #e2e8f0;background:#fff}
+.v3c-ch-h{padding:14px 26px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s}
+.v3c-ch-h:hover{background:#f8faff}
+.v3c-nbadge{width:32px;height:32px;background:#eff6ff;color:#1d4ed8;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0;border:1.5px solid #bfdbfe}
+.v3c-ch-title{font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:.01em}
+.v3c-ch-normas{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.v3c-norma{font-size:9px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:3px;padding:2px 6px;font-weight:700}
+.v3c-sec{padding:11px 26px 11px 70px;border-top:1px solid #f1f5f9}
+.v3c-sec-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#1d4ed8;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.v3c-sec-lbl::after{content:'';flex:1;height:1px;background:#e2e8f0}
+.v3c-sec p{font-size:11px;color:#334155;line-height:1.65}
+.v3c-foot{padding:9px 26px;background:#f8faff;border-top:2px solid #1d4ed8;display:flex;justify-content:space-between;font-size:9px;color:#94a3b8}
+
+/* ════════════ 3D — BLUEPRINT DOS COLUMNAS ════════════ */
+.v3d{max-width:900px;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px -8px rgba(30,58,95,.22);display:flex;animation:fadeUp .4s .05s both}
+/* sidebar */
+.v3d-sidebar{width:200px;flex-shrink:0;background:#0f172a;display:flex;flex-direction:column}
+.v3d-sb-head{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,.07)}
+.v3d-sb-logo{width:44px;height:22px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,.3);font-weight:700;margin-bottom:10px}
+.v3d-sb-proj{font-size:11px;font-weight:800;color:#f1f5f9;line-height:1.3;letter-spacing:-.01em}
+.v3d-sb-sub{font-size:9px;color:#64748b;margin-top:3px}
+.v3d-sb-stats{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.v3d-sb-stat{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.v3d-sb-stat:last-child{border-bottom:none}
+.v3d-sb-stat .k{font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:.07em}
+.v3d-sb-stat .v{font-size:10px;font-weight:700;color:#38bdf8}
+.v3d-sb-idx{flex:1;padding:12px 0;overflow-y:auto}
+.v3d-sb-idx-h{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#475569;padding:0 16px 6px}
+.v3d-idx-item{padding:8px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .1s;border-left:2px solid transparent}
+.v3d-idx-item:hover{background:rgba(255,255,255,.05)}
+.v3d-idx-item.active{background:rgba(29,78,216,.25);border-left-color:#1d4ed8}
+.v3d-idx-num{width:20px;height:20px;background:#1e3a5f;color:#fbbf24;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;border-radius:4px;flex-shrink:0}
+.v3d-idx-title{font-size:10px;color:#94a3b8;font-weight:500;line-height:1.3}
+.v3d-idx-item.active .v3d-idx-title{color:#e2e8f0;font-weight:700}
+/* main */
+.v3d-main{flex:1;background:#fff;display:flex;flex-direction:column;min-width:0}
+.v3d-main-head{background:linear-gradient(135deg,#1e3a5f,#1e40af);padding:18px 22px;position:relative;overflow:hidden}
+.v3d-main-head::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:20px 20px}
+.v3d-main-tag{position:relative;z-index:1;font-size:8px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#93c5fd;margin-bottom:6px}
+.v3d-main-head h2{position:relative;z-index:1;font-size:14px;font-weight:800;color:#fff;letter-spacing:.03em;text-transform:uppercase}
+.v3d-main-normas{position:relative;z-index:1;display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.v3d-main-norma{font-size:8px;background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3);padding:2px 6px;border-radius:3px;font-weight:700}
+.v3d-secs{flex:1;overflow-y:auto}
+.v3d-sec{padding:14px 22px;border-bottom:1px solid #f1f5f9}
+.v3d-sec-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#1d4ed8;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.v3d-sec-lbl::after{content:'';flex:1;height:1px;background:#e2e8f0}
+.v3d-sec p{font-size:11px;color:#334155;line-height:1.65}
+.v3d-table{border-top:1px solid #e2e8f0;background:#f8fafc}
+.v3d-tr{display:flex;border-bottom:1px solid #e2e8f0;font-size:10px}
+.v3d-tr:last-child{border-bottom:none}
+.v3d-tr .k{width:100px;flex-shrink:0;background:#e2e8f0;padding:8px 12px;font-size:8px;font-weight:800;color:#1e3a5f;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center}
+.v3d-tr .v{padding:8px 12px;font-size:10px;color:#1e293b;display:flex;align-items:center}
+.v3d-foot{padding:8px 22px;background:#0f172a;display:flex;justify-content:space-between;font-size:9px;color:#475569}
+
+/* ════════════ 3E — BLUEPRINT PREMIUM ════════════ */
+.v3e{max-width:760px;border-radius:14px;overflow:hidden;box-shadow:0 12px 60px -10px rgba(30,58,95,.3),0 0 0 1px rgba(30,58,95,.12);animation:scaleIn .4s .05s both}
+.v3e-head{background:#0a0f1e;padding:0;position:relative;overflow:hidden}
+.v3e-head-deco{position:absolute;right:-30px;top:-30px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(29,78,216,.25) 0%,transparent 70%);pointer-events:none}
+.v3e-head-deco2{position:absolute;left:-20px;bottom:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.08) 0%,transparent 70%);pointer-events:none}
+.v3e-head-content{position:relative;z-index:1;padding:22px 26px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.v3e-eyebrow{font-size:8px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#3b82f6;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.v3e-eyebrow::before{content:'';width:18px;height:1.5px;background:#3b82f6;display:inline-block}
+.v3e-head h1{font-size:17px;font-weight:900;color:#f8fafc;letter-spacing:-.03em;line-height:1.2;margin-bottom:5px}
+.v3e-head .sub{font-size:10.5px;color:#64748b;line-height:1.5}
+.v3e-logo{width:56px;height:30px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.25);font-weight:700;flex-shrink:0}
+/* stats con iconos */
+.v3e-stats{background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);display:flex;position:relative;z-index:1}
+.v3e-st{flex:1;padding:10px 16px;border-right:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.v3e-st:last-child{border-right:none}
+.v3e-st-icon{font-size:14px;flex-shrink:0}
+.v3e-st .v{font-size:12px;font-weight:800;color:#e2e8f0;letter-spacing:-.01em}
+.v3e-st .k{font-size:8px;color:#475569;text-transform:uppercase;letter-spacing:.07em;margin-top:1px}
+/* table premium */
+.v3e-table{background:#fff}
+.v3e-row{display:flex;align-items:stretch;border-bottom:1px solid #e8edf4;transition:background .12s}
+.v3e-row:hover{background:#f8faff}
+.v3e-row:last-child{border-bottom:none}
+.v3e-row-k{width:130px;flex-shrink:0;background:linear-gradient(90deg,#1e3a5f,#1e40af);padding:11px 14px;font-size:9px;font-weight:800;color:#93c5fd;letter-spacing:.09em;text-transform:uppercase;display:flex;align-items:center}
+.v3e-row-v{padding:11px 16px;font-size:11.5px;color:#1e293b;display:flex;align-items:center;font-weight:500}
+/* estado badge */
+.v3e-status{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;margin-left:8px}
+.st-active{background:#dcfce7;color:#166534}
+.st-pending{background:#fef9c3;color:#854d0e}
+/* acc premium */
+.v3e-acc{border-top:1px solid #e2e8f0}
+.v3e-acc-h{padding:12px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;background:linear-gradient(90deg,#eff6ff,#f8faff);border-left:3px solid #1d4ed8;border-bottom:1px solid #e0eeff;transition:all .12s}
+.v3e-acc-h:hover{background:linear-gradient(90deg,#dbeafe,#eff6ff);border-left-color:#1e40af}
+.v3e-acc-icon{font-size:14px;flex-shrink:0}
+.v3e-acc-h .title{font-size:10px;font-weight:800;color:#1e40af;text-transform:uppercase;letter-spacing:.06em;flex:1}
+.v3e-acc-h .desc{font-size:9px;color:#64748b}
+.v3e-acc-h .arr{font-size:9px;color:#93c5fd}
+/* chapter premium */
+.v3e-ch{border-top:1px solid #e2e8f0;background:#fff}
+.v3e-ch-h{padding:15px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s}
+.v3e-ch-h:hover{background:#f8fafc}
+.v3e-nbadge{width:36px;height:36px;background:linear-gradient(135deg,#1e3a5f,#1d4ed8);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0;box-shadow:0 2px 8px rgba(29,78,216,.35)}
+.v3e-ch-right{flex:1;min-width:0}
+.v3e-ch-title{font-size:13px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:.01em}
+.v3e-ch-meta{display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap}
+.v3e-norma{font-size:9px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:3px;padding:2px 6px;font-weight:700}
+.v3e-ch-prog{display:flex;align-items:center;gap:4px;margin-left:auto;flex-shrink:0}
+.v3e-prog-dot{width:6px;height:6px;border-radius:50%;background:#e2e8f0}
+.v3e-prog-dot.done{background:#1d4ed8}
+.v3e-sec{padding:12px 20px 12px 68px;border-top:1px solid #f1f5f9}
+.v3e-sec-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#1d4ed8;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.v3e-sec-lbl .icon{font-size:11px}
+.v3e-sec-lbl::after{content:'';flex:1;height:1px;background:#e2e8f0;margin-left:4px}
+.v3e-sec p{font-size:11px;color:#334155;line-height:1.65}
+.v3e-foot{padding:10px 20px;background:#0a0f1e;display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#334155}
+.v3e-foot .brand{color:#3b82f6;font-weight:700}
+.v3e-foot .pg{color:#475569}
+.v3e-foot .right{display:flex;align-items:center;gap:8px}
+.v3e-foot .rev{font-size:8px;color:#334155;background:rgba(255,255,255,.05);padding:2px 6px;border-radius:3px}
+
+/* BOTTOM */
+.bottom{text-align:center;padding:32px 0 56px;font-size:11px;color:#94a3b8}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <span class="label">Blueprint · 5 Variaciones</span>
+  <a href="#v3a" class="na">3A · Refined</a>
+  <a href="#v3b" class="nb">3B · Datos Completos</a>
+  <a href="#v3c" class="nc">3C · Blueprint Claro</a>
+  <a href="#v3d" class="nd">3D · Dos Columnas</a>
+  <a href="#v3e" class="ne">3E · Premium</a>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     3A — BLUEPRINT REFINED
+══════════════════════════════════════════════ -->
+<div id="v3a" style="padding-top:8px">
+  <div class="sh">
+    <div class="sh-num" style="background:linear-gradient(135deg,#1e3a5f,#1d4ed8)">3A</div>
+    <div>
+      <h2>Blueprint Refined <span class="badge b-anim">✦ Stats strip</span><span class="badge b-data">+ Plazo / Partidas</span></h2>
+      <p>Original mejorado · Header con grid pattern + barra de estadísticas · Table con keys navy · Diseño más pulido y completo</p>
+    </div>
+  </div>
+  <div class="v3a">
+    <div class="v3a-head">
+      <div class="v3a-head-grid"></div>
+      <div class="v3a-head-inner">
+        <div>
+          <div class="v3a-tag">📐 EE.TT. · ONDAC 2017</div>
+          <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+          <div class="sub">
+            <span>Av. Bulnes 01855, Punta Arenas</span>
+            <span>Marzo 2026</span>
+            <span>180 días corridos</span>
+          </div>
+        </div>
+        <div class="v3a-logo">LOGO</div>
+      </div>
+      <div class="v3a-stats">
+        <div class="v3a-stat"><div class="v">8</div><div class="k">Capítulos</div></div>
+        <div class="v3a-stat"><div class="v">24</div><div class="k">Partidas</div></div>
+        <div class="v3a-stat"><div class="v">180</div><div class="k">Días corridos</div></div>
+        <div class="v3a-stat"><div class="v">Magallanes</div><div class="k">Región</div></div>
+        <div class="v3a-stat"><div class="v">J. Pérez</div><div class="k">Responsable</div></div>
+      </div>
+    </div>
+    <div class="v3a-table">
+      <div class="v3a-row"><div class="v3a-row-k">Proyecto</div><div class="v3a-row-v">Habilitación Sala de Clases CFT Magallanes</div></div>
+      <div class="v3a-row"><div class="v3a-row-k">Propietario</div><div class="v3a-row-v">CFT Magallanes</div></div>
+      <div class="v3a-row"><div class="v3a-row-k">Dirección</div><div class="v3a-row-v">Av. Bulnes 01855, Punta Arenas</div></div>
+      <div class="v3a-row"><div class="v3a-row-k">Fecha</div><div class="v3a-row-v">Marzo 2026</div></div>
+    </div>
+    <div class="v3a-acc">
+      <div class="v3a-acc-h"><span>I. Generalidades</span><span class="arr">▶</span></div>
+      <div class="v3a-acc-h"><span>II. Orden de Prelación</span><span class="arr">▶</span></div>
+    </div>
+    <div class="v3a-ch">
+      <div class="v3a-ch-h">
+        <div class="v3a-nbadge">01</div>
+        <div class="v3a-ch-info">
+          <div class="title">Obra Gruesa</div>
+          <div class="normas"><span class="norma">NCh170</span><span class="norma">NCh1934</span><span class="norma">OGUC Art. 4.1</span></div>
+        </div>
+        <span class="v3a-ch-arr">▼</span>
+      </div>
+      <div class="v3a-sec"><div class="v3a-sec-lbl">Descripción</div><p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según los planos de arquitectura e ingeniería estructural aprobados.</p></div>
+      <div class="v3a-sec"><div class="v3a-sec-lbl">Materiales y Equipos</div><p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado. Todos los materiales deberán contar con certificado de calidad del fabricante.</p></div>
+    </div>
+    <div class="v3a-foot"><span>APUchile · Base ONDAC 2017</span><span class="r">Página 1 de 12</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     3B — BLUEPRINT DATOS COMPLETOS
+══════════════════════════════════════════════ -->
+<div id="v3b" style="margin-top:48px">
+  <div class="sh">
+    <div class="sh-num" style="background:linear-gradient(135deg,#0c4a6e,#0369a1)">3B</div>
+    <div>
+      <h2>Blueprint + Datos Completos <span class="badge b-data">+ 8 campos</span><span class="badge b-new">Estado / Presupuesto</span></h2>
+      <p>Header negro con raya de color degradada · Grid 2×2 con todos los datos del proyecto · Chips de estado (Activo/Pendiente)</p>
+    </div>
+  </div>
+  <div class="v3b">
+    <div class="v3b-head">
+      <div>
+        <div class="v3b-tag">EE.TT. · ESPECIFICACIONES TÉCNICAS</div>
+        <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+        <div class="mandante">CFT Magallanes · Punta Arenas</div>
+      </div>
+      <div class="v3b-logo">LOGO</div>
+    </div>
+    <div class="v3b-stats">
+      <div class="v3b-st"><div class="v">8</div><div class="k">Capítulos</div></div>
+      <div class="v3b-st"><div class="v">24</div><div class="k">Partidas</div></div>
+      <div class="v3b-st"><div class="v">180 días</div><div class="k">Plazo</div></div>
+      <div class="v3b-st"><div class="v">Mar 2026</div><div class="k">Fecha inicio</div></div>
+      <div class="v3b-st"><div class="v">$48.2M</div><div class="k">Presupuesto</div></div>
+    </div>
+    <div class="v3b-grid">
+      <div class="v3b-cell"><div class="k">Proyecto</div><div class="v">Habilitación Sala de Clases CFT Magallanes</div></div>
+      <div class="v3b-cell"><div class="k">Estado</div><div class="v"><span class="v3b-chip chip-ok">✓ Activo</span></div></div>
+      <div class="v3b-cell"><div class="k">Propietario / Mandante</div><div class="v">CFT Magallanes</div></div>
+      <div class="v3b-cell"><div class="k">Responsable ITO</div><div class="v">Juan Pérez Rodríguez</div></div>
+      <div class="v3b-cell"><div class="k">Dirección</div><div class="v">Av. Bulnes 01855, Punta Arenas</div></div>
+      <div class="v3b-cell"><div class="k">Región</div><div class="v">Magallanes y Antártica Chilena</div></div>
+      <div class="v3b-cell"><div class="k">Fecha inicio</div><div class="v">01 de marzo de 2026</div></div>
+      <div class="v3b-cell"><div class="k">Fecha término</div><div class="v">28 de agosto de 2026 (180 días)</div></div>
+    </div>
+    <div class="v3b-acc-h" style="margin-top:0"><span>I. Generalidades</span><span class="arr">▶</span></div>
+    <div class="v3b-acc-h"><span>II. Orden de Prelación</span><span class="arr">▶</span></div>
+    <div class="v3b-ch">
+      <div class="v3b-ch-h">
+        <div class="v3b-nbadge">01</div>
+        <div>
+          <div class="v3b-ch-title">Obra Gruesa</div>
+          <div class="v3b-ch-normas"><span class="v3b-norma">NCh170</span><span class="v3b-norma">NCh1934</span><span class="v3b-norma">OGUC Art. 4.1</span></div>
+        </div>
+      </div>
+      <div class="v3b-sec"><div class="v3b-sec-lbl">Descripción</div><p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros.</p></div>
+      <div class="v3b-sec"><div class="v3b-sec-lbl">Materiales y Equipos</div><p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado con ensayos de laboratorio.</p></div>
+    </div>
+    <div class="v3b-foot"><span>APUchile · Base ONDAC 2017</span><span>Página 1 de 12</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     3C — BLUEPRINT CLARO
+══════════════════════════════════════════════ -->
+<div id="v3c" style="margin-top:48px">
+  <div class="sh">
+    <div class="sh-num" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">3C</div>
+    <div>
+      <h2>Blueprint Claro <span class="badge b-anim">✦ Border top accent</span><span class="badge b-data">Tabs de datos</span></h2>
+      <p>Fondo blanco total · Acento azul en bordes y labels · Tabs para datos rápidos · Más legible en pantalla · Muy limpio</p>
+    </div>
+  </div>
+  <div class="v3c">
+    <div class="v3c-head">
+      <div class="v3c-head-top">
+        <div>
+          <div class="v3c-tag">📐 EE.TT. · ONDAC 2017</div>
+          <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+          <div class="sub">CFT Magallanes · Av. Bulnes 01855, Punta Arenas</div>
+        </div>
+        <div class="v3c-logo">LOGO</div>
+      </div>
+      <div class="v3c-tabs">
+        <div class="v3c-tab"><div class="k">Capítulos</div><div class="v">8</div></div>
+        <div class="v3c-tab"><div class="k">Partidas</div><div class="v">24</div></div>
+        <div class="v3c-tab"><div class="k">Plazo</div><div class="v">180 días</div></div>
+        <div class="v3c-tab"><div class="k">Inicio</div><div class="v">Mar 2026</div></div>
+        <div class="v3c-tab"><div class="k">Región</div><div class="v">Magallanes</div></div>
+      </div>
+    </div>
+    <div class="v3c-table">
+      <div class="v3c-row"><span class="k">Proyecto</span><span class="v">Habilitación Sala de Clases CFT Magallanes</span></div>
+      <div class="v3c-row"><span class="k">Propietario</span><span class="v">CFT Magallanes</span></div>
+      <div class="v3c-row"><span class="k">Dirección</span><span class="v">Av. Bulnes 01855, Punta Arenas</span></div>
+      <div class="v3c-row"><span class="k">Fecha</span><span class="v">Marzo 2026</span></div>
+    </div>
+    <div class="v3c-acc-h"><div class="v3c-dot"></div><span>I. Generalidades</span><span class="arr">▶</span></div>
+    <div class="v3c-acc-h"><div class="v3c-dot"></div><span>II. Orden de Prelación</span><span class="arr">▶</span></div>
+    <div class="v3c-ch">
+      <div class="v3c-ch-h">
+        <div class="v3c-nbadge">01</div>
+        <div>
+          <div class="v3c-ch-title">Obra Gruesa</div>
+          <div class="v3c-ch-normas"><span class="v3c-norma">NCh170</span><span class="v3c-norma">NCh1934</span><span class="v3c-norma">OGUC Art. 4.1</span></div>
+        </div>
+      </div>
+      <div class="v3c-sec"><div class="v3c-sec-lbl">Descripción</div><p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según los planos aprobados.</p></div>
+      <div class="v3c-sec"><div class="v3c-sec-lbl">Materiales y Equipos</div><p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado con ensayos de laboratorio acreditado.</p></div>
+    </div>
+    <div class="v3c-foot"><span>APUchile · Base ONDAC 2017</span><span>Página 1 de 12</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     3D — BLUEPRINT DOS COLUMNAS
+══════════════════════════════════════════════ -->
+<div id="v3d" style="margin-top:48px">
+  <div class="sh">
+    <div class="sh-num" style="background:linear-gradient(135deg,#064e3b,#065f46)">3D</div>
+    <div>
+      <h2>Blueprint Dos Columnas <span class="badge b-new">Sidebar índice</span><span class="badge b-data">Datos en panel</span></h2>
+      <p>Sidebar oscuro con índice de capítulos navegable + panel de datos · Contenido a la derecha · Ideal pantallas anchas</p>
+    </div>
+  </div>
+  <div class="v3d">
+    <div class="v3d-sidebar">
+      <div class="v3d-sb-head">
+        <div class="v3d-sb-logo">LOGO</div>
+        <div class="v3d-sb-proj">Habilitación Sala de Clases</div>
+        <div class="v3d-sb-sub">CFT Magallanes</div>
+      </div>
+      <div class="v3d-sb-stats">
+        <div class="v3d-sb-stat"><span class="k">Capítulos</span><span class="v">8</span></div>
+        <div class="v3d-sb-stat"><span class="k">Partidas</span><span class="v">24</span></div>
+        <div class="v3d-sb-stat"><span class="k">Plazo</span><span class="v">180 días</span></div>
+        <div class="v3d-sb-stat"><span class="k">Fecha</span><span class="v">Mar 2026</span></div>
+        <div class="v3d-sb-stat"><span class="k">ITO</span><span class="v">J. Pérez</span></div>
+      </div>
+      <div class="v3d-sb-idx">
+        <div class="v3d-sb-idx-h">Índice</div>
+        <div class="v3d-idx-item active">
+          <div class="v3d-idx-num">01</div>
+          <div class="v3d-idx-title">Obra Gruesa</div>
+        </div>
+        <div class="v3d-idx-item">
+          <div class="v3d-idx-num">02</div>
+          <div class="v3d-idx-title">Tabiquería y Cielos</div>
+        </div>
+        <div class="v3d-idx-item">
+          <div class="v3d-idx-num">03</div>
+          <div class="v3d-idx-title">Revestimientos</div>
+        </div>
+        <div class="v3d-idx-item">
+          <div class="v3d-idx-num">04</div>
+          <div class="v3d-idx-title">Inst. Eléctricas</div>
+        </div>
+        <div class="v3d-idx-item">
+          <div class="v3d-idx-num">05</div>
+          <div class="v3d-idx-title">Inst. Sanitarias</div>
+        </div>
+        <div class="v3d-idx-item">
+          <div class="v3d-idx-num">06</div>
+          <div class="v3d-idx-title">Pintura</div>
+        </div>
+      </div>
+    </div>
+    <div class="v3d-main">
+      <div class="v3d-table">
+        <div class="v3d-tr"><div class="k">Propietario</div><div class="v">CFT Magallanes</div></div>
+        <div class="v3d-tr"><div class="k">Dirección</div><div class="v">Av. Bulnes 01855, Punta Arenas</div></div>
+        <div class="v3d-tr"><div class="k">Fecha</div><div class="v">Marzo 2026</div></div>
+        <div class="v3d-tr"><div class="k">Responsable</div><div class="v">Juan Pérez R.</div></div>
+      </div>
+      <div class="v3d-main-head">
+        <div class="v3d-main-tag">Capítulo 01</div>
+        <h2>Obra Gruesa</h2>
+        <div class="v3d-main-normas">
+          <span class="v3d-main-norma">NCh170</span>
+          <span class="v3d-main-norma">NCh1934</span>
+          <span class="v3d-main-norma">OGUC Art. 4.1</span>
+        </div>
+      </div>
+      <div class="v3d-secs">
+        <div class="v3d-sec"><div class="v3d-sec-lbl">Descripción</div><p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según los planos de arquitectura e ingeniería estructural aprobados por la DO.</p></div>
+        <div class="v3d-sec"><div class="v3d-sec-lbl">Materiales y Equipos</div><p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado. Todos los materiales deben contar con certificado del fabricante.</p></div>
+        <div class="v3d-sec"><div class="v3d-sec-lbl">Ejecución</div><p>Se ejecutará conforme a los planos de cálculo estructural y las indicaciones del proyectista. Se deberá respetar los recubrimientos mínimos especificados.</p></div>
+        <div class="v3d-sec"><div class="v3d-sec-lbl">Medición y Pago</div><p>Se medirá por metro cúbico (m³) de hormigón efectivamente colocado y aprobado. El precio unitario incluye materiales, mano de obra y equipos.</p></div>
+      </div>
+      <div class="v3d-foot"><span>APUchile · ONDAC 2017</span><span>Pág. 1 / 12</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     3E — BLUEPRINT PREMIUM
+══════════════════════════════════════════════ -->
+<div id="v3e" style="margin-top:48px">
+  <div class="sh">
+    <div class="sh-num" style="background:linear-gradient(135deg,#1e3a5f,#1d4ed8);box-shadow:0 4px 16px rgba(29,78,216,.4)">3E</div>
+    <div>
+      <h2>Blueprint Premium <span class="badge b-anim">✦ Glow decos</span><span class="badge b-data">Íconos + Progress</span><span class="badge b-new">Gradiente keys</span></h2>
+      <p>Header negro con decos circulares glow · Stats con íconos · Keys con gradiente · Puntos de progreso por capítulo · El más completo</p>
+    </div>
+  </div>
+  <div class="v3e">
+    <div class="v3e-head">
+      <div class="v3e-head-deco"></div>
+      <div class="v3e-head-deco2"></div>
+      <div class="v3e-head-content">
+        <div>
+          <div class="v3e-eyebrow">ESPECIFICACIONES TÉCNICAS</div>
+          <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+          <div class="sub">Av. Bulnes 01855, Punta Arenas · Marzo 2026 · 180 días corridos</div>
+        </div>
+        <div class="v3e-logo">LOGO</div>
+      </div>
+      <div class="v3e-stats">
+        <div class="v3e-st"><span class="v3e-st-icon">📋</span><div><div class="v">8</div><div class="k">Capítulos</div></div></div>
+        <div class="v3e-st"><span class="v3e-st-icon">📦</span><div><div class="v">24</div><div class="k">Partidas</div></div></div>
+        <div class="v3e-st"><span class="v3e-st-icon">⏱</span><div><div class="v">180 días</div><div class="k">Plazo</div></div></div>
+        <div class="v3e-st"><span class="v3e-st-icon">💰</span><div><div class="v">$48.2M</div><div class="k">Presupuesto</div></div></div>
+        <div class="v3e-st"><span class="v3e-st-icon">👷</span><div><div class="v">J. Pérez</div><div class="k">Responsable</div></div></div>
+      </div>
+    </div>
+    <div class="v3e-table">
+      <div class="v3e-row"><div class="v3e-row-k">Proyecto</div><div class="v3e-row-v">Habilitación Sala de Clases CFT Magallanes</div></div>
+      <div class="v3e-row"><div class="v3e-row-k">Propietario</div><div class="v3e-row-v">CFT Magallanes<span class="v3e-status st-active">✓ Mandante activo</span></div></div>
+      <div class="v3e-row"><div class="v3e-row-k">Dirección</div><div class="v3e-row-v">Av. Bulnes 01855, Punta Arenas</div></div>
+      <div class="v3e-row"><div class="v3e-row-k">Fecha</div><div class="v3e-row-v">Marzo 2026</div></div>
+    </div>
+    <div class="v3e-acc">
+      <div class="v3e-acc-h">
+        <span class="v3e-acc-icon">📄</span>
+        <span class="title">I. Generalidades</span>
+        <span class="desc">7 puntos · Normativa general chilena</span>
+        <span class="arr">▶</span>
+      </div>
+      <div class="v3e-acc-h">
+        <span class="v3e-acc-icon">⚖️</span>
+        <span class="title">II. Orden de Prelación</span>
+        <span class="desc">Planos vs. Especificaciones</span>
+        <span class="arr">▶</span>
+      </div>
+    </div>
+    <div class="v3e-ch">
+      <div class="v3e-ch-h">
+        <div class="v3e-nbadge">01</div>
+        <div class="v3e-ch-right">
+          <div class="v3e-ch-title">Obra Gruesa</div>
+          <div class="v3e-ch-meta">
+            <span class="v3e-norma">NCh170</span>
+            <span class="v3e-norma">NCh1934</span>
+            <span class="v3e-norma">OGUC Art. 4.1</span>
+          </div>
+        </div>
+        <div class="v3e-ch-prog" title="4/4 secciones completas">
+          <div class="v3e-prog-dot done"></div>
+          <div class="v3e-prog-dot done"></div>
+          <div class="v3e-prog-dot done"></div>
+          <div class="v3e-prog-dot done"></div>
+        </div>
+      </div>
+      <div class="v3e-sec"><div class="v3e-sec-lbl"><span class="icon">📄</span>Descripción</div><p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según los planos de arquitectura e ingeniería estructural aprobados.</p></div>
+      <div class="v3e-sec"><div class="v3e-sec-lbl"><span class="icon">🧱</span>Materiales y Equipos</div><p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado. Todos los materiales deberán contar con certificado de calidad del fabricante y ensayos de laboratorio acreditado.</p></div>
+      <div class="v3e-sec"><div class="v3e-sec-lbl"><span class="icon">🔨</span>Ejecución</div><p>Se ejecutará conforme a los planos de cálculo estructural. Deberán respetarse los recubrimientos mínimos especificados por el proyectista y la Dirección de Obras Municipal.</p></div>
+      <div class="v3e-sec"><div class="v3e-sec-lbl"><span class="icon">📐</span>Medición y Pago</div><p>Se medirá por m³ de hormigón efectivamente colocado y aprobado por la ITO. El precio unitario incluye materiales, mano de obra, moldajes y equipos.</p></div>
+    </div>
+    <div class="v3e-foot">
+      <span><span class="brand">APUchile</span> · Base ONDAC 2017</span>
+      <div class="right"><span class="rev">Rev. 01</span><span class="pg">Página 1 de 12</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom">APUchile · Blueprint Variaciones · Elige una o combinaciones ✦</div>
+</body>
+</html>

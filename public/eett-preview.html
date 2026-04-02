@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EE.TT. — 5 Propuestas de Diseño</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f0;padding:24px;color:#111}
+
+  /* ── NAV STICKY ── */
+  .nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #e0e0e0;padding:10px 24px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .nav span{font-size:13px;font-weight:700;color:#555;margin-right:8px}
+  .nav a{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;border:1.5px solid transparent;transition:all .15s}
+  .nav a:hover{transform:translateY(-1px)}
+  .nav a.a1{background:#f8f8f8;color:#333;border-color:#ddd}
+  .nav a.a1:hover{background:#111;color:#fff;border-color:#111}
+  .nav a.a2{background:#ecfdf5;color:#059669;border-color:#a7f3d0}
+  .nav a.a2:hover{background:#059669;color:#fff}
+  .nav a.a3{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+  .nav a.a3:hover{background:#1e3a5f;color:#fff}
+  .nav a.a4{background:#fafafa;color:#111;border-color:#e0e0e0}
+  .nav a.a4:hover{background:#111;color:#fff}
+  .nav a.a5{background:#fff7ed;color:#ea580c;border-color:#fed7aa}
+  .nav a.a5:hover{background:#ea580c;color:#fff}
+
+  /* ── SECTION HEADER ── */
+  .section-header{display:flex;align-items:center;gap:14px;margin:40px 0 16px;padding:0 4px}
+  .section-header .badge{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;flex-shrink:0}
+  .section-header h2{font-size:18px;font-weight:800}
+  .section-header p{font-size:12px;color:#888;margin-top:2px}
+
+  /* ── ANIMS ── */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes scaleIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+  @keyframes slideLeft{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+  .fade-up{animation:fadeUp .4s cubic-bezier(.16,1,.3,1) both}
+  .scale-in{animation:scaleIn .35s cubic-bezier(.16,1,.3,1) both}
+
+
+  /* ════════════════════════════════════════════
+     OPCIÓN 1 — DOCUMENTO OFICIAL
+  ════════════════════════════════════════════ */
+  .opt1{background:#fff;border:1px solid #d8d8d8;border-radius:4px;max-width:720px;box-shadow:0 2px 12px rgba(0,0,0,.08);animation:fadeUp .4s .1s both}
+  .opt1-head{padding:24px 28px 18px;border-bottom:2px solid #111;display:flex;justify-content:space-between;align-items:flex-start}
+  .opt1-head-left .label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#888;margin-bottom:4px}
+  .opt1-head-left h1{font-size:16px;font-weight:800;color:#111;letter-spacing:-.01em}
+  .opt1-logo{width:56px;height:28px;background:#f0f0f0;border:1px solid #e0e0e0;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aaa;font-weight:600;letter-spacing:.06em}
+  .opt1-table{width:100%}
+  .opt1-table tr:nth-child(even){background:#fafafa}
+  .opt1-table td{padding:9px 28px;font-size:11px;border-bottom:1px solid #ececec;vertical-align:top}
+  .opt1-table td:first-child{font-weight:700;color:#555;width:110px;font-size:10px;letter-spacing:.04em;text-transform:uppercase}
+  .opt1-table td:last-child{color:#111}
+  .opt1-section-head{padding:10px 28px;background:#fafafa;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .12s}
+  .opt1-section-head:hover{background:#f0f0f0}
+  .opt1-section-head span{font-size:11px;font-weight:700;color:#222;letter-spacing:.04em;text-transform:uppercase}
+  .opt1-section-head .arr{font-size:9px;color:#999;transition:transform .2s}
+  .opt1-chapter{border-top:1.5px solid #222;margin-top:12px}
+  .opt1-chapter-head{padding:14px 28px 12px;display:flex;align-items:baseline;gap:12px}
+  .opt1-chapter-head .num{font-size:11px;font-weight:900;color:#111;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+  .opt1-chapter-head .title{font-size:13px;font-weight:800;color:#111;text-transform:uppercase;letter-spacing:.02em}
+  .opt1-normas{padding:0 28px 10px;display:flex;gap:6px;flex-wrap:wrap}
+  .opt1-norma{font-size:9px;border:1px solid #d0d0d0;border-radius:2px;padding:2px 6px;color:#666}
+  .opt1-sub{padding:12px 28px}
+  .opt1-sub-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#888;margin-bottom:5px;padding-bottom:4px;border-bottom:1px solid #ebebeb}
+  .opt1-sub p{font-size:11px;color:#333;line-height:1.65}
+  .opt1-footer{padding:10px 28px;border-top:1px solid #e0e0e0;display:flex;justify-content:space-between;font-size:9px;color:#aaa}
+
+  /* ════════════════════════════════════════════
+     OPCIÓN 2 — APUCHILE PRO
+  ════════════════════════════════════════════ */
+  .opt2{background:#fff;border:1px solid #e5e7eb;border-radius:16px;max-width:720px;box-shadow:0 4px 24px -4px rgba(0,0,0,.1);overflow:hidden;animation:scaleIn .4s .1s both}
+  .opt2-head{background:linear-gradient(135deg,#065f46 0%,#059669 100%);padding:20px 24px;display:flex;justify-content:space-between;align-items:flex-start}
+  .opt2-head-left .label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#6ee7b7;margin-bottom:4px}
+  .opt2-head-left h1{font-size:15px;font-weight:800;color:#fff}
+  .opt2-logo{width:52px;height:26px;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.25);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.7);font-weight:600}
+  .opt2-stats{background:#f0fdf4;border-bottom:1px solid #d1fae5;padding:10px 24px;display:flex;gap:20px}
+  .opt2-stat{text-align:center}
+  .opt2-stat .v{font-size:14px;font-weight:800;color:#065f46}
+  .opt2-stat .k{font-size:9px;color:#6ee7b7;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+  .opt2-table{padding:0}
+  .opt2-table-row{display:flex;align-items:baseline;padding:9px 24px;border-bottom:1px solid #f3f4f6;transition:background .12s}
+  .opt2-table-row:hover{background:#f0fdf4}
+  .opt2-table-row .k{font-size:10px;font-weight:700;color:#6b7280;width:100px;flex-shrink:0}
+  .opt2-table-row .v{font-size:11px;color:#111}
+  .opt2-accordion{border-top:1px solid #e5e7eb}
+  .opt2-accordion-head{padding:12px 24px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .12s}
+  .opt2-accordion-head:hover{background:#f9fafb}
+  .opt2-accordion-head .dot{width:8px;height:8px;border-radius:50%;background:#d1fae5;border:2px solid #059669;flex-shrink:0}
+  .opt2-accordion-head span{font-size:11px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.07em;flex:1}
+  .opt2-accordion-head .arr{font-size:9px;color:#9ca3af}
+  .opt2-chapter{border-top:1px solid #e5e7eb;animation:fadeUp .25s both}
+  .opt2-chapter-banner{padding:14px 24px 12px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:background .15s}
+  .opt2-chapter-banner:hover{background:#f9fafb}
+  .opt2-chapter-num{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#059669,#065f46);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(5,150,105,.3)}
+  .opt2-chapter-title{font-size:13px;font-weight:700;color:#111}
+  .opt2-chapter-sub{font-size:10px;color:#6b7280;margin-top:2px}
+  .opt2-chapter-arr{margin-left:auto;font-size:10px;color:#d1d5db}
+  .opt2-section{padding:10px 24px 10px 72px;border-top:1px solid #f3f4f6}
+  .opt2-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#059669;margin-bottom:4px}
+  .opt2-section p{font-size:11px;color:#4b5563;line-height:1.6}
+  .opt2-footer{padding:10px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;display:flex;justify-content:space-between;font-size:9px;color:#9ca3af}
+
+  /* ════════════════════════════════════════════
+     OPCIÓN 3 — BLUEPRINT
+  ════════════════════════════════════════════ */
+  .opt3{background:#fff;border-radius:12px;max-width:720px;overflow:hidden;box-shadow:0 6px 32px -4px rgba(30,58,95,.18);animation:fadeUp .4s .1s both}
+  .opt3-head{background:linear-gradient(135deg,#1e3a5f 0%,#1e40af 100%);padding:22px 26px;position:relative;overflow:hidden}
+  .opt3-head::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v1H0zm0 39h40v1H0zm0-20h40v1H0zM0 0v40H1V0zm39 0v40h1V0zm-20 0v40h1V0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+  .opt3-head-inner{position:relative;z-index:1}
+  .opt3-head .tag{display:inline-flex;align-items:center;gap:5px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);border-radius:4px;padding:3px 8px;font-size:9px;font-weight:700;color:#fbbf24;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .opt3-head h1{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:4px}
+  .opt3-head .sub{font-size:11px;color:rgba(255,255,255,.6)}
+  .opt3-logo-slot{position:absolute;top:18px;right:24px;z-index:1;width:52px;height:28px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.5);font-weight:600}
+  .opt3-table{background:#f8fafc}
+  .opt3-row{display:flex;align-items:stretch;border-bottom:1px solid #e2e8f0}
+  .opt3-row-key{width:110px;flex-shrink:0;background:#1e3a5f;padding:9px 12px;font-size:9px;font-weight:700;color:#93c5fd;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center}
+  .opt3-row-val{padding:9px 14px;font-size:11px;color:#1e293b;display:flex;align-items:center;background:#fff}
+  .opt3-accordion{border-top:1px solid #e2e8f0}
+  .opt3-acc-head{padding:11px 20px;display:flex;align-items:center;gap:8px;cursor:pointer;background:#eff6ff;border-left:3px solid #1d4ed8;border-bottom:1px solid #dbeafe;transition:background .12s}
+  .opt3-acc-head:hover{background:#dbeafe}
+  .opt3-acc-head span{font-size:11px;font-weight:700;color:#1d4ed8;letter-spacing:.05em;text-transform:uppercase;flex:1}
+  .opt3-acc-head .arr{font-size:9px;color:#93c5fd}
+  .opt3-chapter{border-top:2px solid #1e3a5f;margin:0;animation:fadeUp .25s both}
+  .opt3-chapter-head{padding:14px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;background:#fff;transition:background .12s}
+  .opt3-chapter-head:hover{background:#f8fafc}
+  .opt3-num-badge{background:#1e3a5f;color:#fbbf24;font-size:11px;font-weight:900;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:4px;flex-shrink:0}
+  .opt3-chapter-title{font-size:13px;font-weight:700;color:#1e3a5f;text-transform:uppercase;letter-spacing:.02em}
+  .opt3-normas{display:flex;gap:5px;flex-wrap:wrap;padding:0 20px 10px 62px}
+  .opt3-norma{font-size:9px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:3px;padding:2px 6px;font-weight:600}
+  .opt3-section{padding:10px 20px 10px 62px;border-top:1px solid #f1f5f9}
+  .opt3-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#1d4ed8;margin-bottom:4px;display:flex;align-items:center;gap:4px}
+  .opt3-section-label::after{content:'';flex:1;height:1px;background:#e2e8f0;margin-left:6px}
+  .opt3-section p{font-size:11px;color:#334155;line-height:1.65}
+  .opt3-footer{padding:10px 20px;background:#1e3a5f;display:flex;justify-content:space-between;font-size:9px;color:#93c5fd}
+
+  /* ════════════════════════════════════════════
+     OPCIÓN 4 — MINIMAL SUIZO
+  ════════════════════════════════════════════ */
+  .opt4{background:#fff;max-width:720px;box-shadow:0 1px 4px rgba(0,0,0,.06);animation:fadeUp .4s .1s both}
+  .opt4-head{padding:28px 32px 20px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #000}
+  .opt4-head h1{font-size:15px;font-weight:900;color:#000;letter-spacing:-.02em;line-height:1.3;max-width:380px}
+  .opt4-head .label{font-size:9px;font-weight:400;color:#999;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+  .opt4-logo{width:50px;height:24px;border:1px solid #d0d0d0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#ccc;font-weight:600;letter-spacing:.06em}
+  .opt4-table{padding:0}
+  .opt4-row{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid #f0f0f0;padding:0 32px}
+  .opt4-row:last-child{border-bottom:none}
+  .opt4-row .k{padding:10px 0;font-size:10px;font-weight:400;color:#999;letter-spacing:.06em;text-transform:uppercase;border-right:1px solid #f0f0f0}
+  .opt4-row .v{padding:10px 0 10px 20px;font-size:11px;color:#111;font-weight:400}
+  .opt4-divider{height:1px;background:#000;margin:0 32px}
+  .opt4-section-row{display:flex;align-items:center;padding:11px 32px;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .1s}
+  .opt4-section-row:hover{background:#fafafa}
+  .opt4-section-row .num{font-size:9px;font-weight:900;color:#bbb;width:24px;flex-shrink:0;letter-spacing:.06em}
+  .opt4-section-row .title{font-size:11px;font-weight:700;color:#111;letter-spacing:.01em;flex:1;text-transform:uppercase}
+  .opt4-section-row .arr{font-size:9px;color:#ccc}
+  .opt4-chapter{border-top:2px solid #000;animation:fadeUp .25s both}
+  .opt4-chapter-head{padding:16px 32px 10px}
+  .opt4-chapter-num{font-size:9px;font-weight:900;color:#bbb;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+  .opt4-chapter-title{font-size:14px;font-weight:900;color:#000;letter-spacing:-.02em;text-transform:uppercase}
+  .opt4-normas{padding:0 32px 10px;display:flex;gap:10px;flex-wrap:wrap}
+  .opt4-norma{font-size:9px;color:#999;letter-spacing:.05em}
+  .opt4-section{padding:12px 32px;border-top:1px solid #f0f0f0}
+  .opt4-section-label{font-size:9px;font-weight:900;color:#000;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+  .opt4-section p{font-size:11px;color:#555;line-height:1.7;font-weight:300}
+  .opt4-footer{padding:10px 32px;border-top:2px solid #000;display:flex;justify-content:space-between;font-size:9px;color:#aaa;letter-spacing:.06em;text-transform:uppercase}
+
+  /* ════════════════════════════════════════════
+     OPCIÓN 5 — EDITORIAL CONSTRUCTORA
+  ════════════════════════════════════════════ */
+  .opt5{background:#fff;border-radius:10px;max-width:720px;overflow:hidden;box-shadow:0 8px 40px -8px rgba(0,0,0,.18);animation:scaleIn .4s .1s both}
+  .opt5-head{background:#111;padding:22px 26px;display:flex;justify-content:space-between;align-items:flex-start;position:relative;overflow:hidden}
+  .opt5-head::before{content:'EE.TT.';position:absolute;right:-10px;top:-18px;font-size:80px;font-weight:900;color:rgba(255,255,255,.04);letter-spacing:-.03em;pointer-events:none;user-select:none}
+  .opt5-head-left .tag{display:inline-block;background:#ea580c;color:#fff;font-size:8px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:2px;margin-bottom:8px}
+  .opt5-head-left h1{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.25}
+  .opt5-head-left .sub{font-size:10px;color:#9ca3af;margin-top:4px}
+  .opt5-logo{width:54px;height:28px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.4);font-weight:600;flex-shrink:0}
+  .opt5-table{background:#fafafa;border-bottom:2px solid #f97316}
+  .opt5-table-row{display:flex;padding:9px 24px;border-bottom:1px solid #f3f4f6;align-items:baseline;transition:background .12s}
+  .opt5-table-row:hover{background:#fff7ed}
+  .opt5-table-row .k{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#ea580c;width:100px;flex-shrink:0}
+  .opt5-table-row .v{font-size:11px;color:#111}
+  .opt5-accordion-head{padding:11px 24px;display:flex;align-items:center;gap:8px;cursor:pointer;border-left:3px solid #ea580c;background:#fff7ed;border-bottom:1px solid #fed7aa;transition:background .12s}
+  .opt5-accordion-head:hover{background:#ffedd5}
+  .opt5-accordion-head span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#c2410c;flex:1}
+  .opt5-accordion-head .arr{font-size:9px;color:#fb923c}
+  .opt5-chapter{position:relative;border-top:1px solid #f3f4f6;overflow:hidden;animation:fadeUp .25s both}
+  .opt5-chapter-bg-num{position:absolute;left:16px;top:-4px;font-size:64px;font-weight:900;color:#f3f4f6;line-height:1;pointer-events:none;user-select:none;z-index:0;letter-spacing:-.04em}
+  .opt5-chapter-head{padding:16px 24px 12px 76px;position:relative;z-index:1;cursor:pointer;transition:background .12s}
+  .opt5-chapter-head:hover{background:#fafafa}
+  .opt5-chapter-tag{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#ea580c;margin-bottom:3px}
+  .opt5-chapter-title{font-size:14px;font-weight:900;color:#111;letter-spacing:-.01em;text-transform:uppercase}
+  .opt5-normas{padding:0 24px 10px 76px;display:flex;gap:5px;flex-wrap:wrap;position:relative;z-index:1}
+  .opt5-norma{font-size:9px;background:#fff7ed;color:#ea580c;border:1px solid #fed7aa;padding:2px 7px;border-radius:3px;font-weight:700}
+  .opt5-section{padding:10px 24px 10px 76px;border-top:1px solid #f9f9f9;position:relative;z-index:1}
+  .opt5-section-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#ea580c;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .opt5-section-label .line{flex:1;height:1.5px;background:#fee2e2;border-radius:1px}
+  .opt5-section p{font-size:11px;color:#374151;line-height:1.65}
+  .opt5-footer{padding:10px 24px;background:#111;display:flex;justify-content:space-between;font-size:9px;color:#6b7280}
+  .opt5-footer .accent{color:#ea580c;font-weight:700}
+
+  /* ── Labels de animacion ── */
+  .anim-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:600;padding:3px 8px;border-radius:10px;margin-left:8px;vertical-align:middle;letter-spacing:.06em;text-transform:uppercase}
+  .anim-badge.entry{background:#ecfdf5;color:#059669;border:1px solid #a7f3d0}
+  .anim-badge.hover{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+  .anim-badge.micro{background:#fef3c7;color:#d97706;border:1px solid #fde68a}
+
+  /* ── BOTTOM LABEL ── */
+  .bottom-note{text-align:center;padding:32px 0 48px;font-size:11px;color:#aaa}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <span>EE.TT. · 5 Propuestas</span>
+  <a href="#opt1" class="a1">① Documento Oficial</a>
+  <a href="#opt2" class="a2">② APUchile Pro</a>
+  <a href="#opt3" class="a3">③ Blueprint</a>
+  <a href="#opt4" class="a4">④ Minimal Suizo</a>
+  <a href="#opt5" class="a5">⑤ Editorial</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     OPCIÓN 1 — DOCUMENTO OFICIAL
+════════════════════════════════════════════════════════════ -->
+<div id="opt1" style="padding-top:8px">
+  <div class="section-header">
+    <div class="badge" style="background:#333">1</div>
+    <div>
+      <h2>Documento Oficial <span class="anim-badge entry">✦ Fade up</span><span class="anim-badge hover">↕ Row hover</span></h2>
+      <p>Estilo MINVU/SERVIU · Sin colores · Máxima formalidad · Ideal licitaciones públicas</p>
+    </div>
+  </div>
+
+  <div class="opt1 fade-up">
+    <div class="opt1-head">
+      <div class="opt1-head-left">
+        <div class="label">Especificaciones Técnicas</div>
+        <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+      </div>
+      <div class="opt1-logo">LOGO</div>
+    </div>
+
+    <table class="opt1-table">
+      <tr><td>Proyecto</td><td>Habilitación Sala de Clases CFT Magallanes</td></tr>
+      <tr><td>Propietario</td><td>CFT Magallanes</td></tr>
+      <tr><td>Dirección</td><td>Av. Bulnes 01855, Punta Arenas</td></tr>
+      <tr><td>Fecha</td><td>Marzo 2026</td></tr>
+    </table>
+
+    <div class="opt1-section-head" onclick="this.querySelector('.arr').style.transform=this.querySelector('.arr').style.transform?'':'rotate(90deg)'">
+      <span>I. Generalidades</span><span class="arr">▶</span>
+    </div>
+    <div class="opt1-section-head" onclick="this.querySelector('.arr').style.transform=this.querySelector('.arr').style.transform?'':'rotate(90deg)'">
+      <span>II. Orden de Prelación</span><span class="arr">▶</span>
+    </div>
+
+    <div class="opt1-chapter">
+      <div class="opt1-chapter-head">
+        <span class="num">01.</span>
+        <span class="title">Obra Gruesa</span>
+      </div>
+      <div class="opt1-normas">
+        <span class="opt1-norma">NCh170</span>
+        <span class="opt1-norma">NCh1934</span>
+        <span class="opt1-norma">OGUC Art. 4.1</span>
+      </div>
+      <div class="opt1-sub">
+        <div class="opt1-sub-label">1. Descripción</div>
+        <p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según los planos de arquitectura e ingeniería estructural aprobados.</p>
+      </div>
+      <div class="opt1-sub">
+        <div class="opt1-sub-label">2. Materiales y Equipos</div>
+        <p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado. Todos los materiales deberán contar con certificado de calidad del fabricante.</p>
+      </div>
+    </div>
+
+    <div class="opt1-footer">
+      <span>APUchile · Base ONDAC 2017</span>
+      <span>Página 1 de 12</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     OPCIÓN 2 — APUCHILE PRO
+════════════════════════════════════════════════════════════ -->
+<div id="opt2" style="margin-top:48px">
+  <div class="section-header">
+    <div class="badge" style="background:#059669">2</div>
+    <div>
+      <h2>APUchile Pro <span class="anim-badge entry">✦ Scale in</span><span class="anim-badge hover">↕ Row hover</span><span class="anim-badge micro">✦ Gradient números</span></h2>
+      <p>Evolución refinada del diseño actual · Verde esmeralda · Números en badge degradado · Stats en header</p>
+    </div>
+  </div>
+
+  <div class="opt2">
+    <div class="opt2-head">
+      <div class="opt2-head-left">
+        <div class="label">Especificaciones Técnicas</div>
+        <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+      </div>
+      <div class="opt2-logo">LOGO</div>
+    </div>
+
+    <div class="opt2-stats">
+      <div class="opt2-stat"><div class="v">8</div><div class="k">Capítulos</div></div>
+      <div class="opt2-stat"><div class="v">24</div><div class="k">Partidas</div></div>
+      <div class="opt2-stat"><div class="v">Marzo 2026</div><div class="k">Fecha</div></div>
+      <div class="opt2-stat"><div class="v">180 días</div><div class="k">Plazo</div></div>
+    </div>
+
+    <div style="padding:2px 0 0">
+      <div class="opt2-table-row"><span class="k">Propietario</span><span class="v">CFT Magallanes</span></div>
+      <div class="opt2-table-row"><span class="k">Dirección</span><span class="v">Av. Bulnes 01855, Punta Arenas</span></div>
+    </div>
+
+    <div class="opt2-accordion">
+      <div class="opt2-accordion-head">
+        <div class="dot"></div>
+        <span>I. Generalidades</span><span class="arr">▶</span>
+      </div>
+      <div class="opt2-accordion-head">
+        <div class="dot"></div>
+        <span>II. Orden de Prelación</span><span class="arr">▶</span>
+      </div>
+    </div>
+
+    <div class="opt2-chapter">
+      <div class="opt2-chapter-banner">
+        <div class="opt2-chapter-num">1</div>
+        <div>
+          <div class="opt2-chapter-title">Obra Gruesa</div>
+          <div class="opt2-chapter-sub">NCh170 · NCh1934 · OGUC Art. 4.1</div>
+        </div>
+        <span class="opt2-chapter-arr">▼</span>
+      </div>
+      <div class="opt2-section">
+        <div class="opt2-section-label">📄 Descripción</div>
+        <p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros.</p>
+      </div>
+      <div class="opt2-section">
+        <div class="opt2-section-label">🧱 Materiales y Equipos</div>
+        <p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado con ensayos de laboratorio.</p>
+      </div>
+    </div>
+
+    <div class="opt2-footer">
+      <span>APUchile · Base ONDAC 2017</span>
+      <span>Página 1 de 12</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     OPCIÓN 3 — BLUEPRINT
+════════════════════════════════════════════════════════════ -->
+<div id="opt3" style="margin-top:48px">
+  <div class="section-header">
+    <div class="badge" style="background:#1e3a5f">3</div>
+    <div>
+      <h2>Blueprint <span class="anim-badge entry">✦ Fade up</span><span class="anim-badge micro">✦ Grid pattern</span></h2>
+      <p>Azul marino + amarillo · Inspiración planos constructivos · Muy técnico y profesional</p>
+    </div>
+  </div>
+
+  <div class="opt3">
+    <div class="opt3-head">
+      <div class="opt3-head-inner">
+        <div class="tag">📐 EE.TT. · ONDAC 2017</div>
+        <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+        <div class="sub">Av. Bulnes 01855, Punta Arenas · Marzo 2026</div>
+      </div>
+      <div class="opt3-logo-slot">LOGO</div>
+    </div>
+
+    <div class="opt3-table">
+      <div class="opt3-row"><div class="opt3-row-key">Proyecto</div><div class="opt3-row-val">Habilitación Sala de Clases CFT Magallanes</div></div>
+      <div class="opt3-row"><div class="opt3-row-key">Propietario</div><div class="opt3-row-val">CFT Magallanes</div></div>
+      <div class="opt3-row"><div class="opt3-row-key">Dirección</div><div class="opt3-row-val">Av. Bulnes 01855, Punta Arenas</div></div>
+      <div class="opt3-row"><div class="opt3-row-key">Fecha</div><div class="opt3-row-val">Marzo 2026</div></div>
+    </div>
+
+    <div class="opt3-accordion">
+      <div class="opt3-acc-head"><span>I. Generalidades</span><span class="arr">▶</span></div>
+      <div class="opt3-acc-head"><span>II. Orden de Prelación</span><span class="arr">▶</span></div>
+    </div>
+
+    <div class="opt3-chapter">
+      <div class="opt3-chapter-head">
+        <div class="opt3-num-badge">01</div>
+        <div class="opt3-chapter-title">Obra Gruesa</div>
+      </div>
+      <div class="opt3-normas">
+        <span class="opt3-norma">NCh170</span>
+        <span class="opt3-norma">NCh1934</span>
+        <span class="opt3-norma">OGUC Art. 4.1</span>
+      </div>
+      <div class="opt3-section">
+        <div class="opt3-section-label">Descripción</div>
+        <p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según planos aprobados.</p>
+      </div>
+      <div class="opt3-section">
+        <div class="opt3-section-label">Materiales y Equipos</div>
+        <p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado con ensayos de laboratorio acreditado.</p>
+      </div>
+    </div>
+
+    <div class="opt3-footer">
+      <span>APUchile · Base ONDAC 2017</span>
+      <span>Página 1 de 12</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     OPCIÓN 4 — MINIMAL SUIZO
+════════════════════════════════════════════════════════════ -->
+<div id="opt4" style="margin-top:48px">
+  <div class="section-header">
+    <div class="badge" style="background:#111">4</div>
+    <div>
+      <h2>Minimal Suizo <span class="anim-badge entry">✦ Fade up</span><span class="anim-badge hover">↕ Hover sutil</span></h2>
+      <p>Solo tipografía y jerarquía · Cero color · Sin decoraciones · El contenido manda</p>
+    </div>
+  </div>
+
+  <div class="opt4">
+    <div class="opt4-head">
+      <div>
+        <div class="label">Especificaciones Técnicas</div>
+        <h1>Habilitación Sala<br>de Clases CFT Magallanes</h1>
+      </div>
+      <div class="opt4-logo">LOGO</div>
+    </div>
+
+    <div class="opt4-table">
+      <div class="opt4-row"><div class="k">Proyecto</div><div class="v">Habilitación Sala de Clases CFT Magallanes</div></div>
+      <div class="opt4-row"><div class="k">Propietario</div><div class="v">CFT Magallanes</div></div>
+      <div class="opt4-row"><div class="k">Dirección</div><div class="v">Av. Bulnes 01855, Punta Arenas</div></div>
+      <div class="opt4-row"><div class="k">Fecha</div><div class="v">Marzo 2026</div></div>
+    </div>
+
+    <div class="opt4-divider" style="margin-top:0"></div>
+
+    <div class="opt4-section-row">
+      <span class="num">I.</span>
+      <span class="title">Generalidades</span>
+      <span class="arr">▶</span>
+    </div>
+    <div class="opt4-section-row">
+      <span class="num">II.</span>
+      <span class="title">Orden de Prelación</span>
+      <span class="arr">▶</span>
+    </div>
+
+    <div class="opt4-divider"></div>
+
+    <div class="opt4-chapter">
+      <div class="opt4-chapter-head">
+        <div class="opt4-chapter-num">Capítulo 01</div>
+        <div class="opt4-chapter-title">Obra Gruesa</div>
+      </div>
+      <div class="opt4-normas">
+        <span class="opt4-norma">NCh170</span>
+        <span class="opt4-norma">NCh1934</span>
+        <span class="opt4-norma">OGUC Art. 4.1</span>
+      </div>
+      <div class="opt4-section">
+        <div class="opt4-section-label">Descripción</div>
+        <p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según los planos aprobados por la Dirección de Obras.</p>
+      </div>
+      <div class="opt4-section">
+        <div class="opt4-section-label">Materiales y Equipos</div>
+        <p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado.</p>
+      </div>
+    </div>
+
+    <div class="opt4-footer">
+      <span>APUchile · ONDAC 2017</span>
+      <span>Página 1 de 12</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     OPCIÓN 5 — EDITORIAL CONSTRUCTORA
+════════════════════════════════════════════════════════════ -->
+<div id="opt5" style="margin-top:48px">
+  <div class="section-header">
+    <div class="badge" style="background:#ea580c">5</div>
+    <div>
+      <h2>Editorial Constructora <span class="anim-badge entry">✦ Scale in</span><span class="anim-badge micro">✦ Número decorativo</span></h2>
+      <p>Negro + naranja · Números enormes de fondo · Bold y dinámico · Constructora premium</p>
+    </div>
+  </div>
+
+  <div class="opt5">
+    <div class="opt5-head">
+      <div class="opt5-head-left">
+        <div class="tag">EE.TT. · ONDAC 2017</div>
+        <h1>Habilitación Sala de Clases<br>CFT Magallanes</h1>
+        <div class="sub">Av. Bulnes 01855, Punta Arenas · Marzo 2026</div>
+      </div>
+      <div class="opt5-logo">LOGO</div>
+    </div>
+
+    <div class="opt5-table">
+      <div class="opt5-table-row"><span class="k">Proyecto</span><span class="v">Habilitación Sala de Clases CFT Magallanes</span></div>
+      <div class="opt5-table-row"><span class="k">Propietario</span><span class="v">CFT Magallanes</span></div>
+      <div class="opt5-table-row"><span class="k">Dirección</span><span class="v">Av. Bulnes 01855, Punta Arenas</span></div>
+      <div class="opt5-table-row"><span class="k">Fecha</span><span class="v">Marzo 2026</span></div>
+    </div>
+
+    <div class="opt5-accordion-head"><span>I. Generalidades</span><span class="arr">▶</span></div>
+    <div class="opt5-accordion-head"><span>II. Orden de Prelación</span><span class="arr">▶</span></div>
+
+    <div class="opt5-chapter">
+      <div class="opt5-chapter-bg-num">01</div>
+      <div class="opt5-chapter-head">
+        <div class="opt5-chapter-tag">Capítulo 01</div>
+        <div class="opt5-chapter-title">Obra Gruesa</div>
+      </div>
+      <div class="opt5-normas">
+        <span class="opt5-norma">NCh170</span>
+        <span class="opt5-norma">NCh1934</span>
+        <span class="opt5-norma">OGUC Art. 4.1</span>
+      </div>
+      <div class="opt5-section">
+        <div class="opt5-section-label">Descripción <div class="line"></div></div>
+        <p>Comprende todos los trabajos de obra gruesa necesarios para la habilitación del recinto, incluyendo fundaciones, estructuras y muros según los planos de arquitectura aprobados.</p>
+      </div>
+      <div class="opt5-section">
+        <div class="opt5-section-label">Materiales y Equipos <div class="line"></div></div>
+        <p>Hormigón H-30 según NCh170, acero A630-420H, fierro corrugado certificado con ensayos de laboratorio acreditado por el INN.</p>
+      </div>
+    </div>
+
+    <div class="opt5-footer">
+      <span>APUchile · Base ONDAC 2017</span>
+      <span class="accent">Página 1</span> <span>de 12</span>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-note">
+  APUchile · EE.TT. Design Preview · 5 propuestas · Elige una o combínalas ✦
+</div>
+
+</body>
+</html>
