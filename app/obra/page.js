@@ -712,14 +712,32 @@ function EmptyState({ icon, msg }) {
 // ── Modal: Documento ────────────────────────────────────────────────────────
 function ModalDoc({ obraId, onClose, onSave }) {
   const [form, setForm] = useState({ categoria: "Actas", nombre: "", descripcion: "", fecha: "" });
+  const [file, setFile] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState("");
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const save = async () => {
     if (!form.nombre.trim()) return;
     setSaving(true);
+    let archivo_url = null, archivo_nombre = null, archivo_size = null;
+
+    if (file) {
+      setUploadProgress("Subiendo archivo...");
+      const ext  = file.name.split(".").pop();
+      const path = `obras/${obraId}/docs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+      const { data: up, error: upErr } = await supabase.storage
+        .from("obras-docs").upload(path, file, { upsert: true });
+      if (upErr) { setSaving(false); setUploadProgress("Error al subir: " + upErr.message); return; }
+      const { data: pub } = supabase.storage.from("obras-docs").getPublicUrl(path);
+      archivo_url    = pub.publicUrl;
+      archivo_nombre = file.name;
+      archivo_size   = file.size;
+      setUploadProgress("");
+    }
+
     const { data, error } = await supabase.from("obra_documentos").insert({
-      obra_id: obraId, ...form,
+      obra_id: obraId, ...form, archivo_url, archivo_nombre, archivo_size,
     }).select().single();
     setSaving(false);
     if (!error && data) onSave(data);
@@ -743,9 +761,32 @@ function ModalDoc({ obraId, onClose, onSave }) {
         <InputRow label="Fecha">
           <input type="date" value={form.fecha} onChange={e => set("fecha", e.target.value)} style={inputSt}/>
         </InputRow>
-        <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>
-          * La subida de archivos estará disponible próximamente
-        </p>
+        <InputRow label="Archivo (opcional)">
+          <div style={{ border: "2px dashed #e2e8f0", borderRadius: 10, padding: "12px 14px",
+            background: file ? "#f0fdf4" : "#fafafa", cursor: "pointer" }}
+            onClick={() => document.getElementById("doc-file-input").click()}>
+            <input id="doc-file-input" type="file" style={{ display: "none" }}
+              accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+              onChange={e => { if (e.target.files[0]) setFile(e.target.files[0]); }}/>
+            {file ? (
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 18 }}>📎</span>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#065f46" }}>{file.name}</div>
+                  <div style={{ fontSize: 10, color: "#94a3b8" }}>{(file.size / 1024).toFixed(0)} KB</div>
+                </div>
+                <button type="button" onClick={e => { e.stopPropagation(); setFile(null); }}
+                  style={{ marginLeft: "auto", background: "none", border: "none",
+                    color: "#fca5a5", cursor: "pointer", fontSize: 14 }}>✕</button>
+              </div>
+            ) : (
+              <div style={{ textAlign: "center", color: "#94a3b8", fontSize: 12 }}>
+                📁 Click para adjuntar archivo (PDF, Word, Excel, imagen)
+              </div>
+            )}
+          </div>
+        </InputRow>
+        {uploadProgress && <p style={{ fontSize: 11, color: "#059669", margin: 0 }}>{uploadProgress}</p>}
         <ModalActions onClose={onClose} onSave={save} saving={saving} disabled={!form.nombre.trim()}/>
       </div>
     </Modal>
@@ -756,14 +797,30 @@ function ModalDoc({ obraId, onClose, onSave }) {
 function ModalPago({ obraId, onClose, onSave }) {
   const [form, setForm] = useState({ nombre: "", tipo: "Estado de Pago", fecha: "", monto: "",
     numero_oficio: "", numero_estado_pago: "", unidad_pago: "" });
+  const [file, setFile] = useState(null);
   const [saving, setSaving] = useState(false);
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const save = async () => {
     if (!form.nombre.trim()) return;
     setSaving(true);
+    let archivo_url = null, archivo_nombre = null;
+
+    if (file) {
+      const path = `obras/${obraId}/pagos/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+      const { error: upErr } = await supabase.storage
+        .from("obras-docs").upload(path, file, { upsert: true });
+      if (!upErr) {
+        const { data: pub } = supabase.storage.from("obras-docs").getPublicUrl(path);
+        archivo_url    = pub.publicUrl;
+        archivo_nombre = file.name;
+      }
+    }
+
     const { data, error } = await supabase.from("obra_estados_pago").insert({
-      obra_id: obraId, ...form, monto: form.monto ? parseFloat(form.monto) : null,
+      obra_id: obraId, ...form,
+      monto: form.monto ? parseFloat(form.monto) : null,
+      archivo_url, archivo_nombre,
     }).select().single();
     setSaving(false);
     if (!error && data) onSave(data);
@@ -798,6 +855,27 @@ function ModalPago({ obraId, onClose, onSave }) {
             <input value={form.numero_oficio} onChange={e => set("numero_oficio", e.target.value)} style={inputSt}/>
           </InputRow>
         </Grid>
+        <InputRow label="Archivo adjunto (opcional)">
+          <div style={{ border: "2px dashed #e2e8f0", borderRadius: 10, padding: "10px 14px",
+            background: file ? "#f0fdf4" : "#fafafa", cursor: "pointer" }}
+            onClick={() => document.getElementById("pago-file-input").click()}>
+            <input id="pago-file-input" type="file" style={{ display: "none" }}
+              accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+              onChange={e => { if (e.target.files[0]) setFile(e.target.files[0]); }}/>
+            {file ? (
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>📎</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#065f46", flex: 1 }}>{file.name}</span>
+                <button type="button" onClick={e => { e.stopPropagation(); setFile(null); }}
+                  style={{ background: "none", border: "none", color: "#fca5a5", cursor: "pointer" }}>✕</button>
+              </div>
+            ) : (
+              <div style={{ textAlign: "center", color: "#94a3b8", fontSize: 12 }}>
+                📁 Adjuntar documento del estado de pago
+              </div>
+            )}
+          </div>
+        </InputRow>
         <ModalActions onClose={onClose} onSave={save} saving={saving} disabled={!form.nombre.trim()}/>
       </div>
     </Modal>
