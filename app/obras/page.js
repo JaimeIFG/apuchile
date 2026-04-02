@@ -40,6 +40,35 @@ function PlazoChip({ fecha }) {
   );
 }
 
+// Loading skeleton para las cards
+function SkeletonCard() {
+  return (
+    <div style={{ background: "#fff", border: "1.5px solid #e2e8f0", borderRadius: 16,
+      padding: "18px 22px", borderLeft: "4px solid #e2e8f0" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+            <div style={{ width: 80, height: 20, borderRadius: 99, background: "#f1f5f9",
+              animation: "shimmerPulse 1.4s ease infinite" }}/>
+            <div style={{ width: 60, height: 20, borderRadius: 99, background: "#f1f5f9",
+              animation: "shimmerPulse 1.4s ease infinite", animationDelay: "0.2s" }}/>
+          </div>
+          <div style={{ width: "60%", height: 18, borderRadius: 6, background: "#f1f5f9",
+            marginBottom: 10, animation: "shimmerPulse 1.4s ease infinite", animationDelay: "0.1s" }}/>
+          <div style={{ display: "flex", gap: 12 }}>
+            <div style={{ width: 100, height: 14, borderRadius: 6, background: "#f1f5f9",
+              animation: "shimmerPulse 1.4s ease infinite", animationDelay: "0.3s" }}/>
+            <div style={{ width: 70, height: 14, borderRadius: 6, background: "#f1f5f9",
+              animation: "shimmerPulse 1.4s ease infinite", animationDelay: "0.4s" }}/>
+          </div>
+        </div>
+        <div style={{ width: 70, height: 32, borderRadius: 8, background: "#f1f5f9",
+          animation: "shimmerPulse 1.4s ease infinite" }}/>
+      </div>
+    </div>
+  );
+}
+
 export default function ObrasPage() {
   const router = useRouter();
   const [obras, setObras] = useState([]);
@@ -51,10 +80,12 @@ export default function ObrasPage() {
   const [filtroEstado, setFiltroEstado] = useState("");
   const [busqueda, setBusqueda] = useState("");
   const [confirmarEliminar, setConfirmarEliminar] = useState(null);
+  const [mounted, setMounted] = useState(false);
 
   useInactividad(supabase, router, 10);
 
   useEffect(() => {
+    setMounted(true);
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) { router.push("/login"); return; }
       const { data } = await supabase.from("obras").select("*").eq("user_id", user.id).order("created_at", { ascending: false });
@@ -96,30 +127,50 @@ export default function ObrasPage() {
 
   // Stats
   const stats = {
-    total:       obras.length,
-    ejecucion:   obras.filter(o => o.estado_obra === "En ejecución").length,
-    paralizadas: obras.filter(o => o.estado_obra === "Paralizada").length,
+    total:         obras.length,
+    ejecucion:     obras.filter(o => o.estado_obra === "En ejecución").length,
+    paralizadas:   obras.filter(o => o.estado_obra === "Paralizada").length,
     recepcionadas: obras.filter(o => o.estado_obra === "Recepcionada").length,
   };
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
 
+      <style>{`
+        @keyframes shimmerPulse {
+          0%,100% { opacity: 1; }
+          50%      { opacity: .45; }
+        }
+      `}</style>
+
       {/* ── Header ── */}
-      <div style={{ background: "linear-gradient(135deg, #065f46, #059669)", padding: "24px 32px 20px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      <div style={{ background: "linear-gradient(135deg, #065f46, #059669)", padding: "24px 32px 20px",
+        position: "relative", overflow: "hidden" }}>
+
+        {/* Shimmer sweep decorativo */}
+        <div className="shimmer-sweep" style={{ opacity: 0.6 }}/>
+
+        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
+
+          {/* Breadcrumb */}
+          <div className={mounted ? "anim-slide-down" : ""}
+            style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
             <button onClick={() => router.push("/dashboard")}
+              className="btn-press"
               style={{ background: "rgba(255,255,255,.15)", border: "none", borderRadius: 8,
-                padding: "6px 12px", color: "#fff", fontSize: 12, cursor: "pointer" }}>
+                padding: "6px 12px", color: "#fff", fontSize: 12, cursor: "pointer",
+                backdropFilter: "blur(4px)", transition: "background .15s" }}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.25)"}
+              onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.15)"}>
               ← Dashboard
             </button>
             <span style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>/</span>
             <span style={{ color: "#fff", fontSize: 12, fontWeight: 600 }}>Ejecución de Obras</span>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12 }}>
-            <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end",
+            flexWrap: "wrap", gap: 12 }}>
+            <div className={mounted ? "anim-fade-up" : ""}>
               <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-.02em" }}>
                 🏗️ Ejecución de Obras
               </h1>
@@ -128,9 +179,11 @@ export default function ObrasPage() {
               </p>
             </div>
             <button onClick={() => setCreando(true)}
+              className={`btn-primary${mounted ? " anim-fade-up delay-100" : ""}`}
               style={{ background: "#fff", color: "#065f46", border: "none", borderRadius: 12,
                 padding: "10px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer",
-                display: "flex", alignItems: "center", gap: 6, boxShadow: "0 2px 8px rgba(0,0,0,.15)" }}>
+                display: "flex", alignItems: "center", gap: 6,
+                boxShadow: "0 2px 8px rgba(0,0,0,.15)" }}>
               ＋ Nueva Obra
             </button>
           </div>
@@ -138,14 +191,21 @@ export default function ObrasPage() {
           {/* Stats row */}
           <div style={{ display: "flex", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
             {[
-              { label: "Total obras",       val: stats.total,         icon: "🏗️" },
-              { label: "En ejecución",      val: stats.ejecucion,     icon: "⚙️" },
-              { label: "Paralizadas",       val: stats.paralizadas,   icon: "⏸️" },
-              { label: "Recepcionadas",     val: stats.recepcionadas, icon: "✅" },
+              { label: "Total obras",   val: stats.total,         icon: "🏗️" },
+              { label: "En ejecución",  val: stats.ejecucion,     icon: "⚙️" },
+              { label: "Paralizadas",   val: stats.paralizadas,   icon: "⏸️" },
+              { label: "Recepcionadas", val: stats.recepcionadas, icon: "✅" },
             ].map((s, i) => (
-              <div key={i} style={{ background: "rgba(255,255,255,.15)", borderRadius: 12,
-                padding: "10px 16px", backdropFilter: "blur(4px)", minWidth: 120 }}>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,.7)", marginBottom: 2 }}>{s.icon} {s.label}</div>
+              <div key={i}
+                className={mounted ? `anim-fade-up delay-${(i+1)*50}` : ""}
+                style={{ background: "rgba(255,255,255,.15)", borderRadius: 12,
+                  padding: "10px 16px", backdropFilter: "blur(4px)", minWidth: 120,
+                  transition: "background .2s", cursor: "default" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.22)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.15)"}>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,.7)", marginBottom: 2 }}>
+                  {s.icon} {s.label}
+                </div>
                 <div style={{ fontSize: 22, fontWeight: 800, color: "#fff" }}>{s.val}</div>
               </div>
             ))}
@@ -156,65 +216,89 @@ export default function ObrasPage() {
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 32px" }}>
 
         {/* ── Filtros ── */}
-        <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
+        <div className={mounted ? "anim-slide-down delay-100" : ""}
+          style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
           <input
             placeholder="Buscar por nombre o contratista..."
             value={busqueda} onChange={e => setBusqueda(e.target.value)}
+            className="input-focus"
             style={{ flex: 1, minWidth: 200, padding: "9px 14px", border: "1.5px solid #e2e8f0",
-              borderRadius: 10, fontSize: 13, fontFamily: "inherit", outline: "none" }}
+              borderRadius: 10, fontSize: 13, fontFamily: "inherit", outline: "none",
+              transition: "border-color .15s" }}
+            onFocus={e => e.target.style.borderColor = "#059669"}
+            onBlur={e => e.target.style.borderColor = "#e2e8f0"}
           />
           <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)}
             style={{ padding: "9px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10,
-              fontSize: 13, fontFamily: "inherit", background: "#fff", color: "#374151", outline: "none" }}>
+              fontSize: 13, fontFamily: "inherit", background: "#fff", color: "#374151",
+              outline: "none", cursor: "pointer", transition: "border-color .15s" }}
+            onFocus={e => e.target.style.borderColor = "#059669"}
+            onBlur={e => e.target.style.borderColor = "#e2e8f0"}>
             <option value="">Todos los estados</option>
             {ESTADOS.map(e => <option key={e} value={e}>{e}</option>)}
           </select>
           {(busqueda || filtroEstado) && (
             <button onClick={() => { setBusqueda(""); setFiltroEstado(""); }}
+              className="btn-press"
               style={{ background: "#f1f5f9", border: "none", borderRadius: 8,
-                padding: "9px 14px", fontSize: 12, color: "#64748b", cursor: "pointer" }}>
-              Limpiar
+                padding: "9px 14px", fontSize: 12, color: "#64748b", cursor: "pointer",
+                transition: "background .15s" }}
+              onMouseEnter={e => e.currentTarget.style.background = "#e2e8f0"}
+              onMouseLeave={e => e.currentTarget.style.background = "#f1f5f9"}>
+              ✕ Limpiar
             </button>
           )}
         </div>
 
         {/* ── Lista ── */}
         {loading ? (
-          <div style={{ textAlign: "center", padding: "60px 0", color: "#94a3b8", fontSize: 14 }}>
-            Cargando obras...
+          <div style={{ display: "grid", gap: 14 }}>
+            {[0,1,2].map(i => (
+              <div key={i} className={`anim-fade-up delay-${(i+1)*50}`}>
+                <SkeletonCard/>
+              </div>
+            ))}
           </div>
         ) : obrasFiltradas.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "60px 0" }}>
+          <div className="anim-fade-up" style={{ textAlign: "center", padding: "60px 0" }}>
             <div style={{ fontSize: 48, marginBottom: 12 }}>🏗️</div>
             <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 8 }}>
               {obras.length === 0 ? "No tienes obras registradas aún" : "Sin resultados con los filtros actuales"}
             </p>
             {obras.length === 0 && (
               <button onClick={() => setCreando(true)}
+                className="btn-primary"
                 style={{ background: "#059669", color: "#fff", border: "none", borderRadius: 10,
-                  padding: "10px 20px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+                  padding: "10px 20px", fontSize: 13, fontWeight: 600, cursor: "pointer",
+                  fontFamily: "inherit" }}>
                 Crear primera obra
               </button>
             )}
           </div>
         ) : (
           <div style={{ display: "grid", gap: 14 }}>
-            {obrasFiltradas.map(obra => {
+            {obrasFiltradas.map((obra, idx) => {
               const est = ESTADO_ST[obra.estado_obra] || ESTADO_ST["En ejecución"];
+              const delay = Math.min(idx * 50, 400);
               return (
                 <div key={obra.id}
-                  onClick={() => router.push(`/obra?id=${obra.id}`)}
-                  style={{ background: "#fff", border: "1.5px solid #e2e8f0", borderRadius: 16,
-                    padding: "18px 22px", cursor: "pointer", transition: "box-shadow .15s, border-color .15s",
+                  className={`card-hover anim-fade-up`}
+                  style={{ animationDelay: `${delay}ms`,
+                    background: "#fff", border: "1.5px solid #e2e8f0", borderRadius: 16,
+                    padding: "18px 22px", cursor: "pointer",
                     borderLeft: `4px solid ${est.dot}` }}
-                  onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,.08)"; e.currentTarget.style.borderColor = est.dot; }}
-                  onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "#e2e8f0"; }}>
+                  onClick={() => router.push(`/obra?id=${obra.id}`)}>
 
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between",
+                    alignItems: "flex-start", gap: 12 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8,
+                        marginBottom: 6, flexWrap: "wrap" }}>
                         <span style={{ background: est.bg, color: est.color, fontSize: 11, fontWeight: 700,
                           padding: "3px 9px", borderRadius: 99 }}>
+                          <span className="pulse-dot" style={{ display: "inline-block",
+                            width: 6, height: 6, borderRadius: "50%", background: est.dot,
+                            marginRight: 5, verticalAlign: "middle" }}/>
                           {obra.estado_obra}
                         </span>
                         {obra.region && (
@@ -222,7 +306,7 @@ export default function ObrasPage() {
                         )}
                         <PlazoChip fecha={obra.fecha_termino_contractual} />
                       </div>
-                      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", margin: "0 0 4px",
+                      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", margin: "0 0 6px",
                         overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {obra.nombre}
                       </h3>
@@ -249,14 +333,22 @@ export default function ObrasPage() {
                     <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
                       <button
                         onClick={e => { e.stopPropagation(); router.push(`/obra?id=${obra.id}`); }}
+                        className="btn-press"
                         style={{ background: "#f0fdf4", color: "#059669", border: "1px solid #bbf7d0",
-                          borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+                          borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 600,
+                          cursor: "pointer", transition: "background .15s, box-shadow .15s" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "#dcfce7"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(5,150,105,.2)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "#f0fdf4"; e.currentTarget.style.boxShadow = "none"; }}>
                         Abrir →
                       </button>
                       <button
                         onClick={e => { e.stopPropagation(); setConfirmarEliminar(obra); }}
+                        className="btn-press"
                         style={{ background: "#fff", color: "#ef4444", border: "1px solid #fca5a5",
-                          borderRadius: 8, padding: "6px 10px", fontSize: 12, cursor: "pointer" }}>
+                          borderRadius: 8, padding: "6px 10px", fontSize: 12, cursor: "pointer",
+                          transition: "background .15s" }}
+                        onMouseEnter={e => e.currentTarget.style.background = "#fff5f5"}
+                        onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
                         🗑
                       </button>
                     </div>
@@ -271,9 +363,11 @@ export default function ObrasPage() {
       {/* ── Modal nueva obra ── */}
       {creando && (
         <div style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex", alignItems: "center",
-          justifyContent: "center", padding: 16, backdropFilter: "blur(6px)", background: "rgba(0,0,0,.35)" }}>
-          <div style={{ background: "#fff", borderRadius: 20, padding: 32, width: "100%", maxWidth: 440,
-            boxShadow: "0 24px 60px rgba(0,0,0,.2)" }}>
+          justifyContent: "center", padding: 16, backdropFilter: "blur(6px)",
+          background: "rgba(0,0,0,.35)", animation: "fadeIn .2s ease both" }}>
+          <div className="anim-scale-in"
+            style={{ background: "#fff", borderRadius: 20, padding: 32, width: "100%", maxWidth: 440,
+              boxShadow: "0 24px 60px rgba(0,0,0,.2)" }}>
             <h3 style={{ fontSize: 18, fontWeight: 800, color: "#1e293b", margin: "0 0 20px" }}>
               🏗️ Nueva Obra
             </h3>
@@ -288,8 +382,12 @@ export default function ObrasPage() {
                 onChange={e => setNombreNuevo(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && crearObra()}
                 placeholder="Ej: Mejoramiento veredas sector norte"
+                className="input-focus"
                 style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0",
-                  borderRadius: 10, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }}
+                  borderRadius: 10, fontSize: 14, fontFamily: "inherit", outline: "none",
+                  boxSizing: "border-box", transition: "border-color .15s, box-shadow .15s" }}
+                onFocus={e => { e.target.style.borderColor = "#059669"; e.target.style.boxShadow = "0 0 0 3px rgba(5,150,105,.12)"; }}
+                onBlur={e => { e.target.style.borderColor = "#e2e8f0"; e.target.style.boxShadow = "none"; }}
               />
             </div>
             <div style={{ marginBottom: 24 }}>
@@ -303,10 +401,12 @@ export default function ObrasPage() {
                   const active = estadoNuevo === e;
                   return (
                     <button key={e} onClick={() => setEstadoNuevo(e)}
+                      className="btn-press"
                       style={{ padding: "6px 12px", borderRadius: 99, fontSize: 11, fontWeight: 600,
                         border: active ? `1.5px solid ${st.dot}` : "1.5px solid #e2e8f0",
                         background: active ? st.bg : "#fff", color: active ? st.color : "#64748b",
-                        cursor: "pointer", fontFamily: "inherit" }}>
+                        cursor: "pointer", fontFamily: "inherit",
+                        transition: "background .15s, border-color .15s, color .15s" }}>
                       {e}
                     </button>
                   );
@@ -315,14 +415,20 @@ export default function ObrasPage() {
             </div>
             <div style={{ display: "flex", gap: 10 }}>
               <button onClick={crearObra} disabled={!nombreNuevo.trim() || creandoLoading}
+                className="btn-primary"
                 style={{ flex: 1, background: "#059669", color: "#fff", border: "none", borderRadius: 12,
                   padding: "12px", fontSize: 14, fontWeight: 700, cursor: "pointer",
-                  opacity: !nombreNuevo.trim() ? 0.5 : 1, fontFamily: "inherit" }}>
-                {creandoLoading ? "Creando..." : "Crear obra →"}
+                  opacity: !nombreNuevo.trim() ? 0.5 : 1, fontFamily: "inherit",
+                  transition: "opacity .15s" }}>
+                {creandoLoading ? "⏳ Creando..." : "Crear obra →"}
               </button>
               <button onClick={() => { setCreando(false); setNombreNuevo(""); }}
+                className="btn-press"
                 style={{ background: "#f1f5f9", color: "#64748b", border: "none", borderRadius: 12,
-                  padding: "12px 18px", fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>
+                  padding: "12px 18px", fontSize: 14, cursor: "pointer", fontFamily: "inherit",
+                  transition: "background .15s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#e2e8f0"}
+                onMouseLeave={e => e.currentTarget.style.background = "#f1f5f9"}>
                 Cancelar
               </button>
             </div>
@@ -333,9 +439,11 @@ export default function ObrasPage() {
       {/* ── Modal confirmar eliminar ── */}
       {confirmarEliminar && (
         <div style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex", alignItems: "center",
-          justifyContent: "center", padding: 16, backdropFilter: "blur(6px)", background: "rgba(0,0,0,.35)" }}>
-          <div style={{ background: "#fff", borderRadius: 20, padding: 28, width: "100%", maxWidth: 380,
-            boxShadow: "0 24px 60px rgba(0,0,0,.2)", textAlign: "center" }}>
+          justifyContent: "center", padding: 16, backdropFilter: "blur(6px)",
+          background: "rgba(0,0,0,.35)", animation: "fadeIn .2s ease both" }}>
+          <div className="anim-scale-in"
+            style={{ background: "#fff", borderRadius: 20, padding: 28, width: "100%", maxWidth: 380,
+              boxShadow: "0 24px 60px rgba(0,0,0,.2)", textAlign: "center" }}>
             <div style={{ fontSize: 40, marginBottom: 12 }}>⚠️</div>
             <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1e293b", margin: "0 0 8px" }}>
               Eliminar obra
@@ -348,13 +456,21 @@ export default function ObrasPage() {
             </p>
             <div style={{ display: "flex", gap: 10 }}>
               <button onClick={() => eliminarObra(confirmarEliminar.id)}
+                className="btn-press"
                 style={{ flex: 1, background: "#ef4444", color: "#fff", border: "none", borderRadius: 10,
-                  padding: "11px", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
+                  padding: "11px", fontSize: 13, fontWeight: 700, cursor: "pointer",
+                  fontFamily: "inherit", transition: "background .15s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#dc2626"}
+                onMouseLeave={e => e.currentTarget.style.background = "#ef4444"}>
                 Eliminar
               </button>
               <button onClick={() => setConfirmarEliminar(null)}
+                className="btn-press"
                 style={{ flex: 1, background: "#f1f5f9", color: "#374151", border: "none", borderRadius: 10,
-                  padding: "11px", fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
+                  padding: "11px", fontSize: 13, cursor: "pointer", fontFamily: "inherit",
+                  transition: "background .15s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#e2e8f0"}
+                onMouseLeave={e => e.currentTarget.style.background = "#f1f5f9"}>
                 Cancelar
               </button>
             </div>
