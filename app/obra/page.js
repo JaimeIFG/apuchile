@@ -1164,7 +1164,13 @@ function ObraDetail() {
       {mGar  && <ModalGarantia obraId={obraId} onClose={()=>setMGar(false)}
                   onSave={g=>{ setGarantias(prev=>[...prev,g].sort((a,b)=>new Date(a.fecha_vencimiento)-new Date(b.fecha_vencimiento))); setMGar(false); }}/>}
       {mBit  && <ModalBitacora obraId={obraId} userId={userId} onClose={()=>setMBit(false)}
-                  onSave={b=>{ setBitacora(prev=>[b,...prev]); setMBit(false); }}/>}
+                  onSave={(b,newAnexos)=>{
+                    setBitacora(prev=>[b,...prev]);
+                    if(newAnexos?.length>0){
+                      setAnexos(prev=>({...prev,[b.id]:newAnexos}));
+                    }
+                    setMBit(false);
+                  }}/>}
       {mFoto && <ModalFotos    obraId={obraId} onClose={()=>setMFoto(false)}
                   onSave={f=>{ setFotos(prev=>[f,...prev]); }}/>}
       {mPresupuesto && <ModalPresupuesto obraId={obraId} onClose={()=>setMPresupuesto(false)}
@@ -1269,26 +1275,27 @@ function ModalBitacora({ obraId, userId, onClose, onSave }) {
     if(!form.descripcion.trim())return;
     setSaving(true);
     const{data,error}=await supabase.from("obra_bitacora").insert({obra_id:obraId,user_id:userId,...form}).select().single();
-    setSaving(false);
     if(!error&&data){
-      // Subir archivos anexos si existen
+      const newAnexos=[];
       if(files.length>0){
         for(let i=0;i<files.length;i++){
           const f=files[i];
           setProg(`Subiendo archivo ${i+1}/${files.length}…`);
           const res=await uploadFile(obraId,"bitacora_anexos",f);
           if(!res.error){
-            await supabase.from("obra_bitacora_anexos").insert({
-              bitacora_id:data.id,
-              url:res.url,
-              nombre:f.name,
+            const{data:a}=await supabase.from("obra_bitacora_anexos").insert({
+              bitacora_id:data.id, url:res.url, nombre:f.name,
               tipo:f.type.startsWith("image/")?"foto":"documento",
-            });
+            }).select().single();
+            if(a) newAnexos.push(a);
           }
         }
         setProg("");
       }
-      onSave(data);
+      setSaving(false);
+      onSave(data, newAnexos);
+    } else {
+      setSaving(false);
     }
   };
   return(
