@@ -12,7 +12,25 @@ export async function POST(req) {
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
 
-    // Convertir a array de arrays (raw)
+    // Expandir celdas combinadas (merged) — copiar el valor al resto de las filas del rango
+    const merges = sheet["!merges"] || [];
+    for (const merge of merges) {
+      const { s, e } = merge; // s=start, e=end (row/col, 0-indexed)
+      const originAddr = XLSX.utils.encode_cell(s);
+      const originCell = sheet[originAddr];
+      if (!originCell) continue;
+      for (let r = s.r; r <= e.r; r++) {
+        for (let c = s.c; c <= e.c; c++) {
+          if (r === s.r && c === s.c) continue; // ya existe
+          const addr = XLSX.utils.encode_cell({ r, c });
+          if (!sheet[addr]) {
+            sheet[addr] = { ...originCell };
+          }
+        }
+      }
+    }
+
+    // Convertir a array de arrays (raw), ya con merged cells expandidas
     const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: null });
 
     const items = [];
@@ -33,7 +51,16 @@ export async function POST(req) {
 
     const dataStart = headerRow >= 0 ? headerRow + 1 : 10;
 
-    // Columnas esperadas: A=item, B=partida, C=unidad, D=cantidad, E=valor_serviu, F=valor_unitario, G=valor_total
+    const parseNum = v => {
+      if (v == null) return null;
+      if (typeof v === "number") return isFinite(v) ? v : null;
+      const s = String(v).replace(/\$/g, "").replace(/\s/g, "")
+        .replace(/\.(?=\d{3})/g, "").replace(",", ".").trim();
+      const n = parseFloat(s);
+      return isNaN(n) ? null : n;
+    };
+
+    // Columnas: A=item, B=partida, C=unidad, D=cantidad, E=valor_serviu, F=valor_unitario, G=valor_total
     for (let i = dataStart; i < rows.length; i++) {
       const row = rows[i];
       if (!row) continue;
@@ -49,36 +76,32 @@ export async function POST(req) {
       const itemStr = colA != null ? String(colA).trim() : "";
       const partida = colB != null ? String(colB).trim() : "";
 
-      if (!partida) continue;
+      // Saltar filas vacías o filas de totales/subtotales
+      if (!partida && !itemStr) continue;
+      if (/^(sub\s*total|total|costo\s*directo|gastos\s*generales|utilidad|iva|costo\s*neto)/i.test(partida)) continue;
 
-      // Detectar encabezado de sección: item tipo "1.0" o sin unidad/cantidad/valores
-      const isSectionHeader =
-        /^\d+\.0$/.test(itemStr) ||
-        (!colC && !colD && !colF && !colG && partida.length > 2);
+      // Detectar encabezado de sección principal (ej: "1.0", "2.0")
+      const isSectionMain = /^\d+\.0$/.test(itemStr);
+      // Sin unidad ni cantidades ni valores → es encabezado/subtítulo
+      const noValues = !colC && !parseNum(colD) && !parseNum(colF) && !parseNum(colG);
 
-      if (isSectionHeader) {
+      if (isSectionMain || (noValues && partida.length > 2)) {
+        if (partida) currentSection = partida;
+        continue;
+      }
+
+      // Si no tiene unidad ni valores y la partida parece subtítulo, es sub-sección
+      if (!colC && noValues && partida) {
         currentSection = partida;
         continue;
       }
 
-      // Sub-encabezado sin unidad ni cantidades
-      if (!colC && !colD && !colF) {
-        if (partida.length > 2) currentSection = partida;
-        continue;
-      }
-
-      const parseNum = v => {
-        if (v == null) return null;
-        if (typeof v === "number") return isFinite(v) ? v : null;
-        const s = String(v).replace(/\$/g, "").replace(/\./g, "").replace(",", ".").trim();
-        const n = parseFloat(s);
-        return isNaN(n) ? null : n;
-      };
+      // Necesita al menos unidad o algún valor para ser una partida real
+      if (!colC && !parseNum(colD) && !parseNum(colE) && !parseNum(colF) && !parseNum(colG)) continue;
 
       const cantidad      = parseNum(colD);
       const valorServiu   = parseNum(colE);
-      // Si no hay valor unitario ingresado, usar SERVIU como referencia
-      const valorUnitario = parseNum(colF) ?? valorServiu;
+      const valorUnitario = parseNum(colF) ?? valorServiu; // fallback a precio SERVIU
       const valorTotal    = parseNum(colG) ??
         (cantidad != null && valorUnitario != null ? cantidad * valorUnitario : 0);
 
@@ -86,7 +109,7 @@ export async function POST(req) {
       items.push({
         item:           itemStr || String(orden),
         seccion:        currentSection,
-        partida:        partida,
+        partida:        partida || `Partida ${itemStr}`,
         unidad:         colC ? String(colC).trim().toLowerCase() : "",
         cantidad:       cantidad,
         valor_unitario: valorUnitario,

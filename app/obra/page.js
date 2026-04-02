@@ -1188,41 +1188,7 @@ function ObraDetail() {
                   })}
 
                   {/* Resumen financiero */}
-                  {(()=>{
-                    const cd = presupuesto.reduce((s,p)=>s+(p.valor_total||0),0);
-                    const gg = cd * 0.25;
-                    const ut = cd * 0.15;
-                    const neto = cd + gg + ut;
-                    const iva = neto * 0.19;
-                    const total = neto + iva;
-                    const row = (label,val,bold,green) => (
-                      <div key={label} style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
-                        padding:"9px 0", borderBottom:"1px solid #f1f5f9" }}>
-                        <span style={{ fontSize:13, color: green?"#065f46":"#374151", fontWeight: bold?700:400 }}>{label}</span>
-                        <span style={{ fontSize:13, fontWeight: bold?800:500, color: green?"#059669":"#1e293b" }}>
-                          ${Math.round(val).toLocaleString("es-CL")}
-                        </span>
-                      </div>
-                    );
-                    return (
-                      <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:14,
-                        padding:"18px 22px", marginTop:8 }}>
-                        <h3 style={{ fontSize:13, fontWeight:700, color:"#065f46", margin:"0 0 12px",
-                          textTransform:"uppercase", letterSpacing:".04em" }}>📊 Resumen Financiero</h3>
-                        {row("Costo Directo", cd)}
-                        {row("Gastos Generales (25%)", gg)}
-                        {row("Utilidades (15%)", ut)}
-                        {row("Costo Neto", neto, true)}
-                        {row("IVA (19%)", iva)}
-                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", paddingTop:10, marginTop:4 }}>
-                          <span style={{ fontSize:15, fontWeight:800, color:"#065f46" }}>TOTAL</span>
-                          <span style={{ fontSize:18, fontWeight:800, color:"#059669" }}>
-                            ${Math.round(total).toLocaleString("es-CL")}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })()}
+                  <ResumenFinanciero presupuesto={presupuesto}/>
 
                   <p style={{ fontSize:11, color:"#94a3b8", marginTop:10, textAlign:"center" }}>
                     ✏️ Haz clic en <strong>Cantidad</strong> o <strong>V. Unitario</strong> para editar · El total se calcula automáticamente
@@ -1582,6 +1548,42 @@ function ModalFotos({ obraId, onClose, onSave }) {
           disabled={files.length===0} label={`Subir ${files.length||""}foto${files.length!==1?"s":""} →`}/>
       </div>
     </Modal>
+  );
+}
+
+function ResumenFinanciero({ presupuesto }) {
+  const cd    = presupuesto.reduce((s,p) => s + (p.valor_total||0), 0);
+  const gg    = cd * 0.25;
+  const ut    = cd * 0.15;
+  const neto  = cd + gg + ut;
+  const iva   = neto * 0.19;
+  const total = neto + iva;
+  const fmtN  = v => "$" + Math.round(v).toLocaleString("es-CL");
+  const filas = [
+    { label:"Costo Directo",          val:cd,    bold:false },
+    { label:"Gastos Generales (25%)", val:gg,    bold:false },
+    { label:"Utilidades (15%)",       val:ut,    bold:false },
+    { label:"Costo Neto",             val:neto,  bold:true  },
+    { label:"IVA (19%)",              val:iva,   bold:false },
+  ];
+  return (
+    <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:14,
+      padding:"18px 22px", marginTop:8 }}>
+      <h3 style={{ fontSize:12, fontWeight:700, color:"#065f46", margin:"0 0 12px",
+        textTransform:"uppercase", letterSpacing:".05em" }}>📊 Resumen Financiero</h3>
+      {filas.map(({label,val,bold}) => (
+        <div key={label} style={{ display:"flex", justifyContent:"space-between",
+          padding:"8px 0", borderBottom:"1px solid #f1f5f9" }}>
+          <span style={{ fontSize:13, color:"#374151", fontWeight:bold?700:400 }}>{label}</span>
+          <span style={{ fontSize:13, fontWeight:bold?700:500, color:"#1e293b" }}>{fmtN(val)}</span>
+        </div>
+      ))}
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+        paddingTop:12, marginTop:4 }}>
+        <span style={{ fontSize:15, fontWeight:800, color:"#065f46" }}>TOTAL</span>
+        <span style={{ fontSize:20, fontWeight:800, color:"#059669" }}>{fmtN(total)}</span>
+      </div>
+    </div>
   );
 }
 
