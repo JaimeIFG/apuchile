@@ -470,7 +470,7 @@ export default function Dashboard() {
                 st:{background:"linear-gradient(135deg,#065f46,#059669)", borderBottom:"3px solid #34d399"}, txt:"#fff" },
               { icon:"📂", label:"Mis proyectos",   action:() => document.getElementById("mis-proyectos")?.scrollIntoView({behavior:"smooth"}),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #059669"}, txt:"#374151" },
-              { icon:"📄", label:"Importar",         action:() => alert("Próximamente"),
+              { icon:"🏗️", label:"Ejecución de Obras", action:() => router.push("/obras"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
               { icon:"⚙️", label:"Configuración",   action:() => alert("Próximamente"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #64748b"}, txt:"#374151" },

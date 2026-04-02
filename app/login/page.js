@@ -16,8 +16,25 @@ export default function LoginPage() {
   const [otpError, setOtpError] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
   const [modoTexto, setModoTexto] = useState(true); // campo único por defecto
+  const [resetMode, setResetMode] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetSent, setResetSent] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetError, setResetError] = useState("");
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const enviarReset = async (e) => {
+    e.preventDefault();
+    if (!resetEmail) { setResetError("Ingresa tu correo"); return; }
+    setResetError(""); setResetLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setResetLoading(false);
+    if (error) { setResetError(error.message); return; }
+    setResetSent(true);
+  };
 
   const ingresar = async (e) => {
     e.preventDefault();
@@ -168,6 +185,7 @@ export default function LoginPage() {
           </div>
 
           {modo === "ingresar" ? (
+            <>
             <form onSubmit={ingresar} className="space-y-4">
               <div>
                 <label className="text-xs font-medium text-gray-600 mb-1.5 block">Correo electrónico</label>
@@ -186,7 +204,46 @@ export default function LoginPage() {
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mt-2">
                 {loading ? "Ingresando..." : "Ingresar →"}
               </button>
+              <div className="text-center mt-3">
+                <button type="button" onClick={() => { setResetMode(true); setResetEmail(form.correo); setResetSent(false); setResetError(""); }}
+                  className="text-xs text-gray-400 hover:text-emerald-600 transition-colors">
+                  ¿Olvidaste tu contraseña?
+                </button>
+              </div>
             </form>
+
+            {/* Panel restablecer contraseña */}
+            {resetMode && (
+              <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+                {resetSent ? (
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">✉️</div>
+                    <p className="text-sm font-semibold text-emerald-800 mb-1">Correo enviado</p>
+                    <p className="text-xs text-gray-500">Revisa tu bandeja (y spam) en <span className="font-medium">{resetEmail}</span> y sigue el enlace para crear una nueva contraseña.</p>
+                    <button onClick={() => setResetMode(false)} className="mt-4 text-xs text-emerald-600 hover:text-emerald-800">Volver al inicio de sesión</button>
+                  </div>
+                ) : (
+                  <form onSubmit={enviarReset}>
+                    <p className="text-xs font-semibold text-emerald-800 mb-3">Restablecer contraseña</p>
+                    <input type="email" required value={resetEmail} onChange={e => setResetEmail(e.target.value)}
+                      placeholder="correo@ejemplo.com"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 mb-2 bg-white"/>
+                    {resetError && <p className="text-red-500 text-xs mb-2">{resetError}</p>}
+                    <div className="flex gap-2">
+                      <button type="submit" disabled={resetLoading}
+                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors disabled:opacity-50">
+                        {resetLoading ? "Enviando..." : "Enviar enlace →"}
+                      </button>
+                      <button type="button" onClick={() => setResetMode(false)}
+                        className="px-4 text-xs text-gray-500 hover:text-gray-700 border border-gray-200 rounded-xl">
+                        Cancelar
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+            </>
           ) : (
             <form onSubmit={registrar} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
