@@ -401,21 +401,92 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
     const p = Math.round(pct || 0);
     const fin = estado === "Terminada";
     const ini = estado === "No iniciada";
-    const terminoStr = fin ? "Se completó la totalidad de" : ini ? "Aún no se ha iniciado" : `Se ejecutó el ${p}% de`;
-    const finStr = fin ? " Partida finalizada conforme a lo proyectado." : ini ? "." : ". Partida en progreso.";
-    if (n.includes("hormig")) return `${terminoStr} la partida de ${partida}. Se realizaron trabajos de moldaje, armadura y vertido conforme a especificaciones técnicas${finStr}`;
-    if (n.includes("excav") || n.includes("movim")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó el retiro y traslado del material según lo indicado en proyecto${finStr}`;
-    if (n.includes("rellen") || n.includes("compac")) return `${terminoStr} la partida de ${partida}. Se realizó la colocación y compactación del material en capas según especificaciones${finStr}`;
-    if (n.includes("pintur") || n.includes("revestim")) return `${terminoStr} la aplicación de ${partida}. Se preparó la superficie y se aplicaron las manos indicadas${finStr}`;
-    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja")) return `${terminoStr} los trabajos de ${partida}. Se instalaron los elementos de cubierta asegurando hermeticidad y fijación correcta${finStr}`;
-    if (n.includes("instala") || n.includes("eléctri") || n.includes("electric")) return `${terminoStr} la instalación de ${partida}. Se realizó el tendido, fijación y conexión de los elementos conforme a normativa vigente${finStr}`;
-    if (n.includes("agua") || n.includes("sanitari") || n.includes("cañer")) return `${terminoStr} las obras de ${partida}. Se realizó el tendido de tuberías, uniones y pruebas de presión correspondientes${finStr}`;
-    if (n.includes("mamposter") || n.includes("albañil") || n.includes("muro") || n.includes("tabique")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos según planos${finStr}`;
-    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("ceramic")) return `${terminoStr} la colocación de ${partida}. Se preparó la base y se instaló el revestimiento nivelado${finStr}`;
-    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint")) return `${terminoStr} la instalación de ${partida}. Se realizó colocación, nivelación, fijación y sellado según proyecto${finStr}`;
-    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier")) return `${terminoStr} los trabajos de ${partida}. Se ejecutaron preparación, enfierradura y vaciado de hormigón${finStr}`;
-    if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) return `${terminoStr} los trabajos de ${partida}. Se procedió al retiro controlado y disposición del escombro${finStr}`;
-    return `${terminoStr} la partida "${partida}". Se ejecutaron los trabajos conforme a especificaciones técnicas del proyecto${finStr}`;
+
+    // Prefijos contextuales según avance
+    const avStr = fin
+      ? "Se completó el 100% de"
+      : `Durante el período se avanzó un ${p}% en`;
+
+    // Sufijo de estado
+    const sufijo = fin
+      ? " Los trabajos quedaron terminados y conformes a las especificaciones técnicas del proyecto."
+      : ` Acumulando a la fecha un avance total de ${p}% respecto al total contratado. Trabajos en ejecución conforme a programa.`;
+
+    if (n.includes("hormig")) {
+      const dosif = n.match(/g\d+/i) ? n.match(/g\d+/i)[0].toUpperCase() : "";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizaron la totalidad de los trabajos de moldaje, colocación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el correcto fraguado y curado del hormigón conforme a especificaciones técnicas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se realizaron trabajos de moldaje, habilitación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el nivelado, vibrado y curado correspondiente. ${sufijo}`;
+    }
+    if (n.includes("excav") || n.includes("movim") || n.includes("escarpe")) {
+      return fin
+        ? `Se completó el 100% de los trabajos de ${partida}. Se ejecutó la excavación y/o movimiento de tierras en su totalidad, incluyendo el perfilado de taludes, retiro y disposición del material excedente en botadero autorizado. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó el movimiento de tierras en el área correspondiente, con retiro y traslado del material al botadero designado. Se verificó la cota de fundación según lo indicado en proyecto.${sufijo}`;
+    }
+    if (n.includes("rellen") || n.includes("compac")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó el relleno y compactación en la totalidad del área proyectada, en capas de 20 cm debidamente compactadas y controladas mediante ensayes de densidad in situ. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se colocó y compactó el material de relleno por capas según especificaciones, verificando la densidad requerida mediante ensayes en terreno.${sufijo}`;
+    }
+    if (n.includes("pintur") || n.includes("revestim")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó la preparación de superficies (lijado, masillado y limpieza), aplicándose la totalidad de manos de pintura/revestimiento indicadas en especificaciones técnicas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se prepararon las superficies y se aplicaron las manos de imprimación y terminación correspondientes en el área intervenida.${sufijo}`;
+    }
+    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja") || n.includes("zinc")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la cubierta incluyendo estructura de soporte, aislación, planchas y elementos de remate y evacuación de aguas lluvias. Se verificó la hermeticidad del sistema. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la estructura de soporte y colocación de los elementos de cubierta en el área correspondiente, asegurando la correcta fijación y traslape.${sufijo}`;
+    }
+    if (n.includes("eléctri") || n.includes("electric") || n.includes("alumbr") || n.includes("luminaria")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de ductos, cableado, conexionado y pruebas eléctricas de la totalidad de la instalación conforme a la normativa SEC vigente. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó el tendido de ductos y conductores, fijación de elementos y conexionado parcial de los tableros y puntos de luz/fuerza correspondientes.${sufijo}`;
+    }
+    if (n.includes("instala") && (n.includes("agua") || n.includes("sanitari") || n.includes("cañer") || n.includes("alcan"))) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de tuberías, uniones, pruebas de presión y desinfección de la red conforme a normativa MINVU/SEC vigente. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en las obras de ${partida}. Se instalaron tuberías, piezas especiales y se ejecutaron las uniones correspondientes. Se realizaron pruebas parciales de hermeticidad.${sufijo}`;
+    }
+    if (n.includes("muro") || n.includes("tabique") || n.includes("mamposter") || n.includes("albañil")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la mampostería/tabique, con colocación de elementos, aplomado, nivelación y sellado de juntas según planos de proyecto. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos en el área correspondiente, controlando geometría y verticalidad conforme a proyecto.${sufijo}`;
+    }
+    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon") || n.includes("cielo falso")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la estructura metálica de soporte y paneles de cielo, con nivelación y terminaciones de borde según especificaciones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó la estructura de soporte y la fijación de paneles en el área intervenida.${sufijo}`;
+    }
+    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("baldos") || n.includes("porcelan")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la colocación del revestimiento de piso, incluyendo preparación de base, aplicación de adhesivo, nivelado y sellado de juntas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la colocación de ${partida}. Se preparó la base de apoyo, se aplicó adhesivo y se instaló el revestimiento en el área correspondiente, verificando planeidad y alineamiento.${sufijo}`;
+    }
+    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint") || n.includes("marco")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó la instalación de la totalidad de los elementos de carpintería, incluyendo colocación, nivelación, fijación, sellado perimetral y prueba de funcionamiento. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se colocaron, nivelaron y fijaron los elementos correspondientes en los vanos indicados en proyecto.${sufijo}`;
+    }
+    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier") || n.includes("losa")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron la totalidad de los trabajos de preparación de subrasante, colocación de enfierradura y vaciado de hormigón. Se realizó el curado correspondiente y se verificaron las cotas según planos de fundaciones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutaron trabajos de preparación de base, colocación de moldajes, habilitación de armaduras y vaciado de hormigón en la zona indicada.${sufijo}`;
+    }
+    if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) {
+      return fin
+        ? `Se completó el 100% de los trabajos de ${partida}. Se procedió al retiro controlado de la totalidad de los elementos indicados, con disposición del escombro en botadero autorizado y limpieza final del área. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se procedió al retiro y disposición controlada del material en el área asignada.${sufijo}`;
+    }
+    if (n.includes("aseo") || n.includes("limpieza")) {
+      return fin
+        ? `Se completó el 100% de las labores de ${partida}. Se realizó la limpieza general de la obra, retiro de escombros y materiales sobrantes, dejando el área en condiciones de entrega. Partida finalizada.`
+        : `Durante el período se ejecutaron labores de ${partida} en el área intervenida, con retiro de escombros y materiales sobrantes acumulados.${sufijo}`;
+    }
+    // Fallback genérico mejorado
+    return fin
+      ? `Se completó el 100% de la partida "${partida}". Se ejecutaron la totalidad de los trabajos indicados en las especificaciones técnicas del proyecto, verificándose la correcta ejecución conforme a planos y normativa vigente. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida "${partida}". Se ejecutaron los trabajos correspondientes conforme a las especificaciones técnicas del proyecto y bajo la supervisión de la Inspección Técnica de Obras.${sufijo}`;
   }
 
   const updatePartida = (id, field, val) => {
@@ -446,7 +517,7 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
       ultimo_ep: ultimoEP?.nombre,
       fotos_count: fotos?.length || 0,
     };
-    const partidas_out = partidasInforme.filter(p=>p.incluir).map(p=>({
+    const partidas_out = partidasInforme.filter(p=>p.incluir && (p.pct||0) > 0).map(p=>({
       item: p.item,
       partida: p.partida,
       unidad: p.unidad,
@@ -835,27 +906,83 @@ function ObraDetail() {
     const n = (partida || "").toLowerCase();
     const p = Math.round(pct || 0);
     const fin = estado === "Terminada";
-    const ini = estado === "No iniciada";
-
-    const terminoStr = fin ? "Se completó la totalidad de" : ini ? "Aún no se ha iniciado" : `Se ejecutó el ${p}% de`;
-    const finStr = fin ? " Partida finalizada conforme a lo proyectado." : ini ? "." : ". Partida en progreso.";
-
-    if (n.includes("hormig")) return `${terminoStr} la partida de ${partida}. Se realizaron trabajos de moldaje, armadura y vertido conforme a especificaciones técnicas${finStr}`;
-    if (n.includes("excav") || n.includes("movim")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó el retiro y traslado del material según lo indicado en proyecto${finStr}`;
-    if (n.includes("rellen") || n.includes("compac")) return `${terminoStr} la partida de ${partida}. Se realizó la colocación y compactación del material en capas según especificaciones${finStr}`;
-    if (n.includes("pintur") || n.includes("revestim")) return `${terminoStr} la aplicación de ${partida}. Se preparó la superficie y se aplicaron las manos de pintura/revestimiento indicadas${finStr}`;
-    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja")) return `${terminoStr} los trabajos de ${partida}. Se instalaron los elementos de cubierta asegurando hermeticidad y fijación correcta${finStr}`;
-    if (n.includes("instala") || n.includes("eléctri") || n.includes("electric")) return `${terminoStr} la instalación de ${partida}. Se realizó el tendido, fijación y conexión de los elementos conforme a normativa vigente${finStr}`;
-    if (n.includes("agua") || n.includes("sanitari") || n.includes("cañer")) return `${terminoStr} las obras de ${partida}. Se realizó el tendido de tuberías, uniones y pruebas de presión correspondientes${finStr}`;
-    if (n.includes("mamposter") || n.includes("albañil") || n.includes("muro") || n.includes("tabique")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos de acuerdo a planos de proyecto${finStr}`;
-    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon")) return `${terminoStr} la instalación de ${partida}. Se realizó la estructura de soporte y fijación de los paneles correspondientes${finStr}`;
-    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("ceramic")) return `${terminoStr} la colocación de ${partida}. Se preparó la base, se aplicó adhesivo y se instaló el revestimiento de piso nivelado${finStr}`;
-    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint")) return `${terminoStr} la instalación de ${partida}. Se realizó la colocación, nivelación, fijación y sellado de los elementos según proyecto${finStr}`;
-    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier")) return `${terminoStr} los trabajos de ${partida}. Se ejecutaron los trabajos de preparación, enfierradura y vaciado de hormigón correspondiente${finStr}`;
-    if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) return `${terminoStr} los trabajos de ${partida}. Se procedió al retiro controlado de los elementos indicados y disposición del escombro${finStr}`;
-    if (n.includes("aseo") || n.includes("limpieza")) return `${terminoStr} las labores de ${partida}. Se realizó limpieza general del área intervenida${finStr}`;
-    // fallback genérico
-    return `${terminoStr} la partida "${partida}". Se ejecutaron los trabajos conforme a lo indicado en las especificaciones técnicas del proyecto${finStr}`;
+    const sufijo = fin
+      ? " Los trabajos quedaron terminados y conformes a las especificaciones técnicas del proyecto."
+      : ` Acumulando a la fecha un avance total de ${p}% respecto al total contratado. Trabajos en ejecución conforme a programa.`;
+    if (n.includes("hormig")) {
+      const dosif = n.match(/g\d+/i) ? n.match(/g\d+/i)[0].toUpperCase() : "";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizaron la totalidad de los trabajos de moldaje, colocación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el correcto fraguado y curado conforme a especificaciones técnicas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se realizaron trabajos de moldaje, habilitación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el nivelado, vibrado y curado correspondiente.${sufijo}`;
+    }
+    if (n.includes("excav") || n.includes("movim") || n.includes("escarpe")) {
+      return fin
+        ? `Se completó el 100% de los trabajos de ${partida}. Se ejecutó la excavación y/o movimiento de tierras en su totalidad, incluyendo perfilado de taludes, retiro y disposición del material excedente en botadero autorizado. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó el movimiento de tierras en el área correspondiente, con retiro y traslado del material al botadero designado. Se verificó la cota de fundación según proyecto.${sufijo}`;
+    }
+    if (n.includes("rellen") || n.includes("compac")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó el relleno y compactación en la totalidad del área proyectada, en capas de 20 cm debidamente compactadas y controladas mediante ensayes de densidad in situ. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se colocó y compactó el material de relleno por capas según especificaciones, verificando la densidad requerida mediante ensayes en terreno.${sufijo}`;
+    }
+    if (n.includes("pintur") || n.includes("revestim")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó la preparación de superficies (lijado, masillado y limpieza), aplicándose la totalidad de manos de pintura/revestimiento indicadas en especificaciones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se prepararon las superficies y se aplicaron las manos de imprimación y terminación en el área intervenida.${sufijo}`;
+    }
+    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja") || n.includes("zinc")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la cubierta incluyendo estructura de soporte, aislación, planchas y elementos de remate y evacuación de aguas lluvias. Se verificó hermeticidad del sistema. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la estructura de soporte y colocación de los elementos de cubierta en el área correspondiente, asegurando correcta fijación y traslape.${sufijo}`;
+    }
+    if (n.includes("eléctri") || n.includes("electric") || n.includes("alumbr") || n.includes("luminaria")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de ductos, cableado, conexionado y pruebas eléctricas de la totalidad de la instalación conforme a normativa SEC vigente. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó el tendido de ductos y conductores, fijación de elementos y conexionado parcial de tableros y puntos de luz/fuerza.${sufijo}`;
+    }
+    if (n.includes("agua") || n.includes("sanitari") || n.includes("cañer") || n.includes("alcan")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de tuberías, uniones, pruebas de presión y desinfección de la red conforme a normativa vigente. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en las obras de ${partida}. Se instalaron tuberías, piezas especiales y se ejecutaron las uniones correspondientes, con pruebas parciales de hermeticidad.${sufijo}`;
+    }
+    if (n.includes("muro") || n.includes("tabique") || n.includes("mamposter") || n.includes("albañil")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la mampostería/tabique, con colocación de elementos, aplomado, nivelación y sellado de juntas según planos. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos en el área correspondiente, controlando geometría y verticalidad conforme a proyecto.${sufijo}`;
+    }
+    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la estructura metálica de soporte y paneles de cielo, con nivelación y terminaciones de borde según especificaciones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó la estructura de soporte y la fijación de paneles en el área intervenida.${sufijo}`;
+    }
+    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("porcelan")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad del revestimiento de piso, incluyendo preparación de base, aplicación de adhesivo, nivelado y sellado de juntas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la colocación de ${partida}. Se preparó la base de apoyo, se aplicó adhesivo y se instaló el revestimiento en el área correspondiente, verificando planeidad y alineamiento.${sufijo}`;
+    }
+    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint") || n.includes("marco")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó la instalación de la totalidad de los elementos de carpintería, incluyendo colocación, nivelación, fijación, sellado perimetral y prueba de funcionamiento. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se colocaron, nivelaron y fijaron los elementos en los vanos indicados en proyecto.${sufijo}`;
+    }
+    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier") || n.includes("losa")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron la totalidad de los trabajos de preparación de subrasante, colocación de enfierradura y vaciado de hormigón. Se realizó el curado correspondiente verificando cotas según planos. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutaron trabajos de preparación de base, colocación de moldajes, habilitación de armaduras y vaciado de hormigón en la zona indicada.${sufijo}`;
+    }
+    if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) {
+      return fin
+        ? `Se completó el 100% de los trabajos de ${partida}. Se procedió al retiro controlado de la totalidad de los elementos indicados, con disposición del escombro en botadero autorizado y limpieza final del área. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se procedió al retiro y disposición controlada del material en el área asignada.${sufijo}`;
+    }
+    if (n.includes("aseo") || n.includes("limpieza")) {
+      return fin
+        ? `Se completó el 100% de las labores de ${partida}. Se realizó la limpieza general de la obra, retiro de escombros y materiales sobrantes, dejando el área en condiciones de entrega. Partida finalizada.`
+        : `Durante el período se ejecutaron labores de ${partida} en el área intervenida, con retiro de escombros y materiales sobrantes acumulados.${sufijo}`;
+    }
+    return fin
+      ? `Se completó el 100% de la partida "${partida}". Se ejecutaron la totalidad de los trabajos indicados en las especificaciones técnicas del proyecto, verificándose la correcta ejecución conforme a planos y normativa vigente. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida "${partida}". Se ejecutaron los trabajos correspondientes conforme a las especificaciones técnicas del proyecto y bajo supervisión de la Inspección Técnica de Obras.${sufijo}`;
   }
 
   function imprimirInforme(inf, obra) {
