@@ -134,7 +134,7 @@ export default function ObrasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div style={{ minHeight:"100vh", background:"#f8fafc", fontFamily:"sans-serif" }}>
 
       <style>{`
         @keyframes shimmerPulse {
@@ -286,57 +286,87 @@ export default function ObrasPage() {
                   style={{ animationDelay: `${delay}ms`,
                     background: "#fff", border: "1.5px solid #e2e8f0", borderRadius: 16,
                     padding: "18px 22px", cursor: "pointer",
-                    borderLeft: `4px solid ${est.dot}` }}
+                    borderLeft: `4px solid ${est.dot}`,
+                    boxShadow: "0 1px 4px rgba(0,0,0,.04)" }}
                   onClick={() => router.push(`/obra?id=${obra.id}`)}>
 
                   <div style={{ display: "flex", justifyContent: "space-between",
                     alignItems: "flex-start", gap: 12 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
+                      {/* Fila superior: estado + región + plazo */}
                       <div style={{ display: "flex", alignItems: "center", gap: 8,
-                        marginBottom: 6, flexWrap: "wrap" }}>
+                        marginBottom: 7, flexWrap: "wrap" }}>
                         <span style={{ background: est.bg, color: est.color, fontSize: 11, fontWeight: 700,
-                          padding: "3px 9px", borderRadius: 99 }}>
+                          padding: "3px 9px", borderRadius: 99, display:"inline-flex", alignItems:"center", gap:4 }}>
                           <span className="pulse-dot" style={{ display: "inline-block",
-                            width: 6, height: 6, borderRadius: "50%", background: est.dot,
-                            marginRight: 5, verticalAlign: "middle" }}/>
+                            width: 6, height: 6, borderRadius: "50%", background: est.dot }}/>
                           {obra.estado_obra}
                         </span>
                         {obra.region && (
-                          <span style={{ fontSize: 11, color: "#64748b" }}>📍 {obra.region}</span>
+                          <span style={{ fontSize: 11, color: "#64748b", background:"#f8fafc",
+                            padding:"2px 7px", borderRadius:99, border:"1px solid #e2e8f0" }}>
+                            📍 {obra.region}
+                          </span>
                         )}
                         <PlazoChip fecha={obra.fecha_termino_contractual} />
                       </div>
-                      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1e293b", margin: "0 0 6px",
-                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+
+                      {/* Nombre */}
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1e293b", margin: "0 0 8px",
+                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                        letterSpacing: "-.01em" }}>
                         {obra.nombre}
                       </h3>
-                      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+
+                      {/* Meta info */}
+                      <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: obra.monto_contrato ? 10 : 0 }}>
                         {obra.contratista && (
-                          <span style={{ fontSize: 12, color: "#64748b" }}>🏢 {obra.contratista}</span>
+                          <span style={{ fontSize: 12, color: "#64748b", display:"flex", alignItems:"center", gap:4 }}>
+                            🏢 <span style={{ maxWidth:200, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{obra.contratista}</span>
+                          </span>
                         )}
-                        {obra.ito && (
-                          <span style={{ fontSize: 12, color: "#64748b" }}>👤 ITO: {obra.ito}</span>
+                        {obra.inspector_fiscal && (
+                          <span style={{ fontSize: 12, color: "#64748b" }}>👤 {obra.inspector_fiscal}</span>
                         )}
                         {obra.monto_contrato && (
-                          <span style={{ fontSize: 12, color: "#059669", fontWeight: 600 }}>
+                          <span style={{ fontSize: 12, color: "#059669", fontWeight: 700 }}>
                             💰 {fmtPeso(obra.monto_contrato)}
                           </span>
                         )}
                         {obra.fecha_inicio && (
-                          <span style={{ fontSize: 12, color: "#64748b" }}>
-                            📅 Inicio: {new Date(obra.fecha_inicio).toLocaleDateString("es-CL")}
+                          <span style={{ fontSize: 12, color: "#94a3b8" }}>
+                            📅 {new Date(obra.fecha_inicio).toLocaleDateString("es-CL")}
+                            {obra.fecha_termino_contractual && (
+                              <> → {new Date(obra.fecha_termino_contractual).toLocaleDateString("es-CL")}</>
+                            )}
                           </span>
                         )}
                       </div>
+
+                      {/* Barra de avance si hay porcentaje */}
+                      {obra.porcentaje_avance != null && obra.porcentaje_avance > 0 && (
+                        <div style={{ marginTop: 4 }}>
+                          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                            <span style={{ fontSize:10, color:"#94a3b8", fontWeight:600 }}>AVANCE EP</span>
+                            <span style={{ fontSize:10, color:"#059669", fontWeight:700 }}>{Math.round(obra.porcentaje_avance)}%</span>
+                          </div>
+                          <div style={{ height:4, background:"#e2e8f0", borderRadius:99, overflow:"hidden" }}>
+                            <div style={{ width:`${Math.min(obra.porcentaje_avance,100)}%`, height:"100%",
+                              borderRadius:99, background: obra.porcentaje_avance >= 100 ? "#059669" : "#34d399",
+                              transition:"width .6s ease" }}/>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
-                    <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+                    <div style={{ display: "flex", flexDirection:"column", gap: 6, flexShrink: 0, alignItems:"flex-end" }}>
                       <button
                         onClick={e => { e.stopPropagation(); router.push(`/obra?id=${obra.id}`); }}
                         className="btn-press"
                         style={{ background: "#f0fdf4", color: "#059669", border: "1px solid #bbf7d0",
-                          borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 600,
-                          cursor: "pointer", transition: "background .15s, box-shadow .15s" }}
+                          borderRadius: 8, padding: "7px 16px", fontSize: 12, fontWeight: 700,
+                          cursor: "pointer", transition: "background .15s, box-shadow .15s",
+                          whiteSpace:"nowrap" }}
                         onMouseEnter={e => { e.currentTarget.style.background = "#dcfce7"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(5,150,105,.2)"; }}
                         onMouseLeave={e => { e.currentTarget.style.background = "#f0fdf4"; e.currentTarget.style.boxShadow = "none"; }}>
                         Abrir →
@@ -345,7 +375,7 @@ export default function ObrasPage() {
                         onClick={e => { e.stopPropagation(); setConfirmarEliminar(obra); }}
                         className="btn-press"
                         style={{ background: "#fff", color: "#ef4444", border: "1px solid #fca5a5",
-                          borderRadius: 8, padding: "6px 10px", fontSize: 12, cursor: "pointer",
+                          borderRadius: 8, padding: "5px 10px", fontSize: 12, cursor: "pointer",
                           transition: "background .15s" }}
                         onMouseEnter={e => e.currentTarget.style.background = "#fff5f5"}
                         onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
