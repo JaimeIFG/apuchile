@@ -298,6 +298,79 @@ function MetricCard({ title, main, sub, color, progress, progressColor, empty, e
   );
 }
 
+// ── Calendario Bitácora ────────────────────────────────────────────────────
+const MESES_ES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const DIAS_ES  = ["Lu","Ma","Mi","Ju","Vi","Sá","Do"];
+
+function CalendarioBitacora({ bitacora, mes, setMes, filtroFecha, setFiltroFecha }) {
+  const { y, m } = mes;
+  const firstDay = new Date(y, m, 1).getDay(); // 0=Dom
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  // Convertir domingo=0 a lunes=0
+  const startOffset = (firstDay + 6) % 7;
+
+  // Set de fechas con entradas (solo yyyy-mm-dd)
+  const fechasConEntradas = new Set(
+    bitacora.map(b => b.fecha ? b.fecha.slice(0, 10) : null).filter(Boolean)
+  );
+
+  const cells = [];
+  for (let i = 0; i < startOffset; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+
+  const toKey = d => `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+
+  return (
+    <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:14, padding:"14px 12px", minWidth:220 }}>
+      {/* Header mes */}
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
+        <button onClick={()=>setMes(p=>{ const nm=p.m-1; return nm<0?{y:p.y-1,m:11}:{y:p.y,m:nm}; })}
+          style={{ background:"none", border:"none", cursor:"pointer", color:"#64748b", fontSize:16, padding:"0 4px" }}>‹</button>
+        <span style={{ fontSize:12, fontWeight:700, color:"#1e293b" }}>{MESES_ES[m]} {y}</span>
+        <button onClick={()=>setMes(p=>{ const nm=p.m+1; return nm>11?{y:p.y+1,m:0}:{y:p.y,m:nm}; })}
+          style={{ background:"none", border:"none", cursor:"pointer", color:"#64748b", fontSize:16, padding:"0 4px" }}>›</button>
+      </div>
+      {/* Días semana */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(7,1fr)", gap:2, marginBottom:4 }}>
+        {DIAS_ES.map(d=>(
+          <div key={d} style={{ textAlign:"center", fontSize:9, fontWeight:700, color:"#94a3b8", padding:"2px 0" }}>{d}</div>
+        ))}
+      </div>
+      {/* Celdas */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(7,1fr)", gap:2 }}>
+        {cells.map((d, i) => {
+          if (!d) return <div key={`e${i}`}/>;
+          const key = toKey(d);
+          const hasEntry = fechasConEntradas.has(key);
+          const isSelected = filtroFecha === key;
+          const isToday = key === new Date().toISOString().slice(0,10);
+          return (
+            <button key={key} onClick={()=>setFiltroFecha(isSelected ? null : key)}
+              style={{ position:"relative", background: isSelected ? "#059669" : isToday ? "#f0fdf4" : "transparent",
+                color: isSelected ? "#fff" : isToday ? "#059669" : "#374151",
+                border: isToday && !isSelected ? "1px solid #bbf7d0" : "1px solid transparent",
+                borderRadius:6, padding:"4px 2px", fontSize:11, cursor: hasEntry ? "pointer" : "default",
+                fontWeight: hasEntry ? 700 : 400 }}>
+              {d}
+              {hasEntry && (
+                <span style={{ position:"absolute", bottom:2, left:"50%", transform:"translateX(-50%)",
+                  width:4, height:4, borderRadius:"50%",
+                  background: isSelected ? "#fff" : "#059669", display:"block" }}/>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      {filtroFecha && (
+        <button onClick={()=>setFiltroFecha(null)}
+          style={{ marginTop:10, width:"100%", background:"#f0fdf4", color:"#059669",
+            border:"1px solid #bbf7d0", borderRadius:8, padding:"5px 0", fontSize:11,
+            fontWeight:600, cursor:"pointer" }}>✕ Limpiar filtro</button>
+      )}
+    </div>
+  );
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 export default function ObraPage() {
   return (
@@ -343,6 +416,8 @@ function ObraDetail() {
   const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
   const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
   const [expandedAnexo,setExpandedAnexo]=useState(null);  // bitacora_id expandido para mostrar preview adjuntos
+  const [calMes,setCalMes]=useState(()=>{ const d=new Date(); return {y:d.getFullYear(),m:d.getMonth()}; });
+  const [filtroFecha,setFiltroFecha]=useState(null);
   const [presupuestoOpen,setPresupuestoOpen]=useState(false);  // desplegable presupuesto en resumen
 
   useInactividad(supabase, router, 10);
@@ -939,12 +1014,19 @@ function ObraDetail() {
           )}
 
           {/* ═══ BITÁCORA ═══ */}
-          {tab==="bitacora" && (
+          {tab==="bitacora" && (()=>{
+            const bitacoraFiltrada = filtroFecha
+              ? bitacora.filter(b => b.fecha && b.fecha.slice(0,10) === filtroFecha)
+              : bitacora;
+            return (
             <div>
+              {/* Header */}
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 }}>
                 <div>
                   <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Bitácora de Obra</h2>
-                  <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{bitacora.length} registros</p>
+                  <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>
+                    {filtroFecha ? `${bitacoraFiltrada.length} registro${bitacoraFiltrada.length!==1?"s":""} el ${fmtFecha(filtroFecha)}` : `${bitacora.length} registros`}
+                  </p>
                 </div>
                 <div style={{ display:"flex", gap:8 }}>
                   {bitacora.length>0&&(
@@ -957,74 +1039,105 @@ function ObraDetail() {
                       padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nueva entrada</button>
                 </div>
               </div>
-              {bitacora.length===0?<EmptyState icon="📖" msg="Sin registros en la bitácora"/>:(
-                <div style={{ position:"relative", paddingLeft:22 }}>
-                  <div style={{ position:"absolute", left:7, top:0, bottom:0,
-                    width:2, background:"#e2e8f0", borderRadius:2 }}/>
-                  {bitacora.map(b=>{
-                    const tc=TIPO_BIT_COLOR[b.tipo]||TIPO_BIT_COLOR.Observación;
-                    const bitAnexos=anexos[b.id]||[];
-                    return (
-                      <div key={b.id} style={{ marginBottom:14, position:"relative" }}>
-                        <div style={{ position:"absolute", left:-19, top:5, width:10, height:10,
-                          borderRadius:"50%", background:tc.color, border:"2px solid #fff",
-                          boxShadow:`0 0 0 2px ${tc.color}` }}/>
-                        <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:12, padding:"11px 14px" }}>
-                          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
-                            marginBottom:5, flexWrap:"wrap", gap:6 }}>
-                            <div style={{ display:"flex", alignItems:"center", gap:7 }}>
-                              <span style={{ background:tc.bg, color:tc.color, fontSize:9, fontWeight:700,
-                                padding:"2px 7px", borderRadius:99 }}>{b.tipo}</span>
-                              {b.autor&&<span style={{ fontSize:10, color:"#94a3b8" }}>por {b.autor}</span>}
-                            </div>
-                            <div style={{ display:"flex", alignItems:"center", gap:7 }}>
-                              <span style={{ fontSize:10, color:"#94a3b8" }}>{fmtFecha(b.fecha)}</span>
-                              <button onClick={()=>delBit(b.id)}
-                                style={{ background:"none", border:"none", color:"#fca5a5",
-                                  cursor:"pointer", fontSize:12 }}>✕</button>
-                            </div>
-                          </div>
-                          <p style={{ fontSize:13, color:"#374151", margin:0, lineHeight:1.6 }}>{b.descripcion}</p>
-                          {bitAnexos.length>0&&(
-                            <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid #f1f5f9" }}>
-                              <button onClick={()=>setExpandedAnexo(expandedAnexo===b.id?null:b.id)}
-                                style={{ background:"none", border:"none", cursor:"pointer", padding:0,
-                                  fontSize:11, color:"#059669", fontWeight:600, display:"flex",
-                                  alignItems:"center", gap:5 }}>
-                                📎 {bitAnexos.length} adjunto{bitAnexos.length>1?"s":""} {expandedAnexo===b.id?"▲":"▼"}
-                              </button>
-                              {expandedAnexo===b.id&&(
-                                <div style={{ marginTop:8, display:"flex", gap:8, flexWrap:"wrap" }}>
-                                  {bitAnexos.map(a=>(
-                                    a.tipo==="foto" ? (
-                                      <div key={a.id} style={{ position:"relative" }}>
-                                        <img src={a.url} alt={a.nombre}
-                                          style={{ width:120, height:90, objectFit:"cover",
-                                            borderRadius:8, cursor:"pointer", border:"1px solid #e2e8f0" }}
-                                          onClick={()=>setLb({url:a.url,caption:a.nombre})}/>
-                                      </div>
-                                    ) : (
-                                      <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
-                                        style={{ display:"inline-flex", alignItems:"center", gap:5,
-                                          fontSize:11, color:"#059669", textDecoration:"none",
-                                          background:"#f0fdf4", border:"1px solid #bbf7d0",
-                                          borderRadius:8, padding:"8px 12px" }}>
-                                        📄 {a.nombre.length>25?a.nombre.substring(0,25)+"…":a.nombre}
-                                      </a>
-                                    )
-                                  ))}
+              {/* 2-column layout */}
+              <div style={{ display:"flex", gap:18, alignItems:"flex-start" }}>
+                {/* Timeline */}
+                <div style={{ flex:1, minWidth:0 }}>
+                  {bitacoraFiltrada.length===0 ? (
+                    <EmptyState icon="📖" msg={filtroFecha ? "Sin registros para esta fecha" : "Sin registros en la bitácora"}/>
+                  ) : (
+                    <div style={{ position:"relative", paddingLeft:22 }}>
+                      <div style={{ position:"absolute", left:7, top:0, bottom:0,
+                        width:2, background:"#e2e8f0", borderRadius:2 }}/>
+                      {bitacoraFiltrada.map(b=>{
+                        const tc=TIPO_BIT_COLOR[b.tipo]||TIPO_BIT_COLOR.Observación;
+                        const bitAnexos=anexos[b.id]||[];
+                        return (
+                          <div key={b.id} style={{ marginBottom:14, position:"relative" }}>
+                            <div style={{ position:"absolute", left:-19, top:5, width:10, height:10,
+                              borderRadius:"50%", background:tc.color, border:"2px solid #fff",
+                              boxShadow:`0 0 0 2px ${tc.color}` }}/>
+                            <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:12, padding:"11px 14px" }}>
+                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+                                marginBottom:5, flexWrap:"wrap", gap:6 }}>
+                                <div style={{ display:"flex", alignItems:"center", gap:7 }}>
+                                  <span style={{ background:tc.bg, color:tc.color, fontSize:9, fontWeight:700,
+                                    padding:"2px 7px", borderRadius:99 }}>{b.tipo}</span>
+                                  {b.autor&&<span style={{ fontSize:10, color:"#94a3b8" }}>por {b.autor}</span>}
+                                </div>
+                                <div style={{ display:"flex", alignItems:"center", gap:7 }}>
+                                  <span style={{ fontSize:10, color:"#94a3b8" }}>{fmtFecha(b.fecha)}</span>
+                                  <button onClick={()=>delBit(b.id)}
+                                    style={{ background:"none", border:"none", color:"#fca5a5",
+                                      cursor:"pointer", fontSize:12 }}>✕</button>
+                                </div>
+                              </div>
+                              <p style={{ fontSize:13, color:"#374151", margin:0, lineHeight:1.6 }}>{b.descripcion}</p>
+                              {bitAnexos.length>0&&(
+                                <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid #f1f5f9" }}>
+                                  <button onClick={()=>setExpandedAnexo(expandedAnexo===b.id?null:b.id)}
+                                    style={{ background:"none", border:"none", cursor:"pointer", padding:0,
+                                      fontSize:11, color:"#059669", fontWeight:600, display:"flex",
+                                      alignItems:"center", gap:5 }}>
+                                    📎 {bitAnexos.length} adjunto{bitAnexos.length>1?"s":""} {expandedAnexo===b.id?"▲":"▼"}
+                                  </button>
+                                  {expandedAnexo===b.id&&(
+                                    <div style={{ marginTop:8, display:"flex", gap:8, flexWrap:"wrap" }}>
+                                      {bitAnexos.map(a=>(
+                                        a.tipo==="foto" ? (
+                                          <div key={a.id} style={{ position:"relative" }}>
+                                            <img src={a.url} alt={a.nombre}
+                                              style={{ width:120, height:90, objectFit:"cover",
+                                                borderRadius:8, cursor:"pointer", border:"1px solid #e2e8f0" }}
+                                              onClick={()=>setLb({url:a.url,caption:a.nombre})}/>
+                                          </div>
+                                        ) : (
+                                          <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
+                                            style={{ display:"inline-flex", alignItems:"center", gap:5,
+                                              fontSize:11, color:"#059669", textDecoration:"none",
+                                              background:"#f0fdf4", border:"1px solid #bbf7d0",
+                                              borderRadius:8, padding:"8px 12px" }}>
+                                            📄 {a.nombre.length>25?a.nombre.substring(0,25)+"…":a.nombre}
+                                          </a>
+                                        )
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
                               )}
                             </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )}
+                {/* Sidebar derecho */}
+                <div style={{ width:230, flexShrink:0, display:"flex", flexDirection:"column", gap:14 }}>
+                  <CalendarioBitacora bitacora={bitacora} mes={calMes} setMes={setCalMes}
+                    filtroFecha={filtroFecha} setFiltroFecha={setFiltroFecha}/>
+                  {/* Filtro por tipo */}
+                  <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:14, padding:"12px" }}>
+                    <p style={{ fontSize:11, fontWeight:700, color:"#64748b", margin:"0 0 8px", textTransform:"uppercase", letterSpacing:".5px" }}>Tipo</p>
+                    <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                      {TIPOS_BIT.map(t=>{
+                        const tc=TIPO_BIT_COLOR[t]||TIPO_BIT_COLOR.Observación;
+                        const cnt=bitacora.filter(b=>b.tipo===t).length;
+                        return (
+                          <div key={t} style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                            <span style={{ background:tc.bg, color:tc.color, fontSize:10, fontWeight:600,
+                              padding:"2px 8px", borderRadius:99 }}>{t}</span>
+                            <span style={{ fontSize:11, color:"#94a3b8", fontWeight:600 }}>{cnt}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
+            );
+          })()}
 
           {/* ═══ FOTOS ═══ */}
           {tab==="fotos" && (
