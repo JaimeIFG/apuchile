@@ -371,6 +371,328 @@ function CalendarioBitacora({ bitacora, mes, setMes, filtroFecha, setFiltroFecha
   );
 }
 
+// ── Modal Informe de Obra ──────────────────────────────────────────────────
+function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
+  const hoy = new Date().toISOString().slice(0,10);
+  const [paso, setPaso] = useState(1);
+  const [tipo, setTipo] = useState("Mensual");
+  const [desde, setDesde] = useState("");
+  const [hasta, setHasta] = useState(hoy);
+  const [observGeneral, setObservGeneral] = useState("");
+  const [partidasInforme, setPartidasInforme] = useState(() =>
+    (presupuesto || []).map(p => ({
+      id: p.id,
+      item: p.item,
+      partida: p.partida,
+      unidad: p.unidad,
+      cantidad: p.cantidad,
+      valor_total: p.valor_total,
+      pct: 0,
+      estado: "No iniciada",
+      obs: "",
+      descripcion: "",
+      incluir: true,
+    }))
+  );
+  const [saving, setSaving] = useState(false);
+
+  function generarDescripcion(partida, pct, estado) {
+    const n = (partida || "").toLowerCase();
+    const p = Math.round(pct || 0);
+    const fin = estado === "Terminada";
+    const ini = estado === "No iniciada";
+    const terminoStr = fin ? "Se completó la totalidad de" : ini ? "Aún no se ha iniciado" : `Se ejecutó el ${p}% de`;
+    const finStr = fin ? " Partida finalizada conforme a lo proyectado." : ini ? "." : ". Partida en progreso.";
+    if (n.includes("hormig")) return `${terminoStr} la partida de ${partida}. Se realizaron trabajos de moldaje, armadura y vertido conforme a especificaciones técnicas${finStr}`;
+    if (n.includes("excav") || n.includes("movim")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó el retiro y traslado del material según lo indicado en proyecto${finStr}`;
+    if (n.includes("rellen") || n.includes("compac")) return `${terminoStr} la partida de ${partida}. Se realizó la colocación y compactación del material en capas según especificaciones${finStr}`;
+    if (n.includes("pintur") || n.includes("revestim")) return `${terminoStr} la aplicación de ${partida}. Se preparó la superficie y se aplicaron las manos indicadas${finStr}`;
+    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja")) return `${terminoStr} los trabajos de ${partida}. Se instalaron los elementos de cubierta asegurando hermeticidad y fijación correcta${finStr}`;
+    if (n.includes("instala") || n.includes("eléctri") || n.includes("electric")) return `${terminoStr} la instalación de ${partida}. Se realizó el tendido, fijación y conexión de los elementos conforme a normativa vigente${finStr}`;
+    if (n.includes("agua") || n.includes("sanitari") || n.includes("cañer")) return `${terminoStr} las obras de ${partida}. Se realizó el tendido de tuberías, uniones y pruebas de presión correspondientes${finStr}`;
+    if (n.includes("mamposter") || n.includes("albañil") || n.includes("muro") || n.includes("tabique")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos según planos${finStr}`;
+    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("ceramic")) return `${terminoStr} la colocación de ${partida}. Se preparó la base y se instaló el revestimiento nivelado${finStr}`;
+    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint")) return `${terminoStr} la instalación de ${partida}. Se realizó colocación, nivelación, fijación y sellado según proyecto${finStr}`;
+    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier")) return `${terminoStr} los trabajos de ${partida}. Se ejecutaron preparación, enfierradura y vaciado de hormigón${finStr}`;
+    if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) return `${terminoStr} los trabajos de ${partida}. Se procedió al retiro controlado y disposición del escombro${finStr}`;
+    return `${terminoStr} la partida "${partida}". Se ejecutaron los trabajos conforme a especificaciones técnicas del proyecto${finStr}`;
+  }
+
+  const updatePartida = (id, field, val) => {
+    setPartidasInforme(prev => prev.map(p => {
+      if (p.id !== id) return p;
+      const next = { ...p, [field]: val };
+      if (field === "pct" || field === "estado") {
+        next.descripcion = generarDescripcion(next.partida, field==="pct"?val:next.pct, field==="estado"?val:next.estado);
+      }
+      return next;
+    }));
+  };
+
+  const fmtP = n => n ? "$"+Math.round(n).toLocaleString("es-CL") : "—";
+  const totalContrato = (presupuesto||[]).reduce((s,p)=>s+(p.valor_total||0),0);
+  const ultimoEP = pagos && pagos.length > 0 ? pagos[pagos.length-1] : null;
+
+  const handleSave = async () => {
+    setSaving(true);
+    const datos = {
+      obra_nombre: obra?.nombre,
+      contratista: obra?.contratista,
+      inspector: obra?.inspector_fiscal,
+      region: obra?.region,
+      monto_contrato: obra?.monto_contrato || totalContrato,
+      tipo_informe: tipo,
+      observacion_general: observGeneral,
+      ultimo_ep: ultimoEP?.nombre,
+      fotos_count: fotos?.length || 0,
+    };
+    const partidas_out = partidasInforme.filter(p=>p.incluir).map(p=>({
+      item: p.item,
+      partida: p.partida,
+      unidad: p.unidad,
+      cantidad: p.cantidad,
+      valor_total: p.valor_total,
+      pct: p.pct,
+      estado: p.estado,
+      obs: p.obs,
+      descripcion: p.descripcion || generarDescripcion(p.partida, p.pct, p.estado),
+    }));
+    await onSave({ tipo, periodo_desde: desde||null, periodo_hasta: hasta||null, datos_json: datos, partidas_json: partidas_out });
+    setSaving(false);
+  };
+
+  return (
+    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:1000,
+      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}>
+      <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:860,
+        maxHeight:"92vh", display:"flex", flexDirection:"column", overflow:"hidden" }}>
+        {/* Header */}
+        <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
+          background:"linear-gradient(135deg,#065f46,#059669)", borderRadius:"18px 18px 0 0" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+            <div>
+              <h2 style={{ color:"#fff", margin:0, fontSize:16, fontWeight:800 }}>📋 Nuevo Informe de Obra</h2>
+              <p style={{ color:"#a7f3d0", margin:"2px 0 0", fontSize:12 }}>{obra?.nombre}</p>
+            </div>
+            <button onClick={onClose} style={{ background:"rgba(255,255,255,0.2)", border:"none",
+              color:"#fff", borderRadius:8, padding:"6px 12px", cursor:"pointer", fontSize:13 }}>✕</button>
+          </div>
+          {/* Pasos */}
+          <div style={{ display:"flex", gap:8, marginTop:14 }}>
+            {["Datos generales","Avance partidas","Vista previa"].map((s,i)=>(
+              <div key={i} style={{ display:"flex", alignItems:"center", gap:6, flex:1 }}>
+                <div style={{ width:22, height:22, borderRadius:"50%", fontSize:11, fontWeight:800,
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  background: paso>i+1?"#fff":paso===i+1?"#fff":"rgba(255,255,255,0.3)",
+                  color: paso>i+1?"#059669":paso===i+1?"#059669":"#fff" }}>
+                  {paso>i+1?"✓":i+1}
+                </div>
+                <span style={{ fontSize:11, color: paso===i+1?"#fff":"rgba(255,255,255,0.6)", fontWeight: paso===i+1?700:400 }}>{s}</span>
+                {i<2&&<div style={{ flex:1, height:1, background:"rgba(255,255,255,0.2)" }}/>}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Body */}
+        <div style={{ flex:1, overflowY:"auto", padding:"20px 24px" }}>
+
+          {/* PASO 1 */}
+          {paso===1&&(
+            <div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:16 }}>
+                <div>
+                  <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>TIPO DE INFORME</label>
+                  <select value={tipo} onChange={e=>setTipo(e.target.value)}
+                    style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}>
+                    {["Semanal","Mensual","Final","Especial"].map(t=><option key={t}>{t}</option>)}
+                  </select>
+                </div>
+                <div/>
+                <div>
+                  <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>PERÍODO DESDE</label>
+                  <input type="date" value={desde} onChange={e=>setDesde(e.target.value)}
+                    style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}/>
+                </div>
+                <div>
+                  <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>PERÍODO HASTA</label>
+                  <input type="date" value={hasta} onChange={e=>setHasta(e.target.value)}
+                    style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}/>
+                </div>
+              </div>
+              {/* Datos auto-rellenados */}
+              <div style={{ background:"#f8fafc", border:"1px solid #e2e8f0", borderRadius:12, padding:16, marginBottom:16 }}>
+                <p style={{ fontSize:11, fontWeight:700, color:"#64748b", margin:"0 0 12px", textTransform:"uppercase" }}>Datos de la Obra (auto-rellenado)</p>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                  {[
+                    ["Nombre","obra_nombre",obra?.nombre],
+                    ["Contratista","contratista",obra?.contratista||"—"],
+                    ["Inspector Fiscal","inspector",obra?.inspector_fiscal||"—"],
+                    ["Región","region",obra?.region||"—"],
+                    ["Monto Contrato","monto",fmtP(obra?.monto_contrato||totalContrato)],
+                    ["Último EP","ep",ultimoEP?.nombre||"Sin EP registrado"],
+                  ].map(([label,,val])=>(
+                    <div key={label}>
+                      <span style={{ fontSize:10, color:"#94a3b8", fontWeight:600 }}>{label}</span>
+                      <p style={{ fontSize:13, color:"#1e293b", fontWeight:600, margin:"2px 0 0" }}>{val}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>OBSERVACIÓN GENERAL DEL PERÍODO</label>
+                <textarea value={observGeneral} onChange={e=>setObservGeneral(e.target.value)} rows={3}
+                  placeholder="Describa brevemente las actividades generales del período..."
+                  style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
+                    fontSize:13, resize:"vertical", fontFamily:"inherit", boxSizing:"border-box" }}/>
+              </div>
+            </div>
+          )}
+
+          {/* PASO 2 */}
+          {paso===2&&(
+            <div>
+              <p style={{ fontSize:12, color:"#64748b", margin:"0 0 14px" }}>
+                Ingrese el % de avance y estado de cada partida. La descripción técnica se genera automáticamente.
+              </p>
+              {partidasInforme.length===0?(
+                <div style={{ textAlign:"center", padding:"40px 20px", color:"#94a3b8" }}>
+                  <p style={{ fontSize:32, margin:0 }}>📦</p>
+                  <p style={{ fontSize:14, margin:"8px 0 0" }}>No hay partidas cargadas en el presupuesto</p>
+                </div>
+              ):(
+                <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                  {partidasInforme.map(p=>(
+                    <div key={p.id} style={{ border:`1px solid ${p.incluir?"#e2e8f0":"#f1f5f9"}`,
+                      borderRadius:12, padding:"12px 14px",
+                      background: p.incluir?"#fff":"#f8fafc", opacity: p.incluir?1:0.6 }}>
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
+                        <div style={{ flex:1 }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                            <input type="checkbox" checked={p.incluir} onChange={e=>updatePartida(p.id,"incluir",e.target.checked)}
+                              style={{ width:14, height:14, cursor:"pointer" }}/>
+                            <span style={{ fontSize:11, color:"#94a3b8", fontWeight:600 }}>{p.item}</span>
+                            <span style={{ fontSize:12, fontWeight:700, color:"#1e293b" }}>{p.partida}</span>
+                          </div>
+                          <span style={{ fontSize:10, color:"#94a3b8", marginLeft:22 }}>{p.unidad} · {fmtP(p.valor_total)}</span>
+                        </div>
+                      </div>
+                      {p.incluir&&(
+                        <div style={{ display:"grid", gridTemplateColumns:"120px 160px 1fr", gap:10, alignItems:"start" }}>
+                          <div>
+                            <label style={{ fontSize:10, fontWeight:700, color:"#64748b", display:"block", marginBottom:3 }}>% AVANCE</label>
+                            <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                              <input type="number" min={0} max={100} value={p.pct}
+                                onChange={e=>updatePartida(p.id,"pct",Number(e.target.value))}
+                                style={{ width:60, padding:"5px 8px", border:"1px solid #e2e8f0",
+                                  borderRadius:6, fontSize:13, textAlign:"center" }}/>
+                              <span style={{ fontSize:12, color:"#64748b" }}>%</span>
+                            </div>
+                            <div style={{ marginTop:5, height:4, borderRadius:99, background:"#e2e8f0", overflow:"hidden" }}>
+                              <div style={{ width:`${p.pct}%`, height:"100%", borderRadius:99,
+                                background: p.pct===100?"#059669":p.pct>0?"#f59e0b":"#e2e8f0",
+                                transition:"width .3s" }}/>
+                            </div>
+                          </div>
+                          <div>
+                            <label style={{ fontSize:10, fontWeight:700, color:"#64748b", display:"block", marginBottom:3 }}>ESTADO</label>
+                            <select value={p.estado} onChange={e=>updatePartida(p.id,"estado",e.target.value)}
+                              style={{ width:"100%", padding:"5px 8px", border:"1px solid #e2e8f0", borderRadius:6, fontSize:12 }}>
+                              {["No iniciada","En progreso","Terminada"].map(s=><option key={s}>{s}</option>)}
+                            </select>
+                          </div>
+                          <div>
+                            <label style={{ fontSize:10, fontWeight:700, color:"#64748b", display:"block", marginBottom:3 }}>DESCRIPCIÓN GENERADA</label>
+                            <textarea value={p.descripcion||generarDescripcion(p.partida,p.pct,p.estado)}
+                              onChange={e=>updatePartida(p.id,"descripcion",e.target.value)} rows={2}
+                              style={{ width:"100%", padding:"5px 8px", border:"1px solid #e2e8f0",
+                                borderRadius:6, fontSize:11, resize:"vertical", fontFamily:"inherit",
+                                color:"#374151", boxSizing:"border-box" }}/>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* PASO 3 — Vista previa */}
+          {paso===3&&(
+            <div>
+              <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:12, padding:20, marginBottom:16 }}>
+                <h3 style={{ margin:"0 0 12px", fontSize:15, color:"#065f46" }}>
+                  Informe {tipo} — {obra?.nombre}
+                </h3>
+                {desde&&hasta&&<p style={{ fontSize:12, color:"#64748b", margin:"0 0 8px" }}>Período: {desde} al {hasta}</p>}
+                {observGeneral&&<p style={{ fontSize:13, color:"#374151", margin:"0 0 12px", fontStyle:"italic" }}>"{observGeneral}"</p>}
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+                  {[
+                    ["Contratista", obra?.contratista||"—"],
+                    ["Inspector", obra?.inspector_fiscal||"—"],
+                    ["Monto Contrato", fmtP(obra?.monto_contrato||totalContrato)],
+                    ["Partidas incluidas", partidasInforme.filter(p=>p.incluir).length+" de "+partidasInforme.length],
+                  ].map(([k,v])=>(
+                    <div key={k} style={{ background:"#fff", borderRadius:8, padding:"8px 12px" }}>
+                      <span style={{ fontSize:10, color:"#94a3b8", fontWeight:600 }}>{k}</span>
+                      <p style={{ margin:"2px 0 0", fontSize:13, fontWeight:700, color:"#1e293b" }}>{v}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+                {partidasInforme.filter(p=>p.incluir).map(p=>(
+                  <div key={p.id} style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:10, padding:"10px 14px" }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 }}>
+                      <span style={{ fontSize:12, fontWeight:700, color:"#1e293b" }}>{p.item} — {p.partida}</span>
+                      <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+                        <span style={{ fontSize:11, fontWeight:700,
+                          color: p.estado==="Terminada"?"#059669":p.estado==="En progreso"?"#d97706":"#94a3b8" }}>
+                          {p.estado}
+                        </span>
+                        <span style={{ fontSize:12, fontWeight:800, color:"#1e293b" }}>{p.pct}%</span>
+                      </div>
+                    </div>
+                    <p style={{ fontSize:11, color:"#64748b", margin:0, lineHeight:1.5 }}>
+                      {p.descripcion||generarDescripcion(p.partida,p.pct,p.estado)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div style={{ padding:"14px 24px", borderTop:"1px solid #e2e8f0",
+          display:"flex", justifyContent:"space-between", alignItems:"center",
+          background:"#f8fafc", borderRadius:"0 0 18px 18px" }}>
+          <button onClick={paso===1?onClose:()=>setPaso(p=>p-1)}
+            style={{ background:"#f1f5f9", color:"#64748b", border:"none", borderRadius:10,
+              padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>
+            {paso===1?"Cancelar":"← Atrás"}
+          </button>
+          {paso<3?(
+            <button onClick={()=>setPaso(p=>p+1)}
+              style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer" }}>
+              Siguiente →
+            </button>
+          ):(
+            <button onClick={handleSave} disabled={saving}
+              style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer",
+                opacity: saving?0.7:1 }}>
+              {saving?"Guardando…":"💾 Guardar Informe"}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 export default function ObraPage() {
   return (
@@ -410,6 +732,8 @@ function ObraDetail() {
   const [mPago,setMPago]  = useState(false);
   const [mGar, setMGar]   = useState(false);
   const [mBit, setMBit]   = useState(false);
+  const [informes, setInformes] = useState([]);
+  const [mInforme, setMInforme] = useState(false);
   const [mFoto,setMFoto]  = useState(false);
   const [mPresupuesto, setMPresupuesto] = useState(false);
   const [lightbox,setLb]  = useState(null);
@@ -440,6 +764,8 @@ function ObraDetail() {
       if (oR.data) setObra(oR.data);
       setDocs(dR.data||[]); setPagos(pR.data||[]); setGarantias(gR.data||[]);
       setBitacora(bR.data||[]); setFotos(fR.data||[]); setPresupuesto(presR.data||[]);
+      const iR = await supabase.from("obra_informes").select("*").eq("obra_id", obraId).order("created_at",{ascending:false});
+      setInformes(iR.data || []);
       // Agrupar anexos por bitacora_id
       const anexosMap = {};
       (aR.data||[]).forEach(a=>{ if(!anexosMap[a.bitacora_id]) anexosMap[a.bitacora_id]=[]; anexosMap[a.bitacora_id].push(a); });
@@ -504,6 +830,89 @@ function ObraDetail() {
   const pctPlazo     = diasTotal>0 ? (diasPasados/diasTotal)*100 : 0;
   const garAlerta    = garantias.filter(g=>g.estado==="Vigente"&&g.fecha_vencimiento&&diasAl(g.fecha_vencimiento)<=30);
 
+  // ── Generador de descripción por plantillas ─────────────────────────────
+  function generarDescripcion(partida, pct, estado) {
+    const n = (partida || "").toLowerCase();
+    const p = Math.round(pct || 0);
+    const fin = estado === "Terminada";
+    const ini = estado === "No iniciada";
+
+    const terminoStr = fin ? "Se completó la totalidad de" : ini ? "Aún no se ha iniciado" : `Se ejecutó el ${p}% de`;
+    const finStr = fin ? " Partida finalizada conforme a lo proyectado." : ini ? "." : ". Partida en progreso.";
+
+    if (n.includes("hormig")) return `${terminoStr} la partida de ${partida}. Se realizaron trabajos de moldaje, armadura y vertido conforme a especificaciones técnicas${finStr}`;
+    if (n.includes("excav") || n.includes("movim")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó el retiro y traslado del material según lo indicado en proyecto${finStr}`;
+    if (n.includes("rellen") || n.includes("compac")) return `${terminoStr} la partida de ${partida}. Se realizó la colocación y compactación del material en capas según especificaciones${finStr}`;
+    if (n.includes("pintur") || n.includes("revestim")) return `${terminoStr} la aplicación de ${partida}. Se preparó la superficie y se aplicaron las manos de pintura/revestimiento indicadas${finStr}`;
+    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja")) return `${terminoStr} los trabajos de ${partida}. Se instalaron los elementos de cubierta asegurando hermeticidad y fijación correcta${finStr}`;
+    if (n.includes("instala") || n.includes("eléctri") || n.includes("electric")) return `${terminoStr} la instalación de ${partida}. Se realizó el tendido, fijación y conexión de los elementos conforme a normativa vigente${finStr}`;
+    if (n.includes("agua") || n.includes("sanitari") || n.includes("cañer")) return `${terminoStr} las obras de ${partida}. Se realizó el tendido de tuberías, uniones y pruebas de presión correspondientes${finStr}`;
+    if (n.includes("mamposter") || n.includes("albañil") || n.includes("muro") || n.includes("tabique")) return `${terminoStr} los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos de acuerdo a planos de proyecto${finStr}`;
+    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon")) return `${terminoStr} la instalación de ${partida}. Se realizó la estructura de soporte y fijación de los paneles correspondientes${finStr}`;
+    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("ceramic")) return `${terminoStr} la colocación de ${partida}. Se preparó la base, se aplicó adhesivo y se instaló el revestimiento de piso nivelado${finStr}`;
+    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint")) return `${terminoStr} la instalación de ${partida}. Se realizó la colocación, nivelación, fijación y sellado de los elementos según proyecto${finStr}`;
+    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier")) return `${terminoStr} los trabajos de ${partida}. Se ejecutaron los trabajos de preparación, enfierradura y vaciado de hormigón correspondiente${finStr}`;
+    if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) return `${terminoStr} los trabajos de ${partida}. Se procedió al retiro controlado de los elementos indicados y disposición del escombro${finStr}`;
+    if (n.includes("aseo") || n.includes("limpieza")) return `${terminoStr} las labores de ${partida}. Se realizó limpieza general del área intervenida${finStr}`;
+    // fallback genérico
+    return `${terminoStr} la partida "${partida}". Se ejecutaron los trabajos conforme a lo indicado en las especificaciones técnicas del proyecto${finStr}`;
+  }
+
+  function imprimirInforme(inf, obra) {
+    const d = inf.datos_json || {};
+    const partidas = inf.partidas_json || [];
+    const fmtP = n => n ? "$"+Math.round(n).toLocaleString("es-CL") : "—";
+    const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<title>Informe ${inf.tipo} — ${d.obra_nombre||""}</title>
+<style>
+  body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:24px;color:#333;font-size:13px;}
+  h1{color:#065f46;font-size:20px;margin-bottom:4px;}
+  h2{color:#065f46;font-size:14px;border-bottom:2px solid #059669;padding-bottom:6px;margin:24px 0 12px;}
+  .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f0fdf4;padding:14px;border-radius:8px;margin-bottom:20px;}
+  .meta-item label{font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;}
+  .meta-item p{margin:2px 0 0;font-weight:700;font-size:13px;}
+  .partida{border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:10px;page-break-inside:avoid;}
+  .partida-header{display:flex;justify-content:space-between;margin-bottom:6px;}
+  .partida-title{font-weight:700;font-size:13px;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;}
+  .badge-terminada{background:#d1fae5;color:#065f46;}
+  .badge-progreso{background:#fef3c7;color:#92400e;}
+  .badge-no{background:#f1f5f9;color:#64748b;}
+  .desc{font-size:12px;color:#4b5563;line-height:1.6;margin:4px 0 0;}
+  .progress{height:4px;background:#e2e8f0;border-radius:99px;margin:8px 0 4px;overflow:hidden;}
+  .progress-bar{height:100%;border-radius:99px;}
+  .footer{margin-top:40px;border-top:1px solid #e2e8f0;padding-top:16px;color:#94a3b8;font-size:11px;text-align:center;}
+  @media print{.partida{page-break-inside:avoid;}}
+</style></head><body>
+<h1>Informe ${inf.tipo} de Obra</h1>
+<p style="color:#6b7280;margin:0 0 16px">${inf.periodo_desde||""} ${inf.periodo_hasta?"→ "+inf.periodo_hasta:""}</p>
+<div class="meta">
+  ${[["Nombre obra",d.obra_nombre||""],["Contratista",d.contratista||"—"],["Inspector Fiscal",d.inspector||"—"],["Región",d.region||"—"],["Monto Contrato",fmtP(d.monto_contrato)],["Último EP",d.ultimo_ep||"—"]].map(([l,v])=>`<div class="meta-item"><label>${l}</label><p>${v}</p></div>`).join("")}
+</div>
+${d.observacion_general?`<h2>Observación General</h2><p style="font-style:italic;color:#374151">"${d.observacion_general}"</p>`:""}
+<h2>Avance por Partidas</h2>
+${partidas.map(p=>`
+<div class="partida">
+  <div class="partida-header">
+    <span class="partida-title">${p.item||""} ${p.partida||""}</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="badge ${p.estado==="Terminada"?"badge-terminada":p.estado==="En progreso"?"badge-progreso":"badge-no"}">${p.estado}</span>
+      <span style="font-weight:800;font-size:13px">${p.pct||0}%</span>
+    </div>
+  </div>
+  <div class="progress"><div class="progress-bar" style="width:${p.pct||0}%;background:${p.estado==="Terminada"?"#059669":p.estado==="En progreso"?"#f59e0b":"#94a3b8"}"></div></div>
+  <p style="font-size:10px;color:#9ca3af;margin:0">${p.unidad||""} · ${fmtP(p.valor_total)}</p>
+  <p class="desc">${p.descripcion||""}</p>
+</div>`).join("")}
+<div class="footer">Generado por APUChile · ${new Date().toLocaleDateString("es-CL")}</div>
+</body></html>`;
+    const w = window.open("","_blank");
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(()=>w.print(),500);
+  }
+
   const NAV = [
     { id:"resumen",   icon:"📊", label:"Resumen"         },
     { id:"ficha",     icon:"📋", label:"Ficha"            },
@@ -511,6 +920,7 @@ function ObraDetail() {
     { id:"pagos",     icon:"💰", label:"Estados de Pago" },
     { id:"garantias", icon:"🔒", label:"Garantías"        },
     { id:"bitacora",  icon:"📖", label:"Bitácora"         },
+    { id:"informes",  icon:"📋", label:"Informes"         },
     { id:"fotos",     icon:"📸", label:"Fotos", badge:fotos.length },
     { id:"presupuesto", icon:"💰", label:"Presupuesto", badge:presupuesto.length },
   ];
@@ -1139,6 +1549,66 @@ function ObraDetail() {
             );
           })()}
 
+          {/* ═══ INFORMES ═══ */}
+          {tab==="informes" && (
+            <div>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 }}>
+                <div>
+                  <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Informes de Obra</h2>
+                  <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{informes.length} informe{informes.length!==1?"s":""} generados</p>
+                </div>
+                <button onClick={()=>setMInforme(true)}
+                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nuevo Informe</button>
+              </div>
+              {informes.length===0?<EmptyState icon="📋" msg="Sin informes generados"/>:(
+                <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+                  {informes.map(inf=>{
+                    const d = inf.datos_json||{};
+                    const partidas = inf.partidas_json||[];
+                    const terminadas = partidas.filter(p=>p.estado==="Terminada").length;
+                    const enProgreso = partidas.filter(p=>p.estado==="En progreso").length;
+                    return (
+                      <div key={inf.id} style={{ background:"#fff", border:"1px solid #e2e8f0",
+                        borderRadius:14, padding:"14px 18px" }}>
+                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                          <div>
+                            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
+                              <span style={{ background:"#d1fae5", color:"#065f46", fontSize:10, fontWeight:700,
+                                padding:"2px 8px", borderRadius:99 }}>{inf.tipo}</span>
+                              <span style={{ fontSize:13, fontWeight:700, color:"#1e293b" }}>{d.obra_nombre}</span>
+                            </div>
+                            {inf.periodo_desde&&inf.periodo_hasta&&(
+                              <p style={{ fontSize:11, color:"#94a3b8", margin:0 }}>
+                                {inf.periodo_desde} → {inf.periodo_hasta}
+                              </p>
+                            )}
+                          </div>
+                          <div style={{ display:"flex", gap:6, alignItems:"center" }}>
+                            <button onClick={()=>imprimirInforme(inf, obra)}
+                              style={{ background:"#f0fdf4", color:"#059669", border:"1px solid #bbf7d0",
+                                borderRadius:8, padding:"5px 12px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
+                              🖨️ Imprimir
+                            </button>
+                            <button onClick={async()=>{ await supabase.from("obra_informes").delete().eq("id",inf.id); setInformes(p=>p.filter(x=>x.id!==inf.id)); }}
+                              style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:14 }}>✕</button>
+                          </div>
+                        </div>
+                        {partidas.length>0&&(
+                          <div style={{ display:"flex", gap:10, marginTop:10, flexWrap:"wrap" }}>
+                            <span style={{ fontSize:11, color:"#64748b" }}>📦 {partidas.length} partidas</span>
+                            {terminadas>0&&<span style={{ fontSize:11, color:"#059669" }}>✓ {terminadas} terminadas</span>}
+                            {enProgreso>0&&<span style={{ fontSize:11, color:"#d97706" }}>⏳ {enProgreso} en progreso</span>}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* ═══ FOTOS ═══ */}
           {tab==="fotos" && (
             <div>
@@ -1422,6 +1892,13 @@ function ObraDetail() {
                     }
                     setMBit(false);
                   }}/>}
+      {mInforme&&<ModalInforme obra={obra} presupuesto={presupuesto} pagos={pagos} fotos={fotos}
+        onClose={()=>setMInforme(false)}
+        onSave={async(data)=>{
+          const { data:saved } = await supabase.from("obra_informes").insert([{ obra_id: obraId, ...data }]).select().single();
+          if (saved) setInformes(p=>[saved,...p]);
+          setMInforme(false);
+        }}/>}
       {mFoto && <ModalFotos    obraId={obraId} onClose={()=>setMFoto(false)}
                   onSave={f=>{ setFotos(prev=>[f,...prev]); }}/>}
       {mPresupuesto && <ModalPresupuesto obraId={obraId} onClose={()=>setMPresupuesto(false)}
