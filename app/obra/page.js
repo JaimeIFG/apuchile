@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
 import { extractBudgetFromPDF } from "../lib/extractPresupuesto";
+import { ONDAC_APUS } from "../ondac_data_nuevo.js";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -395,98 +396,279 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
     }))
   );
   const [saving, setSaving] = useState(false);
+  const [busqOndacIdx, setBusqOndacIdx] = useState(null); // id partida con búsqueda abierta
+  const [busqOndacQ, setBusqOndacQ] = useState("");
+
+  const ondacSugerencias = busqOndacQ.length >= 2
+    ? ONDAC_APUS.filter(a =>
+        a.desc.toLowerCase().includes(busqOndacQ.toLowerCase()) ||
+        a.codigo.includes(busqOndacQ)
+      ).slice(0, 12)
+    : [];
+
+  const vincularOndac = (partidaId, apu) => {
+    setPartidasInforme(prev => prev.map(p => {
+      if (p.id !== partidaId) return p;
+      const next = { ...p, ondac_codigo: apu.codigo, ondac_familia: apu.familia, ondac_desc: apu.desc, ondac_unidad: apu.unidad };
+      next.descripcion = generarDescripcionFamilia(next.partida, next.pct, next.estado, apu.familia, apu.desc);
+      return next;
+    }));
+    setBusqOndacIdx(null);
+    setBusqOndacQ("");
+  };
+
+  function generarDescripcionFamilia(partida, pct, estado, familia, ondacDesc) {
+    const p = Math.round(pct || 0);
+    const fin = estado === "Terminada";
+    const sufijo = fin
+      ? " Los trabajos quedaron terminados y conformes a las especificaciones técnicas del proyecto."
+      : ` Acumulando a la fecha un avance total de ${p}% respecto al total contratado. Trabajos en ejecución conforme a programa.`;
+    const nombre = ondacDesc || partida;
+    const f = (familia || "").toUpperCase();
+
+    if (f === "A") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se ejecutó la instalación completa de faenas incluyendo bodega, oficina ITO, servicios higiénicos, cerco perimetral, señalética de seguridad y acometidas provisorias de agua y electricidad. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutaron los trabajos de habilitación del campamento de obra y acometidas provisorias conforme a lo estipulado.${sufijo}`;
+
+    if (f === "B") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se ejecutó la totalidad de los trabajos de movimiento de tierras y/o excavaciones, incluyendo perfilado de taludes, retiro y disposición del material excedente en botadero autorizado. Se verificó la cota de diseño según planos. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutó el movimiento de tierras en el área correspondiente, con retiro y traslado del material al botadero designado. Se verificó la cota de fundación o diseño según proyecto.${sufijo}`;
+
+    if (f === "C") {
+      const n = (ondacDesc||partida||"").toLowerCase();
+      const esBombeado = n.includes("bombeado") || n.includes("bomba");
+      const esLiviano = n.includes("liviano");
+      const dosif = n.match(/h\s?(\d+)/i) ? "H"+n.match(/h\s?(\d+)/i)[1] : n.match(/g(\d+)/i) ? "H"+n.match(/g(\d+)/i)[1] : "";
+      const tipo = esBombeado ? " bombeado (340 kg cemento/m³ mín.)" : esLiviano ? " liviano" : dosif ? ` ${dosif}` : "";
+      return fin
+        ? `Se completó el 100% de la partida ${nombre}. Se ejecutaron la totalidad de los trabajos de instalación de moldajes, habilitación de enfierraduras y vaciado de hormigón${tipo}. Se verificó vibrado, curado húmedo mínimo 7 días y conformidad geométrica según NCh170. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se realizaron trabajos de instalación de moldajes, colocación de armadura y vaciado de hormigón${tipo}. Se controló consistencia mediante cono de Abrams y se ejecutó vibrado y curado correspondiente.${sufijo}`;
+    }
+
+    if (f === "D") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló, aplomó y arriostró la totalidad de los moldajes, incluyendo posterior desencofrado en los plazos de fraguado requeridos según NCh170. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutó el montaje y arriostramiento de moldajes en el área indicada, verificando verticalidad, planeidad y estanqueidad previo al vaciado.${sufijo}`;
+
+    if (f === "E") {
+      const n = (ondacDesc||"").toLowerCase();
+      const diam = n.match(/d\s?(\d+)/i) ? "D"+n.match(/d\s?(\d+)/i)[1] : "";
+      return fin
+        ? `Se completó el 100% de la partida ${nombre}. Se habilitó y colocó la totalidad de la armadura${diam?" "+diam:""} según planos estructurales, incluyendo corte, doblado, amarre con alambre recocido y verificación de recubrimientos mínimos conforme a NCh429. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutó el corte, doblado y colocación de ${diam?"enfierradura "+diam:"armaduras"} en la zona indicada, verificando recubrimientos y traslapes según especificaciones.${sufijo}`;
+    }
+
+    if (f === "F") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se ejecutó la totalidad de la mampostería con mortero cemento-arena dosificación 1:5, aplomado, nivelación y sellado de juntas según planos de proyecto. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutó la colocación de albañilería con mortero 1:5, controlando aplome, escuadra y geometría de vanos en el área indicada.${sufijo}`;
+
+    if (f === "G") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se realizó la fabricación y/o montaje de la totalidad de los elementos de acero y cerrajería, incluyendo corte, soldadura, tratamiento anticorrosivo y fijaciones según especificaciones. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutaron los trabajos de acero y cerrajería en el área indicada, verificando dimensiones, soldaduras y tratamientos de superficie.${sufijo}`;
+
+    if (f === "H") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló la totalidad de los tabiques y divisiones interiores de estructura metálica (volcametal/metalcon), con soleras, montantes a 60 cm, placa por cara y sellado de juntas. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutó el trazado, instalación de soleras, montantes y placas de yeso-cartón en el área indicada, rellenando juntas.${sufijo}`;
+
+    if (f === "I" || f === "IB") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló la totalidad de la cubierta incluyendo estructura de soporte, aislación, planchas con traslape reglamentario, canaletas y bajadas de aguas lluvias. Se verificó hermeticidad del sistema. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutó la instalación de estructura de soporte y planchas de cubierta en el área indicada, asegurando fijación, traslape y pendiente según proyecto.${sufijo}`;
+
+    if (f === "J") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló la totalidad de la estructura metálica de soporte (perfiles T y canales), paneles de cielo y terminaciones de borde. Se verificó nivelación y ausencia de deflexiones. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se ejecutó la estructura de soporte y fijación de paneles de cielo en el área intervenida, verificando nivelación y planeidad.${sufijo}`;
+
+    if (f === "K") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se realizó la preparación de superficies y se aplicó la totalidad de las capas de revestimiento/pintura indicadas en especificaciones técnicas. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se prepararon las superficies y se aplicaron las capas de revestimiento/pintura en el área intervenida, verificando uniformidad y adherencia.${sufijo}`;
+
+    if (f === "L") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se ejecutó la preparación de base con mortero autonivelante, aplicación de adhesivo, colocación de pavimento/revestimiento con crucetas, fraguado de juntas y remates. Tolerancia ±3 mm/2 m verificada. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se preparó la base, se aplicó adhesivo y se instaló el pavimento/revestimiento en el área indicada, verificando planeidad y alineamiento de juntas.${sufijo}`;
+
+    if (f === "M") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló la totalidad de los elementos de carpintería (puertas/ventanas), incluyendo colocación en vano, aplomado, fijación con tacos expansivos, sellado perimetral con silicona neutra y prueba de funcionamiento. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida ${nombre}. Se colocaron, aplomaron y fijaron los elementos de carpintería en los vanos indicados, ejecutando sellado perimetral y prueba de funcionamiento.${sufijo}`;
+
+    if (f === "N") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló la totalidad de la quincallería, herrajes y accesorios conforme a especificaciones, verificando el correcto funcionamiento de cada elemento. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la instalación de ${nombre}. Se colocaron los herrajes y accesorios correspondientes, verificando funcionamiento y acabados.${sufijo}`;
+
+    if (f === "P" || f === "PE" || f === "PA") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se realizó el tendido de redes (ductos/tuberías), conexionado de elementos y pruebas de funcionamiento/presión conforme a normativa SEC/SISS vigente. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la instalación de ${nombre}. Se ejecutó el tendido de redes, colocación de elementos y conexionado parcial en el área indicada, con pruebas de hermeticidad/continuidad.${sufijo}`;
+
+    if (f === "Q") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se ejecutaron la totalidad de los trabajos de urbanización y obras exteriores, incluyendo pavimentos, soleras, veredas, áreas verdes y señalización conforme a proyecto. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en los trabajos de ${nombre}. Se ejecutaron las obras de urbanización en el área indicada conforme a planos y especificaciones técnicas.${sufijo}`;
+
+    if (f === "R") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se ejecutaron la totalidad de las obras civiles indicadas, verificándose la correcta ejecución conforme a planos y especificaciones técnicas del proyecto. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en los trabajos de ${nombre}. Se ejecutaron las obras civiles correspondientes en el área indicada conforme a proyecto.${sufijo}`;
+
+    if (f === "S") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló la totalidad de las escaleras, barandas y elementos de circulación vertical, verificando dimensiones, fijaciones y acabados conforme a especificaciones. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la instalación de ${nombre}. Se ejecutaron los trabajos de escaleras/barandas en el área indicada, verificando escuadras, fijaciones y acabados.${sufijo}`;
+
+    if (f === "V") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se procedió al retiro controlado de los elementos indicados, carga en camión y disposición del material en botadero autorizado. Limpieza final del área ejecutada. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en los trabajos de ${nombre}. Se ejecutó el retiro y carga del material, transportándolo al botadero autorizado conforme a normativa de residuos de construcción.${sufijo}`;
+
+    if (f === "W") return fin
+      ? `Se completó el 100% de la partida ${nombre}. Se instaló la totalidad del mobiliario y equipamiento conforme a especificaciones, verificando nivelación, fijación y funcionamiento de cada elemento. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la instalación de ${nombre}. Se colocó y fijó el mobiliario/equipamiento en las posiciones indicadas en proyecto.${sufijo}`;
+
+    // fallback a texto si no hay familia
+    return generarDescripcion(partida, pct, estado);
+  }
 
   function generarDescripcion(partida, pct, estado) {
     const n = (partida || "").toLowerCase();
     const p = Math.round(pct || 0);
     const fin = estado === "Terminada";
-    const ini = estado === "No iniciada";
-
-    // Prefijos contextuales según avance
-    const avStr = fin
-      ? "Se completó el 100% de"
-      : `Durante el período se avanzó un ${p}% en`;
-
-    // Sufijo de estado
     const sufijo = fin
       ? " Los trabajos quedaron terminados y conformes a las especificaciones técnicas del proyecto."
       : ` Acumulando a la fecha un avance total de ${p}% respecto al total contratado. Trabajos en ejecución conforme a programa.`;
 
+    // C — Hormigones (ONDAC: H5/H20/H25/H30, liviano, bombeado)
     if (n.includes("hormig")) {
-      const dosif = n.match(/g\d+/i) ? n.match(/g\d+/i)[0].toUpperCase() : "";
+      const dosif = n.match(/h\s?(\d+)/i) ? "H"+n.match(/h\s?(\d+)/i)[1] : n.match(/g\d+/i) ? n.match(/g\d+/i)[0].toUpperCase() : "";
+      const esBombeado = n.includes("bombeado") || n.includes("bomba");
+      const esLiviano = n.includes("liviano") || n.includes("celular");
+      const tipoHorm = esBombeado ? " bombeado (dosificación mín. 340 kg cemento/m³)" : esLiviano ? " liviano (densidad aprox. 1.200 kg/m³)" : dosif ? ` ${dosif}` : "";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizaron la totalidad de los trabajos de moldaje, colocación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el correcto fraguado y curado del hormigón conforme a especificaciones técnicas. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se realizaron trabajos de moldaje, habilitación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el nivelado, vibrado y curado correspondiente. ${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron la totalidad de los trabajos de instalación de moldajes, habilitación de enfierraduras y vaciado de hormigón${tipoHorm}. Se verificó vibrado, curado húmedo mínimo 7 días y conformidad geométrica según NCh170 y especificaciones técnicas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se realizaron trabajos de instalación de moldajes, colocación de armadura y vaciado de hormigón${tipoHorm}. Se controló consistencia mediante cono de Abrams y se ejecutó vibrado y curado correspondiente. ${sufijo}`;
     }
+    // E — Enfierraduras (ONDAC: D10–D25, mallas electrosoldadas)
+    if (n.includes("enfierr") || n.includes("armadur") || n.includes("fierro") || n.includes("malla electro")) {
+      const diam = n.match(/d\s?(\d+)/i) ? "D"+n.match(/d\s?(\d+)/i)[1] : "";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se habilitó y colocó la totalidad de la armadura${diam?" "+diam:""} según planos estructurales, incluyendo corte, doblado, amarre con alambre recocido y verificación de recubrimientos mínimos conforme a NCh429. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se ejecutó corte, doblado y colocación de ${diam?"enfierradura "+diam:"armaduras"} en la zona indicada, verificando recubrimientos y traslapes según especificaciones técnicas.${sufijo}`;
+    }
+    // D — Moldajes y andamios (ONDAC: losa, muro, fundación, pilar)
+    if (n.includes("moldaje") || n.includes("encofr") || n.includes("andamio")) {
+      const tm = n.includes("losa") ? "losa" : n.includes("muro") ? "muro" : n.includes("pilar") ? "pilar" : n.includes("fundaci") ? "fundación" : "elemento estructural";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló, aplomó y arriostró la totalidad de los moldajes de ${tm}, incluyendo posterior desencofrado en los plazos de fraguado requeridos según NCh170. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó el montaje y arriostramiento de moldajes de ${tm} en el área indicada, verificando verticalidad, planeidad y estanqueidad previo al vaciado.${sufijo}`;
+    }
+    // B — Excavaciones (ONDAC: brazo/máquina, terreno blando/semiduro/duro/roca)
     if (n.includes("excav") || n.includes("movim") || n.includes("escarpe")) {
+      const conMaq = n.includes("máquina") || n.includes("retroexcavad") || n.includes("maquina");
+      const terreno = n.includes("roca") ? "roca" : n.includes("duro") ? "terreno duro" : n.includes("semiduro") ? "terreno semiduro" : "terreno normal";
       return fin
-        ? `Se completó el 100% de los trabajos de ${partida}. Se ejecutó la excavación y/o movimiento de tierras en su totalidad, incluyendo el perfilado de taludes, retiro y disposición del material excedente en botadero autorizado. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó el movimiento de tierras en el área correspondiente, con retiro y traslado del material al botadero designado. Se verificó la cota de fundación según lo indicado en proyecto.${sufijo}`;
+        ? `Se completó el 100% de los trabajos de ${partida}. Se ejecutó la excavación en ${terreno} mediante ${conMaq?"maquinaria pesada (retroexcavadora)":"medios manuales y mecánicos"}, con perfilado de taludes, retiro y disposición del material en botadero autorizado. Se verificó cota de fundación según planos. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la excavación en ${terreno} con retiro y traslado del material al botadero designado. Se verificó la cota de fundación según lo indicado en proyecto.${sufijo}`;
     }
+    // B — Rellenos y compactación (ONDAC: capas 20 cm, Proctor)
     if (n.includes("rellen") || n.includes("compac")) {
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutó el relleno y compactación en la totalidad del área proyectada, en capas de 20 cm debidamente compactadas y controladas mediante ensayes de densidad in situ. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se colocó y compactó el material de relleno por capas según especificaciones, verificando la densidad requerida mediante ensayes en terreno.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó el relleno y compactación en capas de 20 cm, controladas mediante ensayes de densidad in situ (Proctor modificado), alcanzando la densidad mínima requerida según especificaciones técnicas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se colocó material de relleno por capas de 20 cm y se compactó con equipo vibratorio, verificando densidad mediante ensayes en terreno.${sufijo}`;
     }
-    if (n.includes("pintur") || n.includes("revestim")) {
+    // F — Albañilería y mampostería (ONDAC: fiscal/gran titán/super flaco, mortero 1:5)
+    if (n.includes("albañil") || n.includes("mamposter") || n.includes("ladrillo") || n.includes("bloque")) {
+      const tb = n.includes("fiscal") ? "ladrillo fiscal" : n.includes("gran tit") ? "bloque gran titán" : n.includes("super flaco") ? "bloque super flaco" : n.includes("bloque") ? "bloque de hormigón" : "ladrillo";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó la preparación de superficies (lijado, masillado y limpieza), aplicándose la totalidad de manos de pintura/revestimiento indicadas en especificaciones técnicas. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se prepararon las superficies y se aplicaron las manos de imprimación y terminación correspondientes en el área intervenida.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la mampostería de ${tb} con mortero cemento-arena dosificación 1:5, aplomado, nivelación y sellado de juntas según planos de proyecto. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la colocación de ${tb} con mortero 1:5, controlando aplome, escuadra y geometría de vanos en el área indicada.${sufijo}`;
     }
-    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja") || n.includes("zinc")) {
+    // K — Estucos y revoques (ONDAC: exterior 340 kg/m², interior, 2-3 manos con llana)
+    if (n.includes("estuco") || n.includes("revoque") || n.includes("empaste")) {
+      const esExt = n.includes("exter") || n.includes("fachada");
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la cubierta incluyendo estructura de soporte, aislación, planchas y elementos de remate y evacuación de aguas lluvias. Se verificó la hermeticidad del sistema. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la estructura de soporte y colocación de los elementos de cubierta en el área correspondiente, asegurando la correcta fijación y traslape.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se aplicó la totalidad del estuco ${esExt?"exterior (dosificación 340 kg cemento/m²)":"interior"} en 2-3 manos, previa limpieza y humedecimiento de base, terminando con llana metálica para obtener superficies planas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se ejecutó el estuco ${esExt?"exterior (340 kg cemento/m²)":"interior"} en capas sucesivas con llana, verificando planeidad y aplome en el área indicada.${sufijo}`;
     }
-    if (n.includes("eléctri") || n.includes("electric") || n.includes("alumbr") || n.includes("luminaria")) {
+    // K — Pinturas (ONDAC: látex/esmalte/anticorrosivo, imprimación + 2 manos terminación)
+    if (n.includes("pintur") || n.includes("látex") || n.includes("latex") || n.includes("esmalte")) {
+      const tp = n.includes("esmalte") ? "esmalte alkídico" : n.includes("metal") || n.includes("estructura") ? "anticorrosivo + esmalte para estructura metálica" : "látex acrílico";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de ductos, cableado, conexionado y pruebas eléctricas de la totalidad de la instalación conforme a la normativa SEC vigente. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó el tendido de ductos y conductores, fijación de elementos y conexionado parcial de los tableros y puntos de luz/fuerza correspondientes.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se realizó preparación de superficies (lijado, masillado y limpieza) y se aplicó 1 mano de imprimación + 2 manos de ${tp}, verificando uniformidad y adherencia. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se prepararon las superficies y se aplicaron las manos de ${tp} en el área intervenida, verificando uniformidad y ausencia de escurrimientos.${sufijo}`;
     }
-    if (n.includes("instala") && (n.includes("agua") || n.includes("sanitari") || n.includes("cañer") || n.includes("alcan"))) {
+    // K — Revestimientos (ONDAC: siding, piedra, madera)
+    if (n.includes("revestim") || n.includes("siding") || n.includes("piedra revestim")) {
+      const tr = n.includes("siding") ? "siding" : n.includes("piedra") ? "piedra" : n.includes("madera") ? "madera" : "revestimiento";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de tuberías, uniones, pruebas de presión y desinfección de la red conforme a normativa MINVU/SEC vigente. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en las obras de ${partida}. Se instalaron tuberías, piezas especiales y se ejecutaron las uniones correspondientes. Se realizaron pruebas parciales de hermeticidad.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad del revestimiento de ${tr}, incluyendo preparación de base, estructura de soporte, colocación de piezas, sellado de juntas y remates perimetrales conforme a especificaciones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó la colocación del revestimiento de ${tr} en el área indicada, verificando planeidad, fijaciones y sellado de juntas.${sufijo}`;
     }
-    if (n.includes("muro") || n.includes("tabique") || n.includes("mamposter") || n.includes("albañil")) {
+    // H — Tabiques y divisiones interiores (ONDAC: volcametal PL10/PL15, húmedo/seco)
+    if (n.includes("tabique") || n.includes("volcametal") || n.includes("drywall") || n.includes("metalcon")) {
+      const thum = n.includes("húmedo") || n.includes("humedo") ? " área húmeda (PL15, e=15 mm)" : n.includes("seco") ? " área seca (PL10, e=10 mm)" : "";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la mampostería/tabique, con colocación de elementos, aplomado, nivelación y sellado de juntas según planos de proyecto. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos en el área correspondiente, controlando geometría y verticalidad conforme a proyecto.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de los tabiques de estructura metálica (volcametal/metalcon)${thum?", tipo"+thum:""}, con soleras, montantes a 60 cm, placa por cara, sellado de juntas y terminación. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó trazado, soleras, montantes metálicos y placas de yeso-cartón${thum?" "+thum:""} en el área indicada, rellenando juntas.${sufijo}`;
     }
-    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon") || n.includes("cielo falso")) {
+    // I — Cubierta y techumbre (ONDAC: cerchas, correas, plancha, traslape mínimo)
+    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja") || n.includes("zinc") || n.includes("plancha")) {
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la estructura metálica de soporte y paneles de cielo, con nivelación y terminaciones de borde según especificaciones. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó la estructura de soporte y la fijación de paneles en el área intervenida.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la cubierta incluyendo cerchas, correas, aislación, planchas con traslape mínimo reglamentario, canaletas y bajadas de aguas lluvias. Se verificó hermeticidad del sistema. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó instalación de estructura de soporte y planchas de cubierta en el área indicada, asegurando fijación, traslape y pendiente según proyecto.${sufijo}`;
     }
+    // J — Cielos y aislaciones (ONDAC: perfiles T, canales, paneles)
+    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon") || n.includes("aislaci")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la estructura metálica de soporte (perfiles T y canales), paneles de cielo y terminaciones de borde. Se verificó nivelación y ausencia de deflexiones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó la estructura de soporte y fijación de paneles en el área intervenida, verificando nivelación y planeidad.${sufijo}`;
+    }
+    // L — Pisos y pavimentos (ONDAC: flotante clic, cerámico, porcelanato, mortero autonivelante)
     if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("baldos") || n.includes("porcelan")) {
+      const tpiso = n.includes("flotante") ? "piso flotante (sistema clic)" : n.includes("porcelan") ? "porcelanato" : n.includes("cerám") ? "cerámico" : "pavimento";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la colocación del revestimiento de piso, incluyendo preparación de base, aplicación de adhesivo, nivelado y sellado de juntas. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la colocación de ${partida}. Se preparó la base de apoyo, se aplicó adhesivo y se instaló el revestimiento en el área correspondiente, verificando planeidad y alineamiento.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó preparación de base con mortero autonivelante, aplicación de adhesivo, colocación de ${tpiso} con crucetas, fraguado de juntas y remates de bordes. Tolerancia ±3 mm/2 m verificada. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la colocación de ${partida}. Se preparó la base, se aplicó adhesivo y se instaló ${tpiso} en el área indicada, verificando planeidad y alineamiento de juntas.${sufijo}`;
     }
-    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint") || n.includes("marco")) {
+    // M — Puertas, ventanas y carpintería (ONDAC: fijación, sellado silicona, prueba funcionamiento)
+    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint") || n.includes("marco") || n.includes("cancel")) {
+      const tcarpt = n.includes("ventana") ? "ventanas" : n.includes("puerta") ? "puertas" : "elementos de carpintería";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó la instalación de la totalidad de los elementos de carpintería, incluyendo colocación, nivelación, fijación, sellado perimetral y prueba de funcionamiento. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se colocaron, nivelaron y fijaron los elementos correspondientes en los vanos indicados en proyecto.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de ${tcarpt}, incluyendo colocación en vano, aplomado, fijación con tacos expansivos, sellado perimetral con silicona neutra y prueba de funcionamiento. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se colocaron, aplomaron y fijaron ${tcarpt} en los vanos indicados, ejecutando sellado perimetral y prueba de funcionamiento.${sufijo}`;
     }
+    // C/R — Fundaciones, radier y losas (ONDAC: subrasante + enfierradura + hormigón + curado)
     if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier") || n.includes("losa")) {
+      const tf = n.includes("radier") ? "radier" : n.includes("losa") ? "losa" : n.includes("zapata") ? "zapatas" : "fundaciones";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron la totalidad de los trabajos de preparación de subrasante, colocación de enfierradura y vaciado de hormigón. Se realizó el curado correspondiente y se verificaron las cotas según planos de fundaciones. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutaron trabajos de preparación de base, colocación de moldajes, habilitación de armaduras y vaciado de hormigón en la zona indicada.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron trabajos de excavación, preparación de subrasante, habilitación de enfierraduras y vaciado de hormigón para ${tf}. Curado húmedo mínimo 7 días y verificación de cotas según planos de fundaciones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutaron habilitación de enfierraduras, instalación de moldajes y vaciado de hormigón en los ${tf} correspondientes, controlando cotas y niveles.${sufijo}`;
     }
+    // P — Instalaciones eléctricas (ONDAC/SEC: ductos conduit, THHN, tableros, pruebas)
+    if (n.includes("eléctri") || n.includes("electric") || n.includes("alumbr") || n.includes("luminaria") || n.includes("tablero")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó tendido de ductos conduit, cableado con conductores THHN, conexionado de tableros y puntos de luz/fuerza, y pruebas eléctricas conforme a NSEG 5 E.n.71 (SEC). Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó tendido de ductos, cableado, fijación de cajas y conexionado parcial de tableros y puntos de luz/fuerza en el área indicada.${sufijo}`;
+    }
+    // P — Instalaciones sanitarias (ONDAC: PVC/HDPE, prueba presión, desinfección)
+    if (n.includes("agua") || n.includes("sanitari") || n.includes("cañer") || n.includes("alcan")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó tendido de tuberías (PVC/HDPE), piezas especiales, prueba de presión hidrostática y desinfección de la red conforme a NCh1105 y normativa SISS. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en las obras de ${partida}. Se instalaron tuberías, piezas especiales y se ejecutaron uniones, con pruebas parciales de hermeticidad en tramos terminados.${sufijo}`;
+    }
+    // V — Demolición y retiro de escombros (ONDAC: carga, transporte, botadero autorizado)
     if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) {
       return fin
-        ? `Se completó el 100% de los trabajos de ${partida}. Se procedió al retiro controlado de la totalidad de los elementos indicados, con disposición del escombro en botadero autorizado y limpieza final del área. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se procedió al retiro y disposición controlada del material en el área asignada.${sufijo}`;
+        ? `Se completó el 100% de los trabajos de ${partida}. Se procedió al retiro controlado de los elementos indicados, carga en camión y disposición del escombro en botadero autorizado por la autoridad competente. Limpieza final del área ejecutada. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó el retiro y carga del material en el área asignada, transportándolo al botadero autorizado conforme a normativa de residuos de construcción.${sufijo}`;
     }
+    // A — Instalación de faenas
+    if (n.includes("faena") || (n.includes("instala") && n.includes("obr"))) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la instalación completa de faenas incluyendo bodega, oficina ITO, servicios higiénicos, cerco perimetral, señalética de seguridad y acometidas provisorias de agua y electricidad. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutaron los trabajos de habilitación del campamento de obra, cerco perimetral y acometidas provisorias conforme a lo estipulado.${sufijo}`;
+    }
+    // Aseo y limpieza final de obra
     if (n.includes("aseo") || n.includes("limpieza")) {
       return fin
-        ? `Se completó el 100% de las labores de ${partida}. Se realizó la limpieza general de la obra, retiro de escombros y materiales sobrantes, dejando el área en condiciones de entrega. Partida finalizada.`
-        : `Durante el período se ejecutaron labores de ${partida} en el área intervenida, con retiro de escombros y materiales sobrantes acumulados.${sufijo}`;
+        ? `Se completó el 100% de las labores de ${partida}. Se realizó limpieza general de la obra, retiro de escombros y materiales sobrantes, dejando el área en condiciones de entrega conforme a las bases del contrato. Partida finalizada.`
+        : `Durante el período se ejecutaron labores de ${partida} en el área intervenida, retirando escombros y materiales sobrantes acumulados, manteniendo el orden y aseo de la faena.${sufijo}`;
     }
-    // Fallback genérico mejorado
+    // Fallback genérico ONDAC
     return fin
-      ? `Se completó el 100% de la partida "${partida}". Se ejecutaron la totalidad de los trabajos indicados en las especificaciones técnicas del proyecto, verificándose la correcta ejecución conforme a planos y normativa vigente. Partida finalizada.`
-      : `Durante el período se avanzó un ${p}% en la partida "${partida}". Se ejecutaron los trabajos correspondientes conforme a las especificaciones técnicas del proyecto y bajo la supervisión de la Inspección Técnica de Obras.${sufijo}`;
+      ? `Se completó el 100% de la partida "${partida}". Se ejecutaron la totalidad de los trabajos indicados en las especificaciones técnicas del proyecto, verificándose la correcta ejecución conforme a planos, normativa vigente y exigencias de la Inspección Técnica de Obras (ITO). Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida "${partida}". Se ejecutaron los trabajos correspondientes conforme a las especificaciones técnicas del proyecto, bajo supervisión de la ITO y en conformidad con el programa contractual.${sufijo}`;
   }
 
   const updatePartida = (id, field, val) => {
@@ -639,13 +821,58 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
                       background: p.incluir?"#fff":"#f8fafc", opacity: p.incluir?1:0.6 }}>
                       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
                         <div style={{ flex:1 }}>
-                          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
                             <input type="checkbox" checked={p.incluir} onChange={e=>updatePartida(p.id,"incluir",e.target.checked)}
                               style={{ width:14, height:14, cursor:"pointer" }}/>
                             <span style={{ fontSize:11, color:"#94a3b8", fontWeight:600 }}>{p.item}</span>
                             <span style={{ fontSize:12, fontWeight:700, color:"#1e293b" }}>{p.partida}</span>
+                            {p.ondac_codigo && (
+                              <span style={{ fontSize:10, background:"#d1fae5", color:"#065f46",
+                                padding:"1px 6px", borderRadius:99, fontFamily:"monospace", fontWeight:700 }}>
+                                {p.ondac_codigo}
+                              </span>
+                            )}
+                            <button onClick={()=>{ setBusqOndacIdx(busqOndacIdx===p.id?null:p.id); setBusqOndacQ(""); }}
+                              style={{ fontSize:10, padding:"2px 8px", borderRadius:6, border:"1px solid #e2e8f0",
+                                background:"#f8fafc", color:"#64748b", cursor:"pointer" }}>
+                              🔍 ONDAC
+                            </button>
                           </div>
-                          <span style={{ fontSize:10, color:"#94a3b8", marginLeft:22 }}>{p.unidad} · {fmtP(p.valor_total)}</span>
+                          <span style={{ fontSize:10, color:"#94a3b8", marginLeft:22 }}>
+                            {p.unidad} · {fmtP(p.valor_total)}
+                            {p.ondac_desc&&<span style={{ color:"#059669", marginLeft:6 }}>· {p.ondac_desc}</span>}
+                          </span>
+                          {/* Panel búsqueda ONDAC */}
+                          {busqOndacIdx===p.id&&(
+                            <div style={{ marginTop:8, marginLeft:22, background:"#f8fafc",
+                              border:"1px solid #e2e8f0", borderRadius:10, padding:10 }}>
+                              <input autoFocus value={busqOndacQ} onChange={e=>setBusqOndacQ(e.target.value)}
+                                placeholder="Buscar en catálogo ONDAC (ej: hormigón, estuco, excavación...)"
+                                style={{ width:"100%", padding:"6px 10px", border:"1px solid #cbd5e1",
+                                  borderRadius:6, fontSize:12, boxSizing:"border-box" }}/>
+                              {ondacSugerencias.length>0&&(
+                                <div style={{ maxHeight:180, overflowY:"auto", marginTop:6 }}>
+                                  {ondacSugerencias.map(apu=>(
+                                    <button key={apu.codigo} onClick={()=>vincularOndac(p.id, apu)}
+                                      style={{ display:"block", width:"100%", textAlign:"left",
+                                        padding:"6px 8px", border:"none", background:"none", cursor:"pointer",
+                                        borderRadius:6, fontSize:11 }}
+                                      onMouseEnter={e=>e.currentTarget.style.background="#e0f2fe"}
+                                      onMouseLeave={e=>e.currentTarget.style.background="none"}>
+                                      <span style={{ fontFamily:"monospace", color:"#64748b", marginRight:8 }}>{apu.codigo}</span>
+                                      <span style={{ fontWeight:600, color:"#1e293b" }}>{apu.desc}</span>
+                                      <span style={{ color:"#94a3b8", marginLeft:8 }}>{apu.unidad}</span>
+                                      <span style={{ float:"right", fontSize:10, background:"#f0fdf4",
+                                        color:"#065f46", padding:"1px 5px", borderRadius:99 }}>{apu.familia}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                              {busqOndacQ.length>=2&&ondacSugerencias.length===0&&(
+                                <p style={{ fontSize:11, color:"#94a3b8", margin:"8px 0 0" }}>Sin resultados para "{busqOndacQ}"</p>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                       {p.incluir&&(
@@ -983,236 +1210,6 @@ function ModalRecepcion({ obraId, onClose, onSave }) {
   );
 }
 
-// ── Modal Modificación de Contrato ────────────────────────────────────────
-function ModalModificacion({ obraId, onClose, onSave }) {
-  const TIPOS = ["Aumento de Obras","Disminución de Obras","Ampliación de Plazo","Mixta"];
-  const [tipo, setTipo] = useState("Aumento de Obras");
-  const [numero, setNumero] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [monto, setMonto] = useState("");
-  const [dias, setDias] = useState("");
-  const [fecha, setFecha] = useState(new Date().toISOString().slice(0,10));
-  const [decreto, setDecreto] = useState("");
-  const [saving, setSaving] = useState(false);
-
-  const handleSave = async () => {
-    setSaving(true);
-    const montoNum = parseFloat(String(monto).replace(/\./g,"").replace(",",".")) || 0;
-    const { data } = await supabase.from("obra_modificaciones").insert([{
-      obra_id: obraId,
-      numero: parseInt(numero) || null,
-      tipo, descripcion,
-      monto_modificacion: tipo === "Disminución de Obras" ? -Math.abs(montoNum) : montoNum,
-      dias_adicionales: parseInt(dias) || 0,
-      fecha: fecha || null,
-      decreto,
-    }]).select().single();
-    if (data) onSave(data);
-    setSaving(false);
-  };
-
-  const showMonto = tipo !== "Ampliación de Plazo";
-  const showDias  = tipo === "Ampliación de Plazo" || tipo === "Mixta";
-
-  return (
-    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:1000,
-      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}>
-      <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:520,
-        boxShadow:"0 24px 60px rgba(0,0,0,.2)" }}>
-        <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
-          background:"linear-gradient(135deg,#1e40af,#3b82f6)", borderRadius:"18px 18px 0 0",
-          display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-          <div>
-            <h2 style={{ color:"#fff", margin:0, fontSize:15, fontWeight:800 }}>📝 Nueva Modificación</h2>
-            <p style={{ color:"#bfdbfe", margin:"2px 0 0", fontSize:12 }}>Modificación de contrato</p>
-          </div>
-          <button onClick={onClose} style={{ background:"rgba(255,255,255,0.2)", border:"none",
-            color:"#fff", borderRadius:8, padding:"6px 12px", cursor:"pointer" }}>✕</button>
-        </div>
-        <div style={{ padding:"20px 24px", display:"flex", flexDirection:"column", gap:14 }}>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>TIPO</label>
-              <select value={tipo} onChange={e=>setTipo(e.target.value)}
-                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}>
-                {TIPOS.map(t=><option key={t}>{t}</option>)}
-              </select>
-            </div>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>N° MODIFICACIÓN</label>
-              <input type="number" value={numero} onChange={e=>setNumero(e.target.value)} placeholder="1"
-                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
-            </div>
-          </div>
-          <div>
-            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DESCRIPCIÓN</label>
-            <textarea value={descripcion} onChange={e=>setDescripcion(e.target.value)} rows={2}
-              placeholder="Descripción de la modificación..."
-              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
-                fontSize:13, resize:"vertical", fontFamily:"inherit", boxSizing:"border-box" }}/>
-          </div>
-          <div style={{ display:"grid", gridTemplateColumns: showMonto && showDias ? "1fr 1fr" : "1fr", gap:12 }}>
-            {showMonto && (
-              <div>
-                <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>
-                  MONTO {tipo==="Disminución de Obras"?"(−)":"(+)"}
-                </label>
-                <input type="text" value={monto} onChange={e=>setMonto(e.target.value)} placeholder="0"
-                  style={{ width:"100%", padding:"8px 10px", borderRadius:8, fontSize:13, boxSizing:"border-box",
-                    border:`1px solid ${tipo==="Disminución de Obras"?"#fca5a5":"#bbf7d0"}` }}/>
-              </div>
-            )}
-            {showDias && (
-              <div>
-                <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DÍAS ADICIONALES</label>
-                <input type="number" value={dias} onChange={e=>setDias(e.target.value)} placeholder="0"
-                  style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
-              </div>
-            )}
-          </div>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA</label>
-              <input type="date" value={fecha} onChange={e=>setFecha(e.target.value)}
-                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
-            </div>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DECRETO / RESOLUCIÓN</label>
-              <input type="text" value={decreto} onChange={e=>setDecreto(e.target.value)} placeholder="Nº decreto..."
-                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
-            </div>
-          </div>
-        </div>
-        <div style={{ padding:"14px 24px", borderTop:"1px solid #e2e8f0", display:"flex",
-          justifyContent:"flex-end", gap:10, background:"#f8fafc", borderRadius:"0 0 18px 18px" }}>
-          <button onClick={onClose} style={{ background:"#f1f5f9", color:"#64748b", border:"none",
-            borderRadius:10, padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>Cancelar</button>
-          <button onClick={handleSave} disabled={saving}
-            style={{ background:"#3b82f6", color:"#fff", border:"none", borderRadius:10,
-              padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer", opacity:saving?0.7:1 }}>
-            {saving?"Guardando…":"Guardar"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Modal Recepción ───────────────────────────────────────────────────────
-function ModalRecepcion({ obraId, onClose, onSave }) {
-  const TIPOS   = ["Provisoria","Definitiva"];
-  const ESTADOS = ["Solicitada","Realizada","Con observaciones","Rechazada"];
-  const [tipo,      setTipo]      = useState("Provisoria");
-  const [estado,    setEstado]    = useState("Solicitada");
-  const [fechaSol,  setFechaSol]  = useState(new Date().toISOString().slice(0,10));
-  const [fechaRec,  setFechaRec]  = useState("");
-  const [inspector, setInspector] = useState("");
-  const [observ,    setObserv]    = useState("");
-  const [saving,    setSaving]    = useState(false);
-
-  const handleSave = async () => {
-    setSaving(true);
-    const { data } = await supabase.from("obra_recepciones").insert([{
-      obra_id: obraId, tipo, estado,
-      fecha_solicitud: fechaSol || null,
-      fecha_recepcion: fechaRec || null,
-      inspector, observaciones: observ,
-    }]).select().single();
-    if (data) onSave(data);
-    setSaving(false);
-  };
-
-  return (
-    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:1000,
-      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}>
-      <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:500,
-        boxShadow:"0 24px 60px rgba(0,0,0,.2)" }}>
-        <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
-          background:"linear-gradient(135deg,#065f46,#059669)", borderRadius:"18px 18px 0 0",
-          display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-          <div>
-            <h2 style={{ color:"#fff", margin:0, fontSize:15, fontWeight:800 }}>🏁 Nueva Recepción</h2>
-            <p style={{ color:"#a7f3d0", margin:"2px 0 0", fontSize:12 }}>Recepción de obra</p>
-          </div>
-          <button onClick={onClose} style={{ background:"rgba(255,255,255,0.2)", border:"none",
-            color:"#fff", borderRadius:8, padding:"6px 12px", cursor:"pointer" }}>✕</button>
-        </div>
-        <div style={{ padding:"20px 24px", display:"flex", flexDirection:"column", gap:14 }}>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>TIPO</label>
-              <div style={{ display:"flex", gap:8 }}>
-                {TIPOS.map(t=>(
-                  <button key={t} onClick={()=>setTipo(t)}
-                    style={{ flex:1, padding:"8px", border:`2px solid ${tipo===t?"#059669":"#e2e8f0"}`,
-                      borderRadius:8, background:tipo===t?"#f0fdf4":"#fff",
-                      color:tipo===t?"#065f46":"#64748b", fontSize:13, fontWeight:700, cursor:"pointer" }}>
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>ESTADO</label>
-              <select value={estado} onChange={e=>setEstado(e.target.value)}
-                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}>
-                {ESTADOS.map(s=><option key={s}>{s}</option>)}
-              </select>
-            </div>
-          </div>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA SOLICITUD</label>
-              <input type="date" value={fechaSol} onChange={e=>setFechaSol(e.target.value)}
-                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
-            </div>
-            <div>
-              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA RECEPCIÓN</label>
-              <input type="date" value={fechaRec} onChange={e=>setFechaRec(e.target.value)}
-                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
-            </div>
-          </div>
-          <div>
-            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>INSPECTOR</label>
-            <input type="text" value={inspector} onChange={e=>setInspector(e.target.value)} placeholder="Nombre del inspector..."
-              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
-          </div>
-          <div>
-            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>OBSERVACIONES</label>
-            <textarea value={observ} onChange={e=>setObserv(e.target.value)} rows={3}
-              placeholder="Observaciones de la recepción..."
-              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
-                fontSize:13, resize:"vertical", fontFamily:"inherit", boxSizing:"border-box" }}/>
-          </div>
-        </div>
-        <div style={{ padding:"14px 24px", borderTop:"1px solid #e2e8f0", display:"flex",
-          justifyContent:"flex-end", gap:10, background:"#f8fafc", borderRadius:"0 0 18px 18px" }}>
-          <button onClick={onClose} style={{ background:"#f1f5f9", color:"#64748b", border:"none",
-            borderRadius:10, padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>Cancelar</button>
-          <button onClick={handleSave} disabled={saving}
-            style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
-              padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer", opacity:saving?0.7:1 }}>
-            {saving?"Guardando…":"Guardar"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-export default function ObraPage() {
-  return (
-    <Suspense fallback={
-      <div style={{ minHeight:"100vh", background:"#f8fafc", display:"flex", alignItems:"center",
-        justifyContent:"center", color:"#94a3b8", fontFamily:"sans-serif" }}>
-        Cargando obra...
-      </div>}>
-      <ObraDetail />
-    </Suspense>
-  );
-}
-
 function ObraDetail() {
   const router   = useRouter();
   const params   = useSearchParams();
@@ -1353,80 +1350,133 @@ function ObraDetail() {
     const sufijo = fin
       ? " Los trabajos quedaron terminados y conformes a las especificaciones técnicas del proyecto."
       : ` Acumulando a la fecha un avance total de ${p}% respecto al total contratado. Trabajos en ejecución conforme a programa.`;
+    // C — Hormigones (ONDAC: H5/H20/H25/H30, liviano, bombeado)
     if (n.includes("hormig")) {
-      const dosif = n.match(/g\d+/i) ? n.match(/g\d+/i)[0].toUpperCase() : "";
+      const dosif = n.match(/h\s?(\d+)/i) ? "H"+n.match(/h\s?(\d+)/i)[1] : n.match(/g\d+/i) ? n.match(/g\d+/i)[0].toUpperCase() : "";
+      const esBombeado = n.includes("bombeado") || n.includes("bomba");
+      const esLiviano = n.includes("liviano") || n.includes("celular");
+      const tipoHorm = esBombeado ? " bombeado (dosificación mín. 340 kg cemento/m³)" : esLiviano ? " liviano (densidad aprox. 1.200 kg/m³)" : dosif ? ` ${dosif}` : "";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizaron la totalidad de los trabajos de moldaje, colocación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el correcto fraguado y curado conforme a especificaciones técnicas. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se realizaron trabajos de moldaje, habilitación de armadura y vaciado de hormigón${dosif?" "+dosif:""}. Se verificó el nivelado, vibrado y curado correspondiente.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron la totalidad de los trabajos de instalación de moldajes, habilitación de enfierraduras y vaciado de hormigón${tipoHorm}. Se verificó vibrado, curado húmedo mínimo 7 días y conformidad geométrica según NCh170. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se realizaron trabajos de instalación de moldajes, colocación de armadura y vaciado de hormigón${tipoHorm}. Se controló consistencia mediante cono de Abrams y se ejecutó vibrado y curado correspondiente.${sufijo}`;
     }
+    // E — Enfierraduras (ONDAC: D10–D25, mallas electrosoldadas)
+    if (n.includes("enfierr") || n.includes("armadur") || n.includes("fierro") || n.includes("malla electro")) {
+      const diam = n.match(/d\s?(\d+)/i) ? "D"+n.match(/d\s?(\d+)/i)[1] : "";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se habilitó y colocó la totalidad de la armadura${diam?" "+diam:""} según planos estructurales, incluyendo corte, doblado, amarre con alambre recocido y verificación de recubrimientos mínimos conforme a NCh429. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se ejecutó corte, doblado y colocación de ${diam?"enfierradura "+diam:"armaduras"} en la zona indicada, verificando recubrimientos y traslapes según especificaciones.${sufijo}`;
+    }
+    // D — Moldajes y andamios (ONDAC: losa, muro, fundación, pilar)
+    if (n.includes("moldaje") || n.includes("encofr") || n.includes("andamio")) {
+      const tm = n.includes("losa") ? "losa" : n.includes("muro") ? "muro" : n.includes("pilar") ? "pilar" : n.includes("fundaci") ? "fundación" : "elemento estructural";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló, aplomó y arriostró la totalidad de los moldajes de ${tm}, con posterior desencofrado en los plazos de fraguado requeridos según NCh170. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó montaje y arriostramiento de moldajes de ${tm} en el área indicada, verificando verticalidad, planeidad y estanqueidad previo al vaciado.${sufijo}`;
+    }
+    // B — Excavaciones (ONDAC: brazo/máquina, terreno blando/semiduro/duro/roca)
     if (n.includes("excav") || n.includes("movim") || n.includes("escarpe")) {
+      const conMaq = n.includes("máquina") || n.includes("retroexcavad") || n.includes("maquina");
+      const terreno = n.includes("roca") ? "roca" : n.includes("duro") ? "terreno duro" : n.includes("semiduro") ? "terreno semiduro" : "terreno normal";
       return fin
-        ? `Se completó el 100% de los trabajos de ${partida}. Se ejecutó la excavación y/o movimiento de tierras en su totalidad, incluyendo perfilado de taludes, retiro y disposición del material excedente en botadero autorizado. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó el movimiento de tierras en el área correspondiente, con retiro y traslado del material al botadero designado. Se verificó la cota de fundación según proyecto.${sufijo}`;
+        ? `Se completó el 100% de los trabajos de ${partida}. Se ejecutó la excavación en ${terreno} mediante ${conMaq?"maquinaria pesada (retroexcavadora)":"medios manuales y mecánicos"}, con perfilado de taludes y disposición del material en botadero autorizado. Se verificó cota de fundación según planos. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la excavación en ${terreno} con retiro y traslado del material al botadero designado. Se verificó la cota de fundación según proyecto.${sufijo}`;
     }
+    // B — Rellenos y compactación (Proctor, capas 20 cm)
     if (n.includes("rellen") || n.includes("compac")) {
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutó el relleno y compactación en la totalidad del área proyectada, en capas de 20 cm debidamente compactadas y controladas mediante ensayes de densidad in situ. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se colocó y compactó el material de relleno por capas según especificaciones, verificando la densidad requerida mediante ensayes en terreno.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó el relleno y compactación en capas de 20 cm, controladas mediante ensayes de densidad in situ (Proctor modificado), alcanzando la densidad mínima requerida. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la partida ${partida}. Se colocó material de relleno por capas de 20 cm y se compactó con equipo vibratorio, verificando densidad mediante ensayes en terreno.${sufijo}`;
     }
-    if (n.includes("pintur") || n.includes("revestim")) {
+    // F — Albañilería (ONDAC: fiscal/gran titán/super flaco, mortero 1:5)
+    if (n.includes("albañil") || n.includes("mamposter") || n.includes("ladrillo") || n.includes("bloque")) {
+      const tb = n.includes("fiscal") ? "ladrillo fiscal" : n.includes("gran tit") ? "bloque gran titán" : n.includes("super flaco") ? "bloque super flaco" : n.includes("bloque") ? "bloque de hormigón" : "ladrillo";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó la preparación de superficies (lijado, masillado y limpieza), aplicándose la totalidad de manos de pintura/revestimiento indicadas en especificaciones. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se prepararon las superficies y se aplicaron las manos de imprimación y terminación en el área intervenida.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la mampostería de ${tb} con mortero cemento-arena dosificación 1:5, aplomado, nivelación y sellado de juntas según planos. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó colocación de ${tb} con mortero 1:5, controlando aplome, escuadra y geometría de vanos en el área indicada.${sufijo}`;
     }
-    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja") || n.includes("zinc")) {
+    // K — Estucos (ONDAC: exterior 340 kg/m², interior, 2-3 manos)
+    if (n.includes("estuco") || n.includes("revoque") || n.includes("empaste")) {
+      const esExt = n.includes("exter") || n.includes("fachada");
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la cubierta incluyendo estructura de soporte, aislación, planchas y elementos de remate y evacuación de aguas lluvias. Se verificó hermeticidad del sistema. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la estructura de soporte y colocación de los elementos de cubierta en el área correspondiente, asegurando correcta fijación y traslape.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se aplicó el estuco ${esExt?"exterior (dosificación 340 kg cemento/m²)":"interior"} en 2-3 manos, previa limpieza y humedecimiento de base, terminando con llana metálica. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se ejecutó el estuco ${esExt?"exterior (340 kg cemento/m²)":"interior"} en capas sucesivas con llana, verificando planeidad y aplome.${sufijo}`;
     }
-    if (n.includes("eléctri") || n.includes("electric") || n.includes("alumbr") || n.includes("luminaria")) {
+    // K — Pinturas (ONDAC: látex/esmalte/anticorrosivo, imprimación + 2 manos)
+    if (n.includes("pintur") || n.includes("látex") || n.includes("latex") || n.includes("esmalte") || n.includes("revestim")) {
+      const tp = n.includes("esmalte") ? "esmalte alkídico" : n.includes("metal") || n.includes("estructura") ? "anticorrosivo + esmalte para estructura metálica" : "látex acrílico";
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de ductos, cableado, conexionado y pruebas eléctricas de la totalidad de la instalación conforme a normativa SEC vigente. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó el tendido de ductos y conductores, fijación de elementos y conexionado parcial de tableros y puntos de luz/fuerza.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se realizó preparación de superficies (lijado, masillado y limpieza) y aplicación de 1 mano de imprimación + 2 manos de ${tp}. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la aplicación de ${partida}. Se prepararon las superficies y se aplicaron las manos de ${tp} en el área intervenida, verificando uniformidad y adherencia.${sufijo}`;
     }
+    // H — Tabiques (ONDAC: volcametal PL10/PL15, húmedo/seco, montantes 60 cm)
+    if (n.includes("tabique") || n.includes("volcametal") || n.includes("drywall") || n.includes("metalcon")) {
+      const thum = n.includes("húmedo") || n.includes("humedo") ? " área húmeda (PL15, e=15 mm)" : n.includes("seco") ? " área seca (PL10, e=10 mm)" : "";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de los tabiques de estructura metálica (volcametal)${thum?", tipo"+thum:""}, con soleras, montantes a 60 cm, placa por cara y sellado de juntas. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó trazado, soleras, montantes y placas de yeso-cartón${thum?" "+thum:""} en el área indicada.${sufijo}`;
+    }
+    // I — Cubierta (ONDAC: cerchas, correas, plancha, traslape mínimo)
+    if (n.includes("cubierta") || n.includes("techo") || n.includes("teja") || n.includes("zinc") || n.includes("plancha")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la cubierta incluyendo cerchas, correas, aislación, planchas con traslape mínimo reglamentario, canaletas y bajadas de aguas lluvias. Se verificó hermeticidad. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó instalación de estructura de soporte y planchas en el área indicada, asegurando fijación, traslape y pendiente según proyecto.${sufijo}`;
+    }
+    // J — Cielos y aislaciones (ONDAC: perfiles T, canales, paneles)
+    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon") || n.includes("aislaci")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la estructura metálica de soporte (perfiles T y canales), paneles de cielo y terminaciones de borde. Se verificó nivelación y ausencia de deflexiones. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó la estructura de soporte y fijación de paneles en el área intervenida, verificando nivelación y planeidad.${sufijo}`;
+    }
+    // L — Pisos (ONDAC: flotante clic, cerámico, porcelanato, mortero autonivelante)
+    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("porcelan")) {
+      const tpiso = n.includes("flotante") ? "piso flotante (sistema clic)" : n.includes("porcelan") ? "porcelanato" : n.includes("cerám") ? "cerámico" : "pavimento";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutó preparación de base con mortero autonivelante, aplicación de adhesivo, colocación de ${tpiso} con crucetas, fraguado de juntas y remates de borde. Tolerancia ±3 mm/2 m verificada. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la colocación de ${partida}. Se preparó la base, se aplicó adhesivo y se instaló ${tpiso} en el área indicada, verificando planeidad y alineamiento de juntas.${sufijo}`;
+    }
+    // M — Carpintería (ONDAC: tacos expansivos, silicona neutra, prueba funcionamiento)
+    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint") || n.includes("marco") || n.includes("cancel")) {
+      const tcarpt = n.includes("ventana") ? "ventanas" : n.includes("puerta") ? "puertas" : "elementos de carpintería";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de ${tcarpt}, incluyendo colocación en vano, aplomado, fijación con tacos expansivos, sellado perimetral con silicona neutra y prueba de funcionamiento. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se colocaron, aplomaron y fijaron ${tcarpt} en los vanos indicados, ejecutando sellado perimetral y prueba de funcionamiento.${sufijo}`;
+    }
+    // C/R — Fundaciones, radier y losas
+    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier") || n.includes("losa")) {
+      const tf = n.includes("radier") ? "radier" : n.includes("losa") ? "losa" : n.includes("zapata") ? "zapatas" : "fundaciones";
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron trabajos de excavación, preparación de subrasante, habilitación de enfierraduras y vaciado de hormigón para ${tf}. Curado húmedo mínimo 7 días y verificación de cotas según planos. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutaron habilitación de enfierraduras, instalación de moldajes y vaciado de hormigón en los ${tf} correspondientes.${sufijo}`;
+    }
+    // P — Instalaciones eléctricas (SEC: ductos conduit, THHN, tableros)
+    if (n.includes("eléctri") || n.includes("electric") || n.includes("alumbr") || n.includes("luminaria") || n.includes("tablero")) {
+      return fin
+        ? `Se completó el 100% de la partida ${partida}. Se realizó tendido de ductos conduit, cableado con conductores THHN, conexionado de tableros y puntos de luz/fuerza, y pruebas eléctricas conforme a NSEG 5 E.n.71 (SEC). Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó tendido de ductos, cableado, fijación de cajas y conexionado parcial de tableros y puntos de luz/fuerza.${sufijo}`;
+    }
+    // P — Instalaciones sanitarias (NCh1105, PVC/HDPE, prueba presión)
     if (n.includes("agua") || n.includes("sanitari") || n.includes("cañer") || n.includes("alcan")) {
       return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó el tendido de tuberías, uniones, pruebas de presión y desinfección de la red conforme a normativa vigente. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en las obras de ${partida}. Se instalaron tuberías, piezas especiales y se ejecutaron las uniones correspondientes, con pruebas parciales de hermeticidad.${sufijo}`;
+        ? `Se completó el 100% de la partida ${partida}. Se realizó tendido de tuberías PVC/HDPE, piezas especiales, prueba de presión hidrostática y desinfección de la red conforme a NCh1105 y normativa SISS. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en las obras de ${partida}. Se instalaron tuberías, piezas especiales y uniones, con pruebas parciales de hermeticidad en tramos terminados.${sufijo}`;
     }
-    if (n.includes("muro") || n.includes("tabique") || n.includes("mamposter") || n.includes("albañil")) {
-      return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad de la mampostería/tabique, con colocación de elementos, aplomado, nivelación y sellado de juntas según planos. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó la colocación y aplomado de los elementos en el área correspondiente, controlando geometría y verticalidad conforme a proyecto.${sufijo}`;
-    }
-    if (n.includes("cielo") || n.includes("plafón") || n.includes("plafon")) {
-      return fin
-        ? `Se completó el 100% de la partida ${partida}. Se instaló la totalidad de la estructura metálica de soporte y paneles de cielo, con nivelación y terminaciones de borde según especificaciones. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se ejecutó la estructura de soporte y la fijación de paneles en el área intervenida.${sufijo}`;
-    }
-    if (n.includes("piso") || n.includes("pavim") || n.includes("cerám") || n.includes("porcelan")) {
-      return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutó la totalidad del revestimiento de piso, incluyendo preparación de base, aplicación de adhesivo, nivelado y sellado de juntas. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la colocación de ${partida}. Se preparó la base de apoyo, se aplicó adhesivo y se instaló el revestimiento en el área correspondiente, verificando planeidad y alineamiento.${sufijo}`;
-    }
-    if (n.includes("ventana") || n.includes("puerta") || n.includes("carpint") || n.includes("marco")) {
-      return fin
-        ? `Se completó el 100% de la partida ${partida}. Se realizó la instalación de la totalidad de los elementos de carpintería, incluyendo colocación, nivelación, fijación, sellado perimetral y prueba de funcionamiento. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en la instalación de ${partida}. Se colocaron, nivelaron y fijaron los elementos en los vanos indicados en proyecto.${sufijo}`;
-    }
-    if (n.includes("fundaci") || n.includes("zapata") || n.includes("radier") || n.includes("losa")) {
-      return fin
-        ? `Se completó el 100% de la partida ${partida}. Se ejecutaron la totalidad de los trabajos de preparación de subrasante, colocación de enfierradura y vaciado de hormigón. Se realizó el curado correspondiente verificando cotas según planos. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutaron trabajos de preparación de base, colocación de moldajes, habilitación de armaduras y vaciado de hormigón en la zona indicada.${sufijo}`;
-    }
+    // V — Demolición y retiro (ONDAC: carga, transporte, botadero autorizado)
     if (n.includes("demolici") || n.includes("retiro") || n.includes("desmonte")) {
       return fin
-        ? `Se completó el 100% de los trabajos de ${partida}. Se procedió al retiro controlado de la totalidad de los elementos indicados, con disposición del escombro en botadero autorizado y limpieza final del área. Partida finalizada.`
-        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se procedió al retiro y disposición controlada del material en el área asignada.${sufijo}`;
+        ? `Se completó el 100% de los trabajos de ${partida}. Se procedió al retiro controlado de los elementos indicados, carga en camión y disposición del escombro en botadero autorizado. Limpieza final del área ejecutada. Partida finalizada.`
+        : `Durante el período se avanzó un ${p}% en los trabajos de ${partida}. Se ejecutó el retiro y carga del material, transportándolo al botadero autorizado conforme a normativa de residuos de construcción.${sufijo}`;
     }
+    // Aseo y limpieza
     if (n.includes("aseo") || n.includes("limpieza")) {
       return fin
-        ? `Se completó el 100% de las labores de ${partida}. Se realizó la limpieza general de la obra, retiro de escombros y materiales sobrantes, dejando el área en condiciones de entrega. Partida finalizada.`
-        : `Durante el período se ejecutaron labores de ${partida} en el área intervenida, con retiro de escombros y materiales sobrantes acumulados.${sufijo}`;
+        ? `Se completó el 100% de las labores de ${partida}. Se realizó limpieza general de la obra, retiro de escombros y materiales sobrantes, dejando el área en condiciones de entrega conforme a las bases del contrato. Partida finalizada.`
+        : `Durante el período se ejecutaron labores de ${partida} en el área intervenida, retirando escombros y materiales sobrantes acumulados, manteniendo el orden y aseo de la faena.${sufijo}`;
     }
+    // Fallback genérico ONDAC
     return fin
-      ? `Se completó el 100% de la partida "${partida}". Se ejecutaron la totalidad de los trabajos indicados en las especificaciones técnicas del proyecto, verificándose la correcta ejecución conforme a planos y normativa vigente. Partida finalizada.`
-      : `Durante el período se avanzó un ${p}% en la partida "${partida}". Se ejecutaron los trabajos correspondientes conforme a las especificaciones técnicas del proyecto y bajo supervisión de la Inspección Técnica de Obras.${sufijo}`;
+      ? `Se completó el 100% de la partida "${partida}". Se ejecutaron la totalidad de los trabajos indicados en las especificaciones técnicas del proyecto, verificándose la correcta ejecución conforme a planos, normativa vigente y exigencias de la ITO. Partida finalizada.`
+      : `Durante el período se avanzó un ${p}% en la partida "${partida}". Se ejecutaron los trabajos correspondientes conforme a las especificaciones técnicas del proyecto, bajo supervisión de la Inspección Técnica de Obras (ITO).${sufijo}`;
   }
 
   function imprimirInforme(inf, obra) {
