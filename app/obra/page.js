@@ -3398,3 +3398,13 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
     </Modal>
   );
 }
+
+function ObraPage() {
+  return (
+    <Suspense fallback={<div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",color:"#64748b"}}>Cargando obra…</div>}>
+      <ObraDetail />
+    </Suspense>
+  );
+}
+
+export default ObraPage;
