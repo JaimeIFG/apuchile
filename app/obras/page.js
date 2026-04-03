@@ -81,6 +81,8 @@ export default function ObrasPage() {
   const [busqueda, setBusqueda] = useState("");
   const [confirmarEliminar, setConfirmarEliminar] = useState(null);
   const [mounted, setMounted] = useState(false);
+  const [alertas, setAlertas] = useState([]);
+  const [alertasCollapsed, setAlertasCollapsed] = useState(false);
 
   useInactividad(supabase, router, 10);
 
@@ -88,8 +90,61 @@ export default function ObrasPage() {
     setMounted(true);
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) { router.push("/login"); return; }
-      const { data } = await supabase.from("obras").select("*").eq("user_id", user.id).order("created_at", { ascending: false });
-      setObras(data || []);
+      const [obrasR, garR, pagosR] = await Promise.all([
+        supabase.from("obras").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
+        supabase.from("obra_garantias").select("*"),
+        supabase.from("obra_estados_pago").select("*").order("created_at", { ascending: false }),
+      ]);
+      setObras(obrasR.data || []);
+      // Calcular alertas
+      const hoy = new Date();
+      const alertasArr = [];
+      // Garantías próximas a vencer (< 30 días)
+      for (const g of (garR.data || [])) {
+        if (!g.fecha_vencimiento) continue;
+        const dias = Math.ceil((new Date(g.fecha_vencimiento) - hoy) / 86400000);
+        if (dias <= 30 && dias >= 0) {
+          const obra = (obrasR.data||[]).find(o => o.id === g.obra_id);
+          alertasArr.push({ tipo: "garantia", nivel: dias <= 7 ? "rojo" : "amarillo",
+            msg: `Garantía "${g.tipo}" vence en ${dias} día${dias!==1?"s":""}`,
+            sub: obra?.nombre || "", obraId: g.obra_id });
+        } else if (dias < 0) {
+          const obra = (obrasR.data||[]).find(o => o.id === g.obra_id);
+          alertasArr.push({ tipo: "garantia", nivel: "rojo",
+            msg: `Garantía "${g.tipo}" venció hace ${Math.abs(dias)} días`,
+            sub: obra?.nombre || "", obraId: g.obra_id });
+        }
+      }
+      // Plazos contractuales próximos (< 30 días)
+      for (const o of (obrasR.data||[])) {
+        if (!o.fecha_termino_contractual) continue;
+        if (o.estado_obra === "Recepcionada" || o.estado_obra === "Liquidada") continue;
+        const dias = Math.ceil((new Date(o.fecha_termino_contractual) - hoy) / 86400000);
+        if (dias <= 30 && dias >= 0) {
+          alertasArr.push({ tipo: "plazo", nivel: dias <= 7 ? "rojo" : "amarillo",
+            msg: `Plazo contractual vence en ${dias} día${dias!==1?"s":""}`,
+            sub: o.nombre, obraId: o.id });
+        } else if (dias < 0) {
+          alertasArr.push({ tipo: "plazo", nivel: "rojo",
+            msg: `Plazo contractual vencido hace ${Math.abs(dias)} días`,
+            sub: o.nombre, obraId: o.id });
+        }
+      }
+      // Obras sin EP en más de 60 días
+      const pagosData = pagosR.data || [];
+      for (const o of (obrasR.data||[])) {
+        if (o.estado_obra !== "En ejecución") continue;
+        const pagosObra = pagosData.filter(p => p.obra_id === o.id);
+        if (pagosObra.length === 0) continue;
+        const ultimo = pagosObra[0];
+        const dias = Math.ceil((hoy - new Date(ultimo.created_at)) / 86400000);
+        if (dias > 60) {
+          alertasArr.push({ tipo: "ep", nivel: "amarillo",
+            msg: `Sin nuevo EP hace ${dias} días`,
+            sub: o.nombre, obraId: o.id });
+        }
+      }
+      setAlertas(alertasArr);
       setLoading(false);
     });
   }, []);
@@ -214,6 +269,60 @@ export default function ObrasPage() {
       </div>
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 32px" }}>
+
+        {/* ── Panel de Alertas ── */}
+        {alertas.length > 0 && (
+          <div className={mounted ? "anim-fade-up" : ""}
+            style={{ marginBottom: 20, border: "1.5px solid #fbbf24", borderRadius: 14,
+              background: "#fffbeb", overflow: "hidden" }}>
+            <button onClick={() => setAlertasCollapsed(p => !p)}
+              style={{ width: "100%", display: "flex", justifyContent: "space-between",
+                alignItems: "center", padding: "12px 16px", background: "none", border: "none",
+                cursor: "pointer", textAlign: "left" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 16 }}>🔔</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#92400e" }}>
+                  {alertas.length} alerta{alertas.length !== 1 ? "s" : ""} activa{alertas.length !== 1 ? "s" : ""}
+                </span>
+                {alertas.filter(a => a.nivel === "rojo").length > 0 && (
+                  <span style={{ background: "#fee2e2", color: "#991b1b", fontSize: 10,
+                    fontWeight: 700, padding: "1px 7px", borderRadius: 99 }}>
+                    {alertas.filter(a => a.nivel === "rojo").length} urgente{alertas.filter(a=>a.nivel==="rojo").length!==1?"s":""}
+                  </span>
+                )}
+              </div>
+              <span style={{ fontSize: 12, color: "#92400e" }}>{alertasCollapsed ? "▼ Ver" : "▲ Ocultar"}</span>
+            </button>
+            {!alertasCollapsed && (
+              <div style={{ borderTop: "1px solid #fde68a", padding: "8px 16px 12px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {alertas.map((a, i) => (
+                    <div key={i}
+                      onClick={() => router.push(`/obra?id=${a.obraId}`)}
+                      style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px",
+                        borderRadius: 10, cursor: "pointer",
+                        background: a.nivel === "rojo" ? "#fee2e2" : "#fef3c7",
+                        border: `1px solid ${a.nivel === "rojo" ? "#fca5a5" : "#fde68a"}`,
+                        transition: "opacity .15s" }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                      <span style={{ fontSize: 16, flexShrink: 0 }}>
+                        {a.tipo === "garantia" ? "🛡️" : a.tipo === "plazo" ? "📅" : "📋"}
+                      </span>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ margin: 0, fontSize: 12, fontWeight: 700,
+                          color: a.nivel === "rojo" ? "#991b1b" : "#92400e" }}>{a.msg}</p>
+                        <p style={{ margin: 0, fontSize: 11, color: "#6b7280",
+                          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.sub}</p>
+                      </div>
+                      <span style={{ fontSize: 11, color: "#6b7280", flexShrink: 0 }}>Ver →</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* ── Filtros ── */}
         <div className={mounted ? "anim-slide-down delay-100" : ""}

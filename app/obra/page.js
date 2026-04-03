@@ -764,6 +764,442 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
   );
 }
 
+// ── Modal Modificación de Contrato ────────────────────────────────────────
+function ModalModificacion({ obraId, onClose, onSave }) {
+  const TIPOS = ["Aumento de Obras","Disminución de Obras","Ampliación de Plazo","Mixta"];
+  const [tipo, setTipo] = useState("Aumento de Obras");
+  const [numero, setNumero] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [monto, setMonto] = useState("");
+  const [dias, setDias] = useState("");
+  const [fecha, setFecha] = useState(new Date().toISOString().slice(0,10));
+  const [decreto, setDecreto] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    const montoNum = parseFloat(String(monto).replace(/\./g,"").replace(",",".")) || 0;
+    const diasNum = parseInt(dias) || 0;
+    const { data } = await supabase.from("obra_modificaciones").insert([{
+      obra_id: obraId,
+      numero: parseInt(numero) || null,
+      tipo, descripcion,
+      monto_modificacion: tipo === "Disminución de Obras" ? -Math.abs(montoNum) : montoNum,
+      dias_adicionales: diasNum,
+      fecha: fecha || null,
+      decreto,
+    }]).select().single();
+    if (data) onSave(data);
+    setSaving(false);
+  };
+
+  const showMonto = tipo !== "Ampliación de Plazo";
+  const showDias  = tipo === "Ampliación de Plazo" || tipo === "Mixta";
+
+  return (
+    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:1000,
+      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}>
+      <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:520,
+        boxShadow:"0 24px 60px rgba(0,0,0,.2)" }}>
+        <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
+          background:"linear-gradient(135deg,#1e40af,#3b82f6)", borderRadius:"18px 18px 0 0",
+          display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <h2 style={{ color:"#fff", margin:0, fontSize:15, fontWeight:800 }}>📝 Nueva Modificación</h2>
+            <p style={{ color:"#bfdbfe", margin:"2px 0 0", fontSize:12 }}>Modificación de contrato</p>
+          </div>
+          <button onClick={onClose} style={{ background:"rgba(255,255,255,0.2)", border:"none",
+            color:"#fff", borderRadius:8, padding:"6px 12px", cursor:"pointer" }}>✕</button>
+        </div>
+        <div style={{ padding:"20px 24px", display:"flex", flexDirection:"column", gap:14 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>TIPO</label>
+              <select value={tipo} onChange={e=>setTipo(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}>
+                {TIPOS.map(t=><option key={t}>{t}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>N° MODIFICACIÓN</label>
+              <input type="number" value={numero} onChange={e=>setNumero(e.target.value)} placeholder="1"
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+          </div>
+          <div>
+            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DESCRIPCIÓN</label>
+            <textarea value={descripcion} onChange={e=>setDescripcion(e.target.value)} rows={2}
+              placeholder="Descripción de la modificación..."
+              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
+                fontSize:13, resize:"vertical", fontFamily:"inherit", boxSizing:"border-box" }}/>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns: showMonto && showDias ? "1fr 1fr" : "1fr", gap:12 }}>
+            {showMonto && (
+              <div>
+                <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>
+                  MONTO {tipo==="Disminución de Obras"?"(−)":"(+)"}
+                </label>
+                <input type="text" value={monto} onChange={e=>setMonto(e.target.value)} placeholder="0"
+                  style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
+                    fontSize:13, boxSizing:"border-box",
+                    borderColor: tipo==="Disminución de Obras"?"#fca5a5":"#bbf7d0" }}/>
+              </div>
+            )}
+            {showDias && (
+              <div>
+                <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DÍAS ADICIONALES</label>
+                <input type="number" value={dias} onChange={e=>setDias(e.target.value)} placeholder="0"
+                  style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+              </div>
+            )}
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA</label>
+              <input type="date" value={fecha} onChange={e=>setFecha(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DECRETO / RESOLUCIÓN</label>
+              <input type="text" value={decreto} onChange={e=>setDecreto(e.target.value)} placeholder="Nº decreto..."
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+          </div>
+        </div>
+        <div style={{ padding:"14px 24px", borderTop:"1px solid #e2e8f0", display:"flex",
+          justifyContent:"flex-end", gap:10, background:"#f8fafc", borderRadius:"0 0 18px 18px" }}>
+          <button onClick={onClose} style={{ background:"#f1f5f9", color:"#64748b", border:"none",
+            borderRadius:10, padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>Cancelar</button>
+          <button onClick={handleSave} disabled={saving}
+            style={{ background:"#3b82f6", color:"#fff", border:"none", borderRadius:10,
+              padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer", opacity:saving?.7:1 }}>
+            {saving?"Guardando…":"Guardar"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Modal Recepción ───────────────────────────────────────────────────────
+function ModalRecepcion({ obraId, onClose, onSave }) {
+  const TIPOS   = ["Provisoria","Definitiva"];
+  const ESTADOS = ["Solicitada","Realizada","Con observaciones","Rechazada"];
+  const [tipo,         setTipo]         = useState("Provisoria");
+  const [estado,       setEstado]       = useState("Solicitada");
+  const [fechaSol,     setFechaSol]     = useState(new Date().toISOString().slice(0,10));
+  const [fechaRec,     setFechaRec]     = useState("");
+  const [inspector,    setInspector]    = useState("");
+  const [observ,       setObserv]       = useState("");
+  const [saving,       setSaving]       = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    const { data } = await supabase.from("obra_recepciones").insert([{
+      obra_id: obraId, tipo, estado,
+      fecha_solicitud: fechaSol || null,
+      fecha_recepcion: fechaRec || null,
+      inspector, observaciones: observ,
+    }]).select().single();
+    if (data) onSave(data);
+    setSaving(false);
+  };
+
+  return (
+    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:1000,
+      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}>
+      <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:500,
+        boxShadow:"0 24px 60px rgba(0,0,0,.2)" }}>
+        <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
+          background:"linear-gradient(135deg,#065f46,#059669)", borderRadius:"18px 18px 0 0",
+          display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <h2 style={{ color:"#fff", margin:0, fontSize:15, fontWeight:800 }}>🏁 Nueva Recepción</h2>
+            <p style={{ color:"#a7f3d0", margin:"2px 0 0", fontSize:12 }}>Recepción de obra</p>
+          </div>
+          <button onClick={onClose} style={{ background:"rgba(255,255,255,0.2)", border:"none",
+            color:"#fff", borderRadius:8, padding:"6px 12px", cursor:"pointer" }}>✕</button>
+        </div>
+        <div style={{ padding:"20px 24px", display:"flex", flexDirection:"column", gap:14 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>TIPO</label>
+              <div style={{ display:"flex", gap:8 }}>
+                {TIPOS.map(t=>(
+                  <button key={t} onClick={()=>setTipo(t)}
+                    style={{ flex:1, padding:"8px", border:`2px solid ${tipo===t?"#059669":"#e2e8f0"}`,
+                      borderRadius:8, background: tipo===t?"#f0fdf4":"#fff",
+                      color: tipo===t?"#065f46":"#64748b", fontSize:13, fontWeight:700, cursor:"pointer" }}>
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>ESTADO</label>
+              <select value={estado} onChange={e=>setEstado(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}>
+                {ESTADOS.map(s=><option key={s}>{s}</option>)}
+              </select>
+            </div>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA SOLICITUD</label>
+              <input type="date" value={fechaSol} onChange={e=>setFechaSol(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA RECEPCIÓN</label>
+              <input type="date" value={fechaRec} onChange={e=>setFechaRec(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+          </div>
+          <div>
+            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>INSPECTOR</label>
+            <input type="text" value={inspector} onChange={e=>setInspector(e.target.value)} placeholder="Nombre del inspector..."
+              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+          </div>
+          <div>
+            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>OBSERVACIONES</label>
+            <textarea value={observ} onChange={e=>setObserv(e.target.value)} rows={3}
+              placeholder="Observaciones de la recepción..."
+              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
+                fontSize:13, resize:"vertical", fontFamily:"inherit", boxSizing:"border-box" }}/>
+          </div>
+        </div>
+        <div style={{ padding:"14px 24px", borderTop:"1px solid #e2e8f0", display:"flex",
+          justifyContent:"flex-end", gap:10, background:"#f8fafc", borderRadius:"0 0 18px 18px" }}>
+          <button onClick={onClose} style={{ background:"#f1f5f9", color:"#64748b", border:"none",
+            borderRadius:10, padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>Cancelar</button>
+          <button onClick={handleSave} disabled={saving}
+            style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+              padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer", opacity:saving?.7:1 }}>
+            {saving?"Guardando…":"Guardar"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Modal Modificación de Contrato ────────────────────────────────────────
+function ModalModificacion({ obraId, onClose, onSave }) {
+  const TIPOS = ["Aumento de Obras","Disminución de Obras","Ampliación de Plazo","Mixta"];
+  const [tipo, setTipo] = useState("Aumento de Obras");
+  const [numero, setNumero] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [monto, setMonto] = useState("");
+  const [dias, setDias] = useState("");
+  const [fecha, setFecha] = useState(new Date().toISOString().slice(0,10));
+  const [decreto, setDecreto] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    const montoNum = parseFloat(String(monto).replace(/\./g,"").replace(",",".")) || 0;
+    const { data } = await supabase.from("obra_modificaciones").insert([{
+      obra_id: obraId,
+      numero: parseInt(numero) || null,
+      tipo, descripcion,
+      monto_modificacion: tipo === "Disminución de Obras" ? -Math.abs(montoNum) : montoNum,
+      dias_adicionales: parseInt(dias) || 0,
+      fecha: fecha || null,
+      decreto,
+    }]).select().single();
+    if (data) onSave(data);
+    setSaving(false);
+  };
+
+  const showMonto = tipo !== "Ampliación de Plazo";
+  const showDias  = tipo === "Ampliación de Plazo" || tipo === "Mixta";
+
+  return (
+    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:1000,
+      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}>
+      <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:520,
+        boxShadow:"0 24px 60px rgba(0,0,0,.2)" }}>
+        <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
+          background:"linear-gradient(135deg,#1e40af,#3b82f6)", borderRadius:"18px 18px 0 0",
+          display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <h2 style={{ color:"#fff", margin:0, fontSize:15, fontWeight:800 }}>📝 Nueva Modificación</h2>
+            <p style={{ color:"#bfdbfe", margin:"2px 0 0", fontSize:12 }}>Modificación de contrato</p>
+          </div>
+          <button onClick={onClose} style={{ background:"rgba(255,255,255,0.2)", border:"none",
+            color:"#fff", borderRadius:8, padding:"6px 12px", cursor:"pointer" }}>✕</button>
+        </div>
+        <div style={{ padding:"20px 24px", display:"flex", flexDirection:"column", gap:14 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>TIPO</label>
+              <select value={tipo} onChange={e=>setTipo(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}>
+                {TIPOS.map(t=><option key={t}>{t}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>N° MODIFICACIÓN</label>
+              <input type="number" value={numero} onChange={e=>setNumero(e.target.value)} placeholder="1"
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+          </div>
+          <div>
+            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DESCRIPCIÓN</label>
+            <textarea value={descripcion} onChange={e=>setDescripcion(e.target.value)} rows={2}
+              placeholder="Descripción de la modificación..."
+              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
+                fontSize:13, resize:"vertical", fontFamily:"inherit", boxSizing:"border-box" }}/>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns: showMonto && showDias ? "1fr 1fr" : "1fr", gap:12 }}>
+            {showMonto && (
+              <div>
+                <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>
+                  MONTO {tipo==="Disminución de Obras"?"(−)":"(+)"}
+                </label>
+                <input type="text" value={monto} onChange={e=>setMonto(e.target.value)} placeholder="0"
+                  style={{ width:"100%", padding:"8px 10px", borderRadius:8, fontSize:13, boxSizing:"border-box",
+                    border:`1px solid ${tipo==="Disminución de Obras"?"#fca5a5":"#bbf7d0"}` }}/>
+              </div>
+            )}
+            {showDias && (
+              <div>
+                <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DÍAS ADICIONALES</label>
+                <input type="number" value={dias} onChange={e=>setDias(e.target.value)} placeholder="0"
+                  style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+              </div>
+            )}
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA</label>
+              <input type="date" value={fecha} onChange={e=>setFecha(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>DECRETO / RESOLUCIÓN</label>
+              <input type="text" value={decreto} onChange={e=>setDecreto(e.target.value)} placeholder="Nº decreto..."
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+          </div>
+        </div>
+        <div style={{ padding:"14px 24px", borderTop:"1px solid #e2e8f0", display:"flex",
+          justifyContent:"flex-end", gap:10, background:"#f8fafc", borderRadius:"0 0 18px 18px" }}>
+          <button onClick={onClose} style={{ background:"#f1f5f9", color:"#64748b", border:"none",
+            borderRadius:10, padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>Cancelar</button>
+          <button onClick={handleSave} disabled={saving}
+            style={{ background:"#3b82f6", color:"#fff", border:"none", borderRadius:10,
+              padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer", opacity:saving?0.7:1 }}>
+            {saving?"Guardando…":"Guardar"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Modal Recepción ───────────────────────────────────────────────────────
+function ModalRecepcion({ obraId, onClose, onSave }) {
+  const TIPOS   = ["Provisoria","Definitiva"];
+  const ESTADOS = ["Solicitada","Realizada","Con observaciones","Rechazada"];
+  const [tipo,      setTipo]      = useState("Provisoria");
+  const [estado,    setEstado]    = useState("Solicitada");
+  const [fechaSol,  setFechaSol]  = useState(new Date().toISOString().slice(0,10));
+  const [fechaRec,  setFechaRec]  = useState("");
+  const [inspector, setInspector] = useState("");
+  const [observ,    setObserv]    = useState("");
+  const [saving,    setSaving]    = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    const { data } = await supabase.from("obra_recepciones").insert([{
+      obra_id: obraId, tipo, estado,
+      fecha_solicitud: fechaSol || null,
+      fecha_recepcion: fechaRec || null,
+      inspector, observaciones: observ,
+    }]).select().single();
+    if (data) onSave(data);
+    setSaving(false);
+  };
+
+  return (
+    <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:1000,
+      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }}>
+      <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:500,
+        boxShadow:"0 24px 60px rgba(0,0,0,.2)" }}>
+        <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
+          background:"linear-gradient(135deg,#065f46,#059669)", borderRadius:"18px 18px 0 0",
+          display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <h2 style={{ color:"#fff", margin:0, fontSize:15, fontWeight:800 }}>🏁 Nueva Recepción</h2>
+            <p style={{ color:"#a7f3d0", margin:"2px 0 0", fontSize:12 }}>Recepción de obra</p>
+          </div>
+          <button onClick={onClose} style={{ background:"rgba(255,255,255,0.2)", border:"none",
+            color:"#fff", borderRadius:8, padding:"6px 12px", cursor:"pointer" }}>✕</button>
+        </div>
+        <div style={{ padding:"20px 24px", display:"flex", flexDirection:"column", gap:14 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>TIPO</label>
+              <div style={{ display:"flex", gap:8 }}>
+                {TIPOS.map(t=>(
+                  <button key={t} onClick={()=>setTipo(t)}
+                    style={{ flex:1, padding:"8px", border:`2px solid ${tipo===t?"#059669":"#e2e8f0"}`,
+                      borderRadius:8, background:tipo===t?"#f0fdf4":"#fff",
+                      color:tipo===t?"#065f46":"#64748b", fontSize:13, fontWeight:700, cursor:"pointer" }}>
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>ESTADO</label>
+              <select value={estado} onChange={e=>setEstado(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13 }}>
+                {ESTADOS.map(s=><option key={s}>{s}</option>)}
+              </select>
+            </div>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA SOLICITUD</label>
+              <input type="date" value={fechaSol} onChange={e=>setFechaSol(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+            <div>
+              <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>FECHA RECEPCIÓN</label>
+              <input type="date" value={fechaRec} onChange={e=>setFechaRec(e.target.value)}
+                style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+            </div>
+          </div>
+          <div>
+            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>INSPECTOR</label>
+            <input type="text" value={inspector} onChange={e=>setInspector(e.target.value)} placeholder="Nombre del inspector..."
+              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8, fontSize:13, boxSizing:"border-box" }}/>
+          </div>
+          <div>
+            <label style={{ fontSize:11, fontWeight:700, color:"#64748b", display:"block", marginBottom:4 }}>OBSERVACIONES</label>
+            <textarea value={observ} onChange={e=>setObserv(e.target.value)} rows={3}
+              placeholder="Observaciones de la recepción..."
+              style={{ width:"100%", padding:"8px 10px", border:"1px solid #e2e8f0", borderRadius:8,
+                fontSize:13, resize:"vertical", fontFamily:"inherit", boxSizing:"border-box" }}/>
+          </div>
+        </div>
+        <div style={{ padding:"14px 24px", borderTop:"1px solid #e2e8f0", display:"flex",
+          justifyContent:"flex-end", gap:10, background:"#f8fafc", borderRadius:"0 0 18px 18px" }}>
+          <button onClick={onClose} style={{ background:"#f1f5f9", color:"#64748b", border:"none",
+            borderRadius:10, padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>Cancelar</button>
+          <button onClick={handleSave} disabled={saving}
+            style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+              padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer", opacity:saving?0.7:1 }}>
+            {saving?"Guardando…":"Guardar"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 export default function ObraPage() {
   return (
@@ -804,6 +1240,10 @@ function ObraDetail() {
   const [mGar, setMGar]   = useState(false);
   const [mBit, setMBit]   = useState(false);
   const [informes, setInformes] = useState([]);
+  const [modificaciones, setModificaciones] = useState([]);
+  const [recepciones,    setRecepciones]    = useState([]);
+  const [mMod,  setMMod]  = useState(false);
+  const [mRec,  setMRec]  = useState(false);
   const [mInforme, setMInforme] = useState(false);
   const [mFoto,setMFoto]  = useState(false);
   const [mPresupuesto, setMPresupuesto] = useState(false);
@@ -837,6 +1277,10 @@ function ObraDetail() {
       setBitacora(bR.data||[]); setFotos(fR.data||[]); setPresupuesto(presR.data||[]);
       const iR = await supabase.from("obra_informes").select("*").eq("obra_id", obraId).order("created_at",{ascending:false});
       setInformes(iR.data || []);
+      const modR = await supabase.from("obra_modificaciones").select("*").eq("obra_id", obraId).order("fecha",{ascending:true});
+      setModificaciones(modR.data || []);
+      const recR = await supabase.from("obra_recepciones").select("*").eq("obra_id", obraId).order("created_at",{ascending:false});
+      setRecepciones(recR.data || []);
       // Agrupar anexos por bitacora_id
       const anexosMap = {};
       (aR.data||[]).forEach(a=>{ if(!anexosMap[a.bitacora_id]) anexosMap[a.bitacora_id]=[]; anexosMap[a.bitacora_id].push(a); });
@@ -1048,6 +1492,8 @@ ${partidas.map(p=>`
     { id:"garantias", icon:"🔒", label:"Garantías"        },
     { id:"bitacora",  icon:"📖", label:"Bitácora"         },
     { id:"informes",  icon:"📋", label:"Informes"         },
+    { id:"modificaciones", icon:"📝", label:"Modificaciones" },
+    { id:"recepciones",    icon:"🏁", label:"Recepciones"    },
     { id:"fotos",     icon:"📸", label:"Fotos", badge:fotos.length },
     { id:"presupuesto", icon:"💰", label:"Presupuesto", badge:presupuesto.length },
   ];
@@ -1676,6 +2122,172 @@ ${partidas.map(p=>`
             );
           })()}
 
+          {/* ═══ MODIFICACIONES ═══ */}
+          {tab==="modificaciones" && (()=>{
+            const montoBase = obra?.monto_contrato || 0;
+            const totalMods = modificaciones.reduce((s,m)=>s+(m.monto_modificacion||0),0);
+            const totalDias = modificaciones.reduce((s,m)=>s+(m.dias_adicionales||0),0);
+            const montoFinal = montoBase + totalMods;
+            const TIPO_MOD_COLOR = {
+              "Aumento de Obras":    { bg:"#d1fae5", color:"#065f46" },
+              "Disminución de Obras":{ bg:"#fee2e2", color:"#991b1b" },
+              "Ampliación de Plazo": { bg:"#dbeafe", color:"#1d4ed8" },
+              "Mixta":               { bg:"#fef3c7", color:"#92400e" },
+            };
+            return (
+            <div>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 }}>
+                <div>
+                  <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Modificaciones de Contrato</h2>
+                  <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{modificaciones.length} modificación{modificaciones.length!==1?"es":""}</p>
+                </div>
+                <button onClick={()=>setMMod(true)}
+                  style={{ background:"#3b82f6", color:"#fff", border:"none", borderRadius:10,
+                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nueva modificación</button>
+              </div>
+              {/* Resumen financiero de modificaciones */}
+              {modificaciones.length > 0 && (
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:20 }}>
+                  {[
+                    { label:"Monto contrato original", val:"$"+Math.round(montoBase).toLocaleString("es-CL"), color:"#1e293b" },
+                    { label:"Total modificaciones",    val:(totalMods>=0?"+":"")+"$"+Math.round(totalMods).toLocaleString("es-CL"), color:totalMods>=0?"#059669":"#ef4444" },
+                    { label:"Monto contrato vigente",  val:"$"+Math.round(montoFinal).toLocaleString("es-CL"), color:"#1d4ed8" },
+                  ].map(c=>(
+                    <div key={c.label} style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:12, padding:"12px 16px" }}>
+                      <p style={{ fontSize:10, color:"#94a3b8", fontWeight:700, margin:"0 0 4px", textTransform:"uppercase" }}>{c.label}</p>
+                      <p style={{ fontSize:16, fontWeight:800, color:c.color, margin:0 }}>{c.val}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {modificaciones.length===0 ? <EmptyState icon="📝" msg="Sin modificaciones registradas"/> : (
+                <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                  {modificaciones.map(m=>{
+                    const tc = TIPO_MOD_COLOR[m.tipo] || TIPO_MOD_COLOR["Mixta"];
+                    return (
+                      <div key={m.id} style={{ background:"#fff", border:"1px solid #e2e8f0",
+                        borderRadius:12, padding:"14px 18px" }}>
+                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                          <div style={{ flex:1 }}>
+                            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
+                              {m.numero&&<span style={{ fontSize:11, color:"#94a3b8", fontWeight:700 }}>Mod. N°{m.numero}</span>}
+                              <span style={{ background:tc.bg, color:tc.color, fontSize:10, fontWeight:700,
+                                padding:"2px 8px", borderRadius:99 }}>{m.tipo}</span>
+                              {m.fecha&&<span style={{ fontSize:11, color:"#94a3b8" }}>{new Date(m.fecha).toLocaleDateString("es-CL")}</span>}
+                            </div>
+                            {m.descripcion&&<p style={{ fontSize:13, color:"#374151", margin:"0 0 6px", lineHeight:1.5 }}>{m.descripcion}</p>}
+                            <div style={{ display:"flex", gap:14, flexWrap:"wrap" }}>
+                              {m.monto_modificacion!==0&&(
+                                <span style={{ fontSize:13, fontWeight:700, color:m.monto_modificacion>0?"#059669":"#ef4444" }}>
+                                  {m.monto_modificacion>0?"▲":"▼"} ${Math.abs(Math.round(m.monto_modificacion)).toLocaleString("es-CL")}
+                                </span>
+                              )}
+                              {m.dias_adicionales>0&&(
+                                <span style={{ fontSize:12, color:"#3b82f6", fontWeight:600 }}>+{m.dias_adicionales} días</span>
+                              )}
+                              {m.decreto&&<span style={{ fontSize:11, color:"#94a3b8" }}>📄 {m.decreto}</span>}
+                            </div>
+                          </div>
+                          <button onClick={async()=>{ await supabase.from("obra_modificaciones").delete().eq("id",m.id); setModificaciones(p=>p.filter(x=>x.id!==m.id)); }}
+                            style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:14, padding:"0 4px" }}>✕</button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+            );
+          })()}
+
+          {/* ═══ RECEPCIONES ═══ */}
+          {tab==="recepciones" && (()=>{
+            const ESTADO_REC_COLOR = {
+              "Solicitada":        { bg:"#dbeafe", color:"#1d4ed8" },
+              "Realizada":         { bg:"#d1fae5", color:"#065f46" },
+              "Con observaciones": { bg:"#fef3c7", color:"#92400e" },
+              "Rechazada":         { bg:"#fee2e2", color:"#991b1b" },
+            };
+            const provRec = recepciones.find(r=>r.tipo==="Provisoria"&&r.estado==="Realizada");
+            const defRec  = recepciones.find(r=>r.tipo==="Definitiva"&&r.estado==="Realizada");
+            return (
+            <div>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 }}>
+                <div>
+                  <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Recepciones de Obra</h2>
+                  <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{recepciones.length} registro{recepciones.length!==1?"s":""}</p>
+                </div>
+                <button onClick={()=>setMRec(true)}
+                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nueva recepción</button>
+              </div>
+              {/* Estado recepciones */}
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:20 }}>
+                {[
+                  { label:"Recepción Provisoria", rec:provRec, tipo:"Provisoria" },
+                  { label:"Recepción Definitiva", rec:defRec,  tipo:"Definitiva" },
+                ].map(({label,rec,tipo})=>(
+                  <div key={tipo} style={{ background: rec?"#f0fdf4":"#f8fafc",
+                    border:`1.5px solid ${rec?"#bbf7d0":"#e2e8f0"}`, borderRadius:14, padding:"14px 18px" }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+                      <span style={{ fontSize:13, fontWeight:700, color:rec?"#065f46":"#94a3b8" }}>{label}</span>
+                      <span style={{ fontSize:20 }}>{rec?"✅":"⏳"}</span>
+                    </div>
+                    {rec ? (
+                      <>
+                        <p style={{ fontSize:12, color:"#059669", fontWeight:600, margin:"0 0 2px" }}>
+                          Realizada el {new Date(rec.fecha_recepcion||rec.fecha_solicitud).toLocaleDateString("es-CL")}
+                        </p>
+                        {rec.inspector&&<p style={{ fontSize:11, color:"#64748b", margin:0 }}>👤 {rec.inspector}</p>}
+                      </>
+                    ) : (
+                      <p style={{ fontSize:12, color:"#94a3b8", margin:0 }}>Pendiente</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {recepciones.length===0 ? <EmptyState icon="🏁" msg="Sin recepciones registradas"/> : (
+                <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                  {recepciones.map(r=>{
+                    const tc = ESTADO_REC_COLOR[r.estado] || ESTADO_REC_COLOR["Solicitada"];
+                    return (
+                      <div key={r.id} style={{ background:"#fff", border:"1px solid #e2e8f0",
+                        borderRadius:12, padding:"14px 18px" }}>
+                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+                          <div style={{ flex:1 }}>
+                            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
+                              <span style={{ fontSize:13, fontWeight:800, color:"#1e293b" }}>Recepción {r.tipo}</span>
+                              <span style={{ background:tc.bg, color:tc.color, fontSize:10, fontWeight:700,
+                                padding:"2px 8px", borderRadius:99 }}>{r.estado}</span>
+                            </div>
+                            <div style={{ display:"flex", gap:14, flexWrap:"wrap", marginBottom: r.observaciones?8:0 }}>
+                              {r.fecha_solicitud&&(
+                                <span style={{ fontSize:12, color:"#64748b" }}>📋 Solicitud: {new Date(r.fecha_solicitud).toLocaleDateString("es-CL")}</span>
+                              )}
+                              {r.fecha_recepcion&&(
+                                <span style={{ fontSize:12, color:"#059669", fontWeight:600 }}>✅ Recepción: {new Date(r.fecha_recepcion).toLocaleDateString("es-CL")}</span>
+                              )}
+                              {r.inspector&&(
+                                <span style={{ fontSize:12, color:"#64748b" }}>👤 {r.inspector}</span>
+                              )}
+                            </div>
+                            {r.observaciones&&(
+                              <p style={{ fontSize:12, color:"#374151", margin:0, fontStyle:"italic",
+                                background:"#f8fafc", padding:"6px 10px", borderRadius:8 }}>"{r.observaciones}"</p>
+                            )}
+                          </div>
+                          <button onClick={async()=>{ await supabase.from("obra_recepciones").delete().eq("id",r.id); setRecepciones(p=>p.filter(x=>x.id!==r.id)); }}
+                            style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:14, padding:"0 4px" }}>✕</button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+            );
+          })()}
+
           {/* ═══ INFORMES ═══ */}
           {tab==="informes" && (
             <div>
@@ -2019,6 +2631,10 @@ ${partidas.map(p=>`
                     }
                     setMBit(false);
                   }}/>}
+      {mMod&&<ModalModificacion obraId={obraId} onClose={()=>setMMod(false)}
+        onSave={data=>{ setModificaciones(p=>[...p,data]); setMMod(false); }}/>}
+      {mRec&&<ModalRecepcion obraId={obraId} onClose={()=>setMRec(false)}
+        onSave={data=>{ setRecepciones(p=>[data,...p]); setMRec(false); }}/>}
       {mInforme&&<ModalInforme obra={obra} presupuesto={presupuesto} pagos={pagos} fotos={fotos}
         onClose={()=>setMInforme(false)}
         onSave={async(data)=>{
