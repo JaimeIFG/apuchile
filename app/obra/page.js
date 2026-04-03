@@ -1297,7 +1297,7 @@ function ObraDetail() {
       {/* Modals */}
       {mDoc  && <ModalDoc      obraId={obraId} catInicial={catActiva} onClose={()=>setMDoc(false)}
                   onSave={d=>{ setDocs(p=>[d,...p]); setMDoc(false); }}/>}
-      {mPago && <ModalPago     obraId={obraId} onClose={()=>setMPago(false)}
+      {mPago && <ModalPago     obraId={obraId} obraMontoContrato={obra?.monto_contrato} onClose={()=>setMPago(false)}
                   onSave={p=>{ setPagos(prev=>[p,...prev]); setMPago(false); }}/>}
       {mGar  && <ModalGarantia obraId={obraId} onClose={()=>setMGar(false)}
                   onSave={g=>{ setGarantias(prev=>[...prev,g].sort((a,b)=>new Date(a.fecha_vencimiento)-new Date(b.fecha_vencimiento))); setMGar(false); }}/>}
@@ -1346,33 +1346,33 @@ function ModalDoc({ obraId, catInicial, onClose, onSave }) {
   );
 }
 
-function ModalPago({ obraId, onClose, onSave }) {
+function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
   const [form,setForm]=useState({nombre:"",tipo:"Estado de Pago",fecha:"",monto:"",numero_oficio:"",numero_estado_pago:"",unidad_pago:""});
   const [file,setFile]=useState(null);
   const [saving,setSaving]=useState(false);
   const [leyendo,setLeyendo]=useState(false);
   const [partidas,setPartidas]=useState([]);
+  const [epMeta,setEpMeta]=useState(null);
   const [epError,setEpError]=useState("");
   const set=(k,v)=>setForm(f=>({...f,[k]:v}));
 
   const isExcel = file && (file.name.endsWith(".xlsx")||file.name.endsWith(".xls"));
-  const isPDF   = file && file.name.endsWith(".pdf");
 
   const leerExcel = async (f) => {
     if (!f || !(f.name.endsWith(".xlsx")||f.name.endsWith(".xls"))) return;
-    setLeyendo(true); setEpError(""); setPartidas([]);
+    setLeyendo(true); setEpError(""); setPartidas([]); setEpMeta(null);
     try {
       const fd = new FormData(); fd.append("file", f);
       const res = await fetch("/api/procesar-ep-excel", { method:"POST", body:fd });
       const data = await res.json();
       if (data.error) { setEpError(data.error); setLeyendo(false); return; }
-      // Auto-fill form
-      if (data.meta.numeroEP) {
-        set("numero_estado_pago", data.meta.numeroEP);
-        if (!form.nombre) set("nombre", `Estado de Pago N°${data.meta.numeroEP}`);
-      }
-      if (data.meta.fecha) set("fecha", data.meta.fecha);
-      if (data.total) set("monto", String(Math.round(data.total)));
+      const m = data.meta;
+      setEpMeta(m);
+      // Auto-fill todos los campos extraídos
+      if (m.nombreSugerido) set("nombre", m.nombreSugerido);
+      if (m.numeroEP)       set("numero_estado_pago", m.numeroEP);
+      if (m.fecha)          set("fecha", m.fecha);
+      if (m.monto)          set("monto", String(Math.round(m.monto)));
       if (data.partidas?.length) setPartidas(data.partidas);
     } catch(e) { setEpError(e.message); }
     setLeyendo(false);
@@ -1396,10 +1396,17 @@ function ModalPago({ obraId, onClose, onSave }) {
     if (!error && data) onSave(data);
   };
 
-  const fmtN = v => v ? "$"+Math.round(v).toLocaleString("es-CL") : "—";
-  const hasPartidas = partidas.length > 0;
-  const hasMontosActuales = partidas.some(p=>p.monto_actual);
-  const hasColumnaAnterior = partidas.some(p=>p.cant_anterior!=null||p.monto_anterior!=null);
+  const fmtN  = v => v ? "$"+Math.round(v).toLocaleString("es-CL") : "—";
+  const fmtPct= v => v != null ? v.toFixed(2)+"%" : "—";
+  const hasPartidas        = partidas.length > 0;
+  const hasMontosActuales  = partidas.some(p=>p.monto_actual);
+  const hasAvancePct       = partidas.some(p=>p.avance_pct!=null);
+  const hasColumnaAnterior = partidas.some(p=>p.monto_anterior!=null);
+  const totalEP      = epMeta?.monto || partidas.reduce((s,p)=>s+(p.monto_actual||0),0);
+  const totalProy    = epMeta?.totalProyecto;
+  const pctAvance    = epMeta?.porcentajeAvance ?? (totalEP&&totalProy ? Math.round(totalEP/totalProy*10000)/100 : null);
+  // Porcentaje calculado contra el monto de contrato de la obra si se pasó
+  const pctConMonto  = obraMontoContrato && totalEP ? Math.round(totalEP/obraMontoContrato*10000)/100 : null;
 
   return (
     <div style={{ position:"fixed", inset:0, zIndex:60, display:"flex", alignItems:"center",
@@ -1494,28 +1501,29 @@ function ModalPago({ obraId, onClose, onSave }) {
                   padding:"8px 12px",fontSize:11,color:"#b91c1c"}}>⚠️ {epError}</div>
               )}
 
-              {/* Resumen si hay partidas */}
-              {hasPartidas && hasMontosActuales && (
+              {/* Resumen extraído del Excel */}
+              {hasPartidas && (
                 <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"12px 14px"}}>
-                  <p style={{fontSize:11,fontWeight:700,color:"#065f46",margin:"0 0 6px",textTransform:"uppercase"}}>
-                    Resumen EP
+                  <p style={{fontSize:11,fontWeight:700,color:"#065f46",margin:"0 0 8px",textTransform:"uppercase",letterSpacing:".04em"}}>
+                    📊 Resumen extraído
                   </p>
-                  {hasColumnaAnterior && (
-                    <div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"4px 0",borderBottom:"1px solid #d1fae5"}}>
-                      <span style={{color:"#374151"}}>Monto anterior</span>
-                      <span style={{fontWeight:600}}>{fmtN(partidas.reduce((s,p)=>s+(p.monto_anterior||0),0))}</span>
+                  {epMeta?.contratista && (
+                    <div style={{fontSize:11,color:"#374151",marginBottom:8,paddingBottom:8,borderBottom:"1px solid #d1fae5"}}>
+                      🏢 <strong>{epMeta.contratista}</strong>
                     </div>
                   )}
-                  <div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"4px 0",borderBottom:"1px solid #d1fae5"}}>
-                    <span style={{color:"#374151"}}>Este estado de pago</span>
-                    <span style={{fontWeight:600,color:"#059669"}}>{fmtN(partidas.reduce((s,p)=>s+(p.monto_actual||0),0))}</span>
-                  </div>
-                  <div style={{display:"flex",justifyContent:"space-between",fontSize:13,padding:"6px 0 0"}}>
-                    <span style={{fontWeight:700,color:"#065f46"}}>Total acumulado</span>
-                    <span style={{fontWeight:800,color:"#059669"}}>
-                      {fmtN(partidas.reduce((s,p)=>s+(p.monto_anterior||0)+(p.monto_actual||0),0))}
-                    </span>
-                  </div>
+                  {[
+                    totalProy    && ["Total proyecto",    fmtN(totalProy),  false],
+                    totalEP      && ["Este EP",           fmtN(totalEP),    true ],
+                    pctAvance    && ["% Avance (EP/Proy)",fmtPct(pctAvance),true ],
+                    pctConMonto  && ["% Avance (s/contrato)", fmtPct(pctConMonto), false],
+                  ].filter(Boolean).map(([lbl,val,bold])=>(
+                    <div key={lbl} style={{display:"flex",justifyContent:"space-between",
+                      fontSize:12,padding:"4px 0",borderBottom:"1px solid #d1fae5"}}>
+                      <span style={{color:"#374151"}}>{lbl}</span>
+                      <span style={{fontWeight:bold?700:500,color:bold?"#059669":"#374151"}}>{val}</span>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -1547,8 +1555,9 @@ function ModalPago({ obraId, onClose, onSave }) {
                 <table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}>
                   <thead style={{background:"#f0fdf4"}}>
                     <tr>
-                      {["Ítem","Descripción","Un.","Cant.","P. Unit.",
-                        ...(hasColumnaAnterior?["Ant.","Actual"]:["Monto"])
+                      {["Ítem","Descripción","Un.","Cant.","V. Unit.","V. Total",
+                        ...(hasAvancePct?["Av. %"]:  []),
+                        "Av. $"
                       ].map((h,i)=>(
                         <th key={i} style={{padding:"8px 10px",fontWeight:700,color:"#065f46",
                           textAlign:i>=3?"right":"left",borderBottom:"1px solid #d1fae5",
@@ -1560,39 +1569,38 @@ function ModalPago({ obraId, onClose, onSave }) {
                     {partidas.map((p,i)=>(
                       <tr key={i} style={{background:i%2===0?"#fff":"#f9fafb",
                         borderBottom:"1px solid #f1f5f9"}}>
-                        <td style={{padding:"6px 10px",color:"#94a3b8",whiteSpace:"nowrap"}}>{p.item}</td>
-                        <td style={{padding:"6px 10px",color:"#1e293b",maxWidth:200,
+                        <td style={{padding:"6px 10px",color:"#94a3b8",whiteSpace:"nowrap",fontSize:10}}>{p.item}</td>
+                        <td style={{padding:"6px 10px",color:"#1e293b",maxWidth:220,
                           overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}
                           title={p.partida}>{p.partida}</td>
                         <td style={{padding:"6px 10px",color:"#64748b"}}>{p.unidad}</td>
                         <td style={{padding:"6px 10px",textAlign:"right",color:"#64748b"}}>
-                          {p.cant_actual??p.cant_contrato??""}</td>
+                          {p.cantidad??""}</td>
                         <td style={{padding:"6px 10px",textAlign:"right",color:"#64748b"}}>
                           {p.precio_unitario?fmtN(p.precio_unitario):""}</td>
-                        {hasColumnaAnterior ? <>
-                          <td style={{padding:"6px 10px",textAlign:"right",color:"#94a3b8"}}>
-                            {p.monto_anterior?fmtN(p.monto_anterior):""}</td>
-                          <td style={{padding:"6px 10px",textAlign:"right",fontWeight:600,color:"#059669"}}>
-                            {p.monto_actual?fmtN(p.monto_actual):"—"}</td>
-                        </> : (
-                          <td style={{padding:"6px 10px",textAlign:"right",fontWeight:600,color:"#059669"}}>
-                            {p.monto_actual?fmtN(p.monto_actual):"—"}</td>
+                        <td style={{padding:"6px 10px",textAlign:"right",color:"#64748b"}}>
+                          {p.monto_contrato?fmtN(p.monto_contrato):""}</td>
+                        {hasAvancePct && (
+                          <td style={{padding:"6px 10px",textAlign:"right",
+                            color: p.avance_pct===100?"#059669":p.avance_pct>0?"#f59e0b":"#cbd5e1",
+                            fontWeight:600}}>
+                            {p.avance_pct!=null ? p.avance_pct===100?"✓":p.avance_pct+"%": "—"}
+                          </td>
                         )}
+                        <td style={{padding:"6px 10px",textAlign:"right",fontWeight:600,
+                          color:p.monto_actual?"#059669":"#cbd5e1"}}>
+                          {p.monto_actual?fmtN(p.monto_actual):"—"}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                   {hasMontosActuales && (
                     <tfoot style={{background:"#f0fdf4",borderTop:"2px solid #d1fae5"}}>
                       <tr>
-                        <td colSpan={hasColumnaAnterior?5:4}
+                        <td colSpan={hasAvancePct?6:5}
                           style={{padding:"8px 10px",fontWeight:700,color:"#065f46",fontSize:12}}>
-                          TOTAL
+                          TOTAL EP
                         </td>
-                        {hasColumnaAnterior && (
-                          <td style={{padding:"8px 10px",textAlign:"right",fontWeight:700,color:"#94a3b8",fontSize:12}}>
-                            {fmtN(partidas.reduce((s,p)=>s+(p.monto_anterior||0),0))}
-                          </td>
-                        )}
                         <td style={{padding:"8px 10px",textAlign:"right",fontWeight:800,color:"#059669",fontSize:13}}>
                           {fmtN(partidas.reduce((s,p)=>s+(p.monto_actual||0),0))}
                         </td>

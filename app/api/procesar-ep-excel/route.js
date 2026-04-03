@@ -13,165 +13,206 @@ export async function POST(req) {
     const sheet = workbook.Sheets[sheetName];
 
     // Expandir celdas combinadas
-    const merges = sheet["!merges"] || [];
-    for (const merge of merges) {
+    for (const merge of (sheet["!merges"] || [])) {
       const { s, e } = merge;
-      const originCell = sheet[XLSX.utils.encode_cell(s)];
-      if (!originCell) continue;
+      const origin = sheet[XLSX.utils.encode_cell(s)];
+      if (!origin) continue;
       for (let r = s.r; r <= e.r; r++) {
         for (let c = s.c; c <= e.c; c++) {
           if (r === s.r && c === s.c) continue;
           const addr = XLSX.utils.encode_cell({ r, c });
-          if (!sheet[addr]) sheet[addr] = { ...originCell };
+          if (!sheet[addr]) sheet[addr] = { ...origin };
         }
       }
     }
 
     const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: null });
 
+    const str  = v => v != null ? String(v).trim() : "";
     const parseNum = v => {
       if (v == null) return null;
       if (typeof v === "number") return isFinite(v) ? v : null;
-      const s = String(v).replace(/\$/g,"").replace(/\s/g,"").replace(/\.(?=\d{3})/g,"").replace(",",".").trim();
+      const s = String(v).replace(/\$/g,"").replace(/\s/g,"")
+        .replace(/\.(?=\d{3})/g,"").replace(",",".").trim();
       const n = parseFloat(s);
       return isNaN(n) ? null : n;
     };
-
     const parseDate = v => {
       if (!v) return null;
       if (typeof v === "number") {
-        // Excel serial date
-        const d = XLSX.SSF.parse_date_code(v);
-        if (d) return `${d.y}-${String(d.m).padStart(2,"0")}-${String(d.d).padStart(2,"0")}`;
+        try {
+          const d = XLSX.SSF.parse_date_code(v);
+          if (d) return `${d.y}-${String(d.m).padStart(2,"0")}-${String(d.d).padStart(2,"0")}`;
+        } catch(e) {}
       }
       if (typeof v === "string") {
         const m = v.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
         if (m) {
-          const y = m[3].length === 2 ? "20" + m[3] : m[3];
+          const y = m[3].length === 2 ? "20"+m[3] : m[3];
           return `${y}-${String(m[2]).padStart(2,"0")}-${String(m[1]).padStart(2,"0")}`;
         }
       }
       return null;
     };
 
-    // Extraer metadata del encabezado (primeras 20 filas)
-    let numeroEP = null, fecha = null, monto = null, obra = null, contratista = null;
-    let headerEndRow = 0;
+    // ── 1. Extraer metadata del encabezado ──────────────────────────────────
+    let numeroEP = null, obraNombre = null, contratista = null, fecha = null;
+    let headerRow = -1; // fila con columnas ITEM, DESCRIPCION, etc.
 
     for (let i = 0; i < Math.min(rows.length, 30); i++) {
       const row = rows[i];
       if (!row) continue;
-      const flat = row.map(c => String(c || "").trim());
-      const joined = flat.join("|").toUpperCase();
+      const joined = row.map(c => str(c).toUpperCase()).join("|");
 
-      if (!numeroEP && joined.match(/N[°º]?\s*(ESTADO\s*DE\s*PAGO|EP)/)) {
-        // Buscar el valor numérico en la misma fila
-        for (let j = 0; j < row.length; j++) {
-          const n = parseNum(row[j]);
-          if (n && n > 0 && n < 1000) { numeroEP = String(Math.round(n)); break; }
+      // N° EP — buscar "N°X" o "N° X" en las primeras filas
+      if (!numeroEP) {
+        for (const cell of row) {
+          const s = str(cell);
+          const m = s.match(/N[°º]?\s*(\d+)/i);
+          if (m && parseInt(m[1]) < 100) { numeroEP = m[1]; break; }
         }
       }
+
+      // Nombre obra — buscar fila con "OBRA" y tomar el valor siguiente
+      if (!obraNombre && joined.includes("OBRA") && !joined.includes("OBRAS")) {
+        for (let j = 0; j < row.length; j++) {
+          if (str(row[j]).toUpperCase() === "OBRA" || str(row[j]).toUpperCase() === ":") continue;
+          const val = str(row[j]);
+          if (val.length > 5 && !val.match(/^[\:\-]/)) { obraNombre = val; break; }
+        }
+      }
+
+      // Fecha
       if (!fecha) {
         for (const c of row) {
           const d = parseDate(c);
-          if (d) { fecha = d; break; }
+          if (d && d > "2000-01-01") { fecha = d; break; }
         }
       }
-      if (!obra && joined.includes("OBRA")) {
-        const idx = flat.findIndex(s => s.toUpperCase().includes("OBRA"));
-        if (idx >= 0 && flat[idx+1]) obra = flat[idx+1];
-      }
-      if (!contratista && (joined.includes("CONTRATISTA") || joined.includes("EMPRESA"))) {
-        const idx = flat.findIndex(s => /CONTRATISTA|EMPRESA/i.test(s));
-        if (idx >= 0 && flat[idx+1]) contratista = flat[idx+1];
-      }
 
-      // Detectar fila de encabezados de la tabla de partidas
-      if (joined.match(/ITEM|PARTIDA|DESCRIPCI[OÓ]N/) && joined.match(/CANT|PRECIO|MONTO|VALOR/)) {
-        headerEndRow = i;
+      // Fila de encabezados de tabla (ITEM + DESCRIPCION + alguna columna de avance)
+      if (joined.includes("ITEM") && (joined.includes("DESCRIPCI") || joined.includes("PARTIDA"))) {
+        headerRow = i;
         break;
       }
     }
 
-    // Parsear tabla de partidas desde headerEndRow
-    const partidas = [];
-    let totalMonto = 0;
+    // ── 2. Mapear columnas desde la fila de encabezado ─────────────────────
+    const colMap = { item:0, desc:1, unidad:4, cant:5, vUnit:6, vTotal:7, avPct:8, avMonto:9 };
 
-    if (headerEndRow > 0) {
-      const headerRow = rows[headerEndRow];
-      // Identificar columnas por nombre
-      const colIdx = {};
-      headerRow.forEach((h, i) => {
-        const s = String(h || "").toUpperCase().trim();
-        if (/^ITEM$|^N[°º]/.test(s)) colIdx.item = colIdx.item ?? i;
-        if (/PARTIDA|DESCRIPCI/.test(s)) colIdx.partida = colIdx.partida ?? i;
-        if (/UNIDAD/.test(s)) colIdx.unidad = colIdx.unidad ?? i;
-        if (/CANT.*CONT/.test(s)) colIdx.cant_contrato = i;
-        if (/CANT.*ANT/.test(s)) colIdx.cant_anterior = i;
-        if (/CANT.*ACT/.test(s)) colIdx.cant_actual = i;
-        if (/PRECIO|VALOR\s*UNIT/.test(s)) colIdx.precio_unitario = colIdx.precio_unitario ?? i;
-        if (/MONTO.*ANT/.test(s)) colIdx.monto_anterior = i;
-        if (/MONTO.*ACT|PARCIAL.*ACT/.test(s)) colIdx.monto_actual = i;
-        if (/^MONTO$|TOTAL/.test(s) && !colIdx.monto_actual) colIdx.monto_actual = i;
+    if (headerRow >= 0) {
+      const hRow = rows[headerRow];
+      hRow.forEach((h, i) => {
+        const s = str(h).toUpperCase();
+        if (s === "ITEM" || s.startsWith("ITEM")) colMap.item = i;
+        if (s.includes("DESCRIPC") || s.includes("PARTIDA")) colMap.desc = i;
+        if (s.includes("UNID")) colMap.unidad = i;
+        if (s.match(/^CANT/) && !s.includes("TOTAL")) colMap.cant = i;
+        if (s.includes("V. UNIT") || s.includes("VALOR UNIT") || s.includes("PRECIO UNIT")) colMap.vUnit = i;
+        if (s.includes("V. TOTAL") || s.includes("VALOR TOTAL") || s === "TOTAL") colMap.vTotal = i;
+        if (s.includes("AVANCE") && s.includes("%")) colMap.avPct = i;
+        if (s.includes("AVANCE") && s.includes("$")) colMap.avMonto = i;
+        if ((s.includes("AVANCE") || s.includes("MONTO")) && !s.includes("%")) colMap.avMonto = colMap.avMonto ?? i;
       });
-
-      // Si no se encontraron columnas específicas, usar posición fija
-      if (colIdx.item === undefined) colIdx.item = 0;
-      if (colIdx.partida === undefined) colIdx.partida = 1;
-      if (colIdx.unidad === undefined) colIdx.unidad = 2;
-      if (colIdx.precio_unitario === undefined) colIdx.precio_unitario = headerRow.length - 2;
-      if (colIdx.monto_actual === undefined) colIdx.monto_actual = headerRow.length - 1;
-
-      for (let i = headerEndRow + 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (!row) continue;
-
-        const itemVal = row[colIdx.item];
-        const partidaVal = row[colIdx.partida];
-        if (!partidaVal && !itemVal) continue;
-
-        const itemStr = itemVal != null ? String(itemVal).trim() : "";
-        const partidaStr = partidaVal != null ? String(partidaVal).trim() : "";
-
-        // Saltar filas de totales
-        if (/^(total|sub\s*total|costo|iva|neto)/i.test(partidaStr)) {
-          const t = parseNum(row[colIdx.monto_actual]);
-          if (t && !monto) monto = t;
-          continue;
-        }
-        if (!partidaStr && !itemStr) continue;
-
-        const cantContrato   = colIdx.cant_contrato !== undefined ? parseNum(row[colIdx.cant_contrato]) : null;
-        const cantAnterior   = colIdx.cant_anterior !== undefined ? parseNum(row[colIdx.cant_anterior]) : null;
-        const cantActual     = colIdx.cant_actual   !== undefined ? parseNum(row[colIdx.cant_actual])   : null;
-        const precioUnit     = parseNum(row[colIdx.precio_unitario]);
-        const montoAnterior  = colIdx.monto_anterior !== undefined ? parseNum(row[colIdx.monto_anterior]) : null;
-        const montoActual    = parseNum(row[colIdx.monto_actual]);
-
-        if (!precioUnit && !montoActual && !cantContrato) continue;
-
-        totalMonto += montoActual || 0;
-
-        partidas.push({
-          item:           itemStr,
-          partida:        partidaStr || `Partida ${itemStr}`,
-          unidad:         colIdx.unidad !== undefined ? String(row[colIdx.unidad] || "").trim().toLowerCase() : "",
-          cant_contrato:  cantContrato,
-          cant_anterior:  cantAnterior,
-          cant_actual:    cantActual,
-          precio_unitario: precioUnit,
-          monto_anterior: montoAnterior,
-          monto_actual:   montoActual,
-        });
-      }
     }
 
-    if (!monto && totalMonto > 0) monto = totalMonto;
+    // ── 3. Parsear partidas ─────────────────────────────────────────────────
+    const partidas = [];
+    let totalEP = null, totalProyecto = null, porcentajeAvance = null;
+    let contratistaRows = [];
+    const dataStart = headerRow >= 0 ? headerRow + 1 : 9;
+
+    for (let i = dataStart; i < rows.length; i++) {
+      const row = rows[i];
+      if (!row) continue;
+
+      // Buscar contratista en filas finales (nombre propio después de totales)
+      const allText = row.map(c => str(c)).filter(Boolean).join(" ");
+      if (i > rows.length - 15 && allText.length > 3 && allText.length < 60
+          && !allText.match(/total|iva|gasto|utilidad|porcentaje|firma|rut/i)) {
+        contratistaRows.push(allText);
+      }
+
+      const itemVal  = str(row[colMap.item]);
+      const descVal  = str(row[colMap.desc]) || str(row[1]) || str(row[2]);
+      const descFull = descVal;
+
+      // Detectar filas de totales/resumen
+      const descUp = descFull.toUpperCase();
+      if (descUp.includes("TOTAL ESTADO DE PAGO") || descUp.includes("TOTAL EP")) {
+        const v = parseNum(row[colMap.avMonto]) ?? parseNum(row[colMap.vTotal]);
+        if (v) totalEP = v;
+        continue;
+      }
+      if (descUp.includes("TOTAL PROYECTO") || descUp.includes("TOTAL OBRA")) {
+        const v = parseNum(row[colMap.vTotal]) ?? parseNum(row[colMap.avMonto]);
+        if (v) totalProyecto = v;
+        continue;
+      }
+      if (descUp.includes("PORCENTAJE") && descUp.includes("AVANCE")) {
+        // Buscar un número entre 0 y 1 o entre 0 y 100 en la fila
+        for (const cell of row) {
+          const n = parseNum(cell);
+          if (n != null && n > 0 && n <= 1) { porcentajeAvance = Math.round(n*10000)/100; break; }
+          if (n != null && n > 1 && n <= 100) { porcentajeAvance = Math.round(n*100)/100; break; }
+        }
+        continue;
+      }
+      if (descUp.match(/^(sub\s*total|total\s*obras|g\.?g\.?|gastos\s*gen|utilidad|iva|costo\s*neto|equipamiento)/)) {
+        // Capturar subtotales pero no agregar como partida
+        if (descUp.includes("TOTAL") && !totalEP) {
+          const v = parseNum(row[colMap.avMonto]);
+          if (v && v > 0) totalEP = v;
+        }
+        continue;
+      }
+
+      if (!descFull && !itemVal) continue;
+
+      const vTotal   = parseNum(row[colMap.vTotal]);
+      const avPct    = parseNum(row[colMap.avPct]);
+      const avMonto  = parseNum(row[colMap.avMonto]);
+
+      // Requiere al menos un valor numérico para ser partida real
+      if (!vTotal && !avMonto && !parseNum(row[colMap.cant])) continue;
+      if (!descFull) continue;
+
+      // Si avance % es 1, significa 100%
+      const avancePct = avPct != null ? (avPct <= 1 ? Math.round(avPct*10000)/100 : Math.round(avPct*100)/100) : null;
+
+      partidas.push({
+        item:          itemVal,
+        partida:       descFull,
+        unidad:        str(row[colMap.unidad]).toLowerCase(),
+        cantidad:      parseNum(row[colMap.cant]),
+        precio_unitario: parseNum(row[colMap.vUnit]),
+        monto_contrato:  vTotal,
+        avance_pct:    avancePct,
+        monto_actual:  avMonto && avMonto > 0 ? avMonto : null,
+      });
+    }
+
+    // Contratista: tomar la primera línea con nombre propio
+    if (contratistaRows.length > 0) contratista = contratistaRows[0];
+
+    // Calcular total EP desde partidas si no se encontró
+    if (!totalEP) totalEP = partidas.reduce((s,p)=>s+(p.monto_actual||0),0) || null;
+
+    // Calcular porcentaje si tenemos totalEP y totalProyecto
+    if (!porcentajeAvance && totalEP && totalProyecto) {
+      porcentajeAvance = Math.round((totalEP/totalProyecto)*10000)/100;
+    }
+
+    // Nombre sugerido
+    const nombreSugerido = numeroEP
+      ? `Estado de Pago N°${numeroEP}${obraNombre ? " — "+obraNombre : ""}`
+      : obraNombre || "";
 
     return NextResponse.json({
-      meta: { numeroEP, fecha, obra, contratista, monto },
+      meta: { numeroEP, obraNombre, contratista, fecha, monto: totalEP,
+              totalProyecto, porcentajeAvance, nombreSugerido },
       partidas,
-      total: monto || totalMonto,
+      total: totalEP,
     });
   } catch (e) {
     console.error("Error procesando EP Excel:", e);
