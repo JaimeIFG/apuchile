@@ -293,6 +293,22 @@ function Home() {
     setProyecto((p) => [...p, { ...apu, cantidad: 1, id: Date.now() + Math.random() }]);
   };
 
+  const crearPartidaNueva = () => {
+    const nueva = {
+      id: Date.now() + Math.random(),
+      codigo: "CUSTOM",
+      familia: "",
+      desc: "Nueva partida",
+      descripcion: "Nueva partida",
+      unidad: "gl",
+      cantidad: 1,
+      insumos: [],
+      precioOverride: 0,
+    };
+    setProyecto(pr => [...pr, nueva]);
+    setEditandoPartida(nueva);
+  };
+
   const duplicarPartida = (p) => {
     setProyecto(pr => {
       const idx = pr.findIndex(x => x.id === p.id);
@@ -869,8 +885,13 @@ function Home() {
           <div className="flex-1 overflow-y-auto p-5 anim-fade-up">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-base font-semibold text-gray-800">Resumen del proyecto</h2>
+              <div className="flex items-center gap-2">
+                  <button onClick={crearPartidaNueva}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 btn-press">
+                    + Nueva partida
+                  </button>
               {proyecto.length > 0 && (
-                <div className="flex items-center gap-2">
+                <>
                   <button onClick={() => setAgruparCapitulos(v => !v)}
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border btn-press transition-colors ${agruparCapitulos ? "bg-emerald-50 border-emerald-300 text-emerald-700" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
                     <span>⊞</span> {agruparCapitulos ? "Vista plana" : "Agrupar por capítulo"}
@@ -879,8 +900,9 @@ function Home() {
                     className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-emerald-700">
                     📄 Exportar PDF
                   </button>
-                </div>
+                </>
               )}
+              </div>
             </div>
             {proyecto.length === 0 ? (
               <div className="text-center py-20 text-gray-400 anim-fade-in">
