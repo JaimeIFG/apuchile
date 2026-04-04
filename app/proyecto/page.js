@@ -12,20 +12,17 @@ import { getTemplatesParaProyecto } from '../data/eett_templates.js';
 // Factor IPC acumulado Chile 2017→2025 (INE)
 const IPC_2017_2025 = 1.65;
 
-// Índice de materiales por descripción normalizada para búsqueda rápida
+// Índice de materiales con precio Sodimac actualizado
 const MATERIALES_IDX = (() => {
   const idx = {};
   for (const m of MATERIALES_BASE) {
-    if (m.precio_actual_rm) {
-      idx[m.desc.trim().toUpperCase()] = m.precio_actual_rm;
-    }
+    if (m.precio_actual_rm) idx[m.desc.trim().toUpperCase()] = m.precio_actual_rm;
   }
   return idx;
 })();
 
 function precioMaterialActual(desc) {
-  if (!desc) return null;
-  return MATERIALES_IDX[desc.trim().toUpperCase()] ?? null;
+  return MATERIALES_IDX[desc?.trim().toUpperCase()] ?? null;
 }
 
 const APUS = ONDAC_APUS;
@@ -121,7 +118,6 @@ function calcAPU(apu, cfg) {
       punit = moRates[ins.moKey] ?? 0;
       cant = ins.rend ?? 0;
     } else if (ins.tipo === "mat" || ins.tipo === "fung") {
-      // Usar precio Sodimac actualizado si está disponible, si no aplicar IPC
       const precioSodimac = precioMaterialActual(ins.desc);
       punit = precioSodimac
         ? precioSodimac * (1 + zona)
@@ -135,8 +131,9 @@ function calcAPU(apu, cfg) {
     return { ...ins, punit, cant, sub };
   });
   if (rows.length === 0 || (moNet === 0 && mat === 0 && fung === 0)) {
-    // APU sin desglose: aplicar IPC + zona al precio base 2017
-    const precioBase = (apu.precio || 0) * IPC_2017_2025 * (1 + zona);
+    const precioBase = apu.precioOverride
+      ? apu.precioOverride * (1 + zona)
+      : (apu.precio || 0) * IPC_2017_2025 * (1 + zona);
     return { rows, moNet: 0, llssAmt: 0, mat: precioBase, herr: 0, fung: 0, total: precioBase };
   }
   const herr = moNet * herrPct;
@@ -190,6 +187,7 @@ function Home() {
   const anexoInputRef = useRef(null);
   const [proyectoMeta, setProyectoMeta] = useState({});
   const [editandoProyecto, setEditandoProyecto] = useState(false);
+  const [editandoPartida, setEditandoPartida] = useState(null); // partida del proyecto en edición
 
   // Auth + cargar proyecto
   useEffect(() => {
@@ -320,6 +318,11 @@ function Home() {
     { val: 0.30, label: "Aysén (+30%)" },
   ];
   const zonaLabel = ZONAS.find((z) => z.val === cfg.zona)?.label ?? "Magallanes";
+
+  const guardarPartidaEditada = (partidaActualizada) => {
+    setProyecto(pr => pr.map(x => x.id === partidaActualizada.id ? partidaActualizada : x));
+    setEditandoPartida(null);
+  };
 
   const guardarEdicionProyecto = async (nuevoNombre, nuevaMeta) => {
     if (!proyectoId) return;
@@ -887,8 +890,12 @@ function Home() {
                               <td className="px-3 py-3 text-right text-gray-700">{fmtM(total)}</td>
                               <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmtM(total * p.cantidad)}</td>
                               <td className="px-3 py-3 text-right">
-                                <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
-                                  className="text-gray-300 hover:text-red-500 text-xs btn-press transition-colors px-1">✕</button>
+                                <div className="flex items-center gap-1 justify-end">
+                                  <button onClick={(e)=>{e.stopPropagation();setEditandoPartida(p);}}
+                                    className="text-gray-300 hover:text-emerald-600 text-xs btn-press transition-colors px-1" title="Editar partida">✏️</button>
+                                  <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
+                                    className="text-gray-300 hover:text-red-500 text-xs btn-press transition-colors px-1">✕</button>
+                                </div>
                               </td>
                             </tr>
                             {expanded && rows.length > 0 && (
@@ -1062,6 +1069,16 @@ function Home() {
         </div>{/* fin contenido según tab */}
       </div>{/* fin área principal */}
 
+      {/* Modal editar partida */}
+      {editandoPartida && (
+        <EditarPartidaModal
+          partida={editandoPartida}
+          cfg={cfg}
+          onGuardar={guardarPartidaEditada}
+          onCerrar={() => setEditandoPartida(null)}
+        />
+      )}
+
       {/* Modal editar proyecto */}
       {editandoProyecto && (
         <EditarProyectoModal
@@ -1077,7 +1094,6 @@ function Home() {
 
 // Modal editar proyecto
 // Factor zona = diferencial sobre precio base RM (flete + mercado local)
-// Alineado con ZONAS_CL en app/api/precios-materiales/route.js
 const REGIONES_EDIT = [
   { label: "Región Metropolitana", zona: 0.00 },
   { label: "Valparaíso",           zona: 0.04 },
@@ -1223,6 +1239,208 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
 }
 
 // Componente selector de archivo y tipo
+// ── Modal editar partida del proyecto ──────────────────────────────────────
+const TIPOS_INSUMO = [
+  { val: "mo",   label: "Mano de obra" },
+  { val: "mat",  label: "Material" },
+  { val: "fung", label: "Fungible" },
+  { val: "tool", label: "Herramienta" },
+];
+const MO_KEYS = [
+  { val: "m1",   label: "Maestro 1ª" },
+  { val: "m2",   label: "Maestro 2ª" },
+  { val: "ay",   label: "Ayudante" },
+  { val: "inst", label: "Instalador" },
+];
+
+function EditarPartidaModal({ partida, cfg, onGuardar, onCerrar }) {
+  const [desc, setDesc] = useState(partida.desc || partida.descripcion || "");
+  const [unidad, setUnidad] = useState(partida.unidad || "");
+  const [insumos, setInsumos] = useState(
+    (partida.insumos || []).map((ins, i) => ({ ...ins, _key: i }))
+  );
+  // Si no tiene insumos, permitir override de precio directo
+  const [precioOverride, setPrecioOverride] = useState(partida.precioOverride ?? partida.precio ?? "");
+
+  const setIns = (key, campo, valor) =>
+    setInsumos(prev => prev.map(x => x._key === key ? { ...x, [campo]: valor } : x));
+
+  const agregarInsumo = () => {
+    setInsumos(prev => [...prev, {
+      _key: Date.now(),
+      tipo: "mat", desc: "", un: "un", cant: 1, punit: 0, perd: 0,
+    }]);
+  };
+
+  const eliminarInsumo = (key) => setInsumos(prev => prev.filter(x => x._key !== key));
+
+  const handleGuardar = () => {
+    const insumosLimpios = insumos.map(({ _key, ...rest }) => ({
+      ...rest,
+      cant: parseFloat(rest.cant) || 0,
+      punit: parseFloat(rest.punit) || 0,
+      perd: parseFloat(rest.perd) || 0,
+      rend: rest.tipo === "mo" ? (parseFloat(rest.rend) || 0) : undefined,
+    }));
+    onGuardar({
+      ...partida,
+      desc,
+      descripcion: desc,
+      unidad,
+      insumos: insumosLimpios,
+      precioOverride: insumosLimpios.length === 0 ? (parseFloat(precioOverride) || 0) : undefined,
+    });
+  };
+
+  const inputCls = "border border-gray-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-emerald-400 w-full";
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center z-50 p-4 anim-fade-in"
+      style={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.35)" }}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col anim-scale-in">
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between shrink-0">
+          <h3 className="text-base font-bold text-gray-800">Editar partida</h3>
+          <button onClick={onCerrar} className="text-gray-400 hover:text-gray-600 btn-press w-7 h-7 rounded-lg hover:bg-gray-100 flex items-center justify-center">✕</button>
+        </div>
+
+        {/* Body */}
+        <div className="overflow-y-auto flex-1 p-6 space-y-5">
+          {/* Descripción y unidad */}
+          <div className="grid grid-cols-5 gap-3">
+            <div className="col-span-4">
+              <label className="text-[11px] text-gray-500 font-medium uppercase tracking-wider block mb-1">Descripción</label>
+              <input value={desc} onChange={e => setDesc(e.target.value)}
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-emerald-400" />
+            </div>
+            <div>
+              <label className="text-[11px] text-gray-500 font-medium uppercase tracking-wider block mb-1">Unidad</label>
+              <input value={unidad} onChange={e => setUnidad(e.target.value)}
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-emerald-400" />
+            </div>
+          </div>
+
+          {/* Insumos */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Insumos</span>
+              <button onClick={agregarInsumo}
+                className="text-xs px-3 py-1 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 btn-press">
+                + Agregar insumo
+              </button>
+            </div>
+
+            {insumos.length === 0 && (
+              <div className="space-y-3">
+                <p className="text-xs text-gray-400 italic">Sin desglose de insumos. Puedes ingresar precio directo:</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-600">Precio unitario ($):</span>
+                  <input type="number" value={precioOverride} onChange={e => setPrecioOverride(e.target.value)}
+                    className="border border-gray-200 rounded-lg px-2 py-1 text-sm w-36 focus:outline-none focus:border-emerald-400" />
+                </div>
+              </div>
+            )}
+
+            {insumos.length > 0 && (
+              <div className="overflow-x-auto rounded-xl border border-gray-200">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-200 text-gray-400 uppercase tracking-wide">
+                      <th className="px-3 py-2 text-left font-medium w-8"></th>
+                      <th className="px-3 py-2 text-left font-medium">Tipo</th>
+                      <th className="px-3 py-2 text-left font-medium min-w-[180px]">Descripción</th>
+                      <th className="px-3 py-2 text-center font-medium">Un.</th>
+                      <th className="px-3 py-2 text-right font-medium">Cantidad / Rend.</th>
+                      <th className="px-3 py-2 text-right font-medium">Precio unit.</th>
+                      <th className="px-3 py-2 text-right font-medium">Pérdida %</th>
+                      <th className="px-3 py-2 text-center font-medium w-8"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {insumos.map((ins) => (
+                      <tr key={ins._key} className="hover:bg-gray-50">
+                        <td className="px-2 py-1.5 text-center">
+                          <span className={`w-2 h-2 rounded-full inline-block ${ins.tipo==="mo"?"bg-blue-400":ins.tipo==="mat"?"bg-amber-400":ins.tipo==="fung"?"bg-purple-400":"bg-gray-300"}`}/>
+                        </td>
+                        <td className="px-2 py-1.5">
+                          <select value={ins.tipo} onChange={e => setIns(ins._key, "tipo", e.target.value)}
+                            className={inputCls + " w-28"}>
+                            {TIPOS_INSUMO.map(t => <option key={t.val} value={t.val}>{t.label}</option>)}
+                          </select>
+                          {ins.tipo === "mo" && (
+                            <select value={ins.moKey || "m1"} onChange={e => setIns(ins._key, "moKey", e.target.value)}
+                              className={inputCls + " w-24 mt-1"}>
+                              {MO_KEYS.map(k => <option key={k.val} value={k.val}>{k.label}</option>)}
+                            </select>
+                          )}
+                        </td>
+                        <td className="px-2 py-1.5">
+                          <input value={ins.desc || ""} onChange={e => setIns(ins._key, "desc", e.target.value)}
+                            placeholder="Descripción..." className={inputCls} />
+                        </td>
+                        <td className="px-2 py-1.5">
+                          <input value={ins.un || ""} onChange={e => setIns(ins._key, "un", e.target.value)}
+                            className={inputCls + " w-14 text-center"} />
+                        </td>
+                        <td className="px-2 py-1.5">
+                          <input type="number" step="any" min="0"
+                            value={ins.tipo === "mo" ? (ins.rend ?? ins.cant ?? "") : (ins.cant ?? "")}
+                            onChange={e => setIns(ins._key, ins.tipo === "mo" ? "rend" : "cant", e.target.value)}
+                            className={inputCls + " w-20 text-right"} />
+                        </td>
+                        <td className="px-2 py-1.5">
+                          {ins.tipo !== "mo" ? (
+                            <input type="number" step="any" min="0" value={ins.punit ?? ""}
+                              onChange={e => setIns(ins._key, "punit", e.target.value)}
+                              className={inputCls + " w-24 text-right"} />
+                          ) : (
+                            <span className="text-gray-300 text-xs px-2">auto</span>
+                          )}
+                        </td>
+                        <td className="px-2 py-1.5">
+                          {ins.tipo === "mat" ? (
+                            <input type="number" step="1" min="0" max="50" value={ins.perd ?? 0}
+                              onChange={e => setIns(ins._key, "perd", e.target.value)}
+                              className={inputCls + " w-16 text-right"} />
+                          ) : (
+                            <span className="text-gray-300 text-xs px-2">—</span>
+                          )}
+                        </td>
+                        <td className="px-2 py-1.5 text-center">
+                          <button onClick={() => eliminarInsumo(ins._key)}
+                            className="text-gray-300 hover:text-red-500 btn-press transition-colors">✕</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* Preview precio calculado */}
+          {insumos.length > 0 && (() => {
+            const preview = calcAPU({ ...partida, desc, unidad, insumos: insumos.map(({ _key, ...r }) => ({ ...r, cant: parseFloat(r.cant)||0, punit: parseFloat(r.punit)||0, perd: parseFloat(r.perd)||0, rend: parseFloat(r.rend)||0 })) }, cfg);
+            return (
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-5 py-3 flex items-center gap-6">
+                <div><div className="text-[10px] text-emerald-600 uppercase tracking-wider">M.O. neto</div><div className="font-semibold text-gray-800">${Math.round(preview.moNet).toLocaleString("es-CL")}</div></div>
+                <div><div className="text-[10px] text-emerald-600 uppercase tracking-wider">Materiales</div><div className="font-semibold text-gray-800">${Math.round(preview.mat).toLocaleString("es-CL")}</div></div>
+                <div className="ml-auto"><div className="text-[10px] text-emerald-600 uppercase tracking-wider">Precio unitario estimado</div><div className="font-bold text-emerald-700 text-lg">${Math.round(preview.total).toLocaleString("es-CL")}</div></div>
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* Footer */}
+        <div className="px-6 py-4 border-t border-gray-100 flex justify-end gap-3 shrink-0">
+          <button onClick={onCerrar} className="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-xl hover:bg-gray-50 btn-press">Cancelar</button>
+          <button onClick={handleGuardar} className="px-5 py-2 text-sm bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 btn-primary font-medium">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AnexoUploader({ onSubir, procesando, inputRef }) {
   const [tipo, setTipo] = useState("presupuesto");
   const [archivoNombre, setArchivoNombre] = useState(null);
