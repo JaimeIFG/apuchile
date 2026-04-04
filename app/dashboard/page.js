@@ -69,6 +69,32 @@ export default function Dashboard() {
   const [guardandoSesion, setGuardandoSesion] = useState(false);
   const [progresoGuardado, setProgresoGuardado] = useState(0);
 
+  // Configuración
+  const [modalConfig, setModalConfig] = useState(false);
+  const [configTab, setConfigTab] = useState("cuenta");
+  const [configGuardando, setConfigGuardando] = useState(false);
+  const [configGuardado, setConfigGuardado] = useState(false);
+  const [configForm, setConfigForm] = useState({
+    // Cuenta
+    inactividad: 10,
+    // Empresa
+    nombreEmpresa: "", rutEmpresa: "", telefonoEmpresa: "", emailEmpresa: "", direccionEmpresa: "",
+    // Valores por defecto proyectos
+    defGG: 18, defUtil: 10, defIVA: 19, defHerr: 4, defLLSS: 40,
+    defMoM1: 6800, defMoM2: 5200, defMoAy: 3800, defMoInst: 9500,
+    defRegion: "",
+    // Apariencia
+    monedaDefault: "CLP", temaOscuro: false,
+    // PDF
+    pdfIncluirLogo: true, pdfIncluirIVA: true, pdfIncluirDesglose: true,
+    // Notificaciones
+    notifColaboradorEdita: true, notifInvitacion: true,
+  });
+  const logoEmpresaRef = useRef(null);
+  const [subiendoLogoEmpresa, setSubiendoLogoEmpresa] = useState(false);
+  const [logoEmpresaUrl, setLogoEmpresaUrl] = useState(null);
+  const [cambioPassword, setCambioPassword] = useState({ email: "", enviado: false, cargando: false });
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) { router.push("/login"); return; }
@@ -76,6 +102,11 @@ export default function Dashboard() {
       const m = user.user_metadata || {};
       setPerfilForm({ nombre: m.nombre || "", profesion: m.profesion || "", cargo: m.cargo || "" });
       setAvatarUrl(m.avatar_url || null);
+      // Cargar configuración guardada
+      if (m.config) {
+        setConfigForm(prev => ({ ...prev, ...m.config }));
+        if (m.config.logoEmpresaUrl) setLogoEmpresaUrl(m.config.logoEmpresaUrl);
+      }
 
       // Guardar última conexión y cargar la anterior
       const ahora = new Date().toISOString();
@@ -196,17 +227,35 @@ export default function Dashboard() {
   const crearProyecto = async () => {
     if (!nombreNuevo.trim()) return;
     setCreandoLoading(true);
-    const regionInfo = REGIONES.find(r => r.label === meta.region);
+    const cfg = user?.user_metadata?.config || {};
+    // Prellenar región si hay default configurada
+    const regionFinal = meta.region || cfg.defRegion || "";
+    const regionInfo = REGIONES.find(r => r.label === regionFinal);
     const metaGuardar = {
       ...meta,
+      region: regionFinal,
       zona: regionInfo ? regionInfo.zona : 0,
       diasCorridos: diasCorridos(meta.fechaInicio, meta.fechaTermino),
+    };
+    // Valores por defecto del proyecto desde config del usuario
+    const cfgProyecto = {
+      gg:    cfg.defGG   ?? 18,
+      util:  cfg.defUtil ?? 10,
+      iva:   cfg.defIVA  ?? 19,
+      herr:  cfg.defHerr ?? 4,
+      llss:  cfg.defLLSS ?? 40,
+      mo_m1: cfg.defMoM1 ?? 6800,
+      mo_m2: cfg.defMoM2 ?? 5200,
+      mo_ay: cfg.defMoAy ?? 3800,
+      mo_inst: cfg.defMoInst ?? 9500,
+      zona:  regionInfo ? regionInfo.zona : 0,
     };
     const { data, error } = await supabase.from("proyectos").insert({
       user_id: user.id,
       nombre: nombreNuevo.trim(),
       datos: [],
       meta: metaGuardar,
+      cfg: cfgProyecto,
     }).select().single();
     setCreandoLoading(false);
     if (!error) {
@@ -259,6 +308,39 @@ export default function Dashboard() {
     setCreando(false);
     setNombreNuevo("");
     setMeta(META_INICIAL);
+  };
+
+  const guardarConfig = async () => {
+    setConfigGuardando(true);
+    const configData = { ...configForm, logoEmpresaUrl };
+    await supabase.auth.updateUser({ data: { config: configData } });
+    setUser(prev => ({ ...prev, user_metadata: { ...prev?.user_metadata, config: configData } }));
+    setConfigGuardando(false);
+    setConfigGuardado(true);
+    setTimeout(() => setConfigGuardado(false), 2500);
+  };
+
+  const subirLogoEmpresa = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSubiendoLogoEmpresa(true);
+    const ext = file.name.split(".").pop();
+    const path = `logos-empresa/${user.id}/logo.${ext}`;
+    const { error } = await supabase.storage.from("avatars").upload(path, file, { upsert: true });
+    if (!error) {
+      const { data: { publicUrl } } = supabase.storage.from("avatars").getPublicUrl(path);
+      setLogoEmpresaUrl(publicUrl);
+    }
+    setSubiendoLogoEmpresa(false);
+  };
+
+  const enviarResetPassword = async () => {
+    if (!cambioPassword.email) return;
+    setCambioPassword(p => ({ ...p, cargando: true }));
+    await supabase.auth.resetPasswordForEmail(cambioPassword.email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setCambioPassword(p => ({ ...p, cargando: false, enviado: true }));
   };
 
   const nombre = user?.user_metadata?.nombre || user?.email?.split("@")[0] || "Usuario";
@@ -512,7 +594,7 @@ export default function Dashboard() {
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #059669"}, txt:"#374151" },
               { icon:"🏗️", label:"Ejecución de Obras", action:() => router.push("/obras"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
-              { icon:"⚙️", label:"Configuración",   action:() => alert("Próximamente"),
+              { icon:"⚙️", label:"Configuración",   action:() => { setModalConfig(true); setConfigTab("cuenta"); },
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #64748b"}, txt:"#374151" },
             ].map((c, i) => (
               <button key={i} onClick={c.action}
@@ -893,6 +975,296 @@ export default function Dashboard() {
           </div>
         </main>
       </div>
+
+      {/* ── Modal Configuración ── */}
+      {modalConfig && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backdropFilter: "blur(8px)", background: "rgba(0,0,0,0.45)" }}
+          onClick={() => setModalConfig(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col"
+            onClick={e => e.stopPropagation()}>
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">⚙️</span>
+                <div>
+                  <h3 className="text-sm font-bold text-gray-800">Configuración</h3>
+                  <p className="text-[11px] text-gray-400">Personaliza tu experiencia en APUchile</p>
+                </div>
+              </div>
+              <button onClick={() => setModalConfig(false)} className="text-gray-400 hover:text-gray-600 text-xl btn-press">✕</button>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex border-b border-gray-100 px-6 gap-1 shrink-0 overflow-x-auto">
+              {[
+                { id: "cuenta",   icon: "🔐", label: "Cuenta" },
+                { id: "empresa",  icon: "🏢", label: "Empresa" },
+                { id: "proyecto", icon: "📐", label: "Valores default" },
+                { id: "apariencia", icon: "🎨", label: "Apariencia" },
+                { id: "pdf",      icon: "📄", label: "Exportación" },
+              ].map(t => (
+                <button key={t.id} onClick={() => setConfigTab(t.id)}
+                  className={`flex items-center gap-1.5 px-3 py-3 text-[11px] font-semibold whitespace-nowrap border-b-2 transition-colors ${configTab === t.id ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-400 hover:text-gray-600"}`}>
+                  <span>{t.icon}</span>{t.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Contenido */}
+            <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+
+              {/* ─ CUENTA ─ */}
+              {configTab === "cuenta" && (
+                <div className="space-y-5">
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Restablecer contraseña</h4>
+                    <div className="bg-gray-50 rounded-xl p-4 space-y-3">
+                      <p className="text-xs text-gray-500">Te enviaremos un enlace a tu correo para restablecer tu contraseña.</p>
+                      <div className="flex gap-2">
+                        <input value={cambioPassword.email} onChange={e => setCambioPassword(p => ({ ...p, email: e.target.value, enviado: false }))}
+                          placeholder={user?.email || "tu@email.com"}
+                          className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                        <button onClick={enviarResetPassword} disabled={!cambioPassword.email || cambioPassword.cargando || cambioPassword.enviado}
+                          className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700 disabled:opacity-50 btn-press">
+                          {cambioPassword.enviado ? "✓ Enviado" : cambioPassword.cargando ? "..." : "Enviar"}
+                        </button>
+                      </div>
+                      {cambioPassword.enviado && <p className="text-xs text-emerald-600">✓ Revisa tu correo para restablecer tu contraseña.</p>}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Sesión</h4>
+                    <div className="bg-gray-50 rounded-xl p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs font-medium text-gray-700">Tiempo de inactividad</p>
+                          <p className="text-[11px] text-gray-400">Cerrar sesión automáticamente después de este tiempo sin actividad</p>
+                        </div>
+                        <select value={configForm.inactividad}
+                          onChange={e => setConfigForm(p => ({ ...p, inactividad: Number(e.target.value) }))}
+                          className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-emerald-400">
+                          {[5,10,15,30,60,120].map(m => <option key={m} value={m}>{m} min</option>)}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Notificaciones</h4>
+                    <div className="bg-gray-50 rounded-xl p-4 space-y-3">
+                      {[
+                        { key: "notifColaboradorEdita", label: "Cuando un colaborador edita mi proyecto", desc: "Recibir email al detectar cambios" },
+                        { key: "notifInvitacion", label: "Cuando me invitan a un proyecto", desc: "Recibir email de invitación" },
+                      ].map(n => (
+                        <div key={n.key} className="flex items-center justify-between">
+                          <div>
+                            <p className="text-xs font-medium text-gray-700">{n.label}</p>
+                            <p className="text-[11px] text-gray-400">{n.desc}</p>
+                          </div>
+                          <button onClick={() => setConfigForm(p => ({ ...p, [n.key]: !p[n.key] }))}
+                            className={`w-10 h-5.5 rounded-full transition-colors relative ${configForm[n.key] ? "bg-emerald-500" : "bg-gray-300"}`}
+                            style={{ width: 40, height: 22 }}>
+                            <span className={`absolute top-0.5 w-4.5 h-4.5 bg-white rounded-full shadow transition-transform`}
+                              style={{ width: 18, height: 18, top: 2, left: configForm[n.key] ? 20 : 2, transition: "left 0.2s" }} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ─ EMPRESA ─ */}
+              {configTab === "empresa" && (
+                <div className="space-y-4">
+                  <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Datos de la empresa</h4>
+                  <p className="text-[11px] text-gray-400 -mt-3">Se usarán automáticamente en los encabezados de PDF y documentos exportados.</p>
+
+                  {/* Logo */}
+                  <div className="bg-gray-50 rounded-xl p-4">
+                    <p className="text-xs font-medium text-gray-700 mb-3">Logo de empresa</p>
+                    <div className="flex items-center gap-4">
+                      {logoEmpresaUrl ? (
+                        <img src={logoEmpresaUrl} alt="Logo" className="h-14 w-auto object-contain rounded-lg border border-gray-200 bg-white p-1" />
+                      ) : (
+                        <div className="h-14 w-20 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-300 text-2xl">🏢</div>
+                      )}
+                      <div className="space-y-1">
+                        <button onClick={() => logoEmpresaRef.current?.click()}
+                          disabled={subiendoLogoEmpresa}
+                          className="px-3 py-1.5 border border-gray-200 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50 btn-press disabled:opacity-50">
+                          {subiendoLogoEmpresa ? "Subiendo..." : logoEmpresaUrl ? "Cambiar logo" : "Subir logo"}
+                        </button>
+                        {logoEmpresaUrl && (
+                          <button onClick={() => setLogoEmpresaUrl(null)} className="block text-[11px] text-red-400 hover:text-red-600">Quitar logo</button>
+                        )}
+                        <p className="text-[10px] text-gray-400">PNG, JPG — máx. 2MB</p>
+                      </div>
+                    </div>
+                    <input ref={logoEmpresaRef} type="file" accept="image/*" className="hidden" onChange={subirLogoEmpresa} />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { key: "nombreEmpresa", label: "Nombre empresa", placeholder: "Constructora XYZ" },
+                      { key: "rutEmpresa",    label: "RUT empresa",    placeholder: "76.123.456-7" },
+                      { key: "telefonoEmpresa", label: "Teléfono",     placeholder: "+56 9 1234 5678" },
+                      { key: "emailEmpresa",  label: "Email empresa",  placeholder: "contacto@empresa.cl" },
+                    ].map(f => (
+                      <div key={f.key}>
+                        <label className="text-[11px] font-medium text-gray-500 block mb-1">{f.label}</label>
+                        <input value={configForm[f.key]} onChange={e => setConfigForm(p => ({ ...p, [f.key]: e.target.value }))}
+                          placeholder={f.placeholder}
+                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                      </div>
+                    ))}
+                    <div className="col-span-2">
+                      <label className="text-[11px] font-medium text-gray-500 block mb-1">Dirección</label>
+                      <input value={configForm.direccionEmpresa} onChange={e => setConfigForm(p => ({ ...p, direccionEmpresa: e.target.value }))}
+                        placeholder="Av. Principal 123, Santiago"
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ─ VALORES DEFAULT ─ */}
+              {configTab === "proyecto" && (
+                <div className="space-y-5">
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Porcentajes por defecto</h4>
+                    <p className="text-[11px] text-gray-400 -mt-2 mb-3">Se aplicarán al crear un proyecto nuevo.</p>
+                    <div className="bg-gray-50 rounded-xl p-4 grid grid-cols-2 gap-3">
+                      {[
+                        { key: "defGG",   label: "Gastos Generales (%)",  min: 0, max: 50 },
+                        { key: "defUtil", label: "Utilidad (%)",           min: 0, max: 30 },
+                        { key: "defIVA",  label: "IVA (%)",               min: 0, max: 30 },
+                        { key: "defHerr", label: "Herramientas (% MO)",   min: 0, max: 20 },
+                        { key: "defLLSS", label: "Leyes Sociales (%)",    min: 0, max: 60 },
+                      ].map(f => (
+                        <div key={f.key}>
+                          <label className="text-[11px] font-medium text-gray-500 block mb-1">{f.label}</label>
+                          <input type="number" min={f.min} max={f.max} value={configForm[f.key]}
+                            onChange={e => setConfigForm(p => ({ ...p, [f.key]: parseFloat(e.target.value) || 0 }))}
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Mano de obra ($/hr por defecto)</h4>
+                    <div className="bg-gray-50 rounded-xl p-4 grid grid-cols-2 gap-3">
+                      {[
+                        { key: "defMoM1",   label: "Maestro primera" },
+                        { key: "defMoM2",   label: "Maestro segunda" },
+                        { key: "defMoAy",   label: "Ayudante" },
+                        { key: "defMoInst", label: "Instalador SEC" },
+                      ].map(f => (
+                        <div key={f.key}>
+                          <label className="text-[11px] font-medium text-gray-500 block mb-1">{f.label}</label>
+                          <input type="number" min={0} value={configForm[f.key]}
+                            onChange={e => setConfigForm(p => ({ ...p, [f.key]: parseFloat(e.target.value) || 0 }))}
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Región por defecto</h4>
+                    <div className="bg-gray-50 rounded-xl p-4">
+                      <select value={configForm.defRegion}
+                        onChange={e => setConfigForm(p => ({ ...p, defRegion: e.target.value }))}
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400">
+                        <option value="">Sin región por defecto</option>
+                        {REGIONES.map(r => <option key={r.label} value={r.label}>{r.label}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ─ APARIENCIA ─ */}
+              {configTab === "apariencia" && (
+                <div className="space-y-5">
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Moneda por defecto</h4>
+                    <div className="bg-gray-50 rounded-xl p-4">
+                      <div className="flex gap-2">
+                        {["CLP","UF","UTM"].map(m => (
+                          <button key={m} onClick={() => setConfigForm(p => ({ ...p, monedaDefault: m }))}
+                            className={`flex-1 py-2 rounded-lg text-xs font-bold border-2 transition-colors btn-press ${configForm.monedaDefault === m ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-500 hover:border-gray-300"}`}>
+                            {m}
+                          </button>
+                        ))}
+                      </div>
+                      <p className="text-[11px] text-gray-400 mt-2">Al abrir un proyecto, se mostrará en esta moneda por defecto.</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Tema</h4>
+                    <div className="bg-gray-50 rounded-xl p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs font-medium text-gray-700">Modo oscuro</p>
+                          <p className="text-[11px] text-gray-400">Próximamente disponible</p>
+                        </div>
+                        <button disabled
+                          className="opacity-40 cursor-not-allowed"
+                          style={{ width: 40, height: 22, borderRadius: 11, background: "#d1d5db", position: "relative" }}>
+                          <span style={{ position: "absolute", width: 18, height: 18, top: 2, left: 2, background: "#fff", borderRadius: "50%", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ─ PDF / EXPORTACIÓN ─ */}
+              {configTab === "pdf" && (
+                <div className="space-y-5">
+                  <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Preferencias de exportación PDF</h4>
+                  <div className="bg-gray-50 rounded-xl p-4 space-y-4">
+                    {[
+                      { key: "pdfIncluirLogo",     label: "Incluir logo de empresa en PDF",     desc: "Aparece en el encabezado de todos los documentos exportados" },
+                      { key: "pdfIncluirIVA",      label: "Incluir IVA en el total del PDF",    desc: "Si está desactivado, se muestra solo el subtotal neto" },
+                      { key: "pdfIncluirDesglose", label: "Incluir desglose de APU en PDF",     desc: "Muestra el detalle de insumos de cada partida" },
+                    ].map(n => (
+                      <div key={n.key} className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs font-medium text-gray-700">{n.label}</p>
+                          <p className="text-[11px] text-gray-400">{n.desc}</p>
+                        </div>
+                        <button onClick={() => setConfigForm(p => ({ ...p, [n.key]: !p[n.key] }))}
+                          className={`rounded-full transition-colors relative shrink-0`}
+                          style={{ width: 40, height: 22, background: configForm[n.key] ? "#059669" : "#d1d5db" }}>
+                          <span className="absolute bg-white rounded-full shadow"
+                            style={{ width: 18, height: 18, top: 2, left: configForm[n.key] ? 20 : 2, transition: "left 0.2s" }} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between shrink-0">
+              <p className="text-[11px] text-gray-400">Los cambios se guardan en tu perfil</p>
+              <button onClick={guardarConfig} disabled={configGuardando}
+                className={`px-5 py-2 rounded-xl text-xs font-bold btn-press transition-colors ${configGuardado ? "bg-emerald-100 text-emerald-700" : "bg-emerald-600 text-white hover:bg-emerald-700"} disabled:opacity-50`}>
+                {configGuardado ? "✓ Guardado" : configGuardando ? "Guardando..." : "Guardar cambios"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal ingresar código de invitación */}
       {modalCodigo && (

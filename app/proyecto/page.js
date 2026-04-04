@@ -293,7 +293,12 @@ function Home() {
           setProyectoNombre(data.nombre);
           setProyecto(data.datos || []);
           setProyectoMeta(data.meta || {});
-          if (data.meta?.zona !== undefined) setCfg(c => ({ ...c, zona: data.meta.zona }));
+          // Cargar cfg guardada del proyecto (valores personalizados del usuario al crearlo)
+          if (data.cfg) {
+            setCfg(c => ({ ...c, ...data.cfg }));
+          } else if (data.meta?.zona !== undefined) {
+            setCfg(c => ({ ...c, zona: data.meta.zona }));
+          }
 
           // Determinar rol del usuario
           if (data.user_id !== user.id) {
