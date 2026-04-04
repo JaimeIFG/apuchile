@@ -38,7 +38,12 @@ export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [proyectos, setProyectos] = useState([]);
+  const [proyectosCompartidos, setProyectosCompartidos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalCodigo, setModalCodigo] = useState(false);
+  const [codigoInput, setCodigoInput] = useState("");
+  const [codigoError, setCodigoError] = useState("");
+  const [codigoCargando, setCodigoCargando] = useState(false);
   const [creando, setCreando] = useState(false);
   const [nombreNuevo, setNombreNuevo] = useState("");
   const [meta, setMeta] = useState(META_INICIAL);
@@ -120,9 +125,42 @@ export default function Dashboard() {
   useInactividad(supabase, router, 10);
 
   const cargarProyectos = async (uid) => {
+    // Proyectos propios
     const { data } = await supabase.from("proyectos").select("*").eq("user_id", uid).order("updated_at", { ascending: false });
     setProyectos(data || []);
+
+    // Proyectos compartidos conmigo
+    const { data: colabs } = await supabase
+      .from("proyecto_colaboradores")
+      .select("proyecto_id, rol")
+      .eq("user_id", uid);
+    if (colabs?.length) {
+      const ids = colabs.map(c => c.proyecto_id);
+      const { data: compartidos } = await supabase.from("proyectos").select("*").in("id", ids).order("updated_at", { ascending: false });
+      setProyectosCompartidos((compartidos || []).map(p => ({
+        ...p,
+        _compartido: true,
+        _rol: colabs.find(c => c.proyecto_id === p.id)?.rol || "editar",
+      })));
+    }
     setLoading(false);
+  };
+
+  const aceptarCodigoInvitacion = async () => {
+    if (!codigoInput.trim() || !user) return;
+    setCodigoCargando(true);
+    setCodigoError("");
+    const res = await fetch("/api/aceptar-invitacion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ codigo: codigoInput.trim(), user_id: user.id, email: user.email }),
+    });
+    const d = await res.json();
+    setCodigoCargando(false);
+    if (d.error) { setCodigoError(d.error); return; }
+    setModalCodigo(false);
+    setCodigoInput("");
+    router.push(`/proyecto?id=${d.proyecto_id}`);
   };
 
   const setM = (k, v) => setMeta(m => ({ ...m, [k]: v }));
@@ -733,10 +771,16 @@ export default function Dashboard() {
           {/* ── Proyectos recientes ── */}
           <div id="mis-proyectos">
             <div className="flex items-center justify-between mb-4 anim-fade-up delay-300">
-              <h2 className="text-[14px] font-bold text-gray-800">Proyectos recientes</h2>
-              {proyectos.length > 0 && (
-                <span className="text-[11px] font-semibold text-emerald-600">{proyectos.length} proyecto{proyectos.length !== 1 ? "s" : ""}</span>
-              )}
+              <h2 className="text-[14px] font-bold text-gray-800">Mis proyectos</h2>
+              <div className="flex items-center gap-2">
+                <button onClick={() => { setModalCodigo(true); setCodigoError(""); setCodigoInput(""); }}
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg btn-press hover:bg-emerald-100">
+                  🔑 Unirse a proyecto
+                </button>
+                {(proyectos.length + proyectosCompartidos.length) > 0 && (
+                  <span className="text-[11px] font-semibold text-emerald-600">{proyectos.length + proyectosCompartidos.length} proyecto{(proyectos.length + proyectosCompartidos.length) !== 1 ? "s" : ""}</span>
+                )}
+              </div>
             </div>
             {proyectos.length === 0 ? (
               <div className="bg-white rounded-2xl p-12 text-center anim-fade-up delay-350"
@@ -791,9 +835,95 @@ export default function Dashboard() {
                 })}
               </div>
             )}
+
+            {/* Proyectos compartidos conmigo */}
+            {proyectosCompartidos.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-[13px] font-bold text-gray-600 mb-3 flex items-center gap-2">
+                  <span>👥</span> Compartidos conmigo
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {proyectosCompartidos.map((p, idx) => {
+                    const m = p.meta || {};
+                    const dc = m.diasCorridos || diasCorridos(m.fechaInicio, m.fechaTermino);
+                    const zona = m.zona ?? 0;
+                    const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
+                    const total = cd * 1.28 * 1.19;
+                    const montoLabel = total >= 1e6 ? `$${(total / 1e6).toFixed(1)}M` : total > 0 ? `$${Math.round(total).toLocaleString("es-CL")}` : null;
+                    const rolColor = { visualizar: "#64748b", editar: "#2563eb", administrar: "#059669" }[p._rol] || "#64748b";
+                    const rolLabel = { visualizar: "Solo lectura", editar: "Puede editar", administrar: "Administrador" }[p._rol] || p._rol;
+                    return (
+                      <button key={p.id} onClick={() => abrirProyecto(p.id)}
+                        className="bg-white rounded-2xl text-left group card-hover anim-fade-up"
+                        style={{ animationDelay: `${350 + idx * 60}ms`, padding: 20,
+                          border: "1.5px solid #dbeafe", borderBottom: "3px solid #3b82f6",
+                          boxShadow: "0 1px 4px rgba(0,0,0,.05)" }}>
+                        <div className="flex items-start justify-between mb-3">
+                          <span className="text-2xl">🤝</span>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                            style={{ background: `${rolColor}15`, color: rolColor }}>
+                            {rolLabel}
+                          </span>
+                        </div>
+                        <div className="font-semibold text-sm mb-1 truncate" style={{ color: "#1f2937" }}>{p.nombre}</div>
+                        {montoLabel && (
+                          <div className="font-extrabold mb-2" style={{ fontSize: 18, color: "#3b82f6" }}>{montoLabel}</div>
+                        )}
+                        {(m.region || m.mandante) && (
+                          <div className="space-y-0.5 mb-2">
+                            {m.region   && <p className="text-xs truncate" style={{ color: "#94a3b8" }}>{m.region}</p>}
+                            {m.mandante && <p className="text-xs font-semibold truncate" style={{ color: "#3b82f6" }}>{m.mandante}</p>}
+                          </div>
+                        )}
+                        <div className="flex items-center justify-between text-xs pt-2"
+                          style={{ borderTop: "1px solid #f1f5f9", marginTop: 8, color: "#94a3b8" }}>
+                          <span>{(p.datos || []).length} partidas</span>
+                          <span style={{ color: "#3b82f6", fontWeight: 600 }}>
+                            {dc ? `${dc} días` : new Date(p.updated_at).toLocaleDateString("es-CL")}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </main>
       </div>
+
+      {/* Modal ingresar código de invitación */}
+      {modalCodigo && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4"
+          style={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.3)" }}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-gray-800">🔑 Unirse a proyecto</h3>
+              <button onClick={() => setModalCodigo(false)} className="text-gray-400 hover:text-gray-600 text-xl btn-press">✕</button>
+            </div>
+            <p className="text-xs text-gray-500 mb-4">
+              Ingresa el código de 6 dígitos que recibiste en tu email para unirte al proyecto.
+            </p>
+            <input
+              value={codigoInput}
+              onChange={e => { setCodigoInput(e.target.value.replace(/\D/g, "").slice(0, 6)); setCodigoError(""); }}
+              placeholder="000000"
+              maxLength={6}
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-center text-2xl font-mono font-bold tracking-widest focus:outline-none focus:border-emerald-400 mb-3"
+              style={{ letterSpacing: "0.3em" }}
+            />
+            {codigoError && (
+              <p className="text-xs text-red-500 mb-3 text-center">{codigoError}</p>
+            )}
+            <button
+              onClick={aceptarCodigoInvitacion}
+              disabled={codigoInput.length !== 6 || codigoCargando}
+              className="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-semibold text-sm hover:bg-emerald-700 disabled:opacity-50 btn-primary">
+              {codigoCargando ? "Verificando..." : "Unirse al proyecto →"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

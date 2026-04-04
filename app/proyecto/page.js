@@ -187,10 +187,22 @@ function Home() {
   const anexoInputRef = useRef(null);
   const [proyectoMeta, setProyectoMeta] = useState({});
   const [editandoProyecto, setEditandoProyecto] = useState(false);
-  const [editandoPartida, setEditandoPartida] = useState(null); // partida del proyecto en edición
+  const [editandoPartida, setEditandoPartida] = useState(null);
   const [agruparCapitulos, setAgruparCapitulos] = useState(false);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
+
+  // Colaboración
+  const [rolUsuario, setRolUsuario] = useState("owner"); // owner | administrar | editar | visualizar
+  const [colaboradores, setColaboradores] = useState([]);
+  const [presentes, setPresentes] = useState([]);
+  const [panelColab, setPanelColab] = useState(false);
+  const [modalInvitar, setModalInvitar] = useState(false);
+  const [invEmail, setInvEmail] = useState("");
+  const [invRol, setInvRol] = useState("editar");
+  const [invCargando, setInvCargando] = useState(false);
+  const [invResultado, setInvResultado] = useState(null); // { ok, error, warning }
+  const canalPresencia = useRef(null);
 
   // Auth + cargar proyecto
   useEffect(() => {
@@ -204,7 +216,45 @@ function Home() {
           setProyecto(data.datos || []);
           setProyectoMeta(data.meta || {});
           if (data.meta?.zona !== undefined) setCfg(c => ({ ...c, zona: data.meta.zona }));
+
+          // Determinar rol del usuario
+          if (data.user_id !== user.id) {
+            const { data: colab } = await supabase
+              .from("proyecto_colaboradores")
+              .select("rol")
+              .eq("proyecto_id", proyectoId)
+              .eq("user_id", user.id)
+              .single();
+            setRolUsuario(colab?.rol || "visualizar");
+          } else {
+            setRolUsuario("owner");
+          }
+
+          // Cargar colaboradores
+          const { data: colabs } = await supabase
+            .from("proyecto_colaboradores")
+            .select("*")
+            .eq("proyecto_id", proyectoId);
+          setColaboradores(colabs || []);
         }
+
+        // Presencia en tiempo real
+        const nombre = user.user_metadata?.nombre || user.email?.split("@")[0] || "Usuario";
+        const canal = supabase.channel(`proyecto-presencia-${proyectoId}`, {
+          config: { presence: { key: user.id } }
+        });
+        canal
+          .on("presence", { event: "sync" }, () => {
+            const state = canal.presenceState();
+            setPresentes(Object.values(state).flat());
+          })
+          .subscribe(async (status) => {
+            if (status === "SUBSCRIBED") {
+              await canal.track({ user_id: user.id, nombre, online_at: new Date().toISOString() });
+            }
+          });
+        canalPresencia.current = canal;
+      }
         // Si viene con archivo desde dashboard, auto-procesar
         if (archivoParam && tipoParam) {
           const ext = archivoParam.split(".").pop().toLowerCase();
@@ -223,6 +273,46 @@ function Home() {
       }
     });
   }, [proyectoId]);
+
+  // Cleanup canal presencia al salir
+  useEffect(() => {
+    return () => {
+      if (canalPresencia.current) supabase.removeChannel(canalPresencia.current);
+    };
+  }, []);
+
+  // Permisos derivados del rol
+  const puedeEditar     = ["owner", "administrar", "editar"].includes(rolUsuario);
+  const puedeAdministrar = ["owner", "administrar"].includes(rolUsuario);
+
+  const invitarColaborador = async () => {
+    if (!invEmail.trim() || !proyectoId) return;
+    setInvCargando(true);
+    setInvResultado(null);
+    const { data: { user } } = await supabase.auth.getUser();
+    const nombre = user?.user_metadata?.nombre || user?.email?.split("@")[0] || "Un usuario";
+    const res = await fetch("/api/invitar-colaborador", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: invEmail.trim(),
+        rol: invRol,
+        proyecto_id: proyectoId,
+        proyecto_nombre: proyectoNombre,
+        invitado_por_nombre: nombre,
+      }),
+    });
+    const d = await res.json();
+    setInvCargando(false);
+    if (d.error) { setInvResultado({ error: d.error }); return; }
+    setInvResultado({ ok: true, emailEnviado: d.emailEnviado, warning: d.warning });
+    setInvEmail("");
+  };
+
+  const eliminarColaborador = async (colabId) => {
+    await supabase.from("proyecto_colaboradores").delete().eq("id", colabId);
+    setColaboradores(prev => prev.filter(c => c.id !== colabId));
+  };
 
   // Auto-logout por inactividad (10 min)
   useInactividad(supabase, router, 10);
@@ -639,6 +729,37 @@ function Home() {
             )}
           </div>
           <div className="flex items-center gap-3">
+            {/* Presencia en tiempo real */}
+            {presentes.length > 0 && (
+              <div className="flex items-center gap-1">
+                {presentes.slice(0, 3).map((p, i) => (
+                  <div key={p.user_id || i} title={p.nombre}
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-sm border-2 border-white"
+                    style={{ background: ["#059669","#3b82f6","#f59e0b"][i % 3], marginLeft: i > 0 ? -8 : 0, zIndex: 3 - i }}>
+                    {(p.nombre || "?")[0].toUpperCase()}
+                  </div>
+                ))}
+                <span className="text-[10px] text-gray-400 ml-1">{presentes.length === 1 ? "Solo tú" : `${presentes.length} online`}</span>
+              </div>
+            )}
+
+            {/* Botón colaboradores (solo dueño/admin) */}
+            {puedeAdministrar && (
+              <button onClick={() => { setPanelColab(true); setInvResultado(null); }}
+                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 btn-press">
+                👥 {colaboradores.length > 0 ? `${colaboradores.length + 1} colaboradores` : "Colaborar"}
+              </button>
+            )}
+
+            {/* Badge rol si es colaborador */}
+            {rolUsuario !== "owner" && (
+              <span className="text-[10px] font-bold px-2 py-1 rounded-full"
+                style={{ background: rolUsuario === "visualizar" ? "#f1f5f9" : rolUsuario === "editar" ? "#dbeafe" : "#d1fae5",
+                         color:      rolUsuario === "visualizar" ? "#64748b"  : rolUsuario === "editar" ? "#1d4ed8"  : "#065f46" }}>
+                {rolUsuario === "visualizar" ? "Solo lectura" : rolUsuario === "editar" ? "Puede editar" : "Administrador"}
+              </span>
+            )}
+
             {uf && (
               <div className="hidden lg:flex items-center gap-2 text-[11px] text-gray-500 bg-gray-50 border border-gray-100 rounded-lg px-3 py-1.5 anim-fade-in delay-200">
                 <span><span className="font-semibold text-gray-600">UF</span> ${uf.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
@@ -735,10 +856,12 @@ function Home() {
                             style={{ transition: "opacity 0.15s ease, transform 0.12s cubic-bezier(0.16,1,0.3,1), background-color 0.15s ease" }}>
                             Ver APU
                           </button>
+                          {puedeEditar && (
                           <button onClick={() => agregarPartida(apu)}
                             className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm btn-primary hover:bg-emerald-700">
                             + Agregar
                           </button>
+                          )}
                         </div>
                       </div>
                     );
@@ -830,10 +953,12 @@ function Home() {
                     </div>
                   </div>
                 )}
+                {puedeEditar && (
                 <button onClick={()=>agregarPartida(apuActivo)}
                   className="w-full py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 btn-primary anim-fade-up delay-300">
                   + Agregar esta partida al proyecto
                 </button>
+                )}
               </>
             )}
           </div>
@@ -886,10 +1011,12 @@ function Home() {
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-base font-semibold text-gray-800">Resumen del proyecto</h2>
               <div className="flex items-center gap-2">
+                  {puedeEditar && (
                   <button onClick={crearPartidaNueva}
                     className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 btn-press">
                     + Nueva partida
                   </button>
+                  )}
               {proyecto.length > 0 && (
                 <>
                   <button onClick={() => setAgruparCapitulos(v => !v)}
@@ -954,14 +1081,19 @@ function Home() {
                                 </td>
                                 <td className="px-3 py-3 text-center text-gray-500">{p.unidad}</td>
                                 <td className="px-3 py-3 text-right">
-                                  <input type="number" value={p.cantidad} min={0.01} step={0.01}
-                                    onClick={(e) => e.stopPropagation()}
-                                    onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
-                                    className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-emerald-400"/>
+                                  {puedeEditar ? (
+                                    <input type="number" value={p.cantidad} min={0.01} step={0.01}
+                                      onClick={(e) => e.stopPropagation()}
+                                      onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
+                                      className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-emerald-400"/>
+                                  ) : (
+                                    <span className="text-gray-600">{p.cantidad}</span>
+                                  )}
                                 </td>
                                 <td className="px-3 py-3 text-right text-gray-700">{fmtM(total)}</td>
                                 <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmtM(total * p.cantidad)}</td>
                                 <td className="px-3 py-3 text-right">
+                                  {puedeEditar && (
                                   <div className="flex items-center gap-1 justify-end">
                                     <button onClick={(e)=>{e.stopPropagation();setEditandoPartida(p);}}
                                       className="text-gray-300 hover:text-emerald-600 text-xs btn-press transition-colors px-1" title="Editar partida">✏️</button>
@@ -970,6 +1102,7 @@ function Home() {
                                     <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
                                       className="text-gray-300 hover:text-red-500 text-xs btn-press transition-colors px-1">✕</button>
                                   </div>
+                                  )}
                                 </td>
                               </tr>
                               {expanded && (
@@ -1211,6 +1344,124 @@ function Home() {
           onGuardar={guardarEdicionProyecto}
           onCerrar={() => setEditandoProyecto(false)}
         />
+      )}
+
+      {/* ── Panel Colaboradores ── */}
+      {panelColab && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setPanelColab(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden anim-scale-in" onClick={e => e.stopPropagation()}>
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <div>
+                <h3 className="text-sm font-bold text-gray-800">👥 Colaboradores</h3>
+                <p className="text-[11px] text-gray-400 mt-0.5">{proyectoNombre}</p>
+              </div>
+              <button onClick={() => setPanelColab(false)} className="text-gray-300 hover:text-gray-500 text-lg btn-press">✕</button>
+            </div>
+
+            {/* Lista colaboradores actuales */}
+            <div className="px-6 py-4">
+              <p className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 mb-3">Miembros del proyecto</p>
+
+              {/* Dueño */}
+              <div className="flex items-center gap-3 py-2.5 border-b border-gray-50">
+                <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                  {(proyectoNombre?.[0] || "T").toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-semibold text-gray-700">Tú (propietario)</div>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Dueño</span>
+              </div>
+
+              {/* Colaboradores */}
+              {colaboradores.map(c => (
+                <div key={c.id} className="flex items-center gap-3 py-2.5 border-b border-gray-50">
+                  <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                    {(c.email?.[0] || "?").toUpperCase()}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs text-gray-700 truncate">{c.email}</div>
+                    <div className="text-[10px] text-gray-400">
+                      {c.rol === "visualizar" ? "Solo lectura" : c.rol === "editar" ? "Puede editar" : "Administrador"}
+                    </div>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${c.rol === "visualizar" ? "bg-gray-100 text-gray-500" : c.rol === "editar" ? "bg-blue-100 text-blue-700" : "bg-emerald-100 text-emerald-700"}`}>
+                    {c.rol === "visualizar" ? "Ver" : c.rol === "editar" ? "Editar" : "Admin"}
+                  </span>
+                  <button onClick={() => eliminarColaborador(c.id)}
+                    className="text-gray-200 hover:text-red-500 text-xs btn-press ml-1 transition-colors" title="Eliminar colaborador">
+                    🗑
+                  </button>
+                </div>
+              ))}
+
+              {colaboradores.length === 0 && (
+                <p className="text-[11px] text-gray-400 py-3 text-center">Sin colaboradores aún</p>
+              )}
+            </div>
+
+            {/* Invitar sección */}
+            {colaboradores.length < 2 && (
+              <div className="px-6 pb-6">
+                <p className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 mb-3">Invitar colaborador</p>
+
+                <div className="flex gap-2 mb-2">
+                  <input
+                    type="email"
+                    placeholder="correo@ejemplo.com"
+                    value={invEmail}
+                    onChange={e => { setInvEmail(e.target.value); setInvResultado(null); }}
+                    className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-xs input-focus focus:outline-none focus:border-emerald-400"
+                  />
+                  <select
+                    value={invRol}
+                    onChange={e => setInvRol(e.target.value)}
+                    className="border border-gray-200 rounded-lg px-2 py-2 text-xs focus:outline-none focus:border-emerald-400 bg-white">
+                    <option value="visualizar">Ver</option>
+                    <option value="editar">Editar</option>
+                    <option value="administrar">Admin</option>
+                  </select>
+                </div>
+
+                <button
+                  onClick={invitarColaborador}
+                  disabled={invCargando || !invEmail.trim()}
+                  className="w-full py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 btn-press disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                  {invCargando ? "Enviando..." : "📨 Enviar invitación por email"}
+                </button>
+
+                {invResultado?.error && (
+                  <p className="text-[11px] text-red-500 mt-2 text-center">{invResultado.error}</p>
+                )}
+                {invResultado?.ok && (
+                  <div className="mt-2 p-2.5 rounded-xl bg-emerald-50 border border-emerald-100 text-center">
+                    <p className="text-[11px] font-semibold text-emerald-700">
+                      {invResultado.emailEnviado ? "✅ Invitación enviada" : "⚠️ Invitación creada"}
+                    </p>
+                    {invResultado.warning && (
+                      <p className="text-[10px] text-amber-600 mt-0.5">{invResultado.warning}</p>
+                    )}
+                    <p className="text-[10px] text-emerald-600 mt-0.5">El código es válido por 5 minutos</p>
+                  </div>
+                )}
+
+                <p className="text-[10px] text-gray-400 mt-3 text-center leading-relaxed">
+                  Se enviará un código de acceso válido por 5 minutos.<br/>
+                  Máximo 2 colaboradores por proyecto.
+                </p>
+              </div>
+            )}
+
+            {colaboradores.length >= 2 && (
+              <div className="px-6 pb-6">
+                <p className="text-[11px] text-gray-400 text-center py-2 bg-gray-50 rounded-xl">
+                  Máximo de colaboradores alcanzado (2/2)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
