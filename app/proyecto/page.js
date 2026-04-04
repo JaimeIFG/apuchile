@@ -203,6 +203,7 @@ function Home() {
   const [invCargando, setInvCargando] = useState(false);
   const [invResultado, setInvResultado] = useState(null); // { ok, error, warning }
   const canalPresencia = useRef(null);
+  const ignorarRealtime = useRef(false);
 
   // Chat
   const [chatAbierto, setChatAbierto] = useState(false);
@@ -322,7 +323,7 @@ function Home() {
             table: "proyectos",
             filter: `id=eq.${proyectoId}`,
           }, (payload) => {
-            if (payload.new?.datos) {
+            if (payload.new?.datos && !ignorarRealtime.current) {
               setProyecto(payload.new.datos);
             }
           })
@@ -414,7 +415,9 @@ function Home() {
     if (!proyectoId || !userId) return;
     const timer = setTimeout(async () => {
       setGuardando(true);
-      await supabase.from("proyectos").update({ datos: proyecto, updated_at: new Date().toISOString() }).eq("id", proyectoId);
+      ignorarRealtime.current = true;
+      await supabase.from("proyectos").update({ datos: proyecto }).eq("id", proyectoId);
+      setTimeout(() => { ignorarRealtime.current = false; }, 2000);
       setGuardando(false);
     }, 1500);
     return () => clearTimeout(timer);
