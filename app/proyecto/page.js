@@ -1492,9 +1492,9 @@ function Home() {
                   const hora = new Date(m.created_at).toLocaleTimeString("es-CL", {hour:"2-digit", minute:"2-digit"});
                   return (
                     <div key={m.id || i} className={`flex flex-col ${esMio ? "items-end" : "items-start"}`}>
-                      {!esMio && (
-                        <span className="text-[9px] font-bold text-gray-400 mb-0.5 px-1">{m.nombre}</span>
-                      )}
+                      <span className="text-[9px] font-bold mb-0.5 px-1" style={{color: esMio ? "#059669" : "#94a3b8"}}>
+                        {esMio ? "Tú" : m.nombre}
+                      </span>
                       <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-[12px] leading-snug ${esMio
                         ? "bg-emerald-600 text-white rounded-tr-sm"
                         : "bg-gray-100 text-gray-800 rounded-tl-sm"}`}>
