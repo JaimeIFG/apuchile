@@ -388,6 +388,11 @@ function Home() {
     setColaboradores(prev => prev.filter(c => c.id !== colabId));
   };
 
+  const cambiarRolColaborador = async (colabId, nuevoRol) => {
+    await supabase.from("proyecto_colaboradores").update({ rol: nuevoRol }).eq("id", colabId);
+    setColaboradores(prev => prev.map(c => c.id === colabId ? { ...c, rol: nuevoRol } : c));
+  };
+
   const enviarMensaje = async () => {
     const texto = mensajeInput.trim();
     if (!texto || !proyectoId) return;
@@ -1558,15 +1563,17 @@ function Home() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-xs text-gray-700 truncate">{c.email}</div>
-                    <div className="text-[10px] text-gray-400">
-                      {c.rol === "visualizar" ? "Solo lectura" : c.rol === "editar" ? "Puede editar" : "Administrador"}
-                    </div>
                   </div>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${c.rol === "visualizar" ? "bg-gray-100 text-gray-500" : c.rol === "editar" ? "bg-blue-100 text-blue-700" : "bg-emerald-100 text-emerald-700"}`}>
-                    {c.rol === "visualizar" ? "Ver" : c.rol === "editar" ? "Editar" : "Admin"}
-                  </span>
+                  <select
+                    value={c.rol}
+                    onChange={e => cambiarRolColaborador(c.id, e.target.value)}
+                    className="text-[11px] border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-400 bg-white shrink-0">
+                    <option value="visualizar">Solo ver</option>
+                    <option value="editar">Puede editar</option>
+                    <option value="administrar">Administrador</option>
+                  </select>
                   <button onClick={() => eliminarColaborador(c.id)}
-                    className="text-gray-200 hover:text-red-500 text-xs btn-press ml-1 transition-colors" title="Eliminar colaborador">
+                    className="text-gray-200 hover:text-red-500 text-xs btn-press transition-colors" title="Eliminar colaborador">
                     🗑
                   </button>
                 </div>
