@@ -154,6 +154,64 @@ function Badge({ tipo }) {
   return <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${cls}`}>{label}</span>;
 }
 
+function DesgloseInsumos({ secciones, labels, totalItems }) {
+  const [abierto, setAbierto] = useState(true);
+  const [tabActiva, setTabActiva] = useState(secciones[0]?.tipo || "mat");
+  const secActiva = secciones.find(s => s.tipo === tabActiva) || secciones[0];
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5">
+      {/* Header colapsable */}
+      <button
+        onClick={() => setAbierto(v => !v)}
+        className="w-full px-5 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between hover:bg-gray-100 transition-colors">
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-sm text-gray-700">Desglose de insumos</span>
+          <span className="text-xs text-gray-400">cantidades totales del proyecto</span>
+          <span className="text-[10px] bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded-full font-medium">{totalItems} ítems</span>
+        </div>
+        <span className={`text-gray-400 text-xs transition-transform duration-200 ${abierto ? "rotate-180" : ""}`}>▼</span>
+      </button>
+
+      {abierto && (
+        <>
+          {/* Tabs por tipo */}
+          <div className="flex border-b border-gray-100 px-4 pt-2 gap-1">
+            {secciones.map(s => (
+              <button key={s.tipo} onClick={() => setTabActiva(s.tipo)}
+                className={`px-3 py-1.5 text-[11px] font-semibold rounded-t-lg border-b-2 transition-colors ${tabActiva === s.tipo ? "border-emerald-500 text-emerald-700 bg-emerald-50" : "border-transparent text-gray-400 hover:text-gray-600"}`}>
+                <span className={`mr-1 px-1.5 py-0.5 rounded text-[9px] ${labels[s.tipo]?.color}`}>{s.items.length}</span>
+                {labels[s.tipo]?.titulo || s.tipo}
+              </button>
+            ))}
+          </div>
+
+          {/* Tabla de la sección activa */}
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-4 py-2 text-[10px] uppercase text-gray-400 font-medium">{labels[secActiva?.tipo]?.titulo || "Ítem"}</th>
+                <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-center">Un.</th>
+                <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-right">Cant. neta</th>
+                <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-right">Cant. c/merma</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(secActiva?.items || []).map((m, i) => (
+                <tr key={i} className="border-b border-gray-50 hover:bg-gray-50">
+                  <td className="px-4 py-2 text-gray-700">{m.desc}</td>
+                  <td className="px-3 py-2 text-center text-gray-500">{m.un || "—"}</td>
+                  <td className="px-3 py-2 text-right text-gray-600">{m.total.toFixed(3)}</td>
+                  <td className="px-3 py-2 text-right font-semibold text-emerald-700">{Math.ceil(m.total)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function ProyectoPage() {
   return <Suspense fallback={<div className="min-h-screen bg-gray-900"><LoadingOverlay visible={true} mensaje="Cargando proyecto..." blur={false} /></div>}><Home /></Suspense>;
 }
@@ -1360,44 +1418,24 @@ function Home() {
                   </table>
                 </div>
                 {(() => {
-                  const matMap = {};
+                  // Agrupa insumos por tipo (mat, fung, herr) — excluye MO
+                  const grupos = { mat: {}, fung: {}, herr: {} };
                   proyecto.forEach((p) => {
-                    (p.insumos || []).filter(ins => ins.tipo === "mat").forEach((ins) => {
-                      const key = ins.desc;
+                    (p.insumos || []).filter(ins => ["mat","fung","herr"].includes(ins.tipo)).forEach((ins) => {
+                      const key = `${ins.tipo}__${ins.desc}`;
                       const qty = (ins.cant ?? 0) * (1 + (ins.perd ?? 0) / 100) * p.cantidad;
-                      if (!matMap[key]) matMap[key] = { desc: ins.desc, un: ins.un, total: 0 };
-                      matMap[key].total += qty;
+                      if (!grupos[ins.tipo][key]) grupos[ins.tipo][key] = { desc: ins.desc, un: ins.un || "", total: 0, tipo: ins.tipo };
+                      grupos[ins.tipo][key].total += qty;
                     });
                   });
-                  const mats = Object.values(matMap).filter(m => m.total > 0).sort((a,b) => a.desc.localeCompare(b.desc));
-                  if (mats.length === 0) return null;
+                  const LABELS = { mat: { titulo: "Materiales", color: "bg-amber-100 text-amber-700" }, fung: { titulo: "Fungibles", color: "bg-purple-100 text-purple-700" }, herr: { titulo: "Herramientas", color: "bg-blue-100 text-blue-700" } };
+                  const secciones = Object.entries(grupos)
+                    .map(([tipo, map]) => ({ tipo, items: Object.values(map).filter(m => m.total > 0).sort((a,b) => a.desc.localeCompare(b.desc)) }))
+                    .filter(s => s.items.length > 0);
+                  if (secciones.length === 0) return null;
+                  const totalItems = secciones.reduce((s, sec) => s + sec.items.length, 0);
                   return (
-                    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5">
-                      <div className="px-5 py-3 bg-gray-50 border-b border-gray-200">
-                        <span className="font-semibold text-sm text-gray-700">Desglose de materiales</span>
-                        <span className="text-xs text-gray-400 ml-2">cantidades totales del proyecto</span>
-                      </div>
-                      <table className="w-full text-xs">
-                        <thead>
-                          <tr className="border-b border-gray-100">
-                            <th className="text-left px-4 py-2 text-[10px] uppercase text-gray-400 font-medium">Material</th>
-                            <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-center">Un.</th>
-                            <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-right">Cant. neta</th>
-                            <th className="px-3 py-2 text-[10px] uppercase text-gray-400 font-medium text-right">A comprar</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {mats.map((m, i) => (
-                            <tr key={i} className="border-b border-gray-50 hover:bg-gray-50">
-                              <td className="px-4 py-2 text-gray-700">{m.desc}</td>
-                              <td className="px-3 py-2 text-center text-gray-500">{m.un}</td>
-                              <td className="px-3 py-2 text-right text-gray-600">{m.total.toFixed(3)}</td>
-                              <td className="px-3 py-2 text-right font-semibold text-emerald-700">{Math.ceil(m.total)}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                    <DesgloseInsumos secciones={secciones} labels={LABELS} totalItems={totalItems} />
                   );
                 })()}
                 <div className="bg-white border border-gray-200 rounded-xl overflow-hidden max-w-md ml-auto anim-fade-up shadow-sm">
