@@ -255,21 +255,20 @@ function Home() {
           });
         canalPresencia.current = canal;
       }
-        // Si viene con archivo desde dashboard, auto-procesar
-        if (archivoParam && tipoParam) {
-          const ext = archivoParam.split(".").pop().toLowerCase();
-          setAnexos([{ name: archivoParam.split("/").pop(), size: 0 }]);
-          setProcesando(true);
-          fetch("/api/procesar-anexo", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ storagePath: archivoParam, tipo: tipoParam }),
-          }).then(r => r.json()).then(d => {
-            setProcesando(false);
-            if (d.error) alert("Error al procesar: " + d.error);
-            else setMatchesAnexo({ nombre: archivoParam.split("/").pop(), partidas: d.partidas || [] });
-          }).catch(() => setProcesando(false));
-        }
+      // Si viene con archivo desde dashboard, auto-procesar
+      if (archivoParam && tipoParam) {
+        const ext = archivoParam.split(".").pop().toLowerCase();
+        setAnexos([{ name: archivoParam.split("/").pop(), size: 0 }]);
+        setProcesando(true);
+        fetch("/api/procesar-anexo", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ storagePath: archivoParam, tipo: tipoParam }),
+        }).then(r => r.json()).then(d => {
+          setProcesando(false);
+          if (d.error) alert("Error al procesar: " + d.error);
+          else setMatchesAnexo({ nombre: archivoParam.split("/").pop(), partidas: d.partidas || [] });
+        }).catch(() => setProcesando(false));
       }
     });
   }, [proyectoId]);
