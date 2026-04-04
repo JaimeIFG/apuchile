@@ -506,7 +506,7 @@ export default function Dashboard() {
             {[
               { icon:"＋", label:"Nuevo proyecto",  action:() => setCreando(true),
                 st:{background:"linear-gradient(135deg,#065f46,#059669)", borderBottom:"3px solid #34d399"}, txt:"#fff" },
-              { icon:"📂", label:"Mis proyectos",   action:() => document.getElementById("mis-proyectos")?.scrollIntoView({behavior:"smooth"}),
+              { icon:"📂", label:"Mis proyectos",   action:() => document.getElementById("mis-proyectos")?.scrollIntoView({behavior:"smooth", block:"start"}),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #059669"}, txt:"#374151" },
               { icon:"🏗️", label:"Ejecución de Obras", action:() => router.push("/obras"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
