@@ -469,7 +469,7 @@ function Home() {
   };
 
   const eliminarColaborador = async (colabId) => {
-    await supabase.from("proyecto_colaboradores").delete().eq("id", colabId);
+    await supabase.from("proyecto_colaboradores").delete().eq("id", colabId).eq("proyecto_id", proyectoId);
     setColaboradores(prev => prev.filter(c => c.id !== colabId));
   };
 

@@ -1295,12 +1295,12 @@ function ObraDetail() {
     setGuardando(false); setGuardadoOk(true);
     setTimeout(()=>setGuardadoOk(false),2000);
   };
-  const delDoc  = async id => { await supabase.from("obra_documentos").delete().eq("id",id);   setDocs(p=>p.filter(x=>x.id!==id)); };
-  const delPago = async id => { await supabase.from("obra_estados_pago").delete().eq("id",id); setPagos(p=>p.filter(x=>x.id!==id)); };
-  const delGar  = async id => { await supabase.from("obra_garantias").delete().eq("id",id);    setGarantias(p=>p.filter(x=>x.id!==id)); };
-  const delBit  = async id => { await supabase.from("obra_bitacora").delete().eq("id",id);     setBitacora(p=>p.filter(x=>x.id!==id)); };
-  const delFoto = async id => { await supabase.from("obra_fotos").delete().eq("id",id);        setFotos(p=>p.filter(x=>x.id!==id)); };
-  const delPresupuesto = async id => { await supabase.from("obra_presupuesto").delete().eq("id",id); setPresupuesto(p=>p.filter(x=>x.id!==id)); };
+  const delDoc  = async id => { await supabase.from("obra_documentos").delete().eq("id",id).eq("obra_id",obraId);   setDocs(p=>p.filter(x=>x.id!==id)); };
+  const delPago = async id => { await supabase.from("obra_estados_pago").delete().eq("id",id).eq("obra_id",obraId); setPagos(p=>p.filter(x=>x.id!==id)); };
+  const delGar  = async id => { await supabase.from("obra_garantias").delete().eq("id",id).eq("obra_id",obraId);    setGarantias(p=>p.filter(x=>x.id!==id)); };
+  const delBit  = async id => { await supabase.from("obra_bitacora").delete().eq("id",id).eq("obra_id",obraId);     setBitacora(p=>p.filter(x=>x.id!==id)); };
+  const delFoto = async id => { await supabase.from("obra_fotos").delete().eq("id",id).eq("obra_id",obraId);        setFotos(p=>p.filter(x=>x.id!==id)); };
+  const delPresupuesto = async id => { await supabase.from("obra_presupuesto").delete().eq("id",id).eq("obra_id",obraId); setPresupuesto(p=>p.filter(x=>x.id!==id)); };
   const updatePresupuesto = async (id, field, rawVal) => {
     const num = parseFloat(String(rawVal).replace(/\./g,"").replace(",",".")) || 0;
     // Recalcular valor_total si cambia cantidad o valor_unitario
@@ -2237,7 +2237,7 @@ ${partidas.map(p=>`
                               {m.decreto&&<span style={{ fontSize:11, color:"#94a3b8" }}>📄 {m.decreto}</span>}
                             </div>
                           </div>
-                          <button onClick={async()=>{ await supabase.from("obra_modificaciones").delete().eq("id",m.id); setModificaciones(p=>p.filter(x=>x.id!==m.id)); }}
+                          <button onClick={async()=>{ await supabase.from("obra_modificaciones").delete().eq("id",m.id).eq("obra_id",obraId); setModificaciones(p=>p.filter(x=>x.id!==m.id)); }}
                             style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:14, padding:"0 4px" }}>✕</button>
                         </div>
                       </div>
@@ -2325,7 +2325,7 @@ ${partidas.map(p=>`
                                 background:"#f8fafc", padding:"6px 10px", borderRadius:8 }}>"{r.observaciones}"</p>
                             )}
                           </div>
-                          <button onClick={async()=>{ await supabase.from("obra_recepciones").delete().eq("id",r.id); setRecepciones(p=>p.filter(x=>x.id!==r.id)); }}
+                          <button onClick={async()=>{ await supabase.from("obra_recepciones").delete().eq("id",r.id).eq("obra_id",obraId); setRecepciones(p=>p.filter(x=>x.id!==r.id)); }}
                             style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:14, padding:"0 4px" }}>✕</button>
                         </div>
                       </div>
@@ -2378,7 +2378,7 @@ ${partidas.map(p=>`
                                 borderRadius:8, padding:"5px 12px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
                               👁️ Ver informe
                             </button>
-                            <button onClick={async()=>{ await supabase.from("obra_informes").delete().eq("id",inf.id); setInformes(p=>p.filter(x=>x.id!==inf.id)); }}
+                            <button onClick={async()=>{ await supabase.from("obra_informes").delete().eq("id",inf.id).eq("obra_id",obraId); setInformes(p=>p.filter(x=>x.id!==inf.id)); }}
                               style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:14 }}>✕</button>
                           </div>
                         </div>

@@ -276,8 +276,8 @@ export default function Dashboard() {
   };
 
   const confirmarEliminarProyecto = async () => {
-    if (!confirmarEliminar) return;
-    await supabase.from("proyectos").delete().eq("id", confirmarEliminar.id);
+    if (!confirmarEliminar || !user) return;
+    await supabase.from("proyectos").delete().eq("id", confirmarEliminar.id).eq("user_id", user.id);
     setProyectos(p => p.filter(x => x.id !== confirmarEliminar.id));
     setConfirmarEliminar(null);
   };
@@ -813,7 +813,7 @@ export default function Dashboard() {
                         No, cancelar
                       </button>
                       <button onClick={async () => {
-                        await supabase.from("proyectos").delete().eq("id", importModal.id);
+                        await supabase.from("proyectos").delete().eq("id", importModal.id).eq("user_id", user.id);
                         setProyectos(p => p.filter(x => x.id !== importModal.id));
                         setConfirmarCancelarImport(false);
                         setImportModal(null);
