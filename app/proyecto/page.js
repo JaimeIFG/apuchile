@@ -295,6 +295,38 @@ function Home() {
           })
           .subscribe();
         setCanalChat(canalMsg);
+
+        // Realtime: colaboradores (para que el dueño vea cuando alguien se une)
+        supabase
+          .channel(`proyecto-colabs-${proyectoId}`)
+          .on("postgres_changes", {
+            event: "*",
+            schema: "public",
+            table: "proyecto_colaboradores",
+            filter: `proyecto_id=eq.${proyectoId}`,
+          }, async () => {
+            const { data: colabs } = await supabase
+              .from("proyecto_colaboradores")
+              .select("*")
+              .eq("proyecto_id", proyectoId);
+            setColaboradores(colabs || []);
+          })
+          .subscribe();
+
+        // Realtime: cambios en el proyecto (sincronizar partidas entre usuarios)
+        supabase
+          .channel(`proyecto-datos-${proyectoId}`)
+          .on("postgres_changes", {
+            event: "UPDATE",
+            schema: "public",
+            table: "proyectos",
+            filter: `id=eq.${proyectoId}`,
+          }, (payload) => {
+            if (payload.new?.datos) {
+              setProyecto(payload.new.datos);
+            }
+          })
+          .subscribe();
       }
       // Si viene con archivo desde dashboard, auto-procesar
       if (archivoParam && tipoParam) {
