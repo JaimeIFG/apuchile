@@ -1,23 +1,58 @@
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 function generarCodigo() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 export async function POST(req) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const { email, rol, proyecto_id, proyecto_nombre, invitado_por_nombre } = await req.json();
 
     if (!email || !rol || !proyecto_id) {
       return Response.json({ error: "Faltan parámetros" }, { status: 400 });
+    }
+
+    // Verificar autenticación
+    const authHeader = req.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "");
+    let callerId = null;
+    if (token) {
+      const supabaseAuth = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        { global: { headers: { Authorization: `Bearer ${token}` } } }
+      );
+      const { data: { user } } = await supabaseAuth.auth.getUser();
+      callerId = user?.id || null;
+    }
+    if (!callerId) {
+      return Response.json({ error: "No autorizado" }, { status: 401 });
+    }
+
+    // Verificar que el que invita es dueño o administrador del proyecto
+    const { data: proyecto } = await supabase
+      .from("proyectos")
+      .select("user_id")
+      .eq("id", proyecto_id)
+      .single();
+
+    const esOwner = proyecto?.user_id === callerId;
+    if (!esOwner) {
+      const { data: colab } = await supabase
+        .from("proyecto_colaboradores")
+        .select("rol")
+        .eq("proyecto_id", proyecto_id)
+        .eq("user_id", callerId)
+        .single();
+      if (!colab || colab.rol !== "administrar") {
+        return Response.json({ error: "Sin permiso para invitar colaboradores" }, { status: 403 });
+      }
     }
 
     // Verificar que no tenga ya 3 colaboradores (incluyendo dueño = 2 colaboradores más)
@@ -98,7 +133,7 @@ export async function POST(req) {
             </div>
 
             <p style="color: #64748b; font-size: 13px; text-align: center; line-height: 1.6; margin: 0 0 20px;">
-              Ingresa a <a href="https://apuchile.vercel.app" style="color: #059669; font-weight: 700;">APUchile</a>,
+              Ingresa a <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://apuchile.vercel.app"}" style="color: #059669; font-weight: 700;">APUchile</a>,
               ve a tu dashboard y haz clic en <strong>"Unirse a proyecto"</strong> para ingresar el código.
             </p>
 

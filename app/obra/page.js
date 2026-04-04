@@ -1260,7 +1260,7 @@ function ObraDetail() {
     supabase.auth.getUser().then(async ({ data:{ user } }) => {
       if (!user) { router.push("/login"); return; }
       setUserId(user.id);
-      const [oR, dR, pR, gR, bR, fR, aR, presR] = await Promise.all([
+      const [oR, dR, pR, gR, bR, fR, aR, presR] = await Promise.allSettled([
         supabase.from("obras").select("*").eq("id", obraId).single(),
         supabase.from("obra_documentos").select("*").eq("obra_id", obraId).order("created_at",{ascending:false}),
         supabase.from("obra_estados_pago").select("*").eq("obra_id", obraId).order("fecha",{ascending:false}),
@@ -1269,7 +1269,7 @@ function ObraDetail() {
         supabase.from("obra_fotos").select("*").eq("obra_id", obraId).order("created_at",{ascending:false}),
         supabase.from("obra_bitacora_anexos").select("*"),
         supabase.from("obra_presupuesto").select("*").eq("obra_id", obraId).order("orden"),
-      ]);
+      ]).then(rs => rs.map(r => r.status === "fulfilled" ? r.value : { data: null, error: r.reason }));
       if (oR.data) setObra(oR.data);
       setDocs(dR.data||[]); setPagos(pR.data||[]); setGarantias(gR.data||[]);
       setBitacora(bR.data||[]); setFotos(fR.data||[]); setPresupuesto(presR.data||[]);

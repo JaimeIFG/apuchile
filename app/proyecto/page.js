@@ -8,6 +8,7 @@ import { useInactividad } from '../lib/useInactividad';
 import { useIndicadores } from '../lib/useIndicadores';
 import LoadingOverlay from '../components/LoadingOverlay';
 import { getTemplatesParaProyecto } from '../data/eett_templates.js';
+import { diasCorridos } from '../lib/utils';
 
 // Factor IPC acumulado Chile 2017→2025 (INE)
 const IPC_2017_2025 = 1.65;
@@ -164,6 +165,7 @@ function Home() {
   const [proyectoNombre, setProyectoNombre] = useState("Proyecto");
   const [userId, setUserId] = useState(null);
   const [guardando, setGuardando] = useState(false);
+  const [errorGuardado, setErrorGuardado] = useState(false);
 
   const [cfg, setCfg] = useState({
     zona: 0.25, llss: 40, gg: 18, util: 10, iva: 19, herr: 4,
@@ -175,6 +177,7 @@ function Home() {
   const tipoParam = searchParams.get("tipo");
   const [tab, setTab] = useState(tabParam || "biblioteca");
   const [busqueda, setBusqueda] = useState("");
+  const [filtroCat, setFiltroCat] = useState("");
   const [familiaActiva, setFamiliaActiva] = useState(null);
   const [apuActivo, setApuActivo] = useState(null);
   const [proyecto, setProyecto] = useState([]);
@@ -191,6 +194,7 @@ function Home() {
   const [agruparCapitulos, setAgruparCapitulos] = useState(false);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
+  const [dragOverIdx, setDragOverIdx] = useState(null);
 
   // Colaboración
   const [rolUsuario, setRolUsuario] = useState("owner"); // owner | administrar | editar | visualizar
@@ -202,8 +206,9 @@ function Home() {
   const [invRol, setInvRol] = useState("editar");
   const [invCargando, setInvCargando] = useState(false);
   const [invResultado, setInvResultado] = useState(null); // { ok, error, warning }
+  const [confirmarQuitarColab, setConfirmarQuitarColab] = useState(null); // colabId
   const canalPresencia = useRef(null);
-  const ignorarRealtime = useRef(false);
+  const ignorarRealtime = useRef(0); // contador: > 0 → ignorar eventos Realtime
 
   // Chat
   const [chatAbierto, setChatAbierto] = useState(false);
@@ -211,6 +216,10 @@ function Home() {
   const [mensajeInput, setMensajeInput] = useState("");
   const [canalChat, setCanalChat] = useState(null);
   const [mensajesNoLeidos, setMensajesNoLeidos] = useState(0);
+  const [escribiendo, setEscribiendo] = useState([]); // nombres de quienes están escribiendo
+  const [hayMasMensajes, setHayMasMensajes] = useState(false);
+  const [cargandoMas, setCargandoMas] = useState(false);
+  const typingTimerRef = useRef(null);
   const chatBottomRef = useRef(null);
   const nombreUsuario = useRef("");
   const userIdRef = useRef("");
@@ -270,18 +279,19 @@ function Home() {
         nombreUsuario.current = nombre;
         userIdRef.current = user.id;
 
-        // Cargar mensajes previos del chat
+        // Cargar mensajes previos del chat (últimos 50)
         const { data: msgs } = await supabase
           .from("proyecto_mensajes")
           .select("*")
           .eq("proyecto_id", proyectoId)
-          .order("created_at", { ascending: true })
-          .limit(100);
-        setMensajes(msgs || []);
+          .order("created_at", { ascending: false })
+          .limit(50);
+        setMensajes((msgs || []).reverse());
+        setHayMasMensajes((msgs || []).length === 50);
 
-        // Suscribirse a nuevos mensajes en tiempo real
+        // Suscribirse a nuevos mensajes en tiempo real + typing indicator via Presence
         const canalMsg = supabase
-          .channel(`proyecto-chat-${proyectoId}`)
+          .channel(`proyecto-chat-${proyectoId}`, { config: { presence: { key: user.id } } })
           .on("postgres_changes", {
             event: "INSERT",
             schema: "public",
@@ -293,6 +303,14 @@ function Home() {
               if (!open) setMensajesNoLeidos(n => n + 1);
               return open;
             });
+          })
+          .on("presence", { event: "sync" }, () => {
+            const state = canalMsg.presenceState();
+            const typingUsers = Object.values(state)
+              .flat()
+              .filter(p => p.typing && p.user_id !== user.id)
+              .map(p => p.nombre);
+            setEscribiendo(typingUsers);
           })
           .subscribe();
         setCanalChat(canalMsg);
@@ -323,7 +341,7 @@ function Home() {
             table: "proyectos",
             filter: `id=eq.${proyectoId}`,
           }, (payload) => {
-            if (payload.new?.datos && !ignorarRealtime.current) {
+            if (payload.new?.datos && ignorarRealtime.current === 0) {
               setProyecto(payload.new.datos);
             }
           })
@@ -364,10 +382,14 @@ function Home() {
     setInvCargando(true);
     setInvResultado(null);
     const { data: { user } } = await supabase.auth.getUser();
+    const { data: { session } } = await supabase.auth.getSession();
     const nombre = user?.user_metadata?.nombre || user?.email?.split("@")[0] || "Un usuario";
     const res = await fetch("/api/invitar-colaborador", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+      },
       body: JSON.stringify({
         email: invEmail.trim(),
         rol: invRol,
@@ -397,12 +419,32 @@ function Home() {
     const texto = mensajeInput.trim();
     if (!texto || !proyectoId) return;
     setMensajeInput("");
+    // Limpiar typing al enviar
+    clearTimeout(typingTimerRef.current);
+    if (canalChat) canalChat.track({ user_id: userIdRef.current, nombre: nombreUsuario.current, typing: false });
     await supabase.from("proyecto_mensajes").insert({
       proyecto_id: proyectoId,
       user_id: userIdRef.current,
       nombre: nombreUsuario.current,
       mensaje: texto,
     });
+  };
+
+  const cargarMasMensajes = async () => {
+    if (!proyectoId || mensajes.length === 0 || cargandoMas) return;
+    setCargandoMas(true);
+    const oldest = mensajes[0]?.created_at;
+    const { data: mas } = await supabase
+      .from("proyecto_mensajes")
+      .select("*")
+      .eq("proyecto_id", proyectoId)
+      .lt("created_at", oldest)
+      .order("created_at", { ascending: false })
+      .limit(50);
+    const masOrdenados = (mas || []).reverse();
+    setMensajes(prev => [...masOrdenados, ...prev]);
+    setHayMasMensajes(masOrdenados.length === 50);
+    setCargandoMas(false);
   };
 
   useEffect(() => {
@@ -412,6 +454,13 @@ function Home() {
     }
   }, [mensajes, chatAbierto]);
 
+  // Cerrar chat con Escape
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape" && chatAbierto) setChatAbierto(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [chatAbierto]);
+
   // Auto-logout por inactividad (10 min)
   useInactividad(supabase, router, 10);
 
@@ -420,10 +469,12 @@ function Home() {
     if (!proyectoId || !userId) return;
     const timer = setTimeout(async () => {
       setGuardando(true);
-      ignorarRealtime.current = true;
-      await supabase.from("proyectos").update({ datos: proyecto }).eq("id", proyectoId);
-      setTimeout(() => { ignorarRealtime.current = false; }, 2000);
+      setErrorGuardado(false);
+      ignorarRealtime.current += 1;
+      const { error } = await supabase.from("proyectos").update({ datos: proyecto }).eq("id", proyectoId);
+      ignorarRealtime.current = Math.max(0, ignorarRealtime.current - 1);
       setGuardando(false);
+      if (error) setErrorGuardado(true);
     }, 1500);
     return () => clearTimeout(timer);
   }, [proyecto]);
@@ -431,11 +482,18 @@ function Home() {
   // Guardar inmediatamente al cerrar o salir de la pestaña
   useEffect(() => {
     if (!proyectoId || !userId) return;
-    const guardarAhora = () => {
-      navigator.sendBeacon(
-        `/api/guardar?id=${proyectoId}`,
-        JSON.stringify({ datos: proyecto })
-      );
+    const guardarAhora = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+      fetch(`/api/guardar?id=${proyectoId}`, {
+        method: "POST",
+        keepalive: true,
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ datos: proyecto }),
+      });
     };
     window.addEventListener("beforeunload", guardarAhora);
     return () => window.removeEventListener("beforeunload", guardarAhora);
@@ -519,6 +577,7 @@ function Home() {
       dragOverItem.current = null;
       return arr;
     });
+    setDragOverIdx(null);
   };
 
   const getFamiliaLabel = (codigo) => {
@@ -819,6 +878,11 @@ function Home() {
                   Guardando...
                 </span>
               )}
+              {!guardando && errorGuardado && (
+                <span className="text-[10px] text-red-500 bg-red-50 px-2 py-0.5 rounded-full anim-fade-in flex items-center gap-1" title="No se pudo guardar. Verifica tu conexión.">
+                  ⚠️ Error al guardar
+                </span>
+              )}
             </div>
             {(proyectoMeta.mandante || proyectoMeta.responsable || proyectoMeta.diasCorridos) && (
               <div className="flex items-center gap-2 text-[11px] text-gray-400 mt-0.5">
@@ -835,7 +899,7 @@ function Home() {
                 {presentes.slice(0, 3).map((p, i) => (
                   <div key={p.user_id || i} title={p.nombre}
                     className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-sm border-2 border-white"
-                    style={{ background: ["#059669","#3b82f6","#f59e0b"][i % 3], marginLeft: i > 0 ? -8 : 0, zIndex: 3 - i }}>
+                    style={{ background: ["#059669","#3b82f6","#f59e0b","#8b5cf6","#ef4444","#ec4899","#06b6d4","#f97316"][i % 8], marginLeft: i > 0 ? -8 : 0, zIndex: 3 - i }}>
                     {(p.nombre || "?")[0].toUpperCase()}
                   </div>
                 ))}
@@ -887,16 +951,16 @@ function Home() {
               {/* Sidebar acordeón */}
               <aside className="w-56 bg-white border-r border-gray-100 flex flex-col overflow-hidden shrink-0 anim-fade-up">
                 <div className="px-3 py-2.5 border-b border-gray-100">
-                  <input placeholder="Filtrar categorías..."
+                  <input value={filtroCat} onChange={e => { setFiltroCat(e.target.value); setFamAbierta(null); }} placeholder="Filtrar categorías..."
                     className="w-full border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs input-focus focus:outline-none focus:border-emerald-400" />
                 </div>
                 <div className="flex-1 overflow-y-auto py-1">
-                  <button onClick={() => { setFamiliaActiva(null); setFamAbierta(null); }}
+                  <button onClick={() => { setFamiliaActiva(null); setFamAbierta(null); setFiltroCat(""); }}
                     className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between transition-colors duration-100 ${!familiaActiva ? "bg-emerald-50 text-emerald-700 border-r-2 border-emerald-500" : "text-gray-600 hover:bg-gray-50"}`}>
                     <span>Todas las partidas</span>
                     <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{APUS.length}</span>
                   </button>
-                  {raices.map(r => {
+                  {raices.filter(r => !filtroCat || r.nombre.toLowerCase().includes(filtroCat.toLowerCase()) || hijos(r.codigo).some(h => h.nombre.toLowerCase().includes(filtroCat.toLowerCase()))).map(r => {
                     const estaAbierta = famAbierta === r.codigo;
                     const tieneActiva = familiaActiva === r.codigo || hijos(r.codigo).some(h => h.codigo === familiaActiva);
                     return (
@@ -909,7 +973,7 @@ function Home() {
                             <span className={`text-gray-400 text-[10px] inline-block ${estaAbierta ? "arrow-open" : "arrow-close"}`}>▸</span>
                           </div>
                         </button>
-                        {estaAbierta && hijos(r.codigo).map((h, hi) => (
+                        {(estaAbierta || filtroCat) && hijos(r.codigo).filter(h => !filtroCat || h.nombre.toLowerCase().includes(filtroCat.toLowerCase())).map((h, hi) => (
                           <button key={h.codigo} onClick={() => setFamiliaActiva(h.codigo)}
                             style={{ animationDelay: `${hi * 25}ms` }}
                             className={`accordion-item w-full text-left pl-6 pr-3 py-1.5 text-[11px] flex items-center justify-between transition-colors duration-100 ${familiaActiva === h.codigo ? "text-emerald-600 font-semibold bg-emerald-50 border-r-2 border-emerald-400" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"}`}>
@@ -1044,8 +1108,8 @@ function Home() {
                               <td className="px-4 py-2 text-gray-700">{ins.desc}</td>
                               <td className="px-4 py-2 text-right text-gray-700">{ins.cant}</td>
                               <td className="px-4 py-2 text-center text-gray-500">{ins.un}</td>
-                              <td className="px-4 py-2 text-right text-gray-600">{ins.punit > 0 ? fmtM(ins.punit) : <span className="text-gray-300">—</span>}</td>
-                              <td className="px-4 py-2 text-right font-medium text-gray-800">{ins.punit > 0 ? fmtM(ins.cant * ins.punit) : <span className="text-gray-300">—</span>}</td>
+                              <td className="px-4 py-2 text-right text-gray-600">{ins.punit > 0 ? fmtM(ins.punit) : <span className="text-gray-400">—</span>}</td>
+                              <td className="px-4 py-2 text-right font-medium text-gray-800">{ins.punit > 0 ? fmtM(ins.cant * ins.punit) : <span className="text-gray-400">—</span>}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1164,10 +1228,10 @@ function Home() {
                               <tr
                                 draggable
                                 onDragStart={() => { dragItem.current = globalIdx; }}
-                                onDragEnter={() => { dragOverItem.current = globalIdx; }}
+                                onDragEnter={() => { dragOverItem.current = globalIdx; setDragOverIdx(globalIdx); }}
                                 onDragEnd={handleDragSort}
                                 onDragOver={(e) => e.preventDefault()}
-                                className={`border-b border-gray-100 cursor-pointer select-none ${expanded ? "bg-emerald-50" : "hover:bg-gray-50"}`}
+                                className={`border-b border-gray-100 cursor-pointer select-none transition-colors ${dragOverIdx === globalIdx ? "bg-emerald-100 border-emerald-400 border-2" : expanded ? "bg-emerald-50" : "hover:bg-gray-50"}`}
                                 onClick={(e) => { if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") setExpandedResumen(expanded ? null : p.id); }}>
                                 {/* Drag handle */}
                                 <td className="px-2 py-3 text-center text-gray-300 cursor-grab active:cursor-grabbing select-none">⠿</td>
@@ -1481,6 +1545,14 @@ function Home() {
 
               {/* Mensajes */}
               <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
+                {hayMasMensajes && (
+                  <div className="text-center py-1">
+                    <button onClick={cargarMasMensajes} disabled={cargandoMas}
+                      className="text-[10px] text-emerald-600 hover:underline disabled:opacity-50">
+                      {cargandoMas ? "Cargando..." : "↑ Cargar mensajes anteriores"}
+                    </button>
+                  </div>
+                )}
                 {mensajes.length === 0 && (
                   <div className="text-center py-8 text-gray-400">
                     <p className="text-2xl mb-2">💬</p>
@@ -1507,12 +1579,29 @@ function Home() {
                 <div ref={chatBottomRef}/>
               </div>
 
+              {/* Typing indicator */}
+              {escribiendo.length > 0 && (
+                <div className="px-3 pb-1 text-[10px] text-gray-400 italic anim-fade-in">
+                  {escribiendo.length === 1
+                    ? `${escribiendo[0]} está escribiendo...`
+                    : `${escribiendo.join(", ")} están escribiendo...`}
+                </div>
+              )}
               {/* Input */}
               <div className="flex items-center gap-2 px-3 py-2.5 border-t border-gray-100 shrink-0">
                 <input
                   type="text"
                   value={mensajeInput}
-                  onChange={e => setMensajeInput(e.target.value)}
+                  onChange={e => {
+                    setMensajeInput(e.target.value);
+                    if (canalChat) {
+                      canalChat.track({ user_id: userIdRef.current, nombre: nombreUsuario.current, typing: true });
+                      clearTimeout(typingTimerRef.current);
+                      typingTimerRef.current = setTimeout(() => {
+                        canalChat.track({ user_id: userIdRef.current, nombre: nombreUsuario.current, typing: false });
+                      }, 2000);
+                    }
+                  }}
                   onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensaje(); }}}
                   placeholder="Escribe un mensaje..."
                   className="flex-1 text-[12px] border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-400 input-focus"
@@ -1572,10 +1661,19 @@ function Home() {
                     <option value="editar">Puede editar</option>
                     <option value="administrar">Administrador</option>
                   </select>
-                  <button onClick={() => eliminarColaborador(c.id)}
-                    className="text-gray-200 hover:text-red-500 text-xs btn-press transition-colors" title="Eliminar colaborador">
-                    🗑
-                  </button>
+                  {confirmarQuitarColab === c.id ? (
+                    <div className="flex items-center gap-1">
+                      <button onClick={() => { eliminarColaborador(c.id); setConfirmarQuitarColab(null); }}
+                        className="text-[10px] px-1.5 py-0.5 bg-red-500 text-white rounded btn-press">Sí</button>
+                      <button onClick={() => setConfirmarQuitarColab(null)}
+                        className="text-[10px] px-1.5 py-0.5 bg-gray-200 text-gray-600 rounded btn-press">No</button>
+                    </div>
+                  ) : (
+                    <button onClick={() => setConfirmarQuitarColab(c.id)}
+                      className="text-gray-200 hover:text-red-500 text-xs btn-press transition-colors" title="Eliminar colaborador">
+                      🗑
+                    </button>
+                  )}
                 </div>
               ))}
 
@@ -1697,11 +1795,7 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
 
   const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
-  const dias = (() => {
-    if (!form.fechaInicio || !form.fechaTermino) return null;
-    const d = Math.round((new Date(form.fechaTermino) - new Date(form.fechaInicio)) / 86400000);
-    return d > 0 ? d : null;
-  })();
+  const dias = diasCorridos(form.fechaInicio, form.fechaTermino);
 
   const handleLogo = (e) => {
     const file = e.target.files?.[0];
@@ -2694,10 +2788,10 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
                       </span>
                     )}
                   </div>
-                  {/* Float badge */}
+                  {/* Ruta crítica badge */}
                   {hasDeps && floatW === 0 && crit && barW > 24 && (
-                    <div className="absolute flex items-center" style={{ left: barLeft + 4, top: 8, bottom: 8 }}>
-                      <span className="text-[8px] text-white font-bold opacity-70 leading-none">★</span>
+                    <div className="absolute flex items-center" style={{ left: barLeft + 4, top: 6, bottom: 6 }}>
+                      <span className="text-[10px] font-black leading-none drop-shadow-sm" style={{ color: "#fbbf24", textShadow: "0 0 4px rgba(0,0,0,0.5)" }}>★</span>
                     </div>
                   )}
                 </div>

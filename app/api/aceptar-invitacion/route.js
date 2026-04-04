@@ -1,17 +1,38 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+function getAdminClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
 
 export async function POST(req) {
   try {
-    const { codigo, user_id, email } = await req.json();
+    const { codigo, email } = await req.json();
 
-    if (!codigo || !user_id || !email) {
+    if (!codigo || !email) {
       return Response.json({ error: "Faltan parámetros" }, { status: 400 });
     }
+
+    // Obtener user_id desde el token de sesión (no del body)
+    const authHeader = req.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "");
+    let user_id = null;
+    if (token) {
+      const supabaseAuth = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        { global: { headers: { Authorization: `Bearer ${token}` } } }
+      );
+      const { data: { user } } = await supabaseAuth.auth.getUser();
+      user_id = user?.id || null;
+    }
+    if (!user_id) {
+      return Response.json({ error: "No autorizado" }, { status: 401 });
+    }
+
+    const supabase = getAdminClient();
 
     // Buscar la invitación
     const { data: inv, error: invError } = await supabase

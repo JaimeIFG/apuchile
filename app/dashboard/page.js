@@ -6,6 +6,7 @@ import { useInactividad } from "../lib/useInactividad";
 import { useIndicadores } from "../lib/useIndicadores";
 import LicitacionesTicker from "../components/LicitacionesTicker";
 import LoadingOverlay from "../components/LoadingOverlay";
+import { diasCorridos } from "../lib/utils";
 
 const REGIONES = [
   { label: "Región Metropolitana", zona: 0 },
@@ -28,11 +29,6 @@ const REGIONES = [
 
 const META_INICIAL = { region: "", mandante: "", fechaInicio: "", fechaTermino: "", responsable: "" };
 
-function diasCorridos(inicio, termino) {
-  if (!inicio || !termino) return null;
-  const d = Math.round((new Date(termino) - new Date(inicio)) / 86400000);
-  return d > 0 ? d : null;
-}
 
 export default function Dashboard() {
   const router = useRouter();
@@ -105,8 +101,6 @@ export default function Dashboard() {
       });
     });
 
-    return () => { if (canalRef.current) supabase.removeChannel(canalRef.current); };
-
     // Geolocalización automática
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async pos => {
@@ -121,6 +115,8 @@ export default function Dashboard() {
         } catch {}
       }, () => {}); // silenciar error si el usuario rechaza
     }
+
+    return () => { if (canalRef.current) supabase.removeChannel(canalRef.current); };
   }, []);
 
   useInactividad(supabase, router, 10);
@@ -151,10 +147,15 @@ export default function Dashboard() {
     if (!codigoInput.trim() || !user) return;
     setCodigoCargando(true);
     setCodigoError("");
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token;
     const res = await fetch("/api/aceptar-invitacion", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ codigo: codigoInput.trim(), user_id: user.id, email: user.email }),
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ codigo: codigoInput.trim(), email: user.email }),
     });
     const d = await res.json();
     setCodigoCargando(false);
@@ -811,7 +812,7 @@ export default function Dashboard() {
                       <div className="flex items-start justify-between mb-3">
                         <span className="text-2xl transition-transform duration-200 group-hover:scale-110">📋</span>
                         <button onClick={e => eliminarProyecto(p.id, e)}
-                          className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-all btn-press"
+                          className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 sm:opacity-0 opacity-100 transition-all btn-press"
                           style={{background:"#fee2e2", color:"#ef4444"}}>✕</button>
                       </div>
                       <div className="font-semibold text-sm mb-1 truncate" style={{color:"#1f2937"}}>{p.nombre}</div>
