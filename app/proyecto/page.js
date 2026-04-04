@@ -304,7 +304,7 @@ function Home() {
     const d = await res.json();
     setInvCargando(false);
     if (d.error) { setInvResultado({ error: d.error }); return; }
-    setInvResultado({ ok: true, emailEnviado: d.emailEnviado, warning: d.warning });
+    setInvResultado({ ok: true, emailEnviado: d.emailEnviado, warning: d.warning, codigo: d.codigo });
     setInvEmail("");
   };
 
@@ -1434,14 +1434,26 @@ function Home() {
                   <p className="text-[11px] text-red-500 mt-2 text-center">{invResultado.error}</p>
                 )}
                 {invResultado?.ok && (
-                  <div className="mt-2 p-2.5 rounded-xl bg-emerald-50 border border-emerald-100 text-center">
-                    <p className="text-[11px] font-semibold text-emerald-700">
-                      {invResultado.emailEnviado ? "✅ Invitación enviada" : "⚠️ Invitación creada"}
-                    </p>
-                    {invResultado.warning && (
-                      <p className="text-[10px] text-amber-600 mt-0.5">{invResultado.warning}</p>
+                  <div className="mt-2 rounded-xl bg-emerald-50 border border-emerald-200 text-center overflow-hidden">
+                    <div className="px-3 pt-3 pb-2">
+                      <p className="text-[11px] font-semibold text-emerald-700">
+                        {invResultado.emailEnviado ? "✅ Invitación enviada por email" : "✅ Invitación creada"}
+                      </p>
+                      {!invResultado.emailEnviado && (
+                        <p className="text-[10px] text-amber-600 mt-0.5">El email no se pudo enviar — comparte el código manualmente</p>
+                      )}
+                    </div>
+                    {invResultado.codigo && (
+                      <div className="bg-white border-t border-emerald-100 px-4 py-3">
+                        <p className="text-[9px] font-extrabold uppercase tracking-widest text-gray-400 mb-1">Código de acceso</p>
+                        <p className="text-3xl font-black tracking-[0.25em] text-emerald-600 font-mono">{invResultado.codigo}</p>
+                        <p className="text-[9px] text-gray-400 mt-1">⏱ Válido por 5 minutos</p>
+                        <button onClick={() => navigator.clipboard.writeText(invResultado.codigo)}
+                          className="mt-2 text-[10px] font-semibold text-emerald-600 hover:text-emerald-700 underline btn-press">
+                          Copiar código
+                        </button>
+                      </div>
                     )}
-                    <p className="text-[10px] text-emerald-600 mt-0.5">El código es válido por 5 minutos</p>
                   </div>
                 )}
 

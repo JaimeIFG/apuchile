@@ -114,11 +114,10 @@ export async function POST(req) {
 
     if (emailError) {
       console.error("Error Resend:", emailError);
-      // No falla el request — la invitación está creada, solo falló el email
-      return Response.json({ ok: true, emailEnviado: false, warning: "Invitación creada pero no se pudo enviar el email" });
+      return Response.json({ ok: true, emailEnviado: false, codigo, warning: "No se pudo enviar el email" });
     }
 
-    return Response.json({ ok: true, emailEnviado: true });
+    return Response.json({ ok: true, emailEnviado: true, codigo });
   } catch (err) {
     console.error("Error invitar colaborador:", err);
     return Response.json({ error: err.message }, { status: 500 });
