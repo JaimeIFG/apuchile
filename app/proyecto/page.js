@@ -204,6 +204,16 @@ function Home() {
   const [invResultado, setInvResultado] = useState(null); // { ok, error, warning }
   const canalPresencia = useRef(null);
 
+  // Chat
+  const [chatAbierto, setChatAbierto] = useState(false);
+  const [mensajes, setMensajes] = useState([]);
+  const [mensajeInput, setMensajeInput] = useState("");
+  const [canalChat, setCanalChat] = useState(null);
+  const [mensajesNoLeidos, setMensajesNoLeidos] = useState(0);
+  const chatBottomRef = useRef(null);
+  const nombreUsuario = useRef("");
+  const userIdRef = useRef("");
+
   // Auth + cargar proyecto
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
@@ -254,6 +264,37 @@ function Home() {
             }
           });
         canalPresencia.current = canal;
+
+        // Guardar nombre y userId para el chat
+        nombreUsuario.current = nombre;
+        userIdRef.current = user.id;
+
+        // Cargar mensajes previos del chat
+        const { data: msgs } = await supabase
+          .from("proyecto_mensajes")
+          .select("*")
+          .eq("proyecto_id", proyectoId)
+          .order("created_at", { ascending: true })
+          .limit(100);
+        setMensajes(msgs || []);
+
+        // Suscribirse a nuevos mensajes en tiempo real
+        const canalMsg = supabase
+          .channel(`proyecto-chat-${proyectoId}`)
+          .on("postgres_changes", {
+            event: "INSERT",
+            schema: "public",
+            table: "proyecto_mensajes",
+            filter: `proyecto_id=eq.${proyectoId}`,
+          }, (payload) => {
+            setMensajes(prev => [...prev, payload.new]);
+            setChatAbierto(open => {
+              if (!open) setMensajesNoLeidos(n => n + 1);
+              return open;
+            });
+          })
+          .subscribe();
+        setCanalChat(canalMsg);
       }
       // Si viene con archivo desde dashboard, auto-procesar
       if (archivoParam && tipoParam) {
@@ -273,12 +314,13 @@ function Home() {
     });
   }, [proyectoId]);
 
-  // Cleanup canal presencia al salir
+  // Cleanup canales al salir
   useEffect(() => {
     return () => {
       if (canalPresencia.current) supabase.removeChannel(canalPresencia.current);
+      if (canalChat) supabase.removeChannel(canalChat);
     };
-  }, []);
+  }, [canalChat]);
 
   // Permisos derivados del rol
   const puedeEditar     = ["owner", "administrar", "editar"].includes(rolUsuario);
@@ -312,6 +354,25 @@ function Home() {
     await supabase.from("proyecto_colaboradores").delete().eq("id", colabId);
     setColaboradores(prev => prev.filter(c => c.id !== colabId));
   };
+
+  const enviarMensaje = async () => {
+    const texto = mensajeInput.trim();
+    if (!texto || !proyectoId) return;
+    setMensajeInput("");
+    await supabase.from("proyecto_mensajes").insert({
+      proyecto_id: proyectoId,
+      user_id: userIdRef.current,
+      nombre: nombreUsuario.current,
+      mensaje: texto,
+    });
+  };
+
+  useEffect(() => {
+    if (chatAbierto) {
+      chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      setMensajesNoLeidos(0);
+    }
+  }, [mensajes, chatAbierto]);
 
   // Auto-logout por inactividad (10 min)
   useInactividad(supabase, router, 10);
@@ -1343,6 +1404,87 @@ function Home() {
           onGuardar={guardarEdicionProyecto}
           onCerrar={() => setEditandoProyecto(false)}
         />
+      )}
+
+      {/* ── Chat de colaboración ── */}
+      {colaboradores.length > 0 && (
+        <>
+          {/* Botón flotante */}
+          <button
+            onClick={() => { setChatAbierto(v => !v); setMensajesNoLeidos(0); }}
+            className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-emerald-600 text-white shadow-lg flex items-center justify-center btn-press hover:bg-emerald-700 transition-colors"
+            title="Chat del proyecto">
+            <span className="text-lg">💬</span>
+            {mensajesNoLeidos > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-[10px] font-bold flex items-center justify-center">
+                {mensajesNoLeidos}
+              </span>
+            )}
+          </button>
+
+          {/* Panel chat */}
+          {chatAbierto && (
+            <div className="fixed bottom-20 right-6 z-40 w-80 bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100 anim-scale-in"
+              style={{height: 420}}>
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0"
+                style={{background:"linear-gradient(135deg,#065f46,#059669)"}}>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm">💬</span>
+                  <div>
+                    <p className="text-[12px] font-bold text-white">Chat del proyecto</p>
+                    <p className="text-[10px] text-emerald-200">{presentes.length} online</p>
+                  </div>
+                </div>
+                <button onClick={() => setChatAbierto(false)} className="text-emerald-200 hover:text-white text-sm btn-press">✕</button>
+              </div>
+
+              {/* Mensajes */}
+              <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
+                {mensajes.length === 0 && (
+                  <div className="text-center py-8 text-gray-400">
+                    <p className="text-2xl mb-2">💬</p>
+                    <p className="text-[11px]">Sin mensajes aún.<br/>¡Sé el primero en escribir!</p>
+                  </div>
+                )}
+                {mensajes.map((m, i) => {
+                  const esMio = m.user_id === userIdRef.current;
+                  const hora = new Date(m.created_at).toLocaleTimeString("es-CL", {hour:"2-digit", minute:"2-digit"});
+                  return (
+                    <div key={m.id || i} className={`flex flex-col ${esMio ? "items-end" : "items-start"}`}>
+                      {!esMio && (
+                        <span className="text-[9px] font-bold text-gray-400 mb-0.5 px-1">{m.nombre}</span>
+                      )}
+                      <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-[12px] leading-snug ${esMio
+                        ? "bg-emerald-600 text-white rounded-tr-sm"
+                        : "bg-gray-100 text-gray-800 rounded-tl-sm"}`}>
+                        {m.mensaje}
+                      </div>
+                      <span className="text-[9px] text-gray-300 mt-0.5 px-1">{hora}</span>
+                    </div>
+                  );
+                })}
+                <div ref={chatBottomRef}/>
+              </div>
+
+              {/* Input */}
+              <div className="flex items-center gap-2 px-3 py-2.5 border-t border-gray-100 shrink-0">
+                <input
+                  type="text"
+                  value={mensajeInput}
+                  onChange={e => setMensajeInput(e.target.value)}
+                  onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensaje(); }}}
+                  placeholder="Escribe un mensaje..."
+                  className="flex-1 text-[12px] border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-400 input-focus"
+                />
+                <button onClick={enviarMensaje} disabled={!mensajeInput.trim()}
+                  className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center btn-press hover:bg-emerald-700 disabled:opacity-40 transition-colors shrink-0">
+                  <span className="text-sm">↑</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* ── Panel Colaboradores ── */}
