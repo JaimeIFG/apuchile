@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { ONDAC_APUS } from "../../ondac_data_nuevo.js";
+import ONDAC_APUS from "../../ondac_data_nuevo.json";
 
 // Normalizar texto: minúsculas, sin tildes, sin puntuación
 function normalizar(txt) {

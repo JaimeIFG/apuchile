@@ -1,12 +1,32 @@
 "use client";
 import { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ONDAC_APUS } from '../ondac_data_nuevo.js';
+import ONDAC_APUS from '../ondac_data_nuevo.json';
+import MATERIALES_BASE from '../data/materiales_precios.json';
 import { supabase } from '../lib/supabase';
 import { useInactividad } from '../lib/useInactividad';
 import { useIndicadores } from '../lib/useIndicadores';
 import LoadingOverlay from '../components/LoadingOverlay';
 import { getTemplatesParaProyecto } from '../data/eett_templates.js';
+
+// Factor IPC acumulado Chile 2017→2025 (INE)
+const IPC_2017_2025 = 1.65;
+
+// Índice de materiales por descripción normalizada para búsqueda rápida
+const MATERIALES_IDX = (() => {
+  const idx = {};
+  for (const m of MATERIALES_BASE) {
+    if (m.precio_actual_rm) {
+      idx[m.desc.trim().toUpperCase()] = m.precio_actual_rm;
+    }
+  }
+  return idx;
+})();
+
+function precioMaterialActual(desc) {
+  if (!desc) return null;
+  return MATERIALES_IDX[desc.trim().toUpperCase()] ?? null;
+}
 
 const APUS = ONDAC_APUS;
 
@@ -97,7 +117,16 @@ function calcAPU(apu, cfg) {
   const rows = (apu.insumos || []).map((ins) => {
     let punit = ins.punit ?? 0;
     let cant = ins.cant ?? 0;
-    if (ins.tipo === "mo") { punit = moRates[ins.moKey] ?? 0; cant = ins.rend ?? 0; }
+    if (ins.tipo === "mo") {
+      punit = moRates[ins.moKey] ?? 0;
+      cant = ins.rend ?? 0;
+    } else if (ins.tipo === "mat" || ins.tipo === "fung") {
+      // Usar precio Sodimac actualizado si está disponible, si no aplicar IPC
+      const precioSodimac = precioMaterialActual(ins.desc);
+      punit = precioSodimac
+        ? precioSodimac * (1 + zona)
+        : (ins.punit ?? 0) * IPC_2017_2025 * (1 + zona);
+    }
     const cantFinal = cant * (1 + (ins.perd ?? 0) / 100);
     const sub = cantFinal * punit;
     if (ins.tipo === "mo") moNet += sub;
@@ -106,7 +135,8 @@ function calcAPU(apu, cfg) {
     return { ...ins, punit, cant, sub };
   });
   if (rows.length === 0 || (moNet === 0 && mat === 0 && fung === 0)) {
-    const precioBase = (apu.precio || 0) * (1 + zona);
+    // APU sin desglose: aplicar IPC + zona al precio base 2017
+    const precioBase = (apu.precio || 0) * IPC_2017_2025 * (1 + zona);
     return { rows, moNet: 0, llssAmt: 0, mat: precioBase, herr: 0, fung: 0, total: precioBase };
   }
   const herr = moNet * herrPct;
@@ -1046,23 +1076,25 @@ function Home() {
 }
 
 // Modal editar proyecto
+// Factor zona = diferencial sobre precio base RM (flete + mercado local)
+// Alineado con ZONAS_CL en app/api/precios-materiales/route.js
 const REGIONES_EDIT = [
-  { label: "Región Metropolitana", zona: 0 },
-  { label: "Arica y Parinacota", zona: 0.10 },
-  { label: "Tarapacá", zona: 0.10 },
-  { label: "Antofagasta", zona: 0.10 },
-  { label: "Atacama", zona: 0.10 },
-  { label: "Coquimbo", zona: 0.05 },
-  { label: "Valparaíso", zona: 0.05 },
-  { label: "O'Higgins", zona: 0.05 },
-  { label: "Maule", zona: 0.05 },
-  { label: "Ñuble", zona: 0.10 },
-  { label: "Biobío", zona: 0.15 },
-  { label: "La Araucanía", zona: 0.15 },
-  { label: "Los Ríos", zona: 0.15 },
-  { label: "Los Lagos", zona: 0.20 },
-  { label: "Aysén", zona: 0.30 },
-  { label: "Magallanes", zona: 0.25 },
+  { label: "Región Metropolitana", zona: 0.00 },
+  { label: "Valparaíso",           zona: 0.04 },
+  { label: "O'Higgins",            zona: 0.03 },
+  { label: "Maule",                zona: 0.05 },
+  { label: "Ñuble",                zona: 0.07 },
+  { label: "Biobío",               zona: 0.06 },
+  { label: "La Araucanía",         zona: 0.10 },
+  { label: "Los Ríos",             zona: 0.12 },
+  { label: "Coquimbo",             zona: 0.08 },
+  { label: "Atacama",              zona: 0.12 },
+  { label: "Antofagasta",          zona: 0.15 },
+  { label: "Tarapacá",             zona: 0.18 },
+  { label: "Arica y Parinacota",   zona: 0.22 },
+  { label: "Los Lagos",            zona: 0.15 },
+  { label: "Aysén",                zona: 0.28 },
+  { label: "Magallanes",           zona: 0.30 },
 ];
 
 function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {

@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
 import { extractBudgetFromPDF } from "../lib/extractPresupuesto";
-import { ONDAC_APUS } from "../ondac_data_nuevo.js";
+import ONDAC_APUS from "../ondac_data_nuevo.json";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
