@@ -1242,6 +1242,7 @@ function ObraDetail() {
   const [mMod,  setMMod]  = useState(false);
   const [mRec,  setMRec]  = useState(false);
   const [mInforme, setMInforme] = useState(false);
+  const [previsualizando, setPrevisualizando] = useState(null); // informe en preview
   const [mFoto,setMFoto]  = useState(false);
   const [mPresupuesto, setMPresupuesto] = useState(false);
   const [lightbox,setLb]  = useState(null);
@@ -1479,11 +1480,13 @@ function ObraDetail() {
       : `Durante el período se avanzó un ${p}% en la partida "${partida}". Se ejecutaron los trabajos correspondientes conforme a las especificaciones técnicas del proyecto, bajo supervisión de la Inspección Técnica de Obras (ITO).${sufijo}`;
   }
 
-  function imprimirInforme(inf, obra) {
+  function generarHtmlInforme(inf) {
     const d = inf.datos_json || {};
-    const partidas = inf.partidas_json || [];
+    const todasPartidas = inf.partidas_json || [];
+    // Filtrar solo partidas con avance > 0
+    const partidas = todasPartidas.filter(p => (p.pct || 0) > 0);
     const fmtP = n => n ? "$"+Math.round(n).toLocaleString("es-CL") : "—";
-    const html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+    return `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
 <title>Informe ${inf.tipo} — ${d.obra_nombre||""}</title>
 <style>
   body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:24px;color:#333;font-size:13px;}
@@ -1500,7 +1503,7 @@ function ObraDetail() {
   .badge-progreso{background:#fef3c7;color:#92400e;}
   .badge-no{background:#f1f5f9;color:#64748b;}
   .desc{font-size:12px;color:#4b5563;line-height:1.6;margin:4px 0 0;}
-  .progress{height:4px;background:#e2e8f0;border-radius:99px;margin:8px 0 4px;overflow:hidden;}
+  .progress{height:6px;background:#e2e8f0;border-radius:99px;margin:8px 0 4px;overflow:hidden;}
   .progress-bar{height:100%;border-radius:99px;}
   .footer{margin-top:40px;border-top:1px solid #e2e8f0;padding-top:16px;color:#94a3b8;font-size:11px;text-align:center;}
   @media print{.partida{page-break-inside:avoid;}}
@@ -1511,27 +1514,23 @@ function ObraDetail() {
   ${[["Nombre obra",d.obra_nombre||""],["Contratista",d.contratista||"—"],["Inspector Fiscal",d.inspector||"—"],["Región",d.region||"—"],["Monto Contrato",fmtP(d.monto_contrato)],["Último EP",d.ultimo_ep||"—"]].map(([l,v])=>`<div class="meta-item"><label>${l}</label><p>${v}</p></div>`).join("")}
 </div>
 ${d.observacion_general?`<h2>Observación General</h2><p style="font-style:italic;color:#374151">"${d.observacion_general}"</p>`:""}
-<h2>Avance por Partidas</h2>
+<h2>Avance por Partidas ${partidas.length < todasPartidas.length ? `(${partidas.length} con avance de ${todasPartidas.length} total)` : ""}</h2>
+${partidas.length === 0 ? '<p style="color:#94a3b8;font-style:italic;">Sin partidas con avance registrado en este período.</p>' : ""}
 ${partidas.map(p=>`
 <div class="partida">
   <div class="partida-header">
     <span class="partida-title">${p.item||""} ${p.partida||""}</span>
     <div style="display:flex;gap:8px;align-items:center">
       <span class="badge ${p.estado==="Terminada"?"badge-terminada":p.estado==="En progreso"?"badge-progreso":"badge-no"}">${p.estado}</span>
-      <span style="font-weight:800;font-size:13px">${p.pct||0}%</span>
+      <span style="font-weight:800;font-size:14px">${p.pct||0}%</span>
     </div>
   </div>
   <div class="progress"><div class="progress-bar" style="width:${p.pct||0}%;background:${p.estado==="Terminada"?"#059669":p.estado==="En progreso"?"#f59e0b":"#94a3b8"}"></div></div>
   <p style="font-size:10px;color:#9ca3af;margin:0">${p.unidad||""} · ${fmtP(p.valor_total)}</p>
   <p class="desc">${p.descripcion||""}</p>
 </div>`).join("")}
-<div class="footer">Generado por APUChile · ${new Date().toLocaleDateString("es-CL")}</div>
+<div class="footer">Generado por APUchile · ${new Date().toLocaleDateString("es-CL")}</div>
 </body></html>`;
-    const w = window.open("","_blank");
-    w.document.write(html);
-    w.document.close();
-    w.focus();
-    setTimeout(()=>w.print(),500);
   }
 
   const NAV = [
@@ -2374,10 +2373,10 @@ ${partidas.map(p=>`
                             )}
                           </div>
                           <div style={{ display:"flex", gap:6, alignItems:"center" }}>
-                            <button onClick={()=>imprimirInforme(inf, obra)}
+                            <button onClick={()=>setPrevisualizando(inf)}
                               style={{ background:"#f0fdf4", color:"#059669", border:"1px solid #bbf7d0",
                                 borderRadius:8, padding:"5px 12px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
-                              🖨️ Imprimir
+                              👁️ Ver informe
                             </button>
                             <button onClick={async()=>{ await supabase.from("obra_informes").delete().eq("id",inf.id); setInformes(p=>p.filter(x=>x.id!==inf.id)); }}
                               style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:14 }}>✕</button>
@@ -2664,6 +2663,48 @@ ${partidas.map(p=>`
             </div>
           </div>
         </>
+      )}
+
+      {/* Modal previsualización informe */}
+      {previsualizando && (
+        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.55)", zIndex:1000,
+          display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:20 }}>
+          <div style={{ background:"#fff", borderRadius:16, width:"100%", maxWidth:860,
+            maxHeight:"92vh", display:"flex", flexDirection:"column", overflow:"hidden", boxShadow:"0 25px 60px rgba(0,0,0,0.3)" }}>
+            {/* Header */}
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
+              padding:"14px 20px", borderBottom:"1px solid #e2e8f0", background:"#f8fafc", borderRadius:"16px 16px 0 0" }}>
+              <div>
+                <span style={{ fontSize:14, fontWeight:700, color:"#1e293b" }}>
+                  Informe {previsualizando.tipo} — {(previsualizando.datos_json||{}).obra_nombre||""}
+                </span>
+                <span style={{ fontSize:11, color:"#94a3b8", marginLeft:10 }}>
+                  {previsualizando.periodo_desde} {previsualizando.periodo_hasta ? "→ " + previsualizando.periodo_hasta : ""}
+                </span>
+              </div>
+              <div style={{ display:"flex", gap:8 }}>
+                <button onClick={()=>{
+                  const html = generarHtmlInforme(previsualizando);
+                  const w = window.open("","_blank");
+                  w.document.write(html); w.document.close(); w.focus();
+                  setTimeout(()=>w.print(), 400);
+                }} style={{ background:"#059669", color:"#fff", border:"none", borderRadius:8,
+                  padding:"6px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
+                  🖨️ Imprimir
+                </button>
+                <button onClick={()=>setPrevisualizando(null)}
+                  style={{ background:"#f1f5f9", color:"#64748b", border:"none", borderRadius:8,
+                    padding:"6px 12px", fontSize:13, cursor:"pointer", fontWeight:700 }}>✕</button>
+              </div>
+            </div>
+            {/* iframe preview */}
+            <iframe
+              srcDoc={generarHtmlInforme(previsualizando)}
+              style={{ flex:1, border:"none", width:"100%" }}
+              title="preview-informe"
+            />
+          </div>
+        </div>
       )}
 
       {/* Modals */}
