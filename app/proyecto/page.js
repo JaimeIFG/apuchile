@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useEffect, useRef, Suspense } from "react";
+import React, { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ONDAC_APUS from '../ondac_data_nuevo.json';
 import MATERIALES_BASE from '../data/materiales_precios.json';
@@ -188,6 +188,9 @@ function Home() {
   const [proyectoMeta, setProyectoMeta] = useState({});
   const [editandoProyecto, setEditandoProyecto] = useState(false);
   const [editandoPartida, setEditandoPartida] = useState(null); // partida del proyecto en edición
+  const [agruparCapitulos, setAgruparCapitulos] = useState(false);
+  const dragItem = useRef(null);
+  const dragOverItem = useRef(null);
 
   // Auth + cargar proyecto
   useEffect(() => {
@@ -288,6 +291,35 @@ function Home() {
 
   const agregarPartida = (apu) => {
     setProyecto((p) => [...p, { ...apu, cantidad: 1, id: Date.now() + Math.random() }]);
+  };
+
+  const duplicarPartida = (p) => {
+    setProyecto(pr => {
+      const idx = pr.findIndex(x => x.id === p.id);
+      const copia = { ...p, id: Date.now() + Math.random() };
+      const arr = [...pr];
+      arr.splice(idx + 1, 0, copia);
+      return arr;
+    });
+  };
+
+  const handleDragSort = () => {
+    if (dragItem.current === null || dragOverItem.current === null) return;
+    setProyecto(pr => {
+      const arr = [...pr];
+      const [dragged] = arr.splice(dragItem.current, 1);
+      arr.splice(dragOverItem.current, 0, dragged);
+      dragItem.current = null;
+      dragOverItem.current = null;
+      return arr;
+    });
+  };
+
+  const getFamiliaLabel = (codigo) => {
+    const fam = (codigo || "").toUpperCase();
+    const match = FAMILIAS.find(f => fam === f.codigo || fam.startsWith(f.codigo + " "))
+      || FAMILIAS.find(f => fam.startsWith(f.codigo));
+    return match ? match.nombre : "Sin categoría";
   };
 
   const resumen = useMemo(() => {
@@ -838,10 +870,16 @@ function Home() {
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-base font-semibold text-gray-800">Resumen del proyecto</h2>
               {proyecto.length > 0 && (
-                <button onClick={exportarPDF}
-                  className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-emerald-700">
-                  📄 Exportar PDF
-                </button>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => setAgruparCapitulos(v => !v)}
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border btn-press transition-colors ${agruparCapitulos ? "bg-emerald-50 border-emerald-300 text-emerald-700" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
+                    <span>⊞</span> {agruparCapitulos ? "Vista plana" : "Agrupar por capítulo"}
+                  </button>
+                  <button onClick={exportarPDF}
+                    className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-emerald-700">
+                    📄 Exportar PDF
+                  </button>
+                </div>
               )}
             </div>
             {proyecto.length === 0 ? (
@@ -856,7 +894,8 @@ function Home() {
                   <table className="w-full text-xs">
                     <thead>
                       <tr className="bg-gray-50 border-b border-gray-200">
-                        <th className="text-left px-4 py-3 text-[10px] uppercase text-gray-400 font-medium">Partida</th>
+                        <th className="px-2 py-3 w-6"></th>
+                        <th className="text-left px-3 py-3 text-[10px] uppercase text-gray-400 font-medium">Partida</th>
                         <th className="px-3 py-3 text-[10px] uppercase text-gray-400 font-medium text-center">Un.</th>
                         <th className="px-3 py-3 text-[10px] uppercase text-gray-400 font-medium text-right">Cant.</th>
                         <th className="px-3 py-3 text-[10px] uppercase text-gray-400 font-medium text-right">V. Unit.</th>
@@ -865,76 +904,139 @@ function Home() {
                       </tr>
                     </thead>
                     <tbody>
-                      {proyecto.map((p) => {
-                        const { total, rows } = calcAPU(p, cfg);
-                        const desc = p.desc || p.descripcion || "Sin descripción";
-                        const expanded = expandedResumen === p.id;
-                        return (
-                          <>
-                            <tr key={p.id} className={`border-b border-gray-100 row-hover cursor-pointer ${expanded ? "bg-emerald-50" : "hover:bg-gray-50"}`}
-                              onClick={(e) => { if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") setExpandedResumen(expanded ? null : p.id); }}>
-                              <td className="px-4 py-3">
-                                <div className="text-[10px] text-gray-400 font-mono">{p.codigo}</div>
-                                <div className="text-gray-700 leading-snug flex items-center gap-1">
-                                  <span>{desc}</span>
-                                  <span className={`text-[10px] text-gray-400 inline-block ${expanded ? "arrow-open" : "arrow-close"}`}>▸</span>
-                                </div>
-                              </td>
-                              <td className="px-3 py-3 text-center text-gray-500">{p.unidad}</td>
-                              <td className="px-3 py-3 text-right">
-                                <input type="number" value={p.cantidad} min={0.01} step={0.01}
-                                  onClick={(e) => e.stopPropagation()}
-                                  onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
-                                  className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-emerald-400"/>
-                              </td>
-                              <td className="px-3 py-3 text-right text-gray-700">{fmtM(total)}</td>
-                              <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmtM(total * p.cantidad)}</td>
-                              <td className="px-3 py-3 text-right">
-                                <div className="flex items-center gap-1 justify-end">
-                                  <button onClick={(e)=>{e.stopPropagation();setEditandoPartida(p);}}
-                                    className="text-gray-300 hover:text-emerald-600 text-xs btn-press transition-colors px-1" title="Editar partida">✏️</button>
-                                  <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
-                                    className="text-gray-300 hover:text-red-500 text-xs btn-press transition-colors px-1">✕</button>
-                                </div>
-                              </td>
-                            </tr>
-                            {expanded && rows.length > 0 && (
-                              <tr key={p.id + "_detail"} className="bg-emerald-50 border-b border-emerald-100">
-                                <td colSpan={6} className="px-6 py-3">
-                                  <table className="w-full text-[11px]">
-                                    <thead>
-                                      <tr className="text-gray-400 border-b border-emerald-100">
-                                        <th className="text-left py-1 font-medium">Insumo</th>
-                                        <th className="text-center py-1 font-medium">Tipo</th>
-                                        <th className="text-center py-1 font-medium">Un.</th>
-                                        <th className="text-right py-1 font-medium">Cant.</th>
-                                        <th className="text-right py-1 font-medium">P. Unit.</th>
-                                        <th className="text-right py-1 font-medium">Subtotal</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {rows.map((ins, i) => (
-                                        <tr key={i} className="border-b border-emerald-50">
-                                          <td className="py-1 text-gray-700">{ins.desc}</td>
-                                          <td className="py-1 text-center">
-                                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-medium ${ins.tipo==="mo"?"bg-blue-100 text-blue-700":ins.tipo==="mat"?"bg-amber-100 text-amber-700":"bg-gray-100 text-gray-600"}`}>
-                                              {ins.tipo}
-                                            </span>
-                                          </td>
-                                          <td className="py-1 text-center text-gray-500">{ins.un}</td>
-                                          <td className="py-1 text-right text-gray-600">{(ins.cant ?? 0).toFixed(3)}</td>
-                                          <td className="py-1 text-right text-gray-600">{fmtM(ins.punit)}</td>
-                                          <td className="py-1 text-right font-medium text-gray-700">{fmtM(ins.sub)}</td>
-                                        </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
+                      {(() => {
+                        // Build rows, optionally grouped
+                        const renderRow = (p, globalIdx) => {
+                          const { total, rows } = calcAPU(p, cfg);
+                          const desc = p.desc || p.descripcion || "Sin descripción";
+                          const expanded = expandedResumen === p.id;
+                          return (
+                            <React.Fragment key={p.id}>
+                              <tr
+                                draggable
+                                onDragStart={() => { dragItem.current = globalIdx; }}
+                                onDragEnter={() => { dragOverItem.current = globalIdx; }}
+                                onDragEnd={handleDragSort}
+                                onDragOver={(e) => e.preventDefault()}
+                                className={`border-b border-gray-100 cursor-pointer select-none ${expanded ? "bg-emerald-50" : "hover:bg-gray-50"}`}
+                                onClick={(e) => { if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") setExpandedResumen(expanded ? null : p.id); }}>
+                                {/* Drag handle */}
+                                <td className="px-2 py-3 text-center text-gray-300 cursor-grab active:cursor-grabbing select-none">⠿</td>
+                                <td className="px-3 py-3">
+                                  <div className="text-[10px] text-gray-400 font-mono">{p.codigo}</div>
+                                  <div className="text-gray-700 leading-snug flex items-center gap-1">
+                                    <span>{desc}</span>
+                                    {p.nota && <span className="text-amber-400 text-[10px]" title={p.nota}>📝</span>}
+                                    <span className={`text-[10px] text-gray-400 inline-block ${expanded ? "arrow-open" : "arrow-close"}`}>▸</span>
+                                  </div>
+                                </td>
+                                <td className="px-3 py-3 text-center text-gray-500">{p.unidad}</td>
+                                <td className="px-3 py-3 text-right">
+                                  <input type="number" value={p.cantidad} min={0.01} step={0.01}
+                                    onClick={(e) => e.stopPropagation()}
+                                    onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
+                                    className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-emerald-400"/>
+                                </td>
+                                <td className="px-3 py-3 text-right text-gray-700">{fmtM(total)}</td>
+                                <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmtM(total * p.cantidad)}</td>
+                                <td className="px-3 py-3 text-right">
+                                  <div className="flex items-center gap-1 justify-end">
+                                    <button onClick={(e)=>{e.stopPropagation();setEditandoPartida(p);}}
+                                      className="text-gray-300 hover:text-emerald-600 text-xs btn-press transition-colors px-1" title="Editar partida">✏️</button>
+                                    <button onClick={(e)=>{e.stopPropagation();duplicarPartida(p);}}
+                                      className="text-gray-300 hover:text-blue-500 text-xs btn-press transition-colors px-1" title="Duplicar partida">⧉</button>
+                                    <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
+                                      className="text-gray-300 hover:text-red-500 text-xs btn-press transition-colors px-1">✕</button>
+                                  </div>
                                 </td>
                               </tr>
-                            )}
-                          </>
-                        );
-                      })}
+                              {expanded && (
+                                <tr key={p.id + "_detail"} className="bg-emerald-50 border-b border-emerald-100">
+                                  <td colSpan={7} className="px-6 py-3">
+                                    {rows.length > 0 && (
+                                      <table className="w-full text-[11px] mb-3">
+                                        <thead>
+                                          <tr className="text-gray-400 border-b border-emerald-100">
+                                            <th className="text-left py-1 font-medium">Insumo</th>
+                                            <th className="text-center py-1 font-medium">Tipo</th>
+                                            <th className="text-center py-1 font-medium">Un.</th>
+                                            <th className="text-right py-1 font-medium">Cant.</th>
+                                            <th className="text-right py-1 font-medium">P. Unit.</th>
+                                            <th className="text-right py-1 font-medium">Subtotal</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {rows.map((ins, i) => (
+                                            <tr key={i} className="border-b border-emerald-50">
+                                              <td className="py-1 text-gray-700">{ins.desc}</td>
+                                              <td className="py-1 text-center">
+                                                <span className={`px-1.5 py-0.5 rounded text-[9px] font-medium ${ins.tipo==="mo"?"bg-blue-100 text-blue-700":ins.tipo==="mat"?"bg-amber-100 text-amber-700":"bg-gray-100 text-gray-600"}`}>{ins.tipo}</span>
+                                              </td>
+                                              <td className="py-1 text-center text-gray-500">{ins.un}</td>
+                                              <td className="py-1 text-right text-gray-600">{(ins.cant ?? 0).toFixed(3)}</td>
+                                              <td className="py-1 text-right text-gray-600">{fmtM(ins.punit)}</td>
+                                              <td className="py-1 text-right font-medium text-gray-700">{fmtM(ins.sub)}</td>
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      </table>
+                                    )}
+                                    {/* Nota */}
+                                    <div>
+                                      <label className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">📝 Nota / observación</label>
+                                      <textarea
+                                        value={p.nota || ""}
+                                        onClick={(e) => e.stopPropagation()}
+                                        onChange={(e) => setProyecto(pr => pr.map(x => x.id===p.id ? {...x, nota: e.target.value} : x))}
+                                        placeholder="Agrega una nota u observación para esta partida..."
+                                        rows={2}
+                                        className="w-full border border-emerald-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400 bg-white resize-none"
+                                      />
+                                    </div>
+                                  </td>
+                                </tr>
+                              )}
+                            </React.Fragment>
+                          );
+                        };
+
+                        if (!agruparCapitulos) {
+                          return proyecto.map((p, i) => renderRow(p, i));
+                        }
+
+                        // Agrupar por capítulo (familia padre)
+                        const grupos = {};
+                        proyecto.forEach((p, i) => {
+                          const fam = (p.familia || p.codigo || "").toUpperCase();
+                          const padre = FAMILIAS.find(f => !f.padre && (fam === f.codigo || fam.startsWith(f.codigo)))?.codigo || "?";
+                          const label = FAMILIAS.find(f => f.codigo === padre)?.nombre || "Sin categoría";
+                          if (!grupos[padre]) grupos[padre] = { label, items: [] };
+                          grupos[padre].items.push({ p, i });
+                        });
+
+                        return Object.entries(grupos).map(([cod, { label, items }]) => {
+                          const subtotal = items.reduce((s, { p }) => s + calcAPU(p, cfg).total * p.cantidad, 0);
+                          const faseInfo = FASES_INFO[FASE_ORDEN[cod]] || null;
+                          return (
+                            <React.Fragment key={cod}>
+                              <tr className="border-b border-gray-200">
+                                <td colSpan={7} className="px-3 py-2"
+                                  style={{ backgroundColor: faseInfo ? faseInfo.light : "#f9fafb" }}>
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                      {faseInfo && <span className="w-2.5 h-2.5 rounded-full inline-block shrink-0" style={{ backgroundColor: faseInfo.color }}/>}
+                                      <span className="text-xs font-bold text-gray-700">{label}</span>
+                                      <span className="text-[10px] text-gray-400">{items.length} partida{items.length !== 1 ? "s" : ""}</span>
+                                    </div>
+                                    <span className="text-xs font-semibold text-gray-700">{fmtM(subtotal)}</span>
+                                  </div>
+                                </td>
+                              </tr>
+                              {items.map(({ p, i }) => renderRow(p, i))}
+                            </React.Fragment>
+                          );
+                        });
+                      })()}
                     </tbody>
                   </table>
                 </div>
