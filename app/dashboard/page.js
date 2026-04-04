@@ -126,7 +126,7 @@ export default function Dashboard() {
 
   const cargarProyectos = async (uid) => {
     // Proyectos propios
-    const { data } = await supabase.from("proyectos").select("*").eq("user_id", uid).order("updated_at", { ascending: false });
+    const { data } = await supabase.from("proyectos").select("*").eq("user_id", uid).order("created_at", { ascending: false });
     setProyectos(data || []);
 
     // Proyectos compartidos conmigo
@@ -136,7 +136,7 @@ export default function Dashboard() {
       .eq("user_id", uid);
     if (colabs?.length) {
       const ids = colabs.map(c => c.proyecto_id);
-      const { data: compartidos } = await supabase.from("proyectos").select("*").in("id", ids).order("updated_at", { ascending: false });
+      const { data: compartidos } = await supabase.from("proyectos").select("*").in("id", ids).order("created_at", { ascending: false });
       setProyectosCompartidos((compartidos || []).map(p => ({
         ...p,
         _compartido: true,
