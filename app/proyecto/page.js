@@ -293,9 +293,9 @@ function Home() {
           setProyectoNombre(data.nombre);
           setProyecto(data.datos || []);
           setProyectoMeta(data.meta || {});
-          // Cargar cfg guardada del proyecto (valores personalizados del usuario al crearlo)
-          if (data.cfg) {
-            setCfg(c => ({ ...c, ...data.cfg }));
+          // Cargar cfg guardada del proyecto (valores personalizados al crearlo, dentro de meta._cfg)
+          if (data.meta?._cfg) {
+            setCfg(c => ({ ...c, ...data.meta._cfg }));
           } else if (data.meta?.zona !== undefined) {
             setCfg(c => ({ ...c, zona: data.meta.zona }));
           }
@@ -703,31 +703,85 @@ function Home() {
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
     const ancho = doc.internal.pageSize.getWidth();
 
-    // Encabezado
+    // Leer config de empresa del usuario
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    const cfgEmpresa = currentUser?.user_metadata?.config || {};
+    const nombreEmpresa = cfgEmpresa.nombreEmpresa || "";
+    const rutEmpresa    = cfgEmpresa.rutEmpresa    || "";
+    const telEmpresa    = cfgEmpresa.telefonoEmpresa || "";
+    const emailEmpresa  = cfgEmpresa.emailEmpresa  || "";
+    const dirEmpresa    = cfgEmpresa.direccionEmpresa || "";
+    const logoUrl       = cfgEmpresa.pdfIncluirLogo !== false ? (cfgEmpresa.logoEmpresaUrl || "") : "";
+    const incluirIVA    = cfgEmpresa.pdfIncluirIVA !== false;
+
+    // ── Encabezado ──
     doc.setFillColor(6, 95, 70);
-    doc.rect(0, 0, ancho, 28, "F");
+    doc.rect(0, 0, ancho, 30, "F");
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.text("APUchile", 14, 12);
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-    doc.text("Análisis de Precios Unitarios", 14, 19);
+
+    // Logo de empresa (si existe)
+    let logoOk = false;
+    if (logoUrl) {
+      try {
+        await new Promise((resolve) => {
+          const img = new window.Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            try { doc.addImage(img, "PNG", 14, 4, 0, 22); logoOk = true; } catch {}
+            resolve();
+          };
+          img.onerror = resolve;
+          img.src = logoUrl;
+        });
+      } catch {}
+    }
+
+    const textoX = logoOk ? 46 : 14;
+
+    if (nombreEmpresa) {
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text(nombreEmpresa, textoX, 11);
+      const datosEmpresa = [rutEmpresa, telEmpresa, emailEmpresa, dirEmpresa].filter(Boolean).join("  ·  ");
+      if (datosEmpresa) {
+        doc.setFontSize(7);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(200, 240, 220);
+        doc.text(datosEmpresa, textoX, 17);
+      }
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(7);
+      doc.setFont("helvetica", "normal");
+      doc.text("Análisis de Precios Unitarios", textoX, 23);
+    } else {
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "bold");
+      doc.text("APUchile", textoX, 12);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text("Análisis de Precios Unitarios", textoX, 20);
+    }
+
+    // Proyecto nombre y fecha (derecha)
+    doc.setTextColor(255, 255, 255);
     doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
     doc.text(proyectoNombre, ancho - 14, 12, { align: "right" });
     doc.setFontSize(8);
-    doc.text(new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" }), ancho - 14, 19, { align: "right" });
+    doc.setFont("helvetica", "normal");
+    doc.text(new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" }), ancho - 14, 20, { align: "right" });
 
-    // Info del proyecto
-    let y = 36;
+    // ── Info del proyecto ──
+    let y = 38;
     doc.setTextColor(30, 30, 30);
     const infoItems = [
-      proyectoMeta.mandante && ["Mandante", proyectoMeta.mandante],
-      proyectoMeta.region && ["Región", proyectoMeta.region],
+      proyectoMeta.mandante    && ["Mandante",    proyectoMeta.mandante],
+      proyectoMeta.region      && ["Región",      proyectoMeta.region],
+      proyectoMeta.direccion   && ["Dirección",   proyectoMeta.direccion],
       proyectoMeta.responsable && ["Responsable", proyectoMeta.responsable],
-      proyectoMeta.fechaInicio && ["Inicio", new Date(proyectoMeta.fechaInicio).toLocaleDateString("es-CL")],
-      proyectoMeta.fechaTermino && ["Término", new Date(proyectoMeta.fechaTermino).toLocaleDateString("es-CL")],
-      proyectoMeta.diasCorridos && ["Plazo", `${proyectoMeta.diasCorridos} días corridos`],
+      proyectoMeta.fechaInicio && ["Inicio",      new Date(proyectoMeta.fechaInicio).toLocaleDateString("es-CL")],
+      proyectoMeta.fechaTermino && ["Término",    new Date(proyectoMeta.fechaTermino).toLocaleDateString("es-CL")],
+      proyectoMeta.diasCorridos && ["Plazo",      `${proyectoMeta.diasCorridos} días corridos`],
     ].filter(Boolean);
 
     if (infoItems.length > 0) {
@@ -740,13 +794,13 @@ function Home() {
         doc.text(label + ":", 18, y);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(30, 30, 30);
-        doc.text(val, 50, y);
+        doc.text(String(val), 52, y);
         y += 6;
       });
       y += 4;
     }
 
-    // Tabla de partidas
+    // ── Tabla de partidas ──
     doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
     doc.setTextColor(6, 95, 70);
@@ -782,23 +836,19 @@ function Home() {
       },
     });
 
-    // Totales
+    // ── Totales ──
     const finalY = doc.lastAutoTable.finalY + 6;
     const totalesData = [
       ["Subtotal Costo Directo", resumen.cd],
       [`Gastos Generales (${cfg.gg}%)`, resumen.gg],
       [`Utilidad (${cfg.util}%)`, resumen.util],
       ["Subtotal Neto", resumen.neto],
-      [`IVA (${cfg.iva}%)`, resumen.iva],
-      ["TOTAL PROYECTO", resumen.total],
+      ...(incluirIVA ? [[`IVA (${cfg.iva}%)`, resumen.iva], ["TOTAL PROYECTO", resumen.total]] : [["TOTAL NETO", resumen.neto]]),
     ];
 
     autoTable(doc, {
       startY: finalY,
-      body: totalesData.map(([label, val], i) => [
-        label,
-        "$" + Math.round(val).toLocaleString("es-CL"),
-      ]),
+      body: totalesData.map(([label, val]) => [label, "$" + Math.round(val).toLocaleString("es-CL")]),
       styles: { fontSize: 8.5, cellPadding: 3 },
       columnStyles: {
         0: { cellWidth: 100 },
@@ -817,13 +867,16 @@ function Home() {
       tableWidth: 140,
     });
 
-    // Pie de página
+    // ── Pie de página ──
     const totalPags = doc.internal.getNumberOfPages();
     for (let i = 1; i <= totalPags; i++) {
       doc.setPage(i);
       doc.setFontSize(7);
       doc.setTextColor(160, 160, 160);
-      doc.text("Generado por APUchile · apuchile.vercel.app", 14, 292);
+      const pieIzq = nombreEmpresa
+        ? `${nombreEmpresa}${rutEmpresa ? " · " + rutEmpresa : ""} · Generado con APUchile`
+        : "Generado por APUchile · apuchile.vercel.app";
+      doc.text(pieIzq, 14, 292);
       doc.text(`Página ${i} de ${totalPags}`, ancho - 14, 292, { align: "right" });
     }
 

@@ -254,8 +254,7 @@ export default function Dashboard() {
       user_id: user.id,
       nombre: nombreNuevo.trim(),
       datos: [],
-      meta: metaGuardar,
-      cfg: cfgProyecto,
+      meta: { ...metaGuardar, _cfg: cfgProyecto }, // cfg dentro de meta para no requerir columna nueva
     }).select().single();
     setCreandoLoading(false);
     if (!error) {
