@@ -69,6 +69,7 @@ export default function Dashboard() {
   const canalRef = useRef(null);
   const [sidebarAbierto, setSidebarAbierto] = useState(true);
   const [confirmarLogout, setConfirmarLogout] = useState(false);
+  const [modalProyectos, setModalProyectos] = useState(false);
   const [guardandoSesion, setGuardandoSesion] = useState(false);
   const [progresoGuardado, setProgresoGuardado] = useState(0);
 
@@ -506,7 +507,7 @@ export default function Dashboard() {
             {[
               { icon:"＋", label:"Nuevo proyecto",  action:() => setCreando(true),
                 st:{background:"linear-gradient(135deg,#065f46,#059669)", borderBottom:"3px solid #34d399"}, txt:"#fff" },
-              { icon:"📂", label:"Mis proyectos",   action:() => document.getElementById("mis-proyectos")?.scrollIntoView({behavior:"smooth", block:"start"}),
+              { icon:"📂", label:"Mis proyectos",   action:() => setModalProyectos(true),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #059669"}, txt:"#374151" },
               { icon:"🏗️", label:"Ejecución de Obras", action:() => router.push("/obras"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
@@ -921,6 +922,86 @@ export default function Dashboard() {
               className="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-semibold text-sm hover:bg-emerald-700 disabled:opacity-50 btn-primary">
               {codigoCargando ? "Verificando..." : "Unirse al proyecto →"}
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Modal Mis Proyectos ── */}
+      {modalProyectos && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 anim-fade-in"
+          style={{backdropFilter:"blur(6px)", background:"rgba(0,0,0,0.4)"}}
+          onClick={() => setModalProyectos(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col anim-scale-in"
+            onClick={e => e.stopPropagation()}>
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+              <div>
+                <h3 className="text-sm font-bold text-gray-800">📂 Mis proyectos</h3>
+                <p className="text-[11px] text-gray-400 mt-0.5">{proyectos.length + proyectosCompartidos.length} proyecto{(proyectos.length + proyectosCompartidos.length) !== 1 ? "s" : ""}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button onClick={() => { setModalProyectos(false); setCreando(true); }}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 btn-press">
+                  + Nuevo
+                </button>
+                <button onClick={() => setModalProyectos(false)}
+                  className="text-gray-300 hover:text-gray-500 text-lg btn-press">✕</button>
+              </div>
+            </div>
+            {/* Lista */}
+            <div className="overflow-y-auto p-5">
+              {proyectos.length === 0 && proyectosCompartidos.length === 0 ? (
+                <div className="text-center py-16 text-gray-400">
+                  <p className="text-3xl mb-3">📋</p>
+                  <p className="text-sm mb-3">No tienes proyectos aún</p>
+                  <button onClick={() => { setModalProyectos(false); setCreando(true); }}
+                    className="text-emerald-600 text-sm font-semibold underline btn-press">
+                    Crea tu primer proyecto
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {[...proyectos, ...proyectosCompartidos].map((p, idx) => {
+                    const m = p.meta || {};
+                    const dc = m.diasCorridos || diasCorridos(m.fechaInicio, m.fechaTermino);
+                    const zona = m.zona ?? 0;
+                    const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
+                    const total = cd * 1.28 * 1.19;
+                    const montoLabel = total >= 1e6
+                      ? `$${(total / 1e6).toFixed(1)}M`
+                      : total > 0 ? `$${Math.round(total).toLocaleString("es-CL")}` : null;
+                    const esCompartido = !!p._compartido;
+                    return (
+                      <button key={p.id} onClick={() => { setModalProyectos(false); abrirProyecto(p.id); }}
+                        className="bg-white rounded-xl text-left group card-hover anim-fade-up"
+                        style={{animationDelay:`${idx * 40}ms`, padding:16,
+                          border: esCompartido ? "1.5px solid #dbeafe" : "1.5px solid #f1f5f9",
+                          borderBottom: esCompartido ? "3px solid #3b82f6" : "3px solid #059669",
+                          boxShadow:"0 1px 4px rgba(0,0,0,.05)"}}>
+                        <div className="flex items-start justify-between mb-2">
+                          <span className="text-xl">{esCompartido ? "🤝" : "📋"}</span>
+                          {esCompartido && (
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-600">
+                              {p._rol === "visualizar" ? "Ver" : p._rol === "editar" ? "Editar" : "Admin"}
+                            </span>
+                          )}
+                        </div>
+                        <div className="font-semibold text-sm mb-1 truncate text-gray-800">{p.nombre}</div>
+                        {montoLabel && (
+                          <div className="font-extrabold mb-1" style={{fontSize:16, color: esCompartido ? "#3b82f6" : "#059669"}}>{montoLabel}</div>
+                        )}
+                        {m.region && <p className="text-[11px] text-gray-400 truncate">{m.region}</p>}
+                        <div className="flex items-center justify-between text-[11px] pt-2 mt-1"
+                          style={{borderTop:"1px solid #f1f5f9", color:"#94a3b8"}}>
+                          <span>{(p.datos || []).length} partidas</span>
+                          {dc && <span style={{color: esCompartido ? "#3b82f6" : "#059669", fontWeight:600}}>{dc} días</span>}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
