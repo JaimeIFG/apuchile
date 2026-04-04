@@ -569,7 +569,7 @@ function Home() {
 
   return (
     <div className="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
-      <LoadingOverlay visible={procesando} mensaje="Analizando documento con ONDAC..." />
+      <LoadingOverlay visible={procesando} mensaje="Analizando documento..." />
 
       {/* ── Rail lateral ── */}
       <div className="w-[68px] bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-1 shrink-0 shadow-sm z-10">
@@ -786,7 +786,7 @@ function Home() {
                   <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-5 anim-fade-up delay-200">
                     <div className="px-5 py-3 bg-blue-50 border-b border-blue-100 flex items-center gap-2">
                       <span className="text-blue-500">📋</span>
-                      <span className="font-semibold text-blue-800 text-sm">Desglose de insumos ONDAC 2017</span>
+                      <span className="font-semibold text-blue-800 text-sm">Desglose de insumos</span>
                     </div>
                     <div className="overflow-x-auto">
                       <table className="w-full text-xs">
@@ -886,7 +886,7 @@ function Home() {
               <div className="text-center py-20 text-gray-400 anim-fade-in">
                 <p className="text-4xl mb-4">📋</p>
                 <p className="mb-2 font-medium text-gray-500">No hay partidas agregadas</p>
-                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca ONDAC</button>
+                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca</button>
               </div>
             ) : (
               <>
@@ -1108,7 +1108,7 @@ function Home() {
           {tab === "anexos" && (
           <div className="flex-1 overflow-y-auto p-5 max-w-3xl anim-fade-up">
             <h2 className="text-base font-semibold mb-2 text-gray-800">Anexos del proyecto</h2>
-            <p className="text-xs text-gray-400 mb-6">Sube documentos del proyecto. Los PDF y Excel pueden procesarse automáticamente con IA para detectar partidas ONDAC.</p>
+            <p className="text-xs text-gray-400 mb-6">Sube documentos del proyecto. Los PDF y Excel pueden procesarse automáticamente con IA para detectar partidas.</p>
 
             {/* Zona de subida */}
             <AnexoUploader onSubir={subirYProcesar} procesando={procesando} inputRef={anexoInputRef}/>
@@ -1119,7 +1119,7 @@ function Home() {
                 <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin shrink-0"/>
                 <div>
                   <p className="text-sm font-medium text-emerald-700">Procesando documento...</p>
-                  <p className="text-xs text-emerald-500 mt-0.5">Extrayendo texto y cruzando con base ONDAC</p>
+                  <p className="text-xs text-emerald-500 mt-0.5">Extrayendo texto y cruzando con base de datos</p>
                 </div>
               </div>
             )}
@@ -2014,7 +2014,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
         <div className="text-center text-gray-400">
           <p className="text-5xl mb-4">📅</p>
           <p className="text-base font-medium text-gray-500 mb-2">No hay partidas en el proyecto</p>
-          <button onClick={() => onGoTo("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca ONDAC</button>
+          <button onClick={() => onGoTo("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca</button>
         </div>
       </div>
     );
@@ -2589,7 +2589,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       <div className="flex-1 flex flex-col items-center justify-center gap-4 text-gray-400 anim-fade-in">
         <span className="text-6xl">🔍</span>
         <p className="text-base font-medium text-gray-500">Sin templates disponibles</p>
-        <p className="text-xs text-center max-w-xs">Las familias ONDAC de tus partidas aún no tienen especificaciones en la base de datos.</p>
+        <p className="text-xs text-center max-w-xs">Las familias de tus partidas aún no tienen especificaciones en la base de datos.</p>
       </div>
     );
   }
@@ -2660,7 +2660,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
               <div className="flex-1 min-w-0">
                 <p className="text-[9px] font-extrabold tracking-[.18em] uppercase text-white/50 mb-2 flex items-center gap-2">
                   <span className="inline-block w-5 h-0.5 bg-orange-400 rounded shrink-0"/>
-                  Especificaciones Técnicas · ONDAC 2017
+                  Especificaciones Técnicas
                 </p>
                 {/* Biggest text on card — 22px */}
                 <h1 className="text-[22px] font-black text-white leading-tight tracking-tight mb-1.5">
@@ -2832,7 +2832,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
         <div className="rounded-xl py-3 px-5 flex justify-between items-center anim-fade-in" style={{background:"#1e3a8a"}}>
           <span className="text-[10px] font-bold text-blue-400 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-orange-400 inline-block shrink-0"/>
-            APUchile · Base ONDAC 2017
+            APUchile
           </span>
           <span className="text-[10px] font-semibold text-blue-600">{new Date().getFullYear()}</span>
         </div>

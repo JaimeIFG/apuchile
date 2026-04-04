@@ -160,7 +160,7 @@ export default function LoginPage() {
           Simplifica tus análisis<br/>de precios unitarios
         </h2>
         <p className="text-emerald-200 text-center text-sm leading-relaxed max-w-xs">
-          Base de datos ONDAC 2017 · Cálculo automático de costos · Desglose de insumos · Exportación de presupuestos
+          Cálculo automático de costos · Desglose de insumos · Precios actualizados · Exportación de presupuestos
         </p>
         <div className="mt-12 grid grid-cols-2 gap-4 w-full max-w-xs">
           {["821 APUs disponibles","16 categorías","Cálculo automático","Proyectos guardados"].map((f, i) => (
