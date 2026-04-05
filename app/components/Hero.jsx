@@ -154,7 +154,7 @@ const FEATURES = [
     color: "#0ea5e9",
     bg: "#f0f9ff",
     title: "Precios Regionales",
-    desc: "Ajusta precios de materiales según la región de Chile en tiempo real. Consulta valores actualizados de Sodimac y Construmart con factores de zona para todas las regiones del país.",
+    desc: "Ajusta precios de materiales según la región de Chile en tiempo real. Consulta valores actualizados de proveedores locales con factores de zona para todas las regiones del país.",
   },
   {
     icon: (
@@ -219,8 +219,8 @@ const FEATURES = [
     ),
     color: "#6366f1",
     bg: "#eef2ff",
-    title: "Licitaciones Mercado Público",
-    desc: "Consulta licitaciones de construcción activas en Mercado Público directamente desde el dashboard. Filtra por región, tipo, monto y fecha de cierre para encontrar oportunidades relevantes.",
+    title: "Licitaciones Públicas",
+    desc: "Consulta licitaciones de construcción activas directamente desde el dashboard. Filtra por región, tipo, monto y fecha de cierre para encontrar oportunidades relevantes en todo Chile.",
   },
 ];
 
