@@ -5,6 +5,56 @@ import { supabase } from "../lib/supabase";
 
 const PAISES = ["Chile","Argentina","Bolivia","Brasil","Colombia","Ecuador","Paraguay","Perú","Uruguay","Venezuela","México","España","Otro"];
 
+function LeftPanel({ mensaje }) {
+  return (
+    <div
+      className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center px-16 relative overflow-hidden"
+      style={{ background: "linear-gradient(160deg, #f8fafc 0%, #f1f5f9 40%, #ede9fe 100%)" }}
+    >
+      {/* Orb decorativo */}
+      <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: 400, background: "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,0.13) 0%, transparent 70%)" }} />
+      <div className="absolute pointer-events-none" style={{ bottom: "10%", right: "-5%", width: 300, height: 300, borderRadius: "50%", background: "rgba(139,92,246,0.07)", filter: "blur(70px)" }} />
+
+      {/* Grid sutil */}
+      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
+
+      <div className="relative z-10 max-w-sm w-full text-center">
+        {/* Logo */}
+        <div className="flex items-center justify-center gap-3 mb-10">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-base"
+            style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}>A</div>
+          <span className="text-2xl font-bold tracking-tight" style={{ color: "#0f172a" }}>
+            APU<span style={{ color: "#6366f1" }}>desk</span>
+          </span>
+        </div>
+
+        <h2 className="text-2xl font-bold mb-3 leading-snug" style={{ color: "#0f172a" }}>
+          {mensaje || <>Optimiza tus proyectos<br/>de construcción</>}
+        </h2>
+        <p className="text-sm leading-relaxed mb-10" style={{ color: "#64748b" }}>
+          Presupuestos, carta Gantt, colaboración en tiempo real y más — todo en un solo lugar.
+        </p>
+
+        {/* Feature pills */}
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { icon: "📐", label: "+1.100 partidas" },
+            { icon: "🤖", label: "IA integrada" },
+            { icon: "📊", label: "Carta Gantt" },
+            { icon: "📄", label: "PDF profesional" },
+          ].map((f) => (
+            <div key={f.label} className="flex items-center gap-2.5 px-4 py-3 rounded-xl border"
+              style={{ background: "rgba(255,255,255,0.7)", borderColor: "rgba(99,102,241,0.15)", backdropFilter: "blur(8px)" }}>
+              <span className="text-base">{f.icon}</span>
+              <span className="text-xs font-semibold" style={{ color: "#374151" }}>{f.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const [modo, setModo] = useState("ingresar");
@@ -107,10 +157,7 @@ const [resetMode, setResetMode] = useState(false);
   if (otpStep) {
     return (
       <div className="min-h-screen flex">
-        <div className="hidden lg:flex lg:w-1/2 bg-indigo-800 flex-col items-center justify-center px-16 text-white">
-          <span className="text-4xl font-bold tracking-tight mb-6">APU<span className="text-indigo-300">chile</span></span>
-          <p className="text-indigo-200 text-center text-sm">Casi listo — confirma tu correo para activar tu cuenta</p>
-        </div>
+        <LeftPanel mensaje="Casi listo — confirma tu correo para activar tu cuenta" />
         <div className="w-full lg:w-1/2 flex items-center justify-center px-8 bg-white">
           <div className="w-full max-w-md text-center">
             <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -150,29 +197,13 @@ const [resetMode, setResetMode] = useState(false);
 
   return (
     <div className="min-h-screen flex">
-      {/* Panel izquierdo */}
-      <div className="hidden lg:flex lg:w-1/2 bg-indigo-800 flex-col items-center justify-center px-16 text-white">
-        <div className="mb-8">
-          <span className="text-4xl font-bold tracking-tight">APU<span className="text-indigo-300">chile</span></span>
-        </div>
-        <h2 className="text-2xl font-semibold text-center mb-4 leading-snug">
-          Simplifica tus análisis<br/>de precios unitarios
-        </h2>
-        <p className="text-indigo-200 text-center text-sm leading-relaxed max-w-xs">
-          Cálculo automático de costos · Desglose de insumos · Precios actualizados · Exportación de presupuestos
-        </p>
-        <div className="mt-12 grid grid-cols-2 gap-4 w-full max-w-xs">
-          {["821 APUs disponibles","16 categorías","Cálculo automático","Proyectos guardados"].map((f, i) => (
-            <div key={i} className="bg-indigo-700/50 rounded-xl px-4 py-3 text-sm text-indigo-100">{f}</div>
-          ))}
-        </div>
-      </div>
+      <LeftPanel />
 
       {/* Panel derecho */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-8 bg-white">
         <div className="w-full max-w-md">
           <div className="lg:hidden text-center mb-8">
-            <span className="text-3xl font-bold text-indigo-800">APU<span className="text-indigo-500">chile</span></span>
+            <span className="text-3xl font-bold" style={{ color: "#0f172a" }}>APU<span style={{ color: "#6366f1" }}>desk</span></span>
           </div>
           <div className="flex bg-gray-100 rounded-xl p-1 mb-8">
             {[["ingresar","Ingresar"],["registrar","Registrarse"]].map(([m, label]) => (
