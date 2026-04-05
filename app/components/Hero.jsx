@@ -479,19 +479,275 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* ── FOOTER MÍNIMO ─────────────────────────────────────────────────── */}
-      <footer style={{ background: "#f8fafc", borderTop: "1px solid #e2e8f0", padding: "32px 24px" }}>
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md flex items-center justify-center text-white font-bold text-xs"
-              style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}>A</div>
-            <span className="font-bold text-sm" style={{ color: "#0f172a" }}>APU<span style={{ color: "#6366f1" }}>desk</span></span>
+      {/* ── DOCUMENTACIÓN / FAQ ───────────────────────────────────────────── */}
+      <FAQ />
+
+      {/* ── CONTACTO ──────────────────────────────────────────────────────── */}
+      <Contacto />
+
+      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
+      <footer style={{ background: "#0f172a", padding: "48px 24px" }}>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+                style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}>A</div>
+              <span className="font-bold text-lg" style={{ color: "#fff" }}>APU<span style={{ color: "#818cf8" }}>desk</span></span>
+            </div>
+            <div className="flex items-center gap-6">
+              {["Características","Documentación","Contacto"].map(item => (
+                <a key={item} href={`#${item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}`}
+                  className="text-sm transition-colors duration-200"
+                  style={{ color: "#64748b" }}
+                  onMouseEnter={e => e.currentTarget.style.color="#fff"}
+                  onMouseLeave={e => e.currentTarget.style.color="#64748b"}
+                >{item}</a>
+              ))}
+            </div>
           </div>
-          <p className="text-xs" style={{ color: "#94a3b8" }}>
-            © {new Date().getFullYear()} APUdesk · Hecho para constructores chilenos
-          </p>
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "24px" }} className="flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p className="text-xs" style={{ color: "#475569" }}>© {new Date().getFullYear()} APUdesk · Hecho para constructores chilenos</p>
+            <p className="text-xs" style={{ color: "#475569" }}>contacto@apudesk.cl</p>
+          </div>
         </div>
       </footer>
     </div>
+  );
+}
+
+// ── FAQ / DOCUMENTACIÓN ───────────────────────────────────────────────────────
+const FAQS = [
+  {
+    q: "¿Cómo creo mi primer proyecto?",
+    a: "Ingresa al dashboard, haz clic en \"Nuevo proyecto\" y ponle un nombre. En segundos tendrás tu espacio listo para agregar partidas, configurar tu presupuesto y comenzar a planificar.",
+  },
+  {
+    q: "¿Cómo agrego partidas a mi presupuesto?",
+    a: "Desde la vista del proyecto, abre la pestaña \"Biblioteca\". Busca la partida por nombre o código, ajusta la cantidad y confírmala. También puedes crear partidas personalizadas desde cero.",
+  },
+  {
+    q: "¿Puedo importar un presupuesto que ya tengo en Excel o PDF?",
+    a: "Sí. En la sección de Anexos del proyecto, sube tu archivo y la IA lo procesa automáticamente extrayendo las partidas, cantidades y precios en segundos.",
+  },
+  {
+    q: "¿Cómo funciona la carta Gantt?",
+    a: "La Gantt se genera automáticamente a partir de tus partidas. Puedes arrastrar y reorganizar las fases, definir dependencias manualmente o dejar que la IA las sugiera según la secuencia constructiva.",
+  },
+  {
+    q: "¿Cómo invito a mi equipo al proyecto?",
+    a: "En la barra lateral del proyecto, haz clic en \"Invitar colaborador\", ingresa el correo y elige el rol: visualizar, editar o administrar. Recibirán un código de acceso por email.",
+  },
+  {
+    q: "¿El PDF generado tiene mi logo y datos de empresa?",
+    a: "Sí. En Configuración puedes subir tu logo, ingresar el nombre de tu empresa, RUT y datos de contacto. El PDF los incluirá automáticamente en cada exportación.",
+  },
+  {
+    q: "¿Los precios de materiales están actualizados?",
+    a: "Los precios base se actualizan periódicamente con valores del mercado chileno. Además puedes ajustarlos manualmente por partida o aplicar el factor de tu región para obtener precios más precisos.",
+  },
+  {
+    q: "¿Mis datos están seguros?",
+    a: "Todos los proyectos se almacenan de forma segura con cifrado en tránsito y en reposo. Solo tú y los colaboradores que invites tienen acceso a tu información.",
+  },
+];
+
+function FAQ() {
+  const [abierto, setAbierto] = useState(null);
+  return (
+    <section id="documentacion" style={{ background: "#f8fafc", paddingTop: "96px", paddingBottom: "96px" }}>
+      <div className="max-w-4xl mx-auto px-6">
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} className="text-center mb-14">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-4"
+            style={{ background: "#eef2ff", color: "#6366f1" }}>
+            Documentación
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: "#0f172a" }}>
+            Preguntas{" "}
+            <span style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              frecuentes
+            </span>
+          </h2>
+          <p className="text-lg" style={{ color: "#64748b" }}>
+            Todo lo que necesitas saber para empezar a usar APUdesk.
+          </p>
+        </motion.div>
+
+        <div className="space-y-3">
+          {FAQS.map((faq, i) => (
+            <motion.div
+              key={i}
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i * 0.06}
+              className="rounded-2xl border overflow-hidden"
+              style={{ background: "#fff", borderColor: abierto === i ? "rgba(99,102,241,0.3)" : "#e2e8f0" }}
+            >
+              <button
+                className="w-full flex items-center justify-between px-6 py-4 text-left cursor-pointer"
+                onClick={() => setAbierto(abierto === i ? null : i)}
+              >
+                <span className="font-semibold text-sm pr-4" style={{ color: "#0f172a" }}>{faq.q}</span>
+                <motion.span
+                  animate={{ rotate: abierto === i ? 45 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ background: abierto === i ? "#6366f1" : "#f1f5f9", color: abierto === i ? "#fff" : "#64748b" }}
+                >
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                  </svg>
+                </motion.span>
+              </button>
+              <motion.div
+                initial={false}
+                animate={{ height: abierto === i ? "auto" : 0, opacity: abierto === i ? 1 : 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                style={{ overflow: "hidden" }}
+              >
+                <p className="px-6 pb-5 text-sm leading-relaxed" style={{ color: "#64748b" }}>{faq.a}</p>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── CONTACTO ──────────────────────────────────────────────────────────────────
+function Contacto() {
+  const [form, setForm] = useState({ nombre: "", email: "", mensaje: "" });
+  const [estado, setEstado] = useState(null); // null | "enviando" | "ok" | "error"
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.nombre || !form.email || !form.mensaje) return;
+    setEstado("enviando");
+    // Simula envío — aquí conectarías tu API de correo
+    await new Promise(r => setTimeout(r, 1200));
+    setEstado("ok");
+  };
+
+  return (
+    <section id="contacto" style={{ background: "#fff", paddingTop: "96px", paddingBottom: "96px" }}>
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+          {/* Lado izquierdo */}
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0}>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-4"
+              style={{ background: "#eef2ff", color: "#6366f1" }}>
+              Contacto
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: "#0f172a" }}>
+              ¿Tienes alguna{" "}
+              <span style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                pregunta?
+              </span>
+            </h2>
+            <p className="text-lg mb-10 leading-relaxed" style={{ color: "#64748b" }}>
+              Estamos aquí para ayudarte. Escríbenos y te respondemos en menos de 24 horas hábiles.
+            </p>
+
+            <div className="space-y-6">
+              {[
+                {
+                  icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
+                  label: "Email de soporte",
+                  value: "contacto@apudesk.cl",
+                },
+                {
+                  icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+                  label: "Tiempo de respuesta",
+                  value: "Menos de 24 horas hábiles",
+                },
+                {
+                  icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+                  label: "Ubicación",
+                  value: "Chile",
+                },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: "#eef2ff", color: "#6366f1" }}>
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium mb-0.5" style={{ color: "#94a3b8" }}>{item.label}</p>
+                    <p className="text-sm font-semibold" style={{ color: "#0f172a" }}>{item.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Formulario */}
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.15}>
+            <div className="rounded-2xl p-8 border" style={{ background: "#f8fafc", borderColor: "#e2e8f0" }}>
+              {estado === "ok" ? (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-10">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                    style={{ background: "#f0fdf4" }}>
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="#10b981" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <h3 className="font-bold text-lg mb-2" style={{ color: "#0f172a" }}>¡Mensaje enviado!</h3>
+                  <p className="text-sm" style={{ color: "#64748b" }}>Te responderemos a la brevedad. Revisa tu bandeja de entrada.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: "#374151" }}>Nombre</label>
+                    <input
+                      type="text" placeholder="Tu nombre"
+                      value={form.nombre} onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
+                      required
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
+                      style={{ background: "#fff", border: "1px solid #e2e8f0", color: "#0f172a" }}
+                      onFocus={e => e.target.style.borderColor = "#6366f1"}
+                      onBlur={e => e.target.style.borderColor = "#e2e8f0"}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: "#374151" }}>Email</label>
+                    <input
+                      type="email" placeholder="tu@email.com"
+                      value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                      required
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
+                      style={{ background: "#fff", border: "1px solid #e2e8f0", color: "#0f172a" }}
+                      onFocus={e => e.target.style.borderColor = "#6366f1"}
+                      onBlur={e => e.target.style.borderColor = "#e2e8f0"}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: "#374151" }}>Mensaje</label>
+                    <textarea
+                      placeholder="¿En qué te podemos ayudar?"
+                      rows={4}
+                      value={form.mensaje} onChange={e => setForm(f => ({ ...f, mensaje: e.target.value }))}
+                      required
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200 resize-none"
+                      style={{ background: "#fff", border: "1px solid #e2e8f0", color: "#0f172a" }}
+                      onFocus={e => e.target.style.borderColor = "#6366f1"}
+                      onBlur={e => e.target.style.borderColor = "#e2e8f0"}
+                    />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    disabled={estado === "enviando"}
+                    className="w-full py-3.5 rounded-xl text-white font-semibold text-sm cursor-pointer transition-opacity duration-200"
+                    style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", opacity: estado === "enviando" ? 0.7 : 1 }}
+                  >
+                    {estado === "enviando" ? "Enviando..." : "Enviar mensaje"}
+                  </motion.button>
+                </form>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
   );
 }
