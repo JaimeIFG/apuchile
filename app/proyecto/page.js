@@ -478,8 +478,10 @@ function Home() {
     setColaboradores(prev => prev.map(c => c.id === colabId ? { ...c, rol: nuevoRol } : c));
   };
 
+  const CHAT_MAX_LARGO = 500;
   const enviarMensaje = async () => {
-    const texto = mensajeInput.trim();
+    // Sanitizar: recortar, limitar largo, eliminar caracteres de control
+    const texto = mensajeInput.trim().slice(0, CHAT_MAX_LARGO).replace(/[\u0000-\u001F\u007F]/g, "");
     if (!texto || !proyectoId) return;
     setMensajeInput("");
     // Limpiar typing al enviar
@@ -601,12 +603,12 @@ function Home() {
   }, [familiaActiva, busqueda]);
 
   const agregarPartida = (apu) => {
-    setProyecto((p) => [...p, { ...apu, cantidad: 1, id: Date.now() + Math.random() }]);
+    setProyecto((p) => [...p, { ...apu, cantidad: 1, id: crypto.randomUUID() }]);
   };
 
   const crearPartidaNueva = () => {
     const nueva = {
-      id: Date.now() + Math.random(),
+      id: crypto.randomUUID(),
       codigo: "CUSTOM",
       familia: "",
       desc: "Nueva partida",
@@ -623,7 +625,7 @@ function Home() {
   const duplicarPartida = (p) => {
     setProyecto(pr => {
       const idx = pr.findIndex(x => x.id === p.id);
-      const copia = { ...p, id: Date.now() + Math.random() };
+      const copia = { ...p, id: crypto.randomUUID() };
       const arr = [...pr];
       arr.splice(idx + 1, 0, copia);
       return arr;
@@ -931,7 +933,7 @@ function Home() {
     const nuevas = seleccionadas.map(p => ({
       ...p.apu,
       cantidad: p.cantidad || 1,
-      id: Date.now() + Math.random(),
+      id: crypto.randomUUID(),
     }));
     setProyecto(prev => [...prev, ...nuevas]);
     setMatchesAnexo(null);
@@ -1700,6 +1702,7 @@ function Home() {
                   }}
                   onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensaje(); }}}
                   placeholder="Escribe un mensaje..."
+                  maxLength={CHAT_MAX_LARGO}
                   className="flex-1 text-[12px] border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-400 input-focus"
                 />
                 <button onClick={enviarMensaje} disabled={!mensajeInput.trim()}

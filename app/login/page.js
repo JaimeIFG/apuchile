@@ -15,8 +15,7 @@ export default function LoginPage() {
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState("");
   const [otpLoading, setOtpLoading] = useState(false);
-  const [modoTexto, setModoTexto] = useState(true); // campo único por defecto
-  const [resetMode, setResetMode] = useState(false);
+const [resetMode, setResetMode] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetSent, setResetSent] = useState(false);
   const [resetLoading, setResetLoading] = useState(false);

@@ -4,14 +4,22 @@ import { useEffect, useRef } from "react";
 // Cierra sesión y redirige si el usuario está inactivo más de `minutos` minutos
 export function useInactividad(supabase, router, minutos = 10) {
   const timer = useRef(null);
+  const minutosRef = useRef(minutos);
+  const supabaseRef = useRef(supabase);
+  const routerRef = useRef(router);
+
+  // Mantener refs actualizadas sin re-ejecutar el effect
+  minutosRef.current = minutos;
+  supabaseRef.current = supabase;
+  routerRef.current = router;
 
   useEffect(() => {
     const reset = () => {
       clearTimeout(timer.current);
       timer.current = setTimeout(async () => {
-        await supabase.auth.signOut();
-        router.push("/login");
-      }, minutos * 60 * 1000);
+        await supabaseRef.current.auth.signOut();
+        routerRef.current.push("/login");
+      }, minutosRef.current * 60 * 1000);
     };
 
     const eventos = ["mousemove", "mousedown", "keydown", "touchstart", "scroll", "click"];
@@ -22,5 +30,5 @@ export function useInactividad(supabase, router, minutos = 10) {
       clearTimeout(timer.current);
       eventos.forEach(e => window.removeEventListener(e, reset));
     };
-  }, []);
+  }, []); // effect solo corre al montar — refs mantienen valores frescos
 }

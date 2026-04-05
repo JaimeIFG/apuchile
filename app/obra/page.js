@@ -1291,7 +1291,18 @@ function ObraDetail() {
   const guardar  = async () => {
     if (!obra) return;
     setGuardando(true);
-    await supabase.from("obras").update({...obra, updated_at:new Date().toISOString()}).eq("id",obraId);
+    // Campos explícitos — evita sobreescribir columnas del sistema (id, created_at, user_id)
+    const { nombre, estado_obra, region, mandante, unidad_tecnica, ito, contratista,
+      rut_contratista, numero_decreto, fecha_decreto, numero_contrato, fecha_contrato,
+      fecha_inicio, plazo_dias, fecha_termino_contractual, monto_contrato, presupuesto_oficial,
+      ubicacion, descripcion, estado } = obra;
+    await supabase.from("obras").update({
+      nombre, estado_obra, region, mandante, unidad_tecnica, ito, contratista,
+      rut_contratista, numero_decreto, fecha_decreto, numero_contrato, fecha_contrato,
+      fecha_inicio, plazo_dias, fecha_termino_contractual, monto_contrato, presupuesto_oficial,
+      ubicacion, descripcion, estado,
+      updated_at: new Date().toISOString(),
+    }).eq("id", obraId).eq("user_id", userId);
     setGuardando(false); setGuardadoOk(true);
     setTimeout(()=>setGuardadoOk(false),2000);
   };
