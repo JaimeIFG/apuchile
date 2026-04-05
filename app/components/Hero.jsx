@@ -132,7 +132,7 @@ const FEATURES = [
     color: "#6366f1",
     bg: "#eef2ff",
     title: "Presupuestos APU",
-    desc: "Genera análisis de precios unitarios con la biblioteca ONDAC completa (+1.159 partidas). Calcula mano de obra, materiales, herramientas y leyes sociales automáticamente.",
+    desc: "Genera análisis de precios unitarios con una biblioteca de más de 1.100 partidas de construcción. Calcula mano de obra, materiales, herramientas y leyes sociales automáticamente.",
   },
   {
     icon: (
@@ -187,7 +187,7 @@ const FEATURES = [
     color: "#ec4899",
     bg: "#fdf2f8",
     title: "Extracción IA de Documentos",
-    desc: "Sube un PDF o Excel de presupuesto existente y la IA extrae automáticamente las partidas, cantidades y precios. También importa desde archivos ONDAC y Excel de EP.",
+    desc: "Sube un PDF o Excel de presupuesto existente y la IA extrae automáticamente las partidas, cantidades y precios. Compatible con formatos estándar del rubro.",
   },
   {
     icon: (
@@ -209,7 +209,7 @@ const FEATURES = [
     color: "#f97316",
     bg: "#fff7ed",
     title: "Especificaciones Técnicas",
-    desc: "Genera EE.TT. profesionales por partida con un clic: normas aplicables, materiales requeridos, procedimiento de ejecución y criterios de medición y pago según estándares MINVU/SERVIU.",
+    desc: "Genera especificaciones técnicas profesionales por partida con un clic: normas aplicables, materiales requeridos, procedimiento de ejecución y criterios de medición y pago.",
   },
   {
     icon: (
