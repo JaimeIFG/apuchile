@@ -1540,7 +1540,7 @@ ${partidas.map(p=>`
   <p style="font-size:10px;color:#9ca3af;margin:0">${p.unidad||""} · ${fmtP(p.valor_total)}</p>
   <p class="desc">${p.descripcion||""}</p>
 </div>`).join("")}
-<div class="footer">Generado por APUchile · ${new Date().toLocaleDateString("es-CL")}</div>
+<div class="footer">Generado por APUdesk · ${new Date().toLocaleDateString("es-CL")}</div>
 </body></html>`;
   }
 

@@ -101,7 +101,19 @@ function getFase(apu) {
   return FASE_ORDEN[fam.substring(0,2)] || FASE_ORDEN[fam[0]] || 7;
 }
 
+// Caché de calcAPU: evita recalcular la misma partida+cfg en cada render
+const _calcAPUCache = new Map();
 function calcAPU(apu, cfg) {
+  // Clave basada en insumos + overrides + cfg relevante
+  const key = `${apu.id||apu.codigo||""}|${apu.precioOverride||""}|${JSON.stringify(apu.insumos||[])}|${cfg.zona}|${cfg.llss}|${cfg.herr}|${cfg.mo_m1}|${cfg.mo_m2}|${cfg.mo_ay}|${cfg.mo_inst}`;
+  if (_calcAPUCache.has(key)) return _calcAPUCache.get(key);
+  const result = _calcAPUImpl(apu, cfg);
+  // Limitar tamaño de caché para no acumular memoria indefinidamente
+  if (_calcAPUCache.size > 500) _calcAPUCache.clear();
+  _calcAPUCache.set(key, result);
+  return result;
+}
+function _calcAPUImpl(apu, cfg) {
   const zona = cfg.zona;
   const llss = cfg.llss / 100;
   const herrPct = cfg.herr / 100;
@@ -272,7 +284,9 @@ function Home() {
   const [chatAbierto, setChatAbierto] = useState(false);
   const [mensajes, setMensajes] = useState([]);
   const [mensajeInput, setMensajeInput] = useState("");
-  const [canalChat, setCanalChat] = useState(null);
+  const [canalChat,   setCanalChat]   = useState(null);
+  const [canalColabs, setCanalColabs] = useState(null);
+  const [canalDatos,  setCanalDatos]  = useState(null);
   const [mensajesNoLeidos, setMensajesNoLeidos] = useState(0);
   const [escribiendo, setEscribiendo] = useState([]); // nombres de quienes están escribiendo
   const [hayMasMensajes, setHayMasMensajes] = useState(false);
@@ -379,7 +393,7 @@ function Home() {
         setCanalChat(canalMsg);
 
         // Realtime: colaboradores (para que el dueño vea cuando alguien se une)
-        supabase
+        const canalColabs = supabase
           .channel(`proyecto-colabs-${proyectoId}`)
           .on("postgres_changes", {
             event: "*",
@@ -394,9 +408,10 @@ function Home() {
             setColaboradores(colabs || []);
           })
           .subscribe();
+        setCanalColabs(canalColabs);
 
         // Realtime: cambios en el proyecto (sincronizar partidas entre usuarios)
-        supabase
+        const canalDatos = supabase
           .channel(`proyecto-datos-${proyectoId}`)
           .on("postgres_changes", {
             event: "UPDATE",
@@ -409,32 +424,40 @@ function Home() {
             }
           })
           .subscribe();
+        setCanalDatos(canalDatos);
       }
       // Si viene con archivo desde dashboard, auto-procesar
       if (archivoParam && tipoParam) {
         const ext = archivoParam.split(".").pop().toLowerCase();
         setAnexos([{ name: archivoParam.split("/").pop(), size: 0 }]);
         setProcesando(true);
-        fetch("/api/procesar-anexo", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ storagePath: archivoParam, tipo: tipoParam }),
-        }).then(r => r.json()).then(d => {
-          setProcesando(false);
-          if (d.error) alert("Error al procesar: " + d.error);
-          else setMatchesAnexo({ nombre: archivoParam.split("/").pop(), partidas: d.partidas || [] });
-        }).catch(() => setProcesando(false));
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          fetch("/api/procesar-anexo", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+            },
+            body: JSON.stringify({ storagePath: archivoParam, tipo: tipoParam }),
+          }).then(r => r.json()).then(d => {
+            setProcesando(false);
+            if (d.error) alert("Error al procesar: " + d.error);
+            else setMatchesAnexo({ nombre: archivoParam.split("/").pop(), partidas: d.partidas || [] });
+          }).catch(() => setProcesando(false));
+        });
       }
     });
   }, [proyectoId]);
 
-  // Cleanup canales al salir
+  // Cleanup canales al salir o al cambiar de proyecto
   useEffect(() => {
     return () => {
       if (canalPresencia.current) supabase.removeChannel(canalPresencia.current);
-      if (canalChat) supabase.removeChannel(canalChat);
+      if (canalChat)   supabase.removeChannel(canalChat);
+      if (canalColabs) supabase.removeChannel(canalColabs);
+      if (canalDatos)  supabase.removeChannel(canalDatos);
     };
-  }, [canalChat]);
+  }, [canalChat, canalColabs, canalDatos]);
 
   // Permisos derivados del rol
   const puedeEditar     = ["owner", "administrar", "editar"].includes(rolUsuario);
@@ -758,7 +781,7 @@ function Home() {
     } else {
       doc.setFontSize(18);
       doc.setFont("helvetica", "bold");
-      doc.text("APUchile", textoX, 12);
+      doc.text("APUdesk", textoX, 12);
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
       doc.text("Análisis de Precios Unitarios", textoX, 20);
@@ -876,8 +899,8 @@ function Home() {
       doc.setFontSize(7);
       doc.setTextColor(160, 160, 160);
       const pieIzq = nombreEmpresa
-        ? `${nombreEmpresa}${rutEmpresa ? " · " + rutEmpresa : ""} · Generado con APUchile`
-        : "Generado por APUchile · apuchile.vercel.app";
+        ? `${nombreEmpresa}${rutEmpresa ? " · " + rutEmpresa : ""} · Generado con APUdesk`
+        : "Generado por APUdesk · apudesk.vercel.app";
       doc.text(pieIzq, 14, 292);
       doc.text(`Página ${i} de ${totalPags}`, ancho - 14, 292, { align: "right" });
     }
@@ -915,9 +938,13 @@ function Home() {
 
     // 2. El servidor descarga desde Supabase, extrae texto y cruza con ONDAC
     try {
+      const { data: { session: sess } } = await supabase.auth.getSession();
       const res = await fetch("/api/procesar-anexo", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(sess?.access_token ? { Authorization: `Bearer ${sess.access_token}` } : {}),
+        },
         body: JSON.stringify({ storagePath: path, tipo }),
       });
       const data = await res.json();
@@ -2484,9 +2511,13 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
     setCargandoIA(true);
     setMsgSugerencia(null);
     try {
+      const { data: { session: sessGantt } } = await supabase.auth.getSession();
       const res = await fetch("/api/sugerir-dependencias", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(sessGantt?.access_token ? { Authorization: `Bearer ${sessGantt.access_token}` } : {}),
+        },
         body: JSON.stringify({ partidas: items.map(i => ({ id: i.id, codigo: i.codigo, familia: i.familia, desc: i.desc, descripcion: i.descripcion })) }),
       });
       const data = await res.json();
@@ -2550,7 +2581,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
     doc.rect(0, 0, W, 22, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(14); doc.setFont("helvetica","bold");
-    doc.text("APUchile · Carta Gantt", 10, 10);
+    doc.text("APUdesk · Carta Gantt", 10, 10);
     doc.setFontSize(9); doc.setFont("helvetica","normal");
     doc.text(proyectoNombre, 10, 17);
     doc.setFontSize(8);
@@ -2664,7 +2695,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
     doc.line(0, H - 8, W, H - 8);
     doc.setTextColor(160, 160, 160);
     doc.setFontSize(6.5); doc.setFont("helvetica","normal");
-    doc.text("Generado por APUchile · apuchile.vercel.app · Duración estimada, sujeta a ajuste por el proyectista", 10, H - 4);
+    doc.text("Generado por APUdesk · apudesk.vercel.app · Duración estimada, sujeta a ajuste por el proyectista", 10, H - 4);
 
     doc.save(`${proyectoNombre.replace(/\s+/g,"_")}_gantt.pdf`);
   };
@@ -3093,7 +3124,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       doc.setFontSize(8);
       doc.setTextColor(160, 160, 160);
       const fechaGen = new Date().toLocaleDateString("es-CL", { day:"2-digit", month:"long", year:"numeric" });
-      doc.text(`Generado por APUchile · ${fechaGen}`, ML, y);
+      doc.text(`Generado por APUdesk · ${fechaGen}`, ML, y);
 
       // ── PAGE 2: Generalidades + Orden de Prelación ──────────────────────
       doc.addPage();
@@ -3493,7 +3524,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
         <div className="rounded-xl py-3 px-5 flex justify-between items-center anim-fade-in" style={{background:"#1e3a8a"}}>
           <span className="text-[10px] font-bold text-blue-400 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-orange-400 inline-block shrink-0"/>
-            APUchile
+            APUdesk
           </span>
           <span className="text-[10px] font-semibold text-blue-600">{new Date().getFullYear()}</span>
         </div>

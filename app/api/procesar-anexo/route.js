@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { requireAuth } from "../_auth";
 import ONDAC_APUS from "../../ondac_data_nuevo.json";
 
 // Normalizar texto: minúsculas, sin tildes, sin puntuación
@@ -45,6 +46,10 @@ async function extraerTexto(buffer, ext) {
 }
 
 export async function POST(request) {
+  // Verificar autenticación
+  const { user, errorResponse } = await requireAuth(request);
+  if (errorResponse) return errorResponse;
+
   try {
     const supabaseAdmin = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -55,13 +60,19 @@ export async function POST(request) {
     if (!storagePath || !tipo) return NextResponse.json({ error: "Faltan parámetros" }, { status: 400 });
     if (tipo === "plano") return NextResponse.json({ partidas: [] });
 
+    // Verificar que el path pertenece al usuario autenticado (formato: userId/...)
+    const pathOwner = storagePath.split("/")[0];
+    if (pathOwner !== user.id) {
+      return NextResponse.json({ error: "Sin permiso para acceder a este archivo" }, { status: 403 });
+    }
+
     // 1. Descargar archivo desde Supabase Storage
     const { data: fileData, error: dlErr } = await supabaseAdmin.storage
       .from("anexos")
       .download(storagePath);
 
     if (dlErr || !fileData) {
-      return NextResponse.json({ error: "No se pudo descargar el archivo: " + dlErr?.message }, { status: 500 });
+      return NextResponse.json({ error: "No se pudo descargar el archivo" }, { status: 500 });
     }
 
     const ext = storagePath.split(".").pop().toLowerCase();
@@ -114,6 +125,6 @@ export async function POST(request) {
     return NextResponse.json({ partidas, metodo: "local" });
   } catch (err) {
     console.error("Error procesando anexo:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: "Error al procesar el archivo" }, { status: 500 });
   }
 }

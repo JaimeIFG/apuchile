@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
 
 /* ── Tipo metadata ── */
 const TIPO_INFO = {
@@ -62,10 +63,14 @@ export default function LicitacionesTicker() {
   const [diasFiltro,   setDiasFiltro]   = useState(null); // null = todos
 
   useEffect(() => {
-    fetch("/api/licitaciones")
-      .then(r => r.json())
-      .then(d => { setLicitaciones(d.licitaciones || []); setLoading(false); })
-      .catch(() => setLoading(false));
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      fetch("/api/licitaciones", {
+        headers: session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {},
+      })
+        .then(r => r.json())
+        .then(d => { setLicitaciones(d.licitaciones || []); setLoading(false); })
+        .catch(() => setLoading(false));
+    });
   }, []);
 
   /* ── Aplicar filtros ── */

@@ -2,7 +2,7 @@
  * Base de datos de Especificaciones Técnicas (EE.TT.)
  * Fuentes: EETT 1-8 (Fundación Integra / CORESAM), Anexo ETP Electricidad (Metro),
  *          EETT-Veredas SERVIU RM, EETT-DS-Structural MINVU, C_EETT-Resumidas
- * Compilado para APUchile — pendiente enriquecimiento IA cuando haya créditos.
+ * Compilado para APUdesk — pendiente enriquecimiento IA cuando haya créditos.
  *
  * Estructura por código de familia ONDAC:
  * {

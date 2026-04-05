@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
+import { requireAuth } from "../_auth";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
 export async function POST(req) {
+  // Verificar autenticación
+  const { user, errorResponse } = await requireAuth(req);
+  if (errorResponse) return errorResponse;
+
   const { partidas } = await req.json();
   if (!partidas?.length) return NextResponse.json({ predecessors: {} });
 
@@ -50,7 +55,8 @@ Solo incluye actividades que tienen predecesoras. Sin texto adicional.`;
       const data = await res.json();
       const text = data.content?.[0]?.text || "{}";
       const jsonMatch = text.match(/\{[\s\S]*\}/);
-      const predecessors = jsonMatch ? JSON.parse(jsonMatch[0]) : {};
+      let predecessors = {};
+      try { predecessors = jsonMatch ? JSON.parse(jsonMatch[0]) : {}; } catch {}
       return NextResponse.json({ predecessors, source: "ia" });
     } catch (err) {
       // Si falla la IA, caer en reglas

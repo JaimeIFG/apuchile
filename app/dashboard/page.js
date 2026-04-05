@@ -991,7 +991,7 @@ export default function Dashboard() {
                 <span className="text-xl">⚙️</span>
                 <div>
                   <h3 className="text-sm font-bold text-gray-800">Configuración</h3>
-                  <p className="text-[11px] text-gray-400">Personaliza tu experiencia en APUchile</p>
+                  <p className="text-[11px] text-gray-400">Personaliza tu experiencia en APUdesk</p>
                 </div>
               </div>
               <button onClick={() => setModalConfig(false)} className="text-gray-400 hover:text-gray-600 text-xl btn-press">✕</button>

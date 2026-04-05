@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAuth } from "../_auth";
 
 // ── Zonas y factores regionales ──────────────────────────────────────────────
 // Factor sobre precio base Sodimac (RM = 1.0)
@@ -104,12 +105,15 @@ async function buscarConstrumart(query) {
 
 // ── GET /api/precios-materiales?q=cemento+polpaico&region=Los+Lagos ───────────
 export async function GET(request) {
+  const { user, errorResponse } = await requireAuth(request);
+  if (errorResponse) return errorResponse;
+
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q");
   const region = searchParams.get("region") || "Región Metropolitana";
 
-  if (!query) {
-    return NextResponse.json({ error: "Falta parámetro q" }, { status: 400 });
+  if (!query || query.length > 200) {
+    return NextResponse.json({ error: "Parámetro q inválido" }, { status: 400 });
   }
 
   const zonaInfo = ZONAS_CL[region] || ZONAS_CL["Región Metropolitana"];
@@ -144,26 +148,31 @@ export async function GET(request) {
       actualizado: new Date().toISOString().slice(0, 10),
     });
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: "Error al consultar precios" }, { status: 500 });
   }
 }
 
 // ── POST /api/precios-materiales — actualización masiva ───────────────────────
 // Body: { materiales: [{desc, busqueda_sodimac?, ...}], region: string }
 export async function POST(request) {
+  const { user, errorResponse } = await requireAuth(request);
+  if (errorResponse) return errorResponse;
+
   const { materiales = [], region = "Región Metropolitana" } = await request.json();
 
   if (!materiales.length) {
     return NextResponse.json({ error: "Se requiere array de materiales" }, { status: 400 });
   }
 
+  // Limitar a 50 materiales por request para evitar abusos
+  const materialesLimitados = materiales.slice(0, 50);
   const zonaInfo = ZONAS_CL[region] || ZONAS_CL["Región Metropolitana"];
   const resultados = [];
 
   // Lotes de 5 con pausa para no sobrecargar Sodimac
   const LOTE = 5;
-  for (let i = 0; i < materiales.length; i += LOTE) {
-    const lote = materiales.slice(i, i + LOTE);
+  for (let i = 0; i < materialesLimitados.length; i += LOTE) {
+    const lote = materialesLimitados.slice(i, i + LOTE);
     const res = await Promise.allSettled(
       lote.map(async (mat) => {
         const query = mat.busqueda_sodimac || mat.desc;
@@ -186,7 +195,7 @@ export async function POST(request) {
     res.forEach(r => {
       if (r.status === "fulfilled") resultados.push(r.value);
     });
-    if (i + LOTE < materiales.length) {
+    if (i + LOTE < materialesLimitados.length) {
       await new Promise(r => setTimeout(r, 800));
     }
   }

@@ -98,7 +98,7 @@ export async function POST(req) {
     const rolLabel = { visualizar: "visualizar", editar: "editar", administrar: "administrar" }[rol] || rol;
 
     const { error: emailError } = await resend.emails.send({
-      from: "APUchile <onboarding@resend.dev>",
+      from: "APUdesk <onboarding@resend.dev>",
       to: [email],
       subject: `${invitado_por_nombre || "Un usuario"} te invita a colaborar en "${proyecto_nombre}"`,
       html: `
@@ -107,7 +107,7 @@ export async function POST(req) {
 
             <div style="text-align: center; margin-bottom: 28px;">
               <div style="background: linear-gradient(135deg,#065f46,#059669); border-radius: 12px; display: inline-block; padding: 10px 20px;">
-                <span style="color: #fff; font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">APUchile</span>
+                <span style="color: #fff; font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">APUdesk</span>
               </div>
             </div>
 
@@ -133,7 +133,7 @@ export async function POST(req) {
             </div>
 
             <p style="color: #64748b; font-size: 13px; text-align: center; line-height: 1.6; margin: 0 0 20px;">
-              Ingresa a <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://apuchile.vercel.app"}" style="color: #059669; font-weight: 700;">APUchile</a>,
+              Ingresa a <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://apudesk.vercel.app"}" style="color: #059669; font-weight: 700;">APUdesk</a>,
               ve a tu dashboard y haz clic en <strong>"Unirse a proyecto"</strong> para ingresar el código.
             </p>
 

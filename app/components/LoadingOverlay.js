@@ -13,19 +13,19 @@ function LogoLoader({ progress }) {
       </defs>
       <text x="80" y="34" textAnchor="middle" fontSize="32" fontWeight="800"
         fontFamily="'Inter','Helvetica Neue',Arial,sans-serif" fill="#ffffff" opacity="0.15">
-        APUchile
+        APUdesk
       </text>
       <text x="80" y="34" textAnchor="middle" fontSize="32" fontWeight="800"
         fontFamily="'Inter','Helvetica Neue',Arial,sans-serif"
         clipPath="url(#apu-fill-clip)">
-        <tspan fill="#ffffff">APU</tspan><tspan fill="#6ee7b7">chile</tspan>
+        <tspan fill="#ffffff">APU</tspan><tspan fill="#6ee7b7">desk</tspan>
       </text>
     </svg>
   );
 }
 
 /**
- * LoadingOverlay — superposición de carga con logo APUchile
+ * LoadingOverlay — superposición de carga con logo APUdesk
  *
  * Props:
  *  - visible: boolean — mostrar u ocultar

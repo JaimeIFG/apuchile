@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAuth } from "../_auth";
 
 const TICKET = process.env.MERCADOPUBLICO_TICKET || "DEMO";
 const BASE = "https://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json";
@@ -12,7 +13,10 @@ const PALABRAS_CONSTRUCCION = [
   "techumb", "cubierta", "cielo", "muro", "tabique", "piso",
 ];
 
-export async function GET() {
+export async function GET(request) {
+  const { user, errorResponse } = await requireAuth(request);
+  if (errorResponse) return errorResponse;
+
   try {
     // Intentar con ticket activas sin filtro de tipo primero
     const url = `${BASE}?ticket=${TICKET}&estado=activas`;
@@ -53,6 +57,6 @@ export async function GET() {
     return NextResponse.json({ licitaciones, total: licitaciones.length, raw_total: items.length });
   } catch (err) {
     console.error("Error MP API:", err);
-    return NextResponse.json({ licitaciones: [], error: err.message });
+    return NextResponse.json({ licitaciones: [], error: "Error al consultar licitaciones" });
   }
 }

@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { supabase } from "./supabase";
 
 // Factor de ajuste por zona (mismo que en el API route)
 // Usado en cliente para ajuste instantáneo sin llamada al servidor
@@ -35,22 +36,23 @@ export function ajustarPrecioRegion(precioRM, region) {
  * Hook principal para precios regionales.
  * - Mantiene la región seleccionada en localStorage
  * - Expone función para buscar precio actualizado de un material
- * - Cache local de precios consultados
+ * - Cache local de precios consultados (ref — no re-renderiza)
  */
 export function usePreciosRegionales() {
   const [region, setRegionState] = useState("Región Metropolitana");
-  const [cache, setCache] = useState({});
+  // Usar ref para cache: evita que buscarPrecioReal se recree en cada update de cache
+  const cacheRef = useRef({});
   const [cargando, setCargando] = useState(false);
 
   // Cargar región guardada
   useEffect(() => {
-    const saved = localStorage.getItem("apuchile_region");
+    const saved = localStorage.getItem("apudesk_region");
     if (saved) setRegionState(saved);
   }, []);
 
   const setRegion = useCallback((r) => {
     setRegionState(r);
-    localStorage.setItem("apuchile_region", r);
+    localStorage.setItem("apudesk_region", r);
   }, []);
 
   const factor = FACTOR_ZONA_CLIENTE[region] || 1.0;
@@ -67,26 +69,28 @@ export function usePreciosRegionales() {
 
   /**
    * Busca el precio real actualizado de un material desde Sodimac/Construmart.
-   * Usa cache local para no repetir llamadas.
+   * Usa cacheRef para no repetir llamadas sin causar re-renders en cascada.
    */
   const buscarPrecioReal = useCallback(async (desc, busquedaOverride) => {
     const cacheKey = `${region}:${desc}`;
-    if (cache[cacheKey]) return cache[cacheKey];
+    if (cacheRef.current[cacheKey]) return cacheRef.current[cacheKey];
 
     const query = busquedaOverride || desc;
     try {
+      const { data: { session } } = await supabase.auth.getSession();
       const res = await fetch(
-        `/api/precios-materiales?q=${encodeURIComponent(query)}&region=${encodeURIComponent(region)}`
+        `/api/precios-materiales?q=${encodeURIComponent(query)}&region=${encodeURIComponent(region)}`,
+        { headers: session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {} }
       );
       if (!res.ok) return null;
       const data = await res.json();
       if (data.encontrado) {
-        setCache(prev => ({ ...prev, [cacheKey]: data }));
+        cacheRef.current[cacheKey] = data;
         return data;
       }
     } catch {}
     return null;
-  }, [region, cache]);
+  }, [region]); // ya no depende de cache — cacheRef es estable
 
   /**
    * Actualiza precios de un lote de materiales.
@@ -95,9 +99,13 @@ export function usePreciosRegionales() {
   const actualizarLote = useCallback(async (materiales) => {
     setCargando(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
       const res = await fetch("/api/precios-materiales", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+        },
         body: JSON.stringify({ materiales, region }),
       });
       if (!res.ok) return [];
