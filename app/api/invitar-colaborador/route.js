@@ -106,7 +106,7 @@ export async function POST(req) {
           <div style="background: #fff; border-radius: 16px; padding: 32px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
 
             <div style="text-align: center; margin-bottom: 28px;">
-              <div style="background: linear-gradient(135deg,#065f46,#059669); border-radius: 12px; display: inline-block; padding: 10px 20px;">
+              <div style="background: linear-gradient(135deg,#4338ca,#6366f1); border-radius: 12px; display: inline-block; padding: 10px 20px;">
                 <span style="color: #fff; font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">APUdesk</span>
               </div>
             </div>
@@ -116,15 +116,15 @@ export async function POST(req) {
             </h2>
             <p style="color: #64748b; text-align: center; margin: 0 0 24px; font-size: 14px; line-height: 1.6;">
               <strong style="color: #1e293b;">${invitado_por_nombre || "Un usuario"}</strong> te ha invitado a colaborar en el proyecto
-              <strong style="color: #059669;">"${proyecto_nombre}"</strong>
+              <strong style="color: #6366f1;">"${proyecto_nombre}"</strong>
               con rol de <strong>${rolLabel}</strong>.
             </p>
 
-            <div style="background: #f0fdf4; border: 2px solid #059669; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
-              <p style="color: #065f46; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px;">
+            <div style="background: #eef2ff; border: 2px solid #6366f1; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
+              <p style="color: #4338ca; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px;">
                 Tu código de acceso
               </p>
-              <p style="font-size: 42px; font-weight: 900; color: #059669; letter-spacing: 10px; margin: 0; font-family: monospace;">
+              <p style="font-size: 42px; font-weight: 900; color: #6366f1; letter-spacing: 10px; margin: 0; font-family: monospace;">
                 ${codigo}
               </p>
               <p style="color: #64748b; font-size: 12px; margin: 10px 0 0;">
@@ -133,7 +133,7 @@ export async function POST(req) {
             </div>
 
             <p style="color: #64748b; font-size: 13px; text-align: center; line-height: 1.6; margin: 0 0 20px;">
-              Ingresa a <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://apudesk.vercel.app"}" style="color: #059669; font-weight: 700;">APUdesk</a>,
+              Ingresa a <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://apudesk.vercel.app"}" style="color: #6366f1; font-weight: 700;">APUdesk</a>,
               ve a tu dashboard y haz clic en <strong>"Unirse a proyecto"</strong> para ingresar el código.
             </p>
 

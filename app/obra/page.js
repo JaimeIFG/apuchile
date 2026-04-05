@@ -10,7 +10,7 @@ import ONDAC_APUS from "../ondac_data_nuevo.json";
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
 const ESTADO_ST = {
   "En licitación": { bg: "#dbeafe", color: "#1d4ed8", dot: "#3b82f6" },
-  "En ejecución":  { bg: "#d1fae5", color: "#065f46", dot: "#059669" },
+  "En ejecución":  { bg: "#eef2ff", color: "#4338ca", dot: "#6366f1" },
   "Paralizada":    { bg: "#fee2e2", color: "#991b1b", dot: "#ef4444" },
   "Recepcionada":  { bg: "#fef3c7", color: "#92400e", dot: "#f59e0b" },
   "Liquidada":     { bg: "#f1f5f9", color: "#475569", dot: "#94a3b8" },
@@ -29,7 +29,7 @@ const REGIONES_CL = [
   "Biobío","La Araucanía","Los Ríos","Los Lagos","Aysén","Magallanes",
 ];
 const TIPO_BIT_COLOR = {
-  Avance:      { bg:"#d1fae5", color:"#065f46" },
+  Avance:      { bg:"#eef2ff", color:"#4338ca" },
   Problema:    { bg:"#fee2e2", color:"#991b1b" },
   Reunión:     { bg:"#dbeafe", color:"#1d4ed8" },
   Hito:        { bg:"#fef3c7", color:"#92400e" },
@@ -64,15 +64,15 @@ function exportBitacoraPDF(obra, bitacora, anexos) {
   <title>Bitácora - ${obra?.nombre || "Obra"}</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; }
-    h1 { color: #065f46; border-bottom: 2px solid #059669; padding-bottom: 10px; }
-    .proyecto-info { background: #f0fdf4; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
-    .entrada { page-break-inside: avoid; margin-bottom: 25px; border-left: 4px solid #059669; padding-left: 15px; }
+    h1 { color: #4338ca; border-bottom: 2px solid #6366f1; padding-bottom: 10px; }
+    .proyecto-info { background: #eef2ff; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
+    .entrada { page-break-inside: avoid; margin-bottom: 25px; border-left: 4px solid #6366f1; padding-left: 15px; }
     .entrada-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-    .tipo { display: inline-block; background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+    .tipo { display: inline-block; background: #eef2ff; color: #4338ca; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
     .fecha-autor { color: #64748b; font-size: 13px; }
     .descripcion { margin: 10px 0; color: #374151; }
     .anexos { background: #f9fafb; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 12px; }
-    .anexos strong { color: #059669; }
+    .anexos strong { color: #6366f1; }
     .anexo-item { margin: 5px 0; }
     .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 12px; text-align: center; }
     @media print { .entrada { page-break-inside: avoid; } }
@@ -176,11 +176,11 @@ function SemaforoChip({ fecha }) {
     d <= 30 ? { color:"#991b1b", bg:"#fee2e2", label:`🔴 ${d}d` } :
     d <= 45 ? { color:"#92400e", bg:"#fed7aa", label:`🟠 ${d}d` } :
     d <= 75 ? { color:"#713f12", bg:"#fef3c7", label:`🟡 ${d}d` } :
-              { color:"#065f46", bg:"#d1fae5", label:`🟢 ${d}d` };
+              { color:"#4338ca", bg:"#eef2ff", label:`🟢 ${d}d` };
   return <span style={{ background:bg, color, fontSize:10, fontWeight:700,
     padding:"2px 8px", borderRadius:99, whiteSpace:"nowrap" }}>{label}</span>;
 }
-function ProgressBar({ pct, color="#059669", height=8 }) {
+function ProgressBar({ pct, color="#6366f1", height=8 }) {
   const p = clamp(pct || 0, 0, 100);
   return (
     <div style={{ background:"#f1f5f9", borderRadius:99, overflow:"hidden", height }}>
@@ -191,7 +191,7 @@ function ProgressBar({ pct, color="#059669", height=8 }) {
 function FileDropZone({ id, file, setFile, accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" }) {
   return (
     <div style={{ border:"2px dashed #e2e8f0", borderRadius:10, padding:"12px 14px",
-      background:file?"#f0fdf4":"#fafafa", cursor:"pointer" }}
+      background:file?"#eef2ff":"#fafafa", cursor:"pointer" }}
       onClick={() => document.getElementById(id).click()}>
       <input id={id} type="file" style={{ display:"none" }} accept={accept}
         onChange={e => { if (e.target.files[0]) setFile(e.target.files[0]); }}/>
@@ -199,7 +199,7 @@ function FileDropZone({ id, file, setFile, accept=".pdf,.doc,.docx,.xls,.xlsx,.j
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <span>📎</span>
           <div style={{ flex:1 }}>
-            <div style={{ fontSize:12, fontWeight:600, color:"#065f46" }}>{file.name}</div>
+            <div style={{ fontSize:12, fontWeight:600, color:"#4338ca" }}>{file.name}</div>
             <div style={{ fontSize:10, color:"#94a3b8" }}>{(file.size/1024).toFixed(0)} KB</div>
           </div>
           <button type="button" onClick={e=>{ e.stopPropagation(); setFile(null); }}
@@ -232,7 +232,7 @@ function ModalActions({ onClose, onSave, saving, disabled=false, label="Guardar 
   return (
     <div style={{ display:"flex", gap:10, marginTop:6 }}>
       <button onClick={onSave} disabled={saving||disabled}
-        style={{ flex:1, background:"#059669", color:"#fff", border:"none", borderRadius:12,
+        style={{ flex:1, background:"#6366f1", color:"#fff", border:"none", borderRadius:12,
           padding:"11px", fontSize:14, fontWeight:700, cursor:"pointer",
           opacity:disabled?0.5:1, fontFamily:"inherit" }}>
         {saving ? "Guardando..." : label}
@@ -347,8 +347,8 @@ function CalendarioBitacora({ bitacora, mes, setMes, filtroFecha, setFiltroFecha
           const isToday = key === new Date().toISOString().slice(0,10);
           return (
             <button key={key} onClick={()=>setFiltroFecha(isSelected ? null : key)}
-              style={{ position:"relative", background: isSelected ? "#059669" : isToday ? "#f0fdf4" : "transparent",
-                color: isSelected ? "#fff" : isToday ? "#059669" : "#374151",
+              style={{ position:"relative", background: isSelected ? "#6366f1" : isToday ? "#eef2ff" : "transparent",
+                color: isSelected ? "#fff" : isToday ? "#6366f1" : "#374151",
                 border: isToday && !isSelected ? "1px solid #bbf7d0" : "1px solid transparent",
                 borderRadius:6, padding:"4px 2px", fontSize:11, cursor: hasEntry ? "pointer" : "default",
                 fontWeight: hasEntry ? 700 : 400 }}>
@@ -356,7 +356,7 @@ function CalendarioBitacora({ bitacora, mes, setMes, filtroFecha, setFiltroFecha
               {hasEntry && (
                 <span style={{ position:"absolute", bottom:2, left:"50%", transform:"translateX(-50%)",
                   width:4, height:4, borderRadius:"50%",
-                  background: isSelected ? "#fff" : "#059669", display:"block" }}/>
+                  background: isSelected ? "#fff" : "#6366f1", display:"block" }}/>
               )}
             </button>
           );
@@ -364,7 +364,7 @@ function CalendarioBitacora({ bitacora, mes, setMes, filtroFecha, setFiltroFecha
       </div>
       {filtroFecha && (
         <button onClick={()=>setFiltroFecha(null)}
-          style={{ marginTop:10, width:"100%", background:"#f0fdf4", color:"#059669",
+          style={{ marginTop:10, width:"100%", background:"#eef2ff", color:"#6366f1",
             border:"1px solid #bbf7d0", borderRadius:8, padding:"5px 0", fontSize:11,
             fontWeight:600, cursor:"pointer" }}>✕ Limpiar filtro</button>
       )}
@@ -721,7 +721,7 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
         maxHeight:"92vh", display:"flex", flexDirection:"column", overflow:"hidden" }}>
         {/* Header */}
         <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
-          background:"linear-gradient(135deg,#065f46,#059669)", borderRadius:"18px 18px 0 0" }}>
+          background:"linear-gradient(135deg,#4338ca,#6366f1)", borderRadius:"18px 18px 0 0" }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
             <div>
               <h2 style={{ color:"#fff", margin:0, fontSize:16, fontWeight:800 }}>📋 Nuevo Informe de Obra</h2>
@@ -737,7 +737,7 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
                 <div style={{ width:22, height:22, borderRadius:"50%", fontSize:11, fontWeight:800,
                   display:"flex", alignItems:"center", justifyContent:"center",
                   background: paso>i+1?"#fff":paso===i+1?"#fff":"rgba(255,255,255,0.3)",
-                  color: paso>i+1?"#059669":paso===i+1?"#059669":"#fff" }}>
+                  color: paso>i+1?"#6366f1":paso===i+1?"#6366f1":"#fff" }}>
                   {paso>i+1?"✓":i+1}
                 </div>
                 <span style={{ fontSize:11, color: paso===i+1?"#fff":"rgba(255,255,255,0.6)", fontWeight: paso===i+1?700:400 }}>{s}</span>
@@ -827,7 +827,7 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
                             <span style={{ fontSize:11, color:"#94a3b8", fontWeight:600 }}>{p.item}</span>
                             <span style={{ fontSize:12, fontWeight:700, color:"#1e293b" }}>{p.partida}</span>
                             {p.ondac_codigo && (
-                              <span style={{ fontSize:10, background:"#d1fae5", color:"#065f46",
+                              <span style={{ fontSize:10, background:"#eef2ff", color:"#4338ca",
                                 padding:"1px 6px", borderRadius:99, fontFamily:"monospace", fontWeight:700 }}>
                                 {p.ondac_codigo}
                               </span>
@@ -840,7 +840,7 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
                           </div>
                           <span style={{ fontSize:10, color:"#94a3b8", marginLeft:22 }}>
                             {p.unidad} · {fmtP(p.valor_total)}
-                            {p.ondac_desc&&<span style={{ color:"#059669", marginLeft:6 }}>· {p.ondac_desc}</span>}
+                            {p.ondac_desc&&<span style={{ color:"#6366f1", marginLeft:6 }}>· {p.ondac_desc}</span>}
                           </span>
                           {/* Panel búsqueda ONDAC */}
                           {busqOndacIdx===p.id&&(
@@ -862,8 +862,8 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
                                       <span style={{ fontFamily:"monospace", color:"#64748b", marginRight:8 }}>{apu.codigo}</span>
                                       <span style={{ fontWeight:600, color:"#1e293b" }}>{apu.desc}</span>
                                       <span style={{ color:"#94a3b8", marginLeft:8 }}>{apu.unidad}</span>
-                                      <span style={{ float:"right", fontSize:10, background:"#f0fdf4",
-                                        color:"#065f46", padding:"1px 5px", borderRadius:99 }}>{apu.familia}</span>
+                                      <span style={{ float:"right", fontSize:10, background:"#eef2ff",
+                                        color:"#4338ca", padding:"1px 5px", borderRadius:99 }}>{apu.familia}</span>
                                     </button>
                                   ))}
                                 </div>
@@ -888,7 +888,7 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
                             </div>
                             <div style={{ marginTop:5, height:4, borderRadius:99, background:"#e2e8f0", overflow:"hidden" }}>
                               <div style={{ width:`${p.pct}%`, height:"100%", borderRadius:99,
-                                background: p.pct===100?"#059669":p.pct>0?"#f59e0b":"#e2e8f0",
+                                background: p.pct===100?"#6366f1":p.pct>0?"#f59e0b":"#e2e8f0",
                                 transition:"width .3s" }}/>
                             </div>
                           </div>
@@ -919,8 +919,8 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
           {/* PASO 3 — Vista previa */}
           {paso===3&&(
             <div>
-              <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:12, padding:20, marginBottom:16 }}>
-                <h3 style={{ margin:"0 0 12px", fontSize:15, color:"#065f46" }}>
+              <div style={{ background:"#eef2ff", border:"1px solid #bbf7d0", borderRadius:12, padding:20, marginBottom:16 }}>
+                <h3 style={{ margin:"0 0 12px", fontSize:15, color:"#4338ca" }}>
                   Informe {tipo} — {obra?.nombre}
                 </h3>
                 {desde&&hasta&&<p style={{ fontSize:12, color:"#64748b", margin:"0 0 8px" }}>Período: {desde} al {hasta}</p>}
@@ -946,7 +946,7 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
                       <span style={{ fontSize:12, fontWeight:700, color:"#1e293b" }}>{p.item} — {p.partida}</span>
                       <div style={{ display:"flex", gap:8, alignItems:"center" }}>
                         <span style={{ fontSize:11, fontWeight:700,
-                          color: p.estado==="Terminada"?"#059669":p.estado==="En progreso"?"#d97706":"#94a3b8" }}>
+                          color: p.estado==="Terminada"?"#6366f1":p.estado==="En progreso"?"#d97706":"#94a3b8" }}>
                           {p.estado}
                         </span>
                         <span style={{ fontSize:12, fontWeight:800, color:"#1e293b" }}>{p.pct}%</span>
@@ -973,13 +973,13 @@ function ModalInforme({ obra, presupuesto, pagos, fotos, onClose, onSave }) {
           </button>
           {paso<3?(
             <button onClick={()=>setPaso(p=>p+1)}
-              style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+              style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                 padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer" }}>
               Siguiente →
             </button>
           ):(
             <button onClick={handleSave} disabled={saving}
-              style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+              style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                 padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer",
                 opacity: saving?0.7:1 }}>
               {saving?"Guardando…":"💾 Guardar Informe"}
@@ -1138,7 +1138,7 @@ function ModalRecepcion({ obraId, onClose, onSave }) {
       <div style={{ background:"#fff", borderRadius:18, width:"100%", maxWidth:500,
         boxShadow:"0 24px 60px rgba(0,0,0,.2)" }}>
         <div style={{ padding:"18px 24px", borderBottom:"1px solid #e2e8f0",
-          background:"linear-gradient(135deg,#065f46,#059669)", borderRadius:"18px 18px 0 0",
+          background:"linear-gradient(135deg,#4338ca,#6366f1)", borderRadius:"18px 18px 0 0",
           display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <div>
             <h2 style={{ color:"#fff", margin:0, fontSize:15, fontWeight:800 }}>🏁 Nueva Recepción</h2>
@@ -1154,9 +1154,9 @@ function ModalRecepcion({ obraId, onClose, onSave }) {
               <div style={{ display:"flex", gap:8 }}>
                 {TIPOS.map(t=>(
                   <button key={t} onClick={()=>setTipo(t)}
-                    style={{ flex:1, padding:"8px", border:`2px solid ${tipo===t?"#059669":"#e2e8f0"}`,
-                      borderRadius:8, background: tipo===t?"#f0fdf4":"#fff",
-                      color: tipo===t?"#065f46":"#64748b", fontSize:13, fontWeight:700, cursor:"pointer" }}>
+                    style={{ flex:1, padding:"8px", border:`2px solid ${tipo===t?"#6366f1":"#e2e8f0"}`,
+                      borderRadius:8, background: tipo===t?"#eef2ff":"#fff",
+                      color: tipo===t?"#4338ca":"#64748b", fontSize:13, fontWeight:700, cursor:"pointer" }}>
                     {t}
                   </button>
                 ))}
@@ -1200,7 +1200,7 @@ function ModalRecepcion({ obraId, onClose, onSave }) {
           <button onClick={onClose} style={{ background:"#f1f5f9", color:"#64748b", border:"none",
             borderRadius:10, padding:"8px 18px", fontSize:13, fontWeight:600, cursor:"pointer" }}>Cancelar</button>
           <button onClick={handleSave} disabled={saving}
-            style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+            style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
               padding:"8px 20px", fontSize:13, fontWeight:700, cursor:"pointer", opacity:saving?.7:1 }}>
             {saving?"Guardando…":"Guardar"}
           </button>
@@ -1339,7 +1339,7 @@ function ObraDetail() {
   if (!obra) return (
     <div style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"sans-serif" }}>
       <p>Obra no encontrada. <button onClick={()=>router.push("/obras")}
-        style={{ color:"#059669", background:"none", border:"none", cursor:"pointer" }}>Volver</button></p>
+        style={{ color:"#6366f1", background:"none", border:"none", cursor:"pointer" }}>Volver</button></p>
     </div>
   );
 
@@ -1501,16 +1501,16 @@ function ObraDetail() {
 <title>Informe ${inf.tipo} — ${d.obra_nombre||""}</title>
 <style>
   body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:24px;color:#333;font-size:13px;}
-  h1{color:#065f46;font-size:20px;margin-bottom:4px;}
-  h2{color:#065f46;font-size:14px;border-bottom:2px solid #059669;padding-bottom:6px;margin:24px 0 12px;}
-  .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f0fdf4;padding:14px;border-radius:8px;margin-bottom:20px;}
+  h1{color:#4338ca;font-size:20px;margin-bottom:4px;}
+  h2{color:#4338ca;font-size:14px;border-bottom:2px solid #6366f1;padding-bottom:6px;margin:24px 0 12px;}
+  .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#eef2ff;padding:14px;border-radius:8px;margin-bottom:20px;}
   .meta-item label{font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;}
   .meta-item p{margin:2px 0 0;font-weight:700;font-size:13px;}
   .partida{border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:10px;page-break-inside:avoid;}
   .partida-header{display:flex;justify-content:space-between;margin-bottom:6px;}
   .partida-title{font-weight:700;font-size:13px;}
   .badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;}
-  .badge-terminada{background:#d1fae5;color:#065f46;}
+  .badge-terminada{background:#eef2ff;color:#4338ca;}
   .badge-progreso{background:#fef3c7;color:#92400e;}
   .badge-no{background:#f1f5f9;color:#64748b;}
   .desc{font-size:12px;color:#4b5563;line-height:1.6;margin:4px 0 0;}
@@ -1536,7 +1536,7 @@ ${partidas.map(p=>`
       <span style="font-weight:800;font-size:14px">${p.pct||0}%</span>
     </div>
   </div>
-  <div class="progress"><div class="progress-bar" style="width:${p.pct||0}%;background:${p.estado==="Terminada"?"#059669":p.estado==="En progreso"?"#f59e0b":"#94a3b8"}"></div></div>
+  <div class="progress"><div class="progress-bar" style="width:${p.pct||0}%;background:${p.estado==="Terminada"?"#6366f1":p.estado==="En progreso"?"#f59e0b":"#94a3b8"}"></div></div>
   <p style="font-size:10px;color:#9ca3af;margin:0">${p.unidad||""} · ${fmtP(p.valor_total)}</p>
   <p class="desc">${p.descripcion||""}</p>
 </div>`).join("")}
@@ -1562,7 +1562,7 @@ ${partidas.map(p=>`
     <div style={{ minHeight:"100vh", background:"#f8fafc", fontFamily:"sans-serif", display:"flex", flexDirection:"column" }}>
 
       {/* Top bar */}
-      <div style={{ background:"linear-gradient(135deg,#065f46,#059669)", padding:"10px 20px",
+      <div style={{ background:"linear-gradient(135deg,#4338ca,#6366f1)", padding:"10px 20px",
         display:"flex", alignItems:"center", gap:10, flexShrink:0 }}>
         <button onClick={()=>router.push("/obras")}
           style={{ background:"rgba(255,255,255,.15)", border:"none", borderRadius:8,
@@ -1603,14 +1603,14 @@ ${partidas.map(p=>`
                   }}
                   style={{ width:"100%", display:"flex", alignItems:"center", gap:8,
                     padding:"9px 10px", borderRadius:10, border:"none", cursor:"pointer",
-                    background:tab===item.id?"#f0fdf4":"transparent",
-                    color:tab===item.id?"#059669":"#475569",
+                    background:tab===item.id?"#eef2ff":"transparent",
+                    color:tab===item.id?"#6366f1":"#475569",
                     fontWeight:tab===item.id?700:500, fontSize:13,
                     fontFamily:"inherit", textAlign:"left", transition:"all .1s" }}>
                   <span style={{ fontSize:14 }}>{item.icon}</span>
                   <span style={{ flex:1 }}>{item.label}</span>
                   {item.badge>0 && (
-                    <span style={{ background:"#d1fae5", color:"#065f46", fontSize:9,
+                    <span style={{ background:"#eef2ff", color:"#4338ca", fontSize:9,
                       fontWeight:700, padding:"1px 5px", borderRadius:99 }}>{item.badge}</span>
                   )}
                   {item.sub && <span style={{ fontSize:9, color:"#94a3b8" }}>{docsOpen?"▲":"▼"}</span>}
@@ -1621,8 +1621,8 @@ ${partidas.map(p=>`
                     <button onClick={()=>{ setTab("docs"); setCatActiva(null); }}
                       style={{ width:"100%", padding:"5px 10px", borderRadius:7, border:"none",
                         cursor:"pointer", fontSize:11, fontFamily:"inherit", textAlign:"left",
-                        background:tab==="docs"&&!catActiva?"#f0fdf4":"transparent",
-                        color:tab==="docs"&&!catActiva?"#059669":"#94a3b8", fontWeight:tab==="docs"&&!catActiva?700:400 }}>
+                        background:tab==="docs"&&!catActiva?"#eef2ff":"transparent",
+                        color:tab==="docs"&&!catActiva?"#6366f1":"#94a3b8", fontWeight:tab==="docs"&&!catActiva?700:400 }}>
                       Todas las categorías
                     </button>
                     {CATEGORIAS_DOCS.map(cat => {
@@ -1632,11 +1632,11 @@ ${partidas.map(p=>`
                         <button key={cat} onClick={()=>{ setTab("docs"); setCatActiva(cat); }}
                           style={{ width:"100%", display:"flex", alignItems:"center", gap:4,
                             padding:"5px 10px", borderRadius:7, border:"none", cursor:"pointer",
-                            background:active?"#f0fdf4":"transparent",
-                            color:active?"#059669":"#64748b",
+                            background:active?"#eef2ff":"transparent",
+                            color:active?"#6366f1":"#64748b",
                             fontSize:11, fontFamily:"inherit", textAlign:"left", fontWeight:active?700:400 }}>
                           <span style={{ flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{cat}</span>
-                          {cnt>0 && <span style={{ background:"#f0fdf4", color:"#059669", fontSize:9,
+                          {cnt>0 && <span style={{ background:"#eef2ff", color:"#6366f1", fontSize:9,
                             fontWeight:700, padding:"1px 4px", borderRadius:99, flexShrink:0 }}>{cnt}</span>}
                         </button>
                       );
@@ -1650,7 +1650,7 @@ ${partidas.map(p=>`
           {tab==="ficha" && (
             <div style={{ padding:"10px 8px", borderTop:"1px solid #f1f5f9" }}>
               <button onClick={guardar} disabled={guardando}
-                style={{ width:"100%", background:guardadoOk?"#34d399":"#059669",
+                style={{ width:"100%", background:guardadoOk?"#818cf8":"#6366f1",
                   color:"#fff", border:"none", borderRadius:10, padding:"10px",
                   fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit", transition:"background .2s" }}>
                 {guardando?"Guardando...":guardadoOk?"✓ Guardado":"Guardar ficha"}
@@ -1672,7 +1672,7 @@ ${partidas.map(p=>`
               <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:16 }}>
                 <MetricCard title="Avance Financiero" main={`${pctEjec.toFixed(1)}%`}
                   sub={`${fmtPeso(totalPagado)} de ${fmtPeso(montoContrato)}`}
-                  color="#059669" progress={pctEjec} progressColor="#059669"
+                  color="#6366f1" progress={pctEjec} progressColor="#6366f1"
                   empty={montoContrato===0} emptyMsg="Sin monto de contrato"/>
                 <MetricCard title="Plazo Contractual" main={`${diasPasados}d`}
                   sub={`de ${diasTotal||"?"} días contractuales`}
@@ -1681,14 +1681,14 @@ ${partidas.map(p=>`
                   empty={!obra.fecha_inicio} emptyMsg="Sin fecha de inicio"/>
                 <MetricCard title="Saldo Disponible" main={fmtPeso(saldo)}
                   sub={saldo<0?"⚠️ Monto excedido":montoContrato>0?`${(100-pctEjec).toFixed(1)}% restante`:""}
-                  color={saldo<0?"#ef4444":"#059669"}
+                  color={saldo<0?"#ef4444":"#6366f1"}
                   empty={montoContrato===0} emptyMsg="Sin monto de contrato"/>
               </div>
 
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
                 <Section title="Datos clave"
                   action={<button onClick={()=>setTab("ficha")}
-                    style={{ fontSize:11, color:"#059669", background:"none", border:"none",
+                    style={{ fontSize:11, color:"#6366f1", background:"none", border:"none",
                       cursor:"pointer", fontFamily:"inherit" }}>Editar →</button>}>
                   <div style={{ display:"grid", gap:7 }}>
                     {[["Mandante",obra.mandante],["ITO",obra.ito],["Contratista",obra.contratista],
@@ -1707,7 +1707,7 @@ ${partidas.map(p=>`
                 <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
                   <Section title="Bitácora reciente"
                     action={<button onClick={()=>setTab("bitacora")}
-                      style={{ fontSize:11, color:"#059669", background:"none", border:"none",
+                      style={{ fontSize:11, color:"#6366f1", background:"none", border:"none",
                         cursor:"pointer", fontFamily:"inherit" }}>Ver todo</button>}>
                     {bitacora.length===0 ? <p style={{ fontSize:12, color:"#94a3b8", margin:0 }}>Sin registros aún</p> :
                       bitacora.slice(0,3).map(b => {
@@ -1730,7 +1730,7 @@ ${partidas.map(p=>`
                   {garantias.filter(g=>g.estado==="Vigente").length>0 && (
                     <Section title="Garantías vigentes"
                       action={<button onClick={()=>setTab("garantias")}
-                        style={{ fontSize:11, color:"#059669", background:"none", border:"none",
+                        style={{ fontSize:11, color:"#6366f1", background:"none", border:"none",
                           cursor:"pointer", fontFamily:"inherit" }}>Ver todo</button>}>
                       {garantias.filter(g=>g.estado==="Vigente").slice(0,3).map(g=>(
                         <div key={g.id} style={{ display:"flex", justifyContent:"space-between",
@@ -1758,7 +1758,7 @@ ${partidas.map(p=>`
                         {presupuesto.length} partidas · {fmtPeso(presupuesto.reduce((s,p)=>s+(p.valor_total||0),0))}
                       </span>
                     </div>
-                    <span style={{ fontSize:12, color:"#059669" }}>{presupuestoOpen?"▲":"▼"}</span>
+                    <span style={{ fontSize:12, color:"#6366f1" }}>{presupuestoOpen?"▲":"▼"}</span>
                   </button>
                   {presupuestoOpen&&(
                     <div style={{ borderTop:"1px solid #f1f5f9", maxHeight:340, overflowY:"auto" }}>
@@ -1778,7 +1778,7 @@ ${partidas.map(p=>`
                                 justifyContent:"space-between", alignItems:"center",
                                 borderBottom:"1px solid #f8fafc", fontSize:12 }}>
                                 <span style={{ color:"#374151", flex:1, marginRight:12 }}>{p.item} · {p.partida}</span>
-                                <span style={{ color:"#059669", fontWeight:600, whiteSpace:"nowrap" }}>
+                                <span style={{ color:"#6366f1", fontWeight:600, whiteSpace:"nowrap" }}>
                                   {fmtPeso(p.valor_total)}
                                 </span>
                               </div>
@@ -1786,10 +1786,10 @@ ${partidas.map(p=>`
                           </div>
                         );
                       })}
-                      <div style={{ padding:"12px 20px", background:"#f0fdf4", display:"flex",
+                      <div style={{ padding:"12px 20px", background:"#eef2ff", display:"flex",
                         justifyContent:"space-between", borderTop:"2px solid #bbf7d0" }}>
-                        <span style={{ fontSize:13, fontWeight:700, color:"#065f46" }}>COSTO DIRECTO</span>
-                        <span style={{ fontSize:14, fontWeight:800, color:"#065f46" }}>
+                        <span style={{ fontSize:13, fontWeight:700, color:"#4338ca" }}>COSTO DIRECTO</span>
+                        <span style={{ fontSize:14, fontWeight:800, color:"#4338ca" }}>
                           {fmtPeso(presupuesto.reduce((s,p)=>s+(p.valor_total||0),0))}
                         </span>
                       </div>
@@ -1801,7 +1801,7 @@ ${partidas.map(p=>`
               {pagos.length>0 && (
                 <Section title="Últimos estados de pago"
                   action={<button onClick={()=>setTab("pagos")}
-                    style={{ fontSize:11, color:"#059669", background:"none", border:"none",
+                    style={{ fontSize:11, color:"#6366f1", background:"none", border:"none",
                       cursor:"pointer", fontFamily:"inherit" }}>Ver todos</button>}>
                   {pagos.slice(0,4).map(p=>(
                     <div key={p.id} style={{ display:"flex", justifyContent:"space-between",
@@ -1811,7 +1811,7 @@ ${partidas.map(p=>`
                         {p.tipo&&<span style={{ fontSize:10, color:"#94a3b8", marginLeft:8 }}>{p.tipo}</span>}
                       </div>
                       <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-                        <span style={{ fontSize:13, fontWeight:700, color:"#059669" }}>{fmtPeso(p.monto)}</span>
+                        <span style={{ fontSize:13, fontWeight:700, color:"#6366f1" }}>{fmtPeso(p.monto)}</span>
                         <span style={{ fontSize:10, color:"#94a3b8" }}>{fmtFecha(p.fecha)}</span>
                       </div>
                     </div>
@@ -1895,7 +1895,7 @@ ${partidas.map(p=>`
                   </p>
                 </div>
                 <button onClick={()=>setMDoc(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                     padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Agregar</button>
               </div>
               {(catActiva?[catActiva]:CATEGORIAS_DOCS).map(cat=>{
@@ -1922,7 +1922,7 @@ ${partidas.map(p=>`
                             </div>
                             {doc.archivo_url&&(
                               <button onClick={()=>setDocSelec(doc)}
-                                style={{ background:"#f0fdf4", color:"#059669", border:"1px solid #bbf7d0",
+                                style={{ background:"#eef2ff", color:"#6366f1", border:"1px solid #bbf7d0",
                                   borderRadius:7, padding:"4px 10px", fontSize:11, fontWeight:600,
                                   cursor:"pointer", whiteSpace:"nowrap", fontFamily:"inherit" }}>Ver →</button>
                             )}
@@ -1951,7 +1951,7 @@ ${partidas.map(p=>`
                   </p>
                 </div>
                 <button onClick={()=>setMPago(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                     padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Agregar</button>
               </div>
               {montoContrato>0&&(
@@ -1959,7 +1959,7 @@ ${partidas.map(p=>`
                   borderRadius:12, padding:"12px 16px" }}>
                   <div style={{ display:"flex", justifyContent:"space-between", marginBottom:6 }}>
                     <span style={{ fontSize:12, color:"#64748b" }}>Avance financiero</span>
-                    <span style={{ fontSize:13, fontWeight:700, color:"#059669" }}>{pctEjec.toFixed(1)}%</span>
+                    <span style={{ fontSize:13, fontWeight:700, color:"#6366f1" }}>{pctEjec.toFixed(1)}%</span>
                   </div>
                   <ProgressBar pct={pctEjec}/>
                 </div>
@@ -1983,13 +1983,13 @@ ${partidas.map(p=>`
                               background:"#dbeafe", color:"#1d4ed8" }}>{p.tipo||"—"}</span>
                           </td>
                           <td style={{ padding:"10px 12px", fontSize:12, color:"#64748b" }}>{fmtFecha(p.fecha)}</td>
-                          <td style={{ padding:"10px 12px", fontSize:13, fontWeight:700, color:"#059669" }}>{fmtPeso(p.monto)}</td>
+                          <td style={{ padding:"10px 12px", fontSize:13, fontWeight:700, color:"#6366f1" }}>{fmtPeso(p.monto)}</td>
                           <td style={{ padding:"10px 12px", fontSize:12, color:"#64748b" }}>{p.numero_estado_pago||"—"}</td>
                           <td style={{ padding:"10px 12px", fontSize:12, color:"#64748b" }}>{p.numero_oficio||"—"}</td>
                           <td style={{ padding:"10px 12px" }}>
                             <div style={{ display:"flex", gap:6, alignItems:"center" }}>
                               {p.archivo_url&&<a href={p.archivo_url} target="_blank" rel="noopener noreferrer"
-                                style={{ fontSize:12, color:"#059669", textDecoration:"none" }}>📎</a>}
+                                style={{ fontSize:12, color:"#6366f1", textDecoration:"none" }}>📎</a>}
                               <button onClick={()=>delPago(p.id)}
                                 style={{ background:"none", border:"none", color:"#fca5a5",
                                   cursor:"pointer", fontSize:13 }}>✕</button>
@@ -2013,12 +2013,12 @@ ${partidas.map(p=>`
                   <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{garantias.length} registradas</p>
                 </div>
                 <button onClick={()=>setMGar(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                     padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Agregar</button>
               </div>
               <div style={{ display:"flex", gap:8, marginBottom:14, flexWrap:"wrap" }}>
                 {[["🔴","1–30d","#fee2e2","#991b1b"],["🟠","31–45d","#fed7aa","#92400e"],
-                  ["🟡","46–75d","#fef3c7","#713f12"],["🟢","76+d","#d1fae5","#065f46"]].map(([ico,l,bg,c])=>(
+                  ["🟡","46–75d","#fef3c7","#713f12"],["🟢","76+d","#eef2ff","#4338ca"]].map(([ico,l,bg,c])=>(
                   <span key={l} style={{ background:bg, color:c, fontSize:10, fontWeight:600,
                     padding:"3px 10px", borderRadius:99 }}>{ico} {l}</span>
                 ))}
@@ -2034,13 +2034,13 @@ ${partidas.map(p=>`
                             <span style={{ fontSize:13, fontWeight:700, color:"#1e293b" }}>{g.tipo||"Garantía"}</span>
                             <SemaforoChip fecha={g.fecha_vencimiento}/>
                             <span style={{ fontSize:10, fontWeight:600, padding:"2px 7px", borderRadius:99,
-                              background:g.estado==="Vigente"?"#d1fae5":"#f1f5f9",
-                              color:g.estado==="Vigente"?"#065f46":"#64748b" }}>{g.estado}</span>
+                              background:g.estado==="Vigente"?"#eef2ff":"#f1f5f9",
+                              color:g.estado==="Vigente"?"#4338ca":"#64748b" }}>{g.estado}</span>
                           </div>
                           <div style={{ display:"flex", gap:14, flexWrap:"wrap" }}>
                             {g.entidad&&<span style={{ fontSize:12, color:"#64748b" }}>🏦 {g.entidad}</span>}
                             {g.numero_documento&&<span style={{ fontSize:12, color:"#64748b" }}>N° {g.numero_documento}</span>}
-                            {g.monto&&<span style={{ fontSize:13, fontWeight:700, color:"#059669" }}>{fmtPeso(g.monto)}</span>}
+                            {g.monto&&<span style={{ fontSize:13, fontWeight:700, color:"#6366f1" }}>{fmtPeso(g.monto)}</span>}
                             {g.fecha_emision&&<span style={{ fontSize:12, color:"#64748b" }}>Emisión: {fmtFecha(g.fecha_emision)}</span>}
                             {g.fecha_vencimiento&&<span style={{ fontSize:12, color:"#64748b" }}>Vence: {fmtFecha(g.fecha_vencimiento)}</span>}
                           </div>
@@ -2074,11 +2074,11 @@ ${partidas.map(p=>`
                 <div style={{ display:"flex", gap:8 }}>
                   {bitacora.length>0&&(
                     <button onClick={()=>exportBitacoraPDF(obra,bitacora,anexos)}
-                      style={{ background:"#f8fafc", color:"#059669", border:"1px solid #e2e8f0", borderRadius:10,
+                      style={{ background:"#f8fafc", color:"#6366f1", border:"1px solid #e2e8f0", borderRadius:10,
                         padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>📥 Exportar PDF</button>
                   )}
                   <button onClick={()=>setMBit(true)}
-                    style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                    style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                       padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nueva entrada</button>
                 </div>
               </div>
@@ -2120,7 +2120,7 @@ ${partidas.map(p=>`
                                 <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid #f1f5f9" }}>
                                   <button onClick={()=>setExpandedAnexo(expandedAnexo===b.id?null:b.id)}
                                     style={{ background:"none", border:"none", cursor:"pointer", padding:0,
-                                      fontSize:11, color:"#059669", fontWeight:600, display:"flex",
+                                      fontSize:11, color:"#6366f1", fontWeight:600, display:"flex",
                                       alignItems:"center", gap:5 }}>
                                     📎 {bitAnexos.length} adjunto{bitAnexos.length>1?"s":""} {expandedAnexo===b.id?"▲":"▼"}
                                   </button>
@@ -2137,8 +2137,8 @@ ${partidas.map(p=>`
                                         ) : (
                                           <a key={a.id} href={a.url} target="_blank" rel="noopener noreferrer"
                                             style={{ display:"inline-flex", alignItems:"center", gap:5,
-                                              fontSize:11, color:"#059669", textDecoration:"none",
-                                              background:"#f0fdf4", border:"1px solid #bbf7d0",
+                                              fontSize:11, color:"#6366f1", textDecoration:"none",
+                                              background:"#eef2ff", border:"1px solid #bbf7d0",
                                               borderRadius:8, padding:"8px 12px" }}>
                                             📄 {a.nombre.length>25?a.nombre.substring(0,25)+"…":a.nombre}
                                           </a>
@@ -2189,7 +2189,7 @@ ${partidas.map(p=>`
             const totalDias = modificaciones.reduce((s,m)=>s+(m.dias_adicionales||0),0);
             const montoFinal = montoBase + totalMods;
             const TIPO_MOD_COLOR = {
-              "Aumento de Obras":    { bg:"#d1fae5", color:"#065f46" },
+              "Aumento de Obras":    { bg:"#eef2ff", color:"#4338ca" },
               "Disminución de Obras":{ bg:"#fee2e2", color:"#991b1b" },
               "Ampliación de Plazo": { bg:"#dbeafe", color:"#1d4ed8" },
               "Mixta":               { bg:"#fef3c7", color:"#92400e" },
@@ -2210,7 +2210,7 @@ ${partidas.map(p=>`
                 <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:20 }}>
                   {[
                     { label:"Monto contrato original", val:"$"+Math.round(montoBase).toLocaleString("es-CL"), color:"#1e293b" },
-                    { label:"Total modificaciones",    val:(totalMods>=0?"+":"")+"$"+Math.round(totalMods).toLocaleString("es-CL"), color:totalMods>=0?"#059669":"#ef4444" },
+                    { label:"Total modificaciones",    val:(totalMods>=0?"+":"")+"$"+Math.round(totalMods).toLocaleString("es-CL"), color:totalMods>=0?"#6366f1":"#ef4444" },
                     { label:"Monto contrato vigente",  val:"$"+Math.round(montoFinal).toLocaleString("es-CL"), color:"#1d4ed8" },
                   ].map(c=>(
                     <div key={c.label} style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:12, padding:"12px 16px" }}>
@@ -2238,7 +2238,7 @@ ${partidas.map(p=>`
                             {m.descripcion&&<p style={{ fontSize:13, color:"#374151", margin:"0 0 6px", lineHeight:1.5 }}>{m.descripcion}</p>}
                             <div style={{ display:"flex", gap:14, flexWrap:"wrap" }}>
                               {m.monto_modificacion!==0&&(
-                                <span style={{ fontSize:13, fontWeight:700, color:m.monto_modificacion>0?"#059669":"#ef4444" }}>
+                                <span style={{ fontSize:13, fontWeight:700, color:m.monto_modificacion>0?"#6366f1":"#ef4444" }}>
                                   {m.monto_modificacion>0?"▲":"▼"} ${Math.abs(Math.round(m.monto_modificacion)).toLocaleString("es-CL")}
                                 </span>
                               )}
@@ -2264,7 +2264,7 @@ ${partidas.map(p=>`
           {tab==="recepciones" && (()=>{
             const ESTADO_REC_COLOR = {
               "Solicitada":        { bg:"#dbeafe", color:"#1d4ed8" },
-              "Realizada":         { bg:"#d1fae5", color:"#065f46" },
+              "Realizada":         { bg:"#eef2ff", color:"#4338ca" },
               "Con observaciones": { bg:"#fef3c7", color:"#92400e" },
               "Rechazada":         { bg:"#fee2e2", color:"#991b1b" },
             };
@@ -2278,7 +2278,7 @@ ${partidas.map(p=>`
                   <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{recepciones.length} registro{recepciones.length!==1?"s":""}</p>
                 </div>
                 <button onClick={()=>setMRec(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                     padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nueva recepción</button>
               </div>
               {/* Estado recepciones */}
@@ -2287,15 +2287,15 @@ ${partidas.map(p=>`
                   { label:"Recepción Provisoria", rec:provRec, tipo:"Provisoria" },
                   { label:"Recepción Definitiva", rec:defRec,  tipo:"Definitiva" },
                 ].map(({label,rec,tipo})=>(
-                  <div key={tipo} style={{ background: rec?"#f0fdf4":"#f8fafc",
+                  <div key={tipo} style={{ background: rec?"#eef2ff":"#f8fafc",
                     border:`1.5px solid ${rec?"#bbf7d0":"#e2e8f0"}`, borderRadius:14, padding:"14px 18px" }}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-                      <span style={{ fontSize:13, fontWeight:700, color:rec?"#065f46":"#94a3b8" }}>{label}</span>
+                      <span style={{ fontSize:13, fontWeight:700, color:rec?"#4338ca":"#94a3b8" }}>{label}</span>
                       <span style={{ fontSize:20 }}>{rec?"✅":"⏳"}</span>
                     </div>
                     {rec ? (
                       <>
-                        <p style={{ fontSize:12, color:"#059669", fontWeight:600, margin:"0 0 2px" }}>
+                        <p style={{ fontSize:12, color:"#6366f1", fontWeight:600, margin:"0 0 2px" }}>
                           Realizada el {new Date(rec.fecha_recepcion||rec.fecha_solicitud).toLocaleDateString("es-CL")}
                         </p>
                         {rec.inspector&&<p style={{ fontSize:11, color:"#64748b", margin:0 }}>👤 {rec.inspector}</p>}
@@ -2325,7 +2325,7 @@ ${partidas.map(p=>`
                                 <span style={{ fontSize:12, color:"#64748b" }}>📋 Solicitud: {new Date(r.fecha_solicitud).toLocaleDateString("es-CL")}</span>
                               )}
                               {r.fecha_recepcion&&(
-                                <span style={{ fontSize:12, color:"#059669", fontWeight:600 }}>✅ Recepción: {new Date(r.fecha_recepcion).toLocaleDateString("es-CL")}</span>
+                                <span style={{ fontSize:12, color:"#6366f1", fontWeight:600 }}>✅ Recepción: {new Date(r.fecha_recepcion).toLocaleDateString("es-CL")}</span>
                               )}
                               {r.inspector&&(
                                 <span style={{ fontSize:12, color:"#64748b" }}>👤 {r.inspector}</span>
@@ -2357,7 +2357,7 @@ ${partidas.map(p=>`
                   <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>{informes.length} informe{informes.length!==1?"s":""} generados</p>
                 </div>
                 <button onClick={()=>setMInforme(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                     padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Nuevo Informe</button>
               </div>
               {informes.length===0?<EmptyState icon="📋" msg="Sin informes generados"/>:(
@@ -2373,7 +2373,7 @@ ${partidas.map(p=>`
                         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
                           <div>
                             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
-                              <span style={{ background:"#d1fae5", color:"#065f46", fontSize:10, fontWeight:700,
+                              <span style={{ background:"#eef2ff", color:"#4338ca", fontSize:10, fontWeight:700,
                                 padding:"2px 8px", borderRadius:99 }}>{inf.tipo}</span>
                               <span style={{ fontSize:13, fontWeight:700, color:"#1e293b" }}>{d.obra_nombre}</span>
                             </div>
@@ -2385,7 +2385,7 @@ ${partidas.map(p=>`
                           </div>
                           <div style={{ display:"flex", gap:6, alignItems:"center" }}>
                             <button onClick={()=>setPrevisualizando(inf)}
-                              style={{ background:"#f0fdf4", color:"#059669", border:"1px solid #bbf7d0",
+                              style={{ background:"#eef2ff", color:"#6366f1", border:"1px solid #bbf7d0",
                                 borderRadius:8, padding:"5px 12px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
                               👁️ Ver informe
                             </button>
@@ -2396,7 +2396,7 @@ ${partidas.map(p=>`
                         {partidas.length>0&&(
                           <div style={{ display:"flex", gap:10, marginTop:10, flexWrap:"wrap" }}>
                             <span style={{ fontSize:11, color:"#64748b" }}>📦 {partidas.length} partidas</span>
-                            {terminadas>0&&<span style={{ fontSize:11, color:"#059669" }}>✓ {terminadas} terminadas</span>}
+                            {terminadas>0&&<span style={{ fontSize:11, color:"#6366f1" }}>✓ {terminadas} terminadas</span>}
                             {enProgreso>0&&<span style={{ fontSize:11, color:"#d97706" }}>⏳ {enProgreso} en progreso</span>}
                           </div>
                         )}
@@ -2419,7 +2419,7 @@ ${partidas.map(p=>`
                   </p>
                 </div>
                 <button onClick={()=>setMFoto(true)}
-                  style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                     padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Subir fotos</button>
               </div>
               {fotos.length===0?<EmptyState icon="📸" msg="Sin fotos — sube imágenes de avance de obra"/>:(
@@ -2463,7 +2463,7 @@ ${partidas.map(p=>`
                         padding:"8px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>🗑 Limpiar</button>
                   )}
                   <button onClick={()=>setMPresupuesto(true)}
-                    style={{ background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                    style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                       padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>
                     {presupuesto.length>0?"↑ Reimportar":"＋ Importar presupuesto"}
                   </button>
@@ -2480,10 +2480,10 @@ ${partidas.map(p=>`
                     return (
                       <div key={seccion} style={{ marginBottom:20 }}>
                         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
-                          background:"linear-gradient(90deg,#f0fdf4,#f8fafc)", padding:"10px 14px",
-                          borderRadius:8, marginBottom:0, borderLeft:"3px solid #059669" }}>
-                          <span style={{ fontSize:12, fontWeight:700, color:"#065f46" }}>{seccion}</span>
-                          <span style={{ fontSize:11, fontWeight:600, color:"#059669" }}>
+                          background:"linear-gradient(90deg,#eef2ff,#f8fafc)", padding:"10px 14px",
+                          borderRadius:8, marginBottom:0, borderLeft:"3px solid #6366f1" }}>
+                          <span style={{ fontSize:12, fontWeight:700, color:"#4338ca" }}>{seccion}</span>
+                          <span style={{ fontSize:11, fontWeight:600, color:"#6366f1" }}>
                             ${Math.round(subtotal).toLocaleString("es-CL")}
                           </span>
                         </div>
@@ -2505,7 +2505,7 @@ ${partidas.map(p=>`
                                 return (
                                   <tr key={p.id} style={{ background:i%2===0?"#fff":"#fafafa",
                                     borderBottom:"1px solid #f1f5f9", transition:"background .1s" }}
-                                    onMouseEnter={e=>e.currentTarget.style.background="#f0fdf4"}
+                                    onMouseEnter={e=>e.currentTarget.style.background="#eef2ff"}
                                     onMouseLeave={e=>e.currentTarget.style.background=i%2===0?"#fff":"#fafafa"}>
                                     <td style={{ padding:"7px 10px", color:"#94a3b8", fontSize:11 }}>{p.item}</td>
                                     <td style={{ padding:"7px 10px", color:"#1e293b", maxWidth:280,
@@ -2517,7 +2517,7 @@ ${partidas.map(p=>`
                                         <input autoFocus defaultValue={p.cantidad ?? ""}
                                           onBlur={e=>updatePresupuesto(p.id,"cantidad",e.target.value)}
                                           onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
-                                          style={{ width:70, textAlign:"right", border:"1.5px solid #059669",
+                                          style={{ width:70, textAlign:"right", border:"1.5px solid #6366f1",
                                             borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
                                       ) : (
                                         <span onClick={()=>setEditingCell({id:p.id,field:"cantidad"})}
@@ -2536,7 +2536,7 @@ ${partidas.map(p=>`
                                         <input autoFocus defaultValue={p.valor_unitario ?? ""}
                                           onBlur={e=>updatePresupuesto(p.id,"valor_unitario",e.target.value)}
                                           onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
-                                          style={{ width:90, textAlign:"right", border:"1.5px solid #059669",
+                                          style={{ width:90, textAlign:"right", border:"1.5px solid #6366f1",
                                             borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
                                       ) : (
                                         <span onClick={()=>setEditingCell({id:p.id,field:"valor_unitario"})}
@@ -2551,7 +2551,7 @@ ${partidas.map(p=>`
                                     </td>
                                     {/* Valor total — calculado */}
                                     <td style={{ padding:"7px 10px", textAlign:"right", fontWeight:600,
-                                      color: p.valor_total ? "#059669" : "#cbd5e1" }}>
+                                      color: p.valor_total ? "#6366f1" : "#cbd5e1" }}>
                                       {p.valor_total ? "$"+Math.round(p.valor_total).toLocaleString("es-CL") : "—"}
                                     </td>
                                     <td style={{ padding:"7px 8px", textAlign:"center" }}>
@@ -2664,7 +2664,7 @@ ${partidas.map(p=>`
               <div style={{ marginTop:12, paddingTop:12, borderTop:"1px solid #e2e8f0" }}>
                 {docSelec.archivo_url&&(
                   <a href={docSelec.archivo_url} download target="_blank" rel="noopener noreferrer"
-                    style={{ display:"inline-block", background:"#f0fdf4", color:"#059669",
+                    style={{ display:"inline-block", background:"#eef2ff", color:"#6366f1",
                       border:"1px solid #bbf7d0", borderRadius:8, padding:"8px 16px", fontSize:12,
                       fontWeight:600, textDecoration:"none" }}>
                     Descargar archivo →
@@ -2699,7 +2699,7 @@ ${partidas.map(p=>`
                   const w = window.open("","_blank");
                   w.document.write(html); w.document.close(); w.focus();
                   setTimeout(()=>w.print(), 400);
-                }} style={{ background:"#059669", color:"#fff", border:"none", borderRadius:8,
+                }} style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:8,
                   padding:"6px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
                   🖨️ Imprimir
                 </button>
@@ -2857,8 +2857,8 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
           padding:"20px 24px 16px", borderBottom:"1px solid #f1f5f9", flexShrink:0 }}>
           <h3 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>
             💰 Estado de Pago
-            {hasPartidas && <span style={{ fontSize:11, fontWeight:500, color:"#059669",
-              marginLeft:10, background:"#d1fae5", padding:"2px 8px", borderRadius:99 }}>
+            {hasPartidas && <span style={{ fontSize:11, fontWeight:500, color:"#6366f1",
+              marginLeft:10, background:"#eef2ff", padding:"2px 8px", borderRadius:99 }}>
               {partidas.length} partidas leídas ✓
             </span>}
           </h3>
@@ -2909,15 +2909,15 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
                   background:"#fafafa", cursor:"pointer", textAlign:"center",
                   transition:"border-color .15s, background .15s" }}
                   onClick={()=>document.getElementById("pago-file-inp").click()}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor="#059669";e.currentTarget.style.background="#f0fdf4";}}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor="#6366f1";e.currentTarget.style.background="#eef2ff";}}
                   onMouseLeave={e=>{e.currentTarget.style.borderColor="#e2e8f0";e.currentTarget.style.background="#fafafa";}}>
                   <input id="pago-file-inp" type="file" accept=".xlsx,.xls,.pdf"
                     style={{display:"none"}} onChange={e=>handleFile(e.target.files?.[0]||null)}/>
                   {file ? (
                     <div>
                       <div style={{fontSize:20,marginBottom:3}}>{isExcel?"📊":"📄"}</div>
-                      <p style={{fontSize:11,fontWeight:700,color:"#065f46",margin:0}}>{file.name}</p>
-                      {leyendo && <p style={{fontSize:10,color:"#059669",margin:"4px 0 0"}}>⏳ Leyendo datos…</p>}
+                      <p style={{fontSize:11,fontWeight:700,color:"#4338ca",margin:0}}>{file.name}</p>
+                      {leyendo && <p style={{fontSize:10,color:"#6366f1",margin:"4px 0 0"}}>⏳ Leyendo datos…</p>}
                     </div>
                   ) : (
                     <div>
@@ -2938,12 +2938,12 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
 
               {/* Resumen extraído del Excel */}
               {hasPartidas && (
-                <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"12px 14px"}}>
-                  <p style={{fontSize:11,fontWeight:700,color:"#065f46",margin:"0 0 8px",textTransform:"uppercase",letterSpacing:".04em"}}>
+                <div style={{background:"#eef2ff",border:"1px solid #bbf7d0",borderRadius:10,padding:"12px 14px"}}>
+                  <p style={{fontSize:11,fontWeight:700,color:"#4338ca",margin:"0 0 8px",textTransform:"uppercase",letterSpacing:".04em"}}>
                     📊 Resumen extraído
                   </p>
                   {epMeta?.contratista && (
-                    <div style={{fontSize:11,color:"#374151",marginBottom:8,paddingBottom:8,borderBottom:"1px solid #d1fae5"}}>
+                    <div style={{fontSize:11,color:"#374151",marginBottom:8,paddingBottom:8,borderBottom:"1px solid #eef2ff"}}>
                       🏢 <strong>{epMeta.contratista}</strong>
                     </div>
                   )}
@@ -2954,9 +2954,9 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
                     pctConMonto  && ["% Avance (s/contrato)", fmtPct(pctConMonto), false],
                   ].filter(Boolean).map(([lbl,val,bold])=>(
                     <div key={lbl} style={{display:"flex",justifyContent:"space-between",
-                      fontSize:12,padding:"4px 0",borderBottom:"1px solid #d1fae5"}}>
+                      fontSize:12,padding:"4px 0",borderBottom:"1px solid #eef2ff"}}>
                       <span style={{color:"#374151"}}>{lbl}</span>
-                      <span style={{fontWeight:bold?700:500,color:bold?"#059669":"#374151"}}>{val}</span>
+                      <span style={{fontWeight:bold?700:500,color:bold?"#6366f1":"#374151"}}>{val}</span>
                     </div>
                   ))}
                 </div>
@@ -2966,7 +2966,7 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
             {/* Botones */}
             <div style={{display:"flex",gap:10,marginTop:18}}>
               <button onClick={save} disabled={saving||!form.nombre.trim()}
-                style={{flex:1,background:"#059669",color:"#fff",border:"none",borderRadius:12,
+                style={{flex:1,background:"#6366f1",color:"#fff",border:"none",borderRadius:12,
                   padding:"11px",fontSize:13,fontWeight:700,cursor:"pointer",
                   opacity:!form.nombre.trim()?0.5:1,fontFamily:"inherit"}}>
                 {saving?"Guardando…":"Guardar →"}
@@ -2982,20 +2982,20 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
           {/* Panel derecho — tabla de partidas */}
           {hasPartidas && (
             <div style={{flex:1,overflowY:"auto",padding:"16px 20px",background:"#fafafa"}}>
-              <p style={{fontSize:12,fontWeight:700,color:"#065f46",margin:"0 0 12px",
+              <p style={{fontSize:12,fontWeight:700,color:"#4338ca",margin:"0 0 12px",
                 textTransform:"uppercase",letterSpacing:".05em"}}>
                 📋 Desglose de Partidas
               </p>
               <div style={{border:"1px solid #e2e8f0",borderRadius:12,overflow:"hidden",background:"#fff"}}>
                 <table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}>
-                  <thead style={{background:"#f0fdf4"}}>
+                  <thead style={{background:"#eef2ff"}}>
                     <tr>
                       {["Ítem","Descripción","Un.","Cant.","V. Unit.","V. Total",
                         ...(hasAvancePct?["Av. %"]:  []),
                         "Av. $"
                       ].map((h,i)=>(
-                        <th key={i} style={{padding:"8px 10px",fontWeight:700,color:"#065f46",
-                          textAlign:i>=3?"right":"left",borderBottom:"1px solid #d1fae5",
+                        <th key={i} style={{padding:"8px 10px",fontWeight:700,color:"#4338ca",
+                          textAlign:i>=3?"right":"left",borderBottom:"1px solid #eef2ff",
                           whiteSpace:"nowrap",fontSize:10}}>{h}</th>
                       ))}
                     </tr>
@@ -3017,26 +3017,26 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
                           {p.monto_contrato?fmtN(p.monto_contrato):""}</td>
                         {hasAvancePct && (
                           <td style={{padding:"6px 10px",textAlign:"right",
-                            color: p.avance_pct===100?"#059669":p.avance_pct>0?"#f59e0b":"#cbd5e1",
+                            color: p.avance_pct===100?"#6366f1":p.avance_pct>0?"#f59e0b":"#cbd5e1",
                             fontWeight:600}}>
                             {p.avance_pct!=null ? p.avance_pct===100?"✓":p.avance_pct+"%": "—"}
                           </td>
                         )}
                         <td style={{padding:"6px 10px",textAlign:"right",fontWeight:600,
-                          color:p.monto_actual?"#059669":"#cbd5e1"}}>
+                          color:p.monto_actual?"#6366f1":"#cbd5e1"}}>
                           {p.monto_actual?fmtN(p.monto_actual):"—"}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                   {hasMontosActuales && (
-                    <tfoot style={{background:"#f0fdf4",borderTop:"2px solid #d1fae5"}}>
+                    <tfoot style={{background:"#eef2ff",borderTop:"2px solid #eef2ff"}}>
                       <tr>
                         <td colSpan={hasAvancePct?6:5}
-                          style={{padding:"8px 10px",fontWeight:700,color:"#065f46",fontSize:12}}>
+                          style={{padding:"8px 10px",fontWeight:700,color:"#4338ca",fontSize:12}}>
                           TOTAL EP
                         </td>
-                        <td style={{padding:"8px 10px",textAlign:"right",fontWeight:800,color:"#059669",fontSize:13}}>
+                        <td style={{padding:"8px 10px",textAlign:"right",fontWeight:800,color:"#6366f1",fontSize:13}}>
                           {fmtN(partidas.reduce((s,p)=>s+(p.monto_actual||0),0))}
                         </td>
                       </tr>
@@ -3120,8 +3120,8 @@ function ModalBitacora({ obraId, userId, onClose, onSave }) {
             {TIPOS_BIT.map(t=>(
               <button key={t} onClick={()=>set("tipo",t)}
                 style={{padding:"5px 11px",borderRadius:99,fontSize:11,fontWeight:600,
-                  border:form.tipo===t?"1.5px solid #059669":"1.5px solid #e2e8f0",
-                  background:form.tipo===t?"#d1fae5":"#fff",color:form.tipo===t?"#065f46":"#64748b",
+                  border:form.tipo===t?"1.5px solid #6366f1":"1.5px solid #e2e8f0",
+                  background:form.tipo===t?"#eef2ff":"#fff",color:form.tipo===t?"#4338ca":"#64748b",
                   cursor:"pointer",fontFamily:"inherit"}}>{t}</button>
             ))}
           </div>
@@ -3144,7 +3144,7 @@ function ModalBitacora({ obraId, userId, onClose, onSave }) {
             {files.length>0?(
               <div>
                 <div style={{fontSize:18,marginBottom:4}}>📎</div>
-                <p style={{fontSize:12,fontWeight:600,color:"#065f46",margin:0}}>
+                <p style={{fontSize:12,fontWeight:600,color:"#4338ca",margin:0}}>
                   {files.length} archivo{files.length>1?"s":""} seleccionado{files.length>1?"s":""}
                 </p>
                 <p style={{fontSize:9,color:"#94a3b8",margin:"3px 0 0",wordBreak:"break-word"}}>
@@ -3162,7 +3162,7 @@ function ModalBitacora({ obraId, userId, onClose, onSave }) {
             )}
           </div>
         </InputRow>
-        {prog&&<p style={{fontSize:11,color:"#059669",margin:0}}>⏳ {prog}</p>}
+        {prog&&<p style={{fontSize:11,color:"#6366f1",margin:0}}>⏳ {prog}</p>}
         <ModalActions onClose={onClose} onSave={save} saving={saving} disabled={!form.descripcion.trim()}/>
       </div>
     </Modal>
@@ -3198,7 +3198,7 @@ function ModalFotos({ obraId, onClose, onSave }) {
           {files.length>0?(
             <div>
               <div style={{fontSize:22,marginBottom:4}}>🖼️</div>
-              <p style={{fontSize:13,fontWeight:600,color:"#065f46",margin:0}}>
+              <p style={{fontSize:13,fontWeight:600,color:"#4338ca",margin:0}}>
                 {files.length} foto{files.length>1?"s":""} seleccionada{files.length>1?"s":""}
               </p>
               <p style={{fontSize:10,color:"#94a3b8",margin:"3px 0 0"}}>{files.map(f=>f.name).join(", ")}</p>
@@ -3219,7 +3219,7 @@ function ModalFotos({ obraId, onClose, onSave }) {
               placeholder="Ej: Avance semana 3 — sector norte"/>
           </InputRow>
         )}
-        {prog&&<p style={{fontSize:11,color:"#059669",margin:0}}>⏳ {prog}</p>}
+        {prog&&<p style={{fontSize:11,color:"#6366f1",margin:0}}>⏳ {prog}</p>}
         <ModalActions onClose={onClose} onSave={save} saving={saving}
           disabled={files.length===0} label={`Subir ${files.length||""}foto${files.length!==1?"s":""} →`}/>
       </div>
@@ -3245,7 +3245,7 @@ function ResumenFinanciero({ presupuesto }) {
   return (
     <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:14,
       padding:"18px 22px", marginTop:8 }}>
-      <h3 style={{ fontSize:12, fontWeight:700, color:"#065f46", margin:"0 0 12px",
+      <h3 style={{ fontSize:12, fontWeight:700, color:"#4338ca", margin:"0 0 12px",
         textTransform:"uppercase", letterSpacing:".05em" }}>📊 Resumen Financiero</h3>
       {filas.map(({label,val,bold}) => (
         <div key={label} style={{ display:"flex", justifyContent:"space-between",
@@ -3256,8 +3256,8 @@ function ResumenFinanciero({ presupuesto }) {
       ))}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
         paddingTop:12, marginTop:4 }}>
-        <span style={{ fontSize:15, fontWeight:800, color:"#065f46" }}>TOTAL</span>
-        <span style={{ fontSize:20, fontWeight:800, color:"#059669" }}>{fmtN(total)}</span>
+        <span style={{ fontSize:15, fontWeight:800, color:"#4338ca" }}>TOTAL</span>
+        <span style={{ fontSize:20, fontWeight:800, color:"#6366f1" }}>{fmtN(total)}</span>
       </div>
     </div>
   );
@@ -3334,7 +3334,7 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
               background:"#fafafa", cursor:"pointer", textAlign:"center",
               transition:"border-color .15s, background .15s" }}
               onClick={()=>document.getElementById("presupuesto-input").click()}
-              onMouseEnter={e=>{ e.currentTarget.style.borderColor="#059669"; e.currentTarget.style.background="#f0fdf4"; }}
+              onMouseEnter={e=>{ e.currentTarget.style.borderColor="#6366f1"; e.currentTarget.style.background="#eef2ff"; }}
               onMouseLeave={e=>{ e.currentTarget.style.borderColor="#e2e8f0"; e.currentTarget.style.background="#fafafa"; }}>
               <input id="presupuesto-input" type="file"
                 accept=".xlsx,.xls,.pdf"
@@ -3343,7 +3343,7 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
               {file ? (
                 <div>
                   <div style={{ fontSize:28, marginBottom:6 }}>{isExcel?"📊":"📄"}</div>
-                  <p style={{ fontSize:13, fontWeight:700, color:"#065f46", margin:0 }}>{file.name}</p>
+                  <p style={{ fontSize:13, fontWeight:700, color:"#4338ca", margin:0 }}>{file.name}</p>
                   <p style={{ fontSize:11, color:"#94a3b8", margin:"4px 0 0" }}>
                     {isExcel ? "Excel detectado — extracción automática de partidas" : "PDF detectado — extracción por texto"}
                   </p>
@@ -3355,7 +3355,7 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
                     Selecciona tu presupuesto
                   </p>
                   <div style={{ display:"flex", gap:8, justifyContent:"center", flexWrap:"wrap" }}>
-                    {[["📊","Excel .xlsx","Recomendado","#d1fae5","#065f46"],
+                    {[["📊","Excel .xlsx","Recomendado","#eef2ff","#4338ca"],
                       ["📄","PDF","Texto extraíble","#dbeafe","#1d4ed8"]].map(([ic,lb,sub,bg,col])=>(
                       <div key={lb} style={{ background:bg, color:col, borderRadius:8, padding:"6px 12px",
                         fontSize:11, fontWeight:600 }}>{ic} {lb} <span style={{ opacity:.7 }}>· {sub}</span></div>
@@ -3367,8 +3367,8 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
 
             {/* Tip Excel */}
             {isExcel && (
-              <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10, padding:"10px 14px",
-                fontSize:12, color:"#065f46" }}>
+              <div style={{ background:"#eef2ff", border:"1px solid #bbf7d0", borderRadius:10, padding:"10px 14px",
+                fontSize:12, color:"#4338ca" }}>
                 ✅ <strong>Excel detectado.</strong> La app leerá automáticamente: Ítem, Partida, Unidad,
                 Cantidad, Valor Unitario y Valor Total. Si no hay valores ingresados, los podrás editar
                 directamente en la tabla después de importar.
@@ -3382,7 +3382,7 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
               </div>
             )}
 
-            {prog && <p style={{ fontSize:11, color:"#059669", margin:0, textAlign:"center" }}>⏳ {prog}</p>}
+            {prog && <p style={{ fontSize:11, color:"#6366f1", margin:0, textAlign:"center" }}>⏳ {prog}</p>}
 
             <ModalActions onClose={onClose} onSave={procesar} saving={saving}
               disabled={!file} label={saving ? "Procesando…" : "Procesar →"}/>
@@ -3390,8 +3390,8 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
         ) : (
           <>
             {/* Vista previa de partidas */}
-            <div style={{ background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:10,
-              padding:"10px 14px", fontSize:12, color:"#065f46" }}>
+            <div style={{ background:"#eef2ff", border:"1px solid #bbf7d0", borderRadius:10,
+              padding:"10px 14px", fontSize:12, color:"#4338ca" }}>
               ✅ Se encontraron <strong>{preview.length} partidas</strong> en {[...new Set(preview.map(p=>p.seccion))].length} secciones.
               {preview.every(p=>!p.valor_total) && " Los valores están en blanco — podrás editarlos en la tabla."}
             </div>
@@ -3418,7 +3418,7 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
                       <td style={{ padding:"6px 10px", textAlign:"right", color:"#64748b" }}>
                         {p.valor_unitario ? "$"+Math.round(p.valor_unitario).toLocaleString("es-CL") : ""}
                       </td>
-                      <td style={{ padding:"6px 10px", textAlign:"right", fontWeight:600, color:"#059669" }}>
+                      <td style={{ padding:"6px 10px", textAlign:"right", fontWeight:600, color:"#6366f1" }}>
                         {p.valor_total ? "$"+Math.round(p.valor_total).toLocaleString("es-CL") : "—"}
                       </td>
                     </tr>
@@ -3438,7 +3438,7 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
                 ← Cambiar archivo
               </button>
               <button onClick={guardar} disabled={saving}
-                style={{ flex:1, background:"#059669", color:"#fff", border:"none", borderRadius:10,
+                style={{ flex:1, background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                   padding:"11px", fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"inherit",
                   opacity: saving?0.7:1 }}>
                 {saving ? "⏳ Guardando…" : `✅ Importar ${preview.length} partidas →`}

@@ -18,7 +18,7 @@ function LogoLoader({ progress }) {
       <text x="80" y="34" textAnchor="middle" fontSize="32" fontWeight="800"
         fontFamily="'Inter','Helvetica Neue',Arial,sans-serif"
         clipPath="url(#apu-fill-clip)">
-        <tspan fill="#ffffff">APU</tspan><tspan fill="#6ee7b7">desk</tspan>
+        <tspan fill="#ffffff">APU</tspan><tspan fill="#a5b4fc">desk</tspan>
       </text>
     </svg>
   );
@@ -60,19 +60,19 @@ export default function LoadingOverlay({ visible, mensaje = "Cargando...", progr
     <div className="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300"
       style={{
         backdropFilter: blur ? "blur(6px)" : "none",
-        backgroundColor: blur ? "rgba(0,0,0,0.4)" : "rgba(6,40,28,0.97)",
+        backgroundColor: blur ? "rgba(0,0,0,0.4)" : "rgba(30,27,75,0.97)",
       }}>
       <div className="flex flex-col items-center gap-4">
         <LogoLoader progress={displayProg} />
         <div className="w-44">
           <div className="flex justify-between text-xs mb-1.5">
-            <span className="text-emerald-300 font-medium">{mensaje}</span>
+            <span className="text-indigo-300 font-medium">{mensaje}</span>
             {progress !== null && (
               <span className="text-white font-bold">{displayProg}%</span>
             )}
           </div>
           <div className="w-full bg-white/10 rounded-full h-1 overflow-hidden">
-            <div className="h-1 bg-emerald-400 rounded-full transition-all duration-75"
+            <div className="h-1 bg-indigo-400 rounded-full transition-all duration-75"
               style={{ width: `${displayProg}%` }} />
           </div>
         </div>

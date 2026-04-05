@@ -27,7 +27,7 @@ function diasRestantes(fechaCierre) {
 function chipSt(active) {
   return {
     padding: "4px 10px", borderRadius: 99, fontSize: 10.5, fontWeight: 600,
-    background: active ? "#059669" : "#f1f5f9", color: active ? "#fff" : "#475569",
+    background: active ? "#6366f1" : "#f1f5f9", color: active ? "#fff" : "#475569",
     border: "none", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap",
     transition: "background .12s, color .12s",
   };
@@ -94,7 +94,7 @@ export default function LicitacionesTicker() {
     <div style={{background:"#1e3a8a", color:"rgba(255,255,255,.55)", fontSize:11,
       padding:"11px 16px", display:"flex", alignItems:"center", gap:8, flexShrink:0}}>
       <span className="pulse-dot" style={{display:"inline-block", width:6, height:6,
-        borderRadius:"50%", background:"#34d399", flexShrink:0}}/>
+        borderRadius:"50%", background:"#818cf8", flexShrink:0}}/>
       Cargando licitaciones Mercado Público...
     </div>
   );
@@ -158,7 +158,7 @@ export default function LicitacionesTicker() {
                     <span style={{color:"rgba(255,255,255,.4)", fontSize:10}}>· {l.organismo}</span>
                     {d !== null && (
                       <span style={{fontSize:9.5, fontWeight:700, flexShrink:0,
-                        color: d <= 3 ? "#f87171" : d <= 7 ? "#fbbf24" : "#6ee7b7"}}>
+                        color: d <= 3 ? "#f87171" : d <= 7 ? "#fbbf24" : "#a5b4fc"}}>
                         {d === 0 ? "Cierra hoy" : `${d}d`}
                       </span>
                     )}
@@ -191,7 +191,7 @@ export default function LicitacionesTicker() {
       {/* ══ PANEL DE FILTROS ══ */}
       {panelOpen && (
         <div className="anim-slide-down"
-          style={{background:"#fff", borderBottom:"2px solid #059669",
+          style={{background:"#fff", borderBottom:"2px solid #6366f1",
             boxShadow:"0 8px 24px rgba(6,95,70,.1)", padding:"16px 20px", flexShrink:0}}>
 
           {/* Fila 1 — Tipo */}
@@ -273,7 +273,7 @@ export default function LicitacionesTicker() {
                       </span>
                     ) : <span/>}
                     <a href={l.url} target="_blank" rel="noopener noreferrer"
-                      style={{background:"#059669", color:"#fff", borderRadius:6, padding:"4px 10px",
+                      style={{background:"#6366f1", color:"#fff", borderRadius:6, padding:"4px 10px",
                         fontSize:10, fontWeight:600, textDecoration:"none"}}>
                       Ver en MP →
                     </a>

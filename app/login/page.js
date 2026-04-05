@@ -107,13 +107,13 @@ const [resetMode, setResetMode] = useState(false);
   if (otpStep) {
     return (
       <div className="min-h-screen flex">
-        <div className="hidden lg:flex lg:w-1/2 bg-emerald-800 flex-col items-center justify-center px-16 text-white">
-          <span className="text-4xl font-bold tracking-tight mb-6">APU<span className="text-emerald-300">chile</span></span>
-          <p className="text-emerald-200 text-center text-sm">Casi listo — confirma tu correo para activar tu cuenta</p>
+        <div className="hidden lg:flex lg:w-1/2 bg-indigo-800 flex-col items-center justify-center px-16 text-white">
+          <span className="text-4xl font-bold tracking-tight mb-6">APU<span className="text-indigo-300">chile</span></span>
+          <p className="text-indigo-200 text-center text-sm">Casi listo — confirma tu correo para activar tu cuenta</p>
         </div>
         <div className="w-full lg:w-1/2 flex items-center justify-center px-8 bg-white">
           <div className="w-full max-w-md text-center">
-            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-3xl">✉️</span>
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Revisa tu correo</h2>
@@ -130,12 +130,12 @@ const [resetMode, setResetMode] = useState(false);
               onChange={e => setOtp(e.target.value.replace(/\D/g, "").slice(0, 8))}
               onKeyDown={e => { if (e.key === "Enter" && otp.length >= 8) verificarOtp(); }}
               placeholder="Pega o escribe el código"
-              className="w-full text-center text-3xl font-bold tracking-[0.4em] border-2 border-gray-200 rounded-xl px-4 py-5 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 text-gray-800 mb-2"/>
+              className="w-full text-center text-3xl font-bold tracking-[0.4em] border-2 border-gray-200 rounded-xl px-4 py-5 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 text-gray-800 mb-2"/>
             <p className="text-xs text-gray-400 mb-6">Puedes pegar el código directamente con Ctrl+V</p>
 
             {otpError && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg mb-4">{otpError}</p>}
             <button onClick={verificarOtp} disabled={otpLoading || otp.length < 8}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mb-4">
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mb-4">
               {otpLoading ? "Verificando..." : "Verificar código →"}
             </button>
             <button onClick={() => { setOtpStep(false); setOtp(""); setOtpError(""); }}
@@ -151,19 +151,19 @@ const [resetMode, setResetMode] = useState(false);
   return (
     <div className="min-h-screen flex">
       {/* Panel izquierdo */}
-      <div className="hidden lg:flex lg:w-1/2 bg-emerald-800 flex-col items-center justify-center px-16 text-white">
+      <div className="hidden lg:flex lg:w-1/2 bg-indigo-800 flex-col items-center justify-center px-16 text-white">
         <div className="mb-8">
-          <span className="text-4xl font-bold tracking-tight">APU<span className="text-emerald-300">chile</span></span>
+          <span className="text-4xl font-bold tracking-tight">APU<span className="text-indigo-300">chile</span></span>
         </div>
         <h2 className="text-2xl font-semibold text-center mb-4 leading-snug">
           Simplifica tus análisis<br/>de precios unitarios
         </h2>
-        <p className="text-emerald-200 text-center text-sm leading-relaxed max-w-xs">
+        <p className="text-indigo-200 text-center text-sm leading-relaxed max-w-xs">
           Cálculo automático de costos · Desglose de insumos · Precios actualizados · Exportación de presupuestos
         </p>
         <div className="mt-12 grid grid-cols-2 gap-4 w-full max-w-xs">
           {["821 APUs disponibles","16 categorías","Cálculo automático","Proyectos guardados"].map((f, i) => (
-            <div key={i} className="bg-emerald-700/50 rounded-xl px-4 py-3 text-sm text-emerald-100">{f}</div>
+            <div key={i} className="bg-indigo-700/50 rounded-xl px-4 py-3 text-sm text-indigo-100">{f}</div>
           ))}
         </div>
       </div>
@@ -172,12 +172,12 @@ const [resetMode, setResetMode] = useState(false);
       <div className="w-full lg:w-1/2 flex items-center justify-center px-8 bg-white">
         <div className="w-full max-w-md">
           <div className="lg:hidden text-center mb-8">
-            <span className="text-3xl font-bold text-emerald-800">APU<span className="text-emerald-500">chile</span></span>
+            <span className="text-3xl font-bold text-indigo-800">APU<span className="text-indigo-500">chile</span></span>
           </div>
           <div className="flex bg-gray-100 rounded-xl p-1 mb-8">
             {[["ingresar","Ingresar"],["registrar","Registrarse"]].map(([m, label]) => (
               <button key={m} onClick={() => { setModo(m); setError(""); }}
-                className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${modo === m ? "bg-white shadow text-emerald-700" : "text-gray-500 hover:text-gray-700"}`}>
+                className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${modo === m ? "bg-white shadow text-indigo-700" : "text-gray-500 hover:text-gray-700"}`}>
                 {label}
               </button>
             ))}
@@ -190,22 +190,22 @@ const [resetMode, setResetMode] = useState(false);
                 <label className="text-xs font-medium text-gray-600 mb-1.5 block">Correo electrónico</label>
                 <input type="email" required value={form.correo} onChange={e => set("correo", e.target.value)}
                   placeholder="correo@ejemplo.com"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
               </div>
               <div>
                 <label className="text-xs font-medium text-gray-600 mb-1.5 block">Contraseña</label>
                 <input type="password" required value={form.password} onChange={e => set("password", e.target.value)}
                   placeholder="••••••••"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
               </div>
               {error && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
               <button type="submit" disabled={loading}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mt-2">
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mt-2">
                 {loading ? "Ingresando..." : "Ingresar →"}
               </button>
               <div className="text-center mt-3">
                 <button type="button" onClick={() => { setResetMode(true); setResetEmail(form.correo); setResetSent(false); setResetError(""); }}
-                  className="text-xs text-gray-400 hover:text-emerald-600 transition-colors">
+                  className="text-xs text-gray-400 hover:text-indigo-600 transition-colors">
                   ¿Olvidaste tu contraseña?
                 </button>
               </div>
@@ -213,24 +213,24 @@ const [resetMode, setResetMode] = useState(false);
 
             {/* Panel restablecer contraseña */}
             {resetMode && (
-              <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+              <div className="mt-6 bg-indigo-50 border border-indigo-200 rounded-xl p-5">
                 {resetSent ? (
                   <div className="text-center">
                     <div className="text-2xl mb-2">✉️</div>
-                    <p className="text-sm font-semibold text-emerald-800 mb-1">Correo enviado</p>
+                    <p className="text-sm font-semibold text-indigo-800 mb-1">Correo enviado</p>
                     <p className="text-xs text-gray-500">Revisa tu bandeja (y spam) en <span className="font-medium">{resetEmail}</span> y sigue el enlace para crear una nueva contraseña.</p>
-                    <button onClick={() => setResetMode(false)} className="mt-4 text-xs text-emerald-600 hover:text-emerald-800">Volver al inicio de sesión</button>
+                    <button onClick={() => setResetMode(false)} className="mt-4 text-xs text-indigo-600 hover:text-indigo-800">Volver al inicio de sesión</button>
                   </div>
                 ) : (
                   <form onSubmit={enviarReset}>
-                    <p className="text-xs font-semibold text-emerald-800 mb-3">Restablecer contraseña</p>
+                    <p className="text-xs font-semibold text-indigo-800 mb-3">Restablecer contraseña</p>
                     <input type="email" required value={resetEmail} onChange={e => setResetEmail(e.target.value)}
                       placeholder="correo@ejemplo.com"
-                      className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 mb-2 bg-white"/>
+                      className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 mb-2 bg-white"/>
                     {resetError && <p className="text-red-500 text-xs mb-2">{resetError}</p>}
                     <div className="flex gap-2">
                       <button type="submit" disabled={resetLoading}
-                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors disabled:opacity-50">
+                        className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors disabled:opacity-50">
                         {resetLoading ? "Enviando..." : "Enviar enlace →"}
                       </button>
                       <button type="button" onClick={() => setResetMode(false)}
@@ -250,38 +250,38 @@ const [resetMode, setResetMode] = useState(false);
                   <label className="text-xs font-medium text-gray-600 mb-1.5 block">Nombre completo</label>
                   <input type="text" required value={form.nombre} onChange={e => set("nombre", e.target.value)}
                     placeholder="Juan Pérez"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                 </div>
                 <div>
                   <label className="text-xs font-medium text-gray-600 mb-1.5 block">Usuario</label>
                   <input type="text" required value={form.usuario} onChange={e => set("usuario", e.target.value)}
                     placeholder="juanp"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                 </div>
               </div>
               <div>
                 <label className="text-xs font-medium text-gray-600 mb-1.5 block">Correo electrónico</label>
                 <input type="email" required value={form.correo} onChange={e => set("correo", e.target.value)}
                   placeholder="correo@ejemplo.com"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
               </div>
               <div>
                 <label className="text-xs font-medium text-gray-600 mb-1.5 block">Contraseña</label>
                 <input type="password" required value={form.password} onChange={e => set("password", e.target.value)}
                   placeholder="Mínimo 6 caracteres"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-medium text-gray-600 mb-1.5 block">Año de nacimiento</label>
                   <input type="number" required value={form.anio} onChange={e => set("anio", e.target.value)}
                     placeholder="1990" min="1940" max="2010"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                 </div>
                 <div>
                   <label className="text-xs font-medium text-gray-600 mb-1.5 block">País</label>
                   <select value={form.pais} onChange={e => set("pais", e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 bg-white">
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 bg-white">
                     {PAISES.map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
@@ -291,14 +291,14 @@ const [resetMode, setResetMode] = useState(false);
                   <p className="text-red-500 text-xs">{error}</p>
                   {error.includes("ya está registrado") && (
                     <button type="button" onClick={() => { setModo("ingresar"); setError(""); }}
-                      className="text-emerald-600 text-xs font-medium underline ml-2 shrink-0">
+                      className="text-indigo-600 text-xs font-medium underline ml-2 shrink-0">
                       Ingresar →
                     </button>
                   )}
                 </div>
               )}
               <button type="submit" disabled={loading}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50">
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50">
                 {loading ? "Creando cuenta..." : "Crear cuenta →"}
               </button>
             </form>

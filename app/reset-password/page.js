@@ -42,11 +42,11 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen flex">
       {/* Panel izquierdo */}
-      <div className="hidden lg:flex lg:w-1/2 bg-emerald-800 flex-col items-center justify-center px-16 text-white">
+      <div className="hidden lg:flex lg:w-1/2 bg-indigo-800 flex-col items-center justify-center px-16 text-white">
         <span className="text-4xl font-bold tracking-tight mb-6">
-          APU<span className="text-emerald-300">chile</span>
+          APU<span className="text-indigo-300">chile</span>
         </span>
-        <p className="text-emerald-200 text-center text-sm">
+        <p className="text-indigo-200 text-center text-sm">
           Crea una nueva contraseña segura para tu cuenta
         </p>
       </div>
@@ -56,14 +56,14 @@ export default function ResetPasswordPage() {
         <div className="w-full max-w-md">
 
           <div className="lg:hidden text-center mb-8">
-            <span className="text-3xl font-bold text-emerald-800">
-              APU<span className="text-emerald-500">chile</span>
+            <span className="text-3xl font-bold text-indigo-800">
+              APU<span className="text-indigo-500">chile</span>
             </span>
           </div>
 
           {success ? (
             <div className="text-center">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-3xl">✅</span>
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-2">¡Contraseña actualizada!</h2>
@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
                 Si este mensaje no desaparece, el enlace puede haber expirado.
               </p>
               <button onClick={() => router.push("/login")}
-                className="text-emerald-600 text-sm font-medium hover:text-emerald-800">
+                className="text-indigo-600 text-sm font-medium hover:text-indigo-800">
                 Volver al inicio de sesión
               </button>
             </div>
@@ -98,7 +98,7 @@ export default function ResetPasswordPage() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Mínimo 6 caracteres"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
                   />
                 </div>
                 <div>
@@ -109,7 +109,7 @@ export default function ResetPasswordPage() {
                     value={confirm}
                     onChange={e => setConfirm(e.target.value)}
                     placeholder="Repite la contraseña"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
                   />
                 </div>
 
@@ -118,7 +118,7 @@ export default function ResetPasswordPage() {
                 )}
 
                 <button type="submit" disabled={loading}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mt-2">
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 mt-2">
                   {loading ? "Guardando..." : "Guardar contraseña →"}
                 </button>
               </form>

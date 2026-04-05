@@ -91,7 +91,7 @@ const FASES_INFO = [
   { label:"Cubierta",       color:"#eab308", light:"#fef9c3" },
   { label:"Instalaciones",  color:"#3b82f6", light:"#dbeafe" },
   { label:"Carpintería",    color:"#8b5cf6", light:"#ede9fe" },
-  { label:"Revestimientos", color:"#10b981", light:"#d1fae5" },
+  { label:"Revestimientos", color:"#6366f1", light:"#eef2ff" },
   { label:"Terminaciones",  color:"#14b8a6", light:"#ccfbf1" },
   { label:"Equipamiento",   color:"#ec4899", light:"#fce7f3" },
   { label:"Urbanización",   color:"#6b7280", light:"#f3f4f6" },
@@ -158,7 +158,7 @@ function _calcAPUImpl(apu, cfg) {
 function Badge({ tipo }) {
   const map = {
     mo:   { label: "M.O.",     cls: "bg-blue-100 text-blue-700"    },
-    mat:  { label: "Material", cls: "bg-green-100 text-green-700"  },
+    mat:  { label: "Material", cls: "bg-indigo-100 text-indigo-700"  },
     tool: { label: "Herram.",  cls: "bg-amber-100 text-amber-700"  },
     fung: { label: "Fungible", cls: "bg-purple-100 text-purple-700"},
   };
@@ -190,7 +190,7 @@ function DesgloseInsumos({ secciones, labels, totalItems }) {
           <div className="flex border-b border-gray-100 px-4 pt-2 gap-1">
             {secciones.map(s => (
               <button key={s.tipo} onClick={() => setTabActiva(s.tipo)}
-                className={`px-3 py-1.5 text-[11px] font-semibold rounded-t-lg border-b-2 transition-colors ${tabActiva === s.tipo ? "border-emerald-500 text-emerald-700 bg-emerald-50" : "border-transparent text-gray-400 hover:text-gray-600"}`}>
+                className={`px-3 py-1.5 text-[11px] font-semibold rounded-t-lg border-b-2 transition-colors ${tabActiva === s.tipo ? "border-indigo-500 text-indigo-700 bg-indigo-50" : "border-transparent text-gray-400 hover:text-gray-600"}`}>
                 <span className={`mr-1 px-1.5 py-0.5 rounded text-[9px] ${labels[s.tipo]?.color}`}>{s.items.length}</span>
                 {labels[s.tipo]?.titulo || s.tipo}
               </button>
@@ -213,7 +213,7 @@ function DesgloseInsumos({ secciones, labels, totalItems }) {
                   <td className="px-4 py-2 text-gray-700">{m.desc}</td>
                   <td className="px-3 py-2 text-center text-gray-500">{m.un || "—"}</td>
                   <td className="px-3 py-2 text-right text-gray-600">{m.total.toFixed(3)}</td>
-                  <td className="px-3 py-2 text-right font-semibold text-emerald-700">{Math.ceil(m.total)}</td>
+                  <td className="px-3 py-2 text-right font-semibold text-indigo-700">{Math.ceil(m.total)}</td>
                 </tr>
               ))}
             </tbody>
@@ -984,17 +984,17 @@ function Home() {
       {/* ── Rail lateral ── */}
       <div className="w-[68px] bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-1 shrink-0 shadow-sm z-10">
         <div className="mb-3 text-center leading-none select-none">
-          <div className="text-[11px] font-black text-emerald-600">APU</div>
+          <div className="text-[11px] font-black text-indigo-600">APU</div>
           <div className="text-[9px] text-gray-400 font-medium">chile</div>
         </div>
         {TABS_RAIL.map((t, i) => (
           <button key={t.id} onClick={() => setTab(t.id)} title={t.label}
             style={{ animationDelay: `${i * 40}ms` }}
-            className={`relative w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 rail-btn anim-fade-up ${tab === t.id ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 shadow-sm" : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"}`}>
+            className={`relative w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 rail-btn anim-fade-up ${tab === t.id ? "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200 shadow-sm" : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"}`}>
             <span className={`text-lg leading-none transition-transform duration-150 ${tab === t.id ? "scale-110" : "scale-100"}`}>{t.icon}</span>
             <span className="text-[9px] font-medium leading-none">{t.label}</span>
             {t.id === "resumen" && proyecto.length > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-emerald-500 text-white text-[9px] rounded-full flex items-center justify-center font-bold shadow-sm">{proyecto.length}</span>
+              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-indigo-500 text-white text-[9px] rounded-full flex items-center justify-center font-bold shadow-sm">{proyecto.length}</span>
             )}
           </button>
         ))}
@@ -1016,10 +1016,10 @@ function Home() {
               <span className="font-semibold text-gray-800">{proyectoNombre}</span>
               <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">{zonaLabel}</span>
               <button onClick={() => setEditandoProyecto(true)}
-                className="text-gray-300 hover:text-emerald-500 transition-colors text-xs hover:scale-110 transition-transform">✏️</button>
+                className="text-gray-300 hover:text-indigo-500 transition-colors text-xs hover:scale-110 transition-transform">✏️</button>
               {guardando && (
                 <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full anim-fade-in flex items-center gap-1">
-                  <span className="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"/>
+                  <span className="inline-block w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse"/>
                   Guardando...
                 </span>
               )}
@@ -1044,7 +1044,7 @@ function Home() {
                 {presentes.slice(0, 3).map((p, i) => (
                   <div key={p.user_id || i} title={p.nombre}
                     className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-sm border-2 border-white"
-                    style={{ background: ["#059669","#3b82f6","#f59e0b","#8b5cf6","#ef4444","#ec4899","#06b6d4","#f97316"][i % 8], marginLeft: i > 0 ? -8 : 0, zIndex: 3 - i }}>
+                    style={{ background: ["#6366f1","#3b82f6","#f59e0b","#8b5cf6","#ef4444","#ec4899","#06b6d4","#f97316"][i % 8], marginLeft: i > 0 ? -8 : 0, zIndex: 3 - i }}>
                     {(p.nombre || "?")[0].toUpperCase()}
                   </div>
                 ))}
@@ -1055,7 +1055,7 @@ function Home() {
             {/* Botón colaboradores (solo dueño/admin) */}
             {puedeAdministrar && (
               <button onClick={() => { setPanelColab(true); setInvResultado(null); }}
-                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 btn-press">
+                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 btn-press">
                 👥 {colaboradores.length > 0 ? `${colaboradores.length + 1} colaboradores` : "Colaborar"}
               </button>
             )}
@@ -1063,8 +1063,8 @@ function Home() {
             {/* Badge rol si es colaborador */}
             {rolUsuario !== "owner" && (
               <span className="text-[10px] font-bold px-2 py-1 rounded-full"
-                style={{ background: rolUsuario === "visualizar" ? "#f1f5f9" : rolUsuario === "editar" ? "#dbeafe" : "#d1fae5",
-                         color:      rolUsuario === "visualizar" ? "#64748b"  : rolUsuario === "editar" ? "#1d4ed8"  : "#065f46" }}>
+                style={{ background: rolUsuario === "visualizar" ? "#f1f5f9" : rolUsuario === "editar" ? "#dbeafe" : "#eef2ff",
+                         color:      rolUsuario === "visualizar" ? "#64748b"  : rolUsuario === "editar" ? "#1d4ed8"  : "#4338ca" }}>
                 {rolUsuario === "visualizar" ? "Solo lectura" : rolUsuario === "editar" ? "Puede editar" : "Administrador"}
               </span>
             )}
@@ -1079,7 +1079,7 @@ function Home() {
             <div className="flex bg-gray-100 rounded-lg p-0.5 gap-0.5">
               {["CLP","UF","UTM"].map(m => (
                 <button key={m} onClick={() => setMoneda(m)}
-                  className={`px-2.5 py-1 rounded-md text-[11px] font-semibold btn-press ${moneda === m ? "bg-white shadow text-emerald-700" : "text-gray-400 hover:text-gray-600"}`}>
+                  className={`px-2.5 py-1 rounded-md text-[11px] font-semibold btn-press ${moneda === m ? "bg-white shadow text-indigo-700" : "text-gray-400 hover:text-gray-600"}`}>
                   {m}
                 </button>
               ))}
@@ -1097,11 +1097,11 @@ function Home() {
               <aside className="w-56 bg-white border-r border-gray-100 flex flex-col overflow-hidden shrink-0 anim-fade-up">
                 <div className="px-3 py-2.5 border-b border-gray-100">
                   <input value={filtroCat} onChange={e => { setFiltroCat(e.target.value); setFamAbierta(null); }} placeholder="Filtrar categorías..."
-                    className="w-full border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs input-focus focus:outline-none focus:border-emerald-400" />
+                    className="w-full border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs input-focus focus:outline-none focus:border-indigo-400" />
                 </div>
                 <div className="flex-1 overflow-y-auto py-1">
                   <button onClick={() => { setFamiliaActiva(null); setFamAbierta(null); setFiltroCat(""); }}
-                    className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between transition-colors duration-100 ${!familiaActiva ? "bg-emerald-50 text-emerald-700 border-r-2 border-emerald-500" : "text-gray-600 hover:bg-gray-50"}`}>
+                    className={`w-full text-left px-3 py-2 text-xs font-semibold flex items-center justify-between transition-colors duration-100 ${!familiaActiva ? "bg-indigo-50 text-indigo-700 border-r-2 border-indigo-500" : "text-gray-600 hover:bg-gray-50"}`}>
                     <span>Todas las partidas</span>
                     <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{APUS.length}</span>
                   </button>
@@ -1111,7 +1111,7 @@ function Home() {
                     return (
                       <div key={r.codigo}>
                         <button onClick={() => setFamAbierta(estaAbierta ? null : r.codigo)}
-                          className={`w-full text-left px-3 py-2 text-xs font-medium flex items-center justify-between transition-colors duration-100 ${tieneActiva ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50"}`}>
+                          className={`w-full text-left px-3 py-2 text-xs font-medium flex items-center justify-between transition-colors duration-100 ${tieneActiva ? "bg-indigo-50 text-indigo-700" : "text-gray-600 hover:bg-gray-50"}`}>
                           <span className="truncate pr-1">{r.nombre}</span>
                           <div className="flex items-center gap-1 shrink-0">
                             {conteoFamilia[r.codigo] > 0 && <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-normal">{conteoFamilia[r.codigo]}</span>}
@@ -1121,7 +1121,7 @@ function Home() {
                         {(estaAbierta || filtroCat) && hijos(r.codigo).filter(h => !filtroCat || h.nombre.toLowerCase().includes(filtroCat.toLowerCase())).map((h, hi) => (
                           <button key={h.codigo} onClick={() => setFamiliaActiva(h.codigo)}
                             style={{ animationDelay: `${hi * 25}ms` }}
-                            className={`accordion-item w-full text-left pl-6 pr-3 py-1.5 text-[11px] flex items-center justify-between transition-colors duration-100 ${familiaActiva === h.codigo ? "text-emerald-600 font-semibold bg-emerald-50 border-r-2 border-emerald-400" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"}`}>
+                            className={`accordion-item w-full text-left pl-6 pr-3 py-1.5 text-[11px] flex items-center justify-between transition-colors duration-100 ${familiaActiva === h.codigo ? "text-indigo-600 font-semibold bg-indigo-50 border-r-2 border-indigo-400" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"}`}>
                             <span className="flex items-center gap-1"><span className="text-gray-300">›</span> {h.nombre}</span>
                             {conteoFamilia[h.codigo] > 0 && <span className="text-[10px] text-gray-400">{conteoFamilia[h.codigo]}</span>}
                           </button>
@@ -1137,7 +1137,7 @@ function Home() {
                 <div className="px-4 py-3 border-b border-gray-200 bg-white flex gap-3 items-center sticky top-0 z-10 shadow-sm">
                   <input value={busqueda} onChange={e => setBusqueda(e.target.value)}
                     placeholder="Buscar partida por nombre o código..."
-                    className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm input-focus focus:outline-none focus:border-emerald-400 shadow-sm" />
+                    className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm input-focus focus:outline-none focus:border-indigo-400 shadow-sm" />
                   <span className="text-xs text-gray-400 shrink-0 tabular-nums">{apusFiltrados.length} partidas</span>
                 </div>
                 <div className="p-4 grid gap-2">
@@ -1158,7 +1158,7 @@ function Home() {
                         <div className="flex items-center gap-3 ml-4 shrink-0">
                           <div className="text-right">
                             <div className="text-[10px] text-gray-400">Precio unitario</div>
-                            <div className="font-bold text-emerald-600">{fmtM(total)}</div>
+                            <div className="font-bold text-indigo-600">{fmtM(total)}</div>
                           </div>
                           <button onClick={() => { setApuActivo(apu); setTab("editor"); }}
                             className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600 opacity-0 group-hover:opacity-100 btn-press"
@@ -1167,7 +1167,7 @@ function Home() {
                           </button>
                           {puedeEditar && (
                           <button onClick={() => agregarPartida(apu)}
-                            className="text-xs px-3 py-1.5 rounded-lg bg-emerald-600 text-white shadow-sm btn-primary hover:bg-emerald-700">
+                            className="text-xs px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm btn-primary hover:bg-indigo-700">
                             + Agregar
                           </button>
                           )}
@@ -1212,7 +1212,7 @@ function Home() {
               <div className="text-center py-20 text-gray-400 anim-fade-in">
                 <p className="text-4xl mb-4">🔧</p>
                 <p className="text-base mb-2 font-medium text-gray-500">Ninguna partida seleccionada</p>
-                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca</button>
+                <button onClick={()=>setTab("biblioteca")} className="text-indigo-600 text-sm underline btn-press">Ir a la biblioteca</button>
               </div>
             ) : (
               <>
@@ -1223,8 +1223,8 @@ function Home() {
                 <div className="grid grid-cols-4 gap-3 mb-6">
                   {[["Costo M.O. neto",fmtM(apuCalc.moNet)],["Leyes Sociales",fmtM(apuCalc.llssAmt)],["Materiales",fmtM(apuCalc.mat)],["Precio unitario",fmtM(apuCalc.total)]].map(([label,val],i)=>(
                     <div key={i} style={{ animationDelay: `${i * 50 + 60}ms` }}
-                      className={`rounded-xl p-4 anim-scale-in ${i===3?"bg-emerald-600 text-white shadow-lg shadow-emerald-200":"bg-white border border-gray-200"}`}>
-                      <div className={`text-[10px] uppercase tracking-wider mb-1 ${i===3?"text-emerald-100":"text-gray-400"}`}>{label}</div>
+                      className={`rounded-xl p-4 anim-scale-in ${i===3?"bg-indigo-600 text-white shadow-lg shadow-indigo-200":"bg-white border border-gray-200"}`}>
+                      <div className={`text-[10px] uppercase tracking-wider mb-1 ${i===3?"text-indigo-100":"text-gray-400"}`}>{label}</div>
                       <div className={`text-lg font-semibold ${i===3?"text-white":"text-gray-800"}`}>{val}</div>
                     </div>
                   ))}
@@ -1264,7 +1264,7 @@ function Home() {
                 )}
                 {puedeEditar && (
                 <button onClick={()=>agregarPartida(apuActivo)}
-                  className="w-full py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 btn-primary anim-fade-up delay-300">
+                  className="w-full py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 btn-primary anim-fade-up delay-300">
                   + Agregar esta partida al proyecto
                 </button>
                 )}
@@ -1283,7 +1283,7 @@ function Home() {
                 <div>
                   <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">Región / Zona</label>
                   <select value={cfg.zona} onChange={(e)=>updateCfg("zona",e.target.value)}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-400">
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400">
                     {ZONAS.map((z)=><option key={z.val} value={z.val}>{z.label}</option>)}
                   </select>
                 </div>
@@ -1291,7 +1291,7 @@ function Home() {
                   <div key={k}>
                     <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">{label}</label>
                     <input type="number" value={cfg[k]} onChange={(e)=>updateCfg(k,e.target.value)}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-400"/>
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400"/>
                   </div>
                 ))}
               </div>
@@ -1303,7 +1303,7 @@ function Home() {
                   <div key={k}>
                     <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">{label}</label>
                     <input type="number" value={cfg[k]} onChange={(e)=>updateCfg(k,e.target.value)}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-400"/>
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400"/>
                   </div>
                 ))}
               </div>
@@ -1322,18 +1322,18 @@ function Home() {
               <div className="flex items-center gap-2">
                   {puedeEditar && (
                   <button onClick={crearPartidaNueva}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 btn-press">
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border border-indigo-300 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 btn-press">
                     + Nueva partida
                   </button>
                   )}
               {proyecto.length > 0 && (
                 <>
                   <button onClick={() => setAgruparCapitulos(v => !v)}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border btn-press transition-colors ${agruparCapitulos ? "bg-emerald-50 border-emerald-300 text-emerald-700" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border btn-press transition-colors ${agruparCapitulos ? "bg-indigo-50 border-indigo-300 text-indigo-700" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
                     <span>⊞</span> {agruparCapitulos ? "Vista plana" : "Agrupar por capítulo"}
                   </button>
                   <button onClick={exportarPDF}
-                    className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-emerald-700">
+                    className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-indigo-700">
                     📄 Exportar PDF
                   </button>
                 </>
@@ -1344,7 +1344,7 @@ function Home() {
               <div className="text-center py-20 text-gray-400 anim-fade-in">
                 <p className="text-4xl mb-4">📋</p>
                 <p className="mb-2 font-medium text-gray-500">No hay partidas agregadas</p>
-                <button onClick={()=>setTab("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca</button>
+                <button onClick={()=>setTab("biblioteca")} className="text-indigo-600 text-sm underline btn-press">Ir a la biblioteca</button>
               </div>
             ) : (
               <>
@@ -1376,7 +1376,7 @@ function Home() {
                                 onDragEnter={() => { dragOverItem.current = globalIdx; setDragOverIdx(globalIdx); }}
                                 onDragEnd={handleDragSort}
                                 onDragOver={(e) => e.preventDefault()}
-                                className={`border-b border-gray-100 cursor-pointer select-none transition-colors ${dragOverIdx === globalIdx ? "bg-emerald-100 border-emerald-400 border-2" : expanded ? "bg-emerald-50" : "hover:bg-gray-50"}`}
+                                className={`border-b border-gray-100 cursor-pointer select-none transition-colors ${dragOverIdx === globalIdx ? "bg-indigo-100 border-indigo-400 border-2" : expanded ? "bg-indigo-50" : "hover:bg-gray-50"}`}
                                 onClick={(e) => { if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") setExpandedResumen(expanded ? null : p.id); }}>
                                 {/* Drag handle */}
                                 <td className="px-2 py-3 text-center text-gray-300 cursor-grab active:cursor-grabbing select-none">⠿</td>
@@ -1394,18 +1394,18 @@ function Home() {
                                     <input type="number" value={p.cantidad} min={0.01} step={0.01}
                                       onClick={(e) => e.stopPropagation()}
                                       onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
-                                      className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-emerald-400"/>
+                                      className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-indigo-400"/>
                                   ) : (
                                     <span className="text-gray-600">{p.cantidad}</span>
                                   )}
                                 </td>
                                 <td className="px-3 py-3 text-right text-gray-700">{fmtM(total)}</td>
-                                <td className="px-3 py-3 text-right font-semibold text-emerald-600">{fmtM(total * p.cantidad)}</td>
+                                <td className="px-3 py-3 text-right font-semibold text-indigo-600">{fmtM(total * p.cantidad)}</td>
                                 <td className="px-3 py-3 text-right">
                                   {puedeEditar && (
                                   <div className="flex items-center gap-1 justify-end">
                                     <button onClick={(e)=>{e.stopPropagation();setEditandoPartida(p);}}
-                                      className="text-gray-300 hover:text-emerald-600 text-xs btn-press transition-colors px-1" title="Editar partida">✏️</button>
+                                      className="text-gray-300 hover:text-indigo-600 text-xs btn-press transition-colors px-1" title="Editar partida">✏️</button>
                                     <button onClick={(e)=>{e.stopPropagation();duplicarPartida(p);}}
                                       className="text-gray-300 hover:text-blue-500 text-xs btn-press transition-colors px-1" title="Duplicar partida">⧉</button>
                                     <button onClick={(e)=>{e.stopPropagation();setProyecto(pr=>pr.filter(x=>x.id!==p.id));}}
@@ -1415,12 +1415,12 @@ function Home() {
                                 </td>
                               </tr>
                               {expanded && (
-                                <tr key={p.id + "_detail"} className="bg-emerald-50 border-b border-emerald-100">
+                                <tr key={p.id + "_detail"} className="bg-indigo-50 border-b border-indigo-100">
                                   <td colSpan={7} className="px-6 py-3">
                                     {rows.length > 0 && (
                                       <table className="w-full text-[11px] mb-3">
                                         <thead>
-                                          <tr className="text-gray-400 border-b border-emerald-100">
+                                          <tr className="text-gray-400 border-b border-indigo-100">
                                             <th className="text-left py-1 font-medium">Insumo</th>
                                             <th className="text-center py-1 font-medium">Tipo</th>
                                             <th className="text-center py-1 font-medium">Un.</th>
@@ -1431,7 +1431,7 @@ function Home() {
                                         </thead>
                                         <tbody>
                                           {rows.map((ins, i) => (
-                                            <tr key={i} className="border-b border-emerald-50">
+                                            <tr key={i} className="border-b border-indigo-50">
                                               <td className="py-1 text-gray-700">{ins.desc}</td>
                                               <td className="py-1 text-center">
                                                 <span className={`px-1.5 py-0.5 rounded text-[9px] font-medium ${ins.tipo==="mo"?"bg-blue-100 text-blue-700":ins.tipo==="mat"?"bg-amber-100 text-amber-700":"bg-gray-100 text-gray-600"}`}>{ins.tipo}</span>
@@ -1454,7 +1454,7 @@ function Home() {
                                         onChange={(e) => setProyecto(pr => pr.map(x => x.id===p.id ? {...x, nota: e.target.value} : x))}
                                         placeholder="Agrega una nota u observación para esta partida..."
                                         rows={2}
-                                        className="w-full border border-emerald-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400 bg-white resize-none"
+                                        className="w-full border border-indigo-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-indigo-400 bg-white resize-none"
                                       />
                                     </div>
                                   </td>
@@ -1538,7 +1538,7 @@ function Home() {
                       <span className="font-medium tabular-nums">{fmtM(val)}</span>
                     </div>
                   ))}
-                  <div className="flex justify-between items-center px-5 py-4 bg-emerald-600 text-white">
+                  <div className="flex justify-between items-center px-5 py-4 bg-indigo-600 text-white">
                     <span className="font-semibold">Total proyecto</span>
                     <span className="text-xl font-bold tabular-nums">{fmtM(resumen.total)}</span>
                   </div>
@@ -1559,11 +1559,11 @@ function Home() {
 
             {/* Procesando indicator */}
             {procesando && (
-              <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-5 flex items-center gap-4">
-                <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin shrink-0"/>
+              <div className="mt-6 bg-indigo-50 border border-indigo-200 rounded-xl p-5 flex items-center gap-4">
+                <div className="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin shrink-0"/>
                 <div>
-                  <p className="text-sm font-medium text-emerald-700">Procesando documento...</p>
-                  <p className="text-xs text-emerald-500 mt-0.5">Extrayendo texto y cruzando con base de datos</p>
+                  <p className="text-sm font-medium text-indigo-700">Procesando documento...</p>
+                  <p className="text-xs text-indigo-500 mt-0.5">Extrayendo texto y cruzando con base de datos</p>
                 </div>
               </div>
             )}
@@ -1601,7 +1601,7 @@ function Home() {
                             const { data } = await supabase.storage.from("anexos").createSignedUrl(`${proyectoId}/${a.name}`, 60);
                             if (data?.signedUrl) window.open(data.signedUrl, "_blank");
                           }}
-                          className="text-xs text-emerald-600 hover:text-emerald-700 btn-press font-medium">
+                          className="text-xs text-indigo-600 hover:text-indigo-700 btn-press font-medium">
                           Abrir →
                         </button>
                       </div>
@@ -1641,7 +1641,7 @@ function Home() {
           {/* Botón flotante */}
           <button
             onClick={() => { setChatAbierto(v => !v); setMensajesNoLeidos(0); }}
-            className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-emerald-600 text-white shadow-lg flex items-center justify-center btn-press hover:bg-emerald-700 transition-colors"
+            className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-indigo-600 text-white shadow-lg flex items-center justify-center btn-press hover:bg-indigo-700 transition-colors"
             title="Chat del proyecto">
             <span className="text-lg">💬</span>
             {mensajesNoLeidos > 0 && (
@@ -1657,15 +1657,15 @@ function Home() {
               style={{height: 420}}>
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0"
-                style={{background:"linear-gradient(135deg,#065f46,#059669)"}}>
+                style={{background:"linear-gradient(135deg,#4338ca,#6366f1)"}}>
                 <div className="flex items-center gap-2">
                   <span className="text-sm">💬</span>
                   <div>
                     <p className="text-[12px] font-bold text-white">Chat del proyecto</p>
-                    <p className="text-[10px] text-emerald-200">{presentes.length} online</p>
+                    <p className="text-[10px] text-indigo-200">{presentes.length} online</p>
                   </div>
                 </div>
-                <button onClick={() => setChatAbierto(false)} className="text-emerald-200 hover:text-white text-sm btn-press">✕</button>
+                <button onClick={() => setChatAbierto(false)} className="text-indigo-200 hover:text-white text-sm btn-press">✕</button>
               </div>
 
               {/* Mensajes */}
@@ -1673,7 +1673,7 @@ function Home() {
                 {hayMasMensajes && (
                   <div className="text-center py-1">
                     <button onClick={cargarMasMensajes} disabled={cargandoMas}
-                      className="text-[10px] text-emerald-600 hover:underline disabled:opacity-50">
+                      className="text-[10px] text-indigo-600 hover:underline disabled:opacity-50">
                       {cargandoMas ? "Cargando..." : "↑ Cargar mensajes anteriores"}
                     </button>
                   </div>
@@ -1689,11 +1689,11 @@ function Home() {
                   const hora = new Date(m.created_at).toLocaleTimeString("es-CL", {hour:"2-digit", minute:"2-digit"});
                   return (
                     <div key={m.id || i} className={`flex flex-col ${esMio ? "items-end" : "items-start"}`}>
-                      <span className="text-[9px] font-bold mb-0.5 px-1" style={{color: esMio ? "#059669" : "#94a3b8"}}>
+                      <span className="text-[9px] font-bold mb-0.5 px-1" style={{color: esMio ? "#6366f1" : "#94a3b8"}}>
                         {esMio ? "Tú" : m.nombre}
                       </span>
                       <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-[12px] leading-snug ${esMio
-                        ? "bg-emerald-600 text-white rounded-tr-sm"
+                        ? "bg-indigo-600 text-white rounded-tr-sm"
                         : "bg-gray-100 text-gray-800 rounded-tl-sm"}`}>
                         {m.mensaje}
                       </div>
@@ -1730,10 +1730,10 @@ function Home() {
                   onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensaje(); }}}
                   placeholder="Escribe un mensaje..."
                   maxLength={CHAT_MAX_LARGO}
-                  className="flex-1 text-[12px] border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-400 input-focus"
+                  className="flex-1 text-[12px] border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-400 input-focus"
                 />
                 <button onClick={enviarMensaje} disabled={!mensajeInput.trim()}
-                  className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center btn-press hover:bg-emerald-700 disabled:opacity-40 transition-colors shrink-0">
+                  className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center btn-press hover:bg-indigo-700 disabled:opacity-40 transition-colors shrink-0">
                   <span className="text-sm">↑</span>
                 </button>
               </div>
@@ -1761,13 +1761,13 @@ function Home() {
 
               {/* Dueño */}
               <div className="flex items-center gap-3 py-2.5 border-b border-gray-50">
-                <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
                   {(proyectoNombre?.[0] || "T").toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-xs font-semibold text-gray-700">Tú (propietario)</div>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Dueño</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">Dueño</span>
               </div>
 
               {/* Colaboradores */}
@@ -1782,7 +1782,7 @@ function Home() {
                   <select
                     value={c.rol}
                     onChange={e => cambiarRolColaborador(c.id, e.target.value)}
-                    className="text-[11px] border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-400 bg-white shrink-0">
+                    className="text-[11px] border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-400 bg-white shrink-0">
                     <option value="visualizar">Solo ver</option>
                     <option value="editar">Puede editar</option>
                     <option value="administrar">Administrador</option>
@@ -1819,12 +1819,12 @@ function Home() {
                     placeholder="correo@ejemplo.com"
                     value={invEmail}
                     onChange={e => { setInvEmail(e.target.value); setInvResultado(null); }}
-                    className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-xs input-focus focus:outline-none focus:border-emerald-400"
+                    className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-xs input-focus focus:outline-none focus:border-indigo-400"
                   />
                   <select
                     value={invRol}
                     onChange={e => setInvRol(e.target.value)}
-                    className="border border-gray-200 rounded-lg px-2 py-2 text-xs focus:outline-none focus:border-emerald-400 bg-white">
+                    className="border border-gray-200 rounded-lg px-2 py-2 text-xs focus:outline-none focus:border-indigo-400 bg-white">
                     <option value="visualizar">Ver</option>
                     <option value="editar">Editar</option>
                     <option value="administrar">Admin</option>
@@ -1834,7 +1834,7 @@ function Home() {
                 <button
                   onClick={invitarColaborador}
                   disabled={invCargando || !invEmail.trim()}
-                  className="w-full py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 btn-press disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                  className="w-full py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 btn-press disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                   {invCargando ? "Enviando..." : "📨 Enviar invitación por email"}
                 </button>
 
@@ -1842,9 +1842,9 @@ function Home() {
                   <p className="text-[11px] text-red-500 mt-2 text-center">{invResultado.error}</p>
                 )}
                 {invResultado?.ok && (
-                  <div className="mt-2 rounded-xl bg-emerald-50 border border-emerald-200 text-center overflow-hidden">
+                  <div className="mt-2 rounded-xl bg-indigo-50 border border-indigo-200 text-center overflow-hidden">
                     <div className="px-3 pt-3 pb-2">
-                      <p className="text-[11px] font-semibold text-emerald-700">
+                      <p className="text-[11px] font-semibold text-indigo-700">
                         {invResultado.emailEnviado ? "✅ Invitación enviada por email" : "✅ Invitación creada"}
                       </p>
                       {!invResultado.emailEnviado && (
@@ -1852,12 +1852,12 @@ function Home() {
                       )}
                     </div>
                     {invResultado.codigo && (
-                      <div className="bg-white border-t border-emerald-100 px-4 py-3">
+                      <div className="bg-white border-t border-indigo-100 px-4 py-3">
                         <p className="text-[9px] font-extrabold uppercase tracking-widest text-gray-400 mb-1">Código de acceso</p>
-                        <p className="text-3xl font-black tracking-[0.25em] text-emerald-600 font-mono">{invResultado.codigo}</p>
+                        <p className="text-3xl font-black tracking-[0.25em] text-indigo-600 font-mono">{invResultado.codigo}</p>
                         <p className="text-[9px] text-gray-400 mt-1">⏱ Válido por 5 minutos</p>
                         <button onClick={() => navigator.clipboard.writeText(invResultado.codigo)}
-                          className="mt-2 text-[10px] font-semibold text-emerald-600 hover:text-emerald-700 underline btn-press">
+                          className="mt-2 text-[10px] font-semibold text-indigo-600 hover:text-indigo-700 underline btn-press">
                           Copiar código
                         </button>
                       </div>
@@ -1947,7 +1947,7 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
     onGuardar(form.nombre, nuevaMeta);
   };
 
-  const inputCls = "w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100";
+  const inputCls = "w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100";
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 p-4 anim-fade-in"
@@ -1967,7 +1967,7 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
                   ? <img src={form.logoEmpresa} alt="logo" className="h-10 w-auto rounded border border-gray-200 object-contain bg-gray-50 px-1"/>
                   : <div className="h-10 w-16 rounded border border-dashed border-gray-300 flex items-center justify-center text-gray-300 text-xs">Logo</div>
                 }
-                <label className="cursor-pointer text-xs text-emerald-600 border border-emerald-200 px-3 py-1.5 rounded-lg hover:bg-emerald-50 btn-press">
+                <label className="cursor-pointer text-xs text-indigo-600 border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-50 btn-press">
                   {form.logoEmpresa ? "Cambiar" : "Subir imagen"}
                   <input type="file" accept="image/*" className="hidden" onChange={handleLogo}/>
                 </label>
@@ -2006,7 +2006,7 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
               </div>
             </div>
             {dias && (
-              <p className="text-xs text-emerald-600 anim-fade-in bg-emerald-50 px-3 py-2 rounded-lg">
+              <p className="text-xs text-indigo-600 anim-fade-in bg-indigo-50 px-3 py-2 rounded-lg">
                 Plazo: <strong>{dias} días corridos</strong>
               </p>
             )}
@@ -2018,7 +2018,7 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
           <div className="flex gap-3 mt-6">
             <button onClick={onCerrar} className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50 btn-press">Cancelar</button>
             <button onClick={handleGuardar} disabled={!form.nombre.trim()}
-              className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary hover:bg-emerald-700 disabled:opacity-40">
+              className="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary hover:bg-indigo-700 disabled:opacity-40">
               Guardar cambios
             </button>
           </div>
@@ -2082,7 +2082,7 @@ function EditarPartidaModal({ partida, cfg, onGuardar, onCerrar }) {
     });
   };
 
-  const inputCls = "border border-gray-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-emerald-400 w-full";
+  const inputCls = "border border-gray-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-indigo-400 w-full";
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 p-4 anim-fade-in"
@@ -2101,12 +2101,12 @@ function EditarPartidaModal({ partida, cfg, onGuardar, onCerrar }) {
             <div className="col-span-4">
               <label className="text-[11px] text-gray-500 font-medium uppercase tracking-wider block mb-1">Descripción</label>
               <input value={desc} onChange={e => setDesc(e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-emerald-400" />
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-400" />
             </div>
             <div>
               <label className="text-[11px] text-gray-500 font-medium uppercase tracking-wider block mb-1">Unidad</label>
               <input value={unidad} onChange={e => setUnidad(e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-emerald-400" />
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-400" />
             </div>
           </div>
 
@@ -2115,7 +2115,7 @@ function EditarPartidaModal({ partida, cfg, onGuardar, onCerrar }) {
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Insumos</span>
               <button onClick={agregarInsumo}
-                className="text-xs px-3 py-1 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 btn-press">
+                className="text-xs px-3 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 btn-press">
                 + Agregar insumo
               </button>
             </div>
@@ -2126,7 +2126,7 @@ function EditarPartidaModal({ partida, cfg, onGuardar, onCerrar }) {
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-gray-600">Precio unitario ($):</span>
                   <input type="number" value={precioOverride} onChange={e => setPrecioOverride(e.target.value)}
-                    className="border border-gray-200 rounded-lg px-2 py-1 text-sm w-36 focus:outline-none focus:border-emerald-400" />
+                    className="border border-gray-200 rounded-lg px-2 py-1 text-sm w-36 focus:outline-none focus:border-indigo-400" />
                 </div>
               </div>
             )}
@@ -2212,10 +2212,10 @@ function EditarPartidaModal({ partida, cfg, onGuardar, onCerrar }) {
           {insumos.length > 0 && (() => {
             const preview = calcAPU({ ...partida, desc, unidad, insumos: insumos.map(({ _key, ...r }) => ({ ...r, cant: parseFloat(r.cant)||0, punit: parseFloat(r.punit)||0, perd: parseFloat(r.perd)||0, rend: parseFloat(r.rend)||0 })) }, cfg);
             return (
-              <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-5 py-3 flex items-center gap-6">
-                <div><div className="text-[10px] text-emerald-600 uppercase tracking-wider">M.O. neto</div><div className="font-semibold text-gray-800">${Math.round(preview.moNet).toLocaleString("es-CL")}</div></div>
-                <div><div className="text-[10px] text-emerald-600 uppercase tracking-wider">Materiales</div><div className="font-semibold text-gray-800">${Math.round(preview.mat).toLocaleString("es-CL")}</div></div>
-                <div className="ml-auto"><div className="text-[10px] text-emerald-600 uppercase tracking-wider">Precio unitario estimado</div><div className="font-bold text-emerald-700 text-lg">${Math.round(preview.total).toLocaleString("es-CL")}</div></div>
+              <div className="bg-indigo-50 border border-indigo-200 rounded-xl px-5 py-3 flex items-center gap-6">
+                <div><div className="text-[10px] text-indigo-600 uppercase tracking-wider">M.O. neto</div><div className="font-semibold text-gray-800">${Math.round(preview.moNet).toLocaleString("es-CL")}</div></div>
+                <div><div className="text-[10px] text-indigo-600 uppercase tracking-wider">Materiales</div><div className="font-semibold text-gray-800">${Math.round(preview.mat).toLocaleString("es-CL")}</div></div>
+                <div className="ml-auto"><div className="text-[10px] text-indigo-600 uppercase tracking-wider">Precio unitario estimado</div><div className="font-bold text-indigo-700 text-lg">${Math.round(preview.total).toLocaleString("es-CL")}</div></div>
               </div>
             );
           })()}
@@ -2224,7 +2224,7 @@ function EditarPartidaModal({ partida, cfg, onGuardar, onCerrar }) {
         {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-100 flex justify-end gap-3 shrink-0">
           <button onClick={onCerrar} className="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-xl hover:bg-gray-50 btn-press">Cancelar</button>
-          <button onClick={handleGuardar} className="px-5 py-2 text-sm bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 btn-primary font-medium">Guardar cambios</button>
+          <button onClick={handleGuardar} className="px-5 py-2 text-sm bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 btn-primary font-medium">Guardar cambios</button>
         </div>
       </div>
     </div>
@@ -2254,9 +2254,9 @@ function AnexoUploader({ onSubir, procesando, inputRef }) {
         <div className="grid grid-cols-3 gap-2">
           {TIPOS.map(t => (
             <button key={t.id} onClick={() => setTipo(t.id)}
-              className={`rounded-xl p-3 text-left border btn-press ${tipo === t.id ? "border-emerald-400 bg-emerald-50 shadow-sm" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"}`}
+              className={`rounded-xl p-3 text-left border btn-press ${tipo === t.id ? "border-indigo-400 bg-indigo-50 shadow-sm" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"}`}
               style={{ transition: "border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, transform 0.12s cubic-bezier(0.16,1,0.3,1)" }}>
-              <p className={`text-xs font-semibold ${tipo === t.id ? "text-emerald-700" : "text-gray-700"}`}>{t.label}</p>
+              <p className={`text-xs font-semibold ${tipo === t.id ? "text-indigo-700" : "text-gray-700"}`}>{t.label}</p>
               <p className="text-[10px] text-gray-400 mt-0.5 leading-snug">{t.desc}</p>
             </button>
           ))}
@@ -2274,7 +2274,7 @@ function AnexoUploader({ onSubir, procesando, inputRef }) {
           const f = e.dataTransfer.files[0];
           if (f) { setArchivo(f); setArchivoNombre(f.name); }
         }}
-        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer dropzone ${dragging ? "dropzone-drag" : archivoNombre ? "border-emerald-300 bg-emerald-50" : "border-gray-200 hover:border-emerald-400"}`}>
+        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer dropzone ${dragging ? "dropzone-drag" : archivoNombre ? "border-indigo-300 bg-indigo-50" : "border-gray-200 hover:border-indigo-400"}`}>
         <p className={`text-2xl mb-2 transition-transform duration-150 ${dragging ? "scale-125" : "scale-100"}`}>📂</p>
         <p className="text-sm text-gray-600 font-medium">{archivoNombre || "Arrastra o haz clic para seleccionar"}</p>
         <p className="text-xs text-gray-400 mt-1">PDF, Excel (.xlsx), AutoCAD (.dwg, .dxf)</p>
@@ -2288,7 +2288,7 @@ function AnexoUploader({ onSubir, procesando, inputRef }) {
       <button
         onClick={() => { if (archivo) onSubir(archivo, tipo); }}
         disabled={!archivo || procesando}
-        className="mt-4 w-full bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary hover:bg-emerald-700 disabled:opacity-40">
+        className="mt-4 w-full bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary hover:bg-indigo-700 disabled:opacity-40">
         {procesando ? "Procesando..." : tipo === "plano" ? "Subir archivo →" : "Subir y procesar con IA →"}
       </button>
     </div>
@@ -2306,11 +2306,11 @@ function MatchesReview({ nombre, partidas, onConfirmar, onDescartar }) {
   });
 
   return (
-    <div className="mt-6 bg-white border border-emerald-200 rounded-xl overflow-hidden">
-      <div className="px-5 py-4 bg-emerald-50 border-b border-emerald-100 flex items-center justify-between">
+    <div className="mt-6 bg-white border border-indigo-200 rounded-xl overflow-hidden">
+      <div className="px-5 py-4 bg-indigo-50 border-b border-indigo-100 flex items-center justify-between">
         <div>
-          <p className="font-semibold text-emerald-800 text-sm">Partidas detectadas en «{nombre}»</p>
-          <p className="text-xs text-emerald-600 mt-0.5">{partidas.length} coincidencias — selecciona las que quieres agregar al proyecto</p>
+          <p className="font-semibold text-indigo-800 text-sm">Partidas detectadas en «{nombre}»</p>
+          <p className="text-xs text-indigo-600 mt-0.5">{partidas.length} coincidencias — selecciona las que quieres agregar al proyecto</p>
         </div>
         <button onClick={onDescartar} className="text-gray-400 hover:text-gray-600 text-sm">✕</button>
       </div>
@@ -2319,14 +2319,14 @@ function MatchesReview({ nombre, partidas, onConfirmar, onDescartar }) {
         {partidas.map((p, i) => (
           <div key={i}
             onClick={() => toggle(i)}
-            className={`px-5 py-3 flex items-start gap-3 cursor-pointer transition-colors ${seleccion.has(i) ? "bg-emerald-50" : "hover:bg-gray-50"}`}>
-            <div className={`mt-0.5 w-4 h-4 rounded border-2 shrink-0 flex items-center justify-center transition-colors ${seleccion.has(i) ? "bg-emerald-600 border-emerald-600" : "border-gray-300"}`}>
+            className={`px-5 py-3 flex items-start gap-3 cursor-pointer transition-colors ${seleccion.has(i) ? "bg-indigo-50" : "hover:bg-gray-50"}`}>
+            <div className={`mt-0.5 w-4 h-4 rounded border-2 shrink-0 flex items-center justify-center transition-colors ${seleccion.has(i) ? "bg-indigo-600 border-indigo-600" : "border-gray-300"}`}>
               {seleccion.has(i) && <span className="text-white text-[10px]">✓</span>}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-0.5">
                 <span className="text-[10px] font-mono text-gray-400">{p.codigo}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${p.similitud >= 80 ? "bg-emerald-100 text-emerald-700" : p.similitud >= 65 ? "bg-amber-100 text-amber-700" : "bg-gray-100 text-gray-600"}`}>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${p.similitud >= 80 ? "bg-indigo-100 text-indigo-700" : p.similitud >= 65 ? "bg-amber-100 text-amber-700" : "bg-gray-100 text-gray-600"}`}>
                   {p.similitud}% similar
                 </span>
               </div>
@@ -2346,7 +2346,7 @@ function MatchesReview({ nombre, partidas, onConfirmar, onDescartar }) {
         <button
           onClick={() => onConfirmar(partidas.filter((_, i) => seleccion.has(i)))}
           disabled={seleccion.size === 0}
-          className="bg-emerald-600 text-white text-sm font-medium px-5 py-2 rounded-xl hover:bg-emerald-700 disabled:opacity-40">
+          className="bg-indigo-600 text-white text-sm font-medium px-5 py-2 rounded-xl hover:bg-indigo-700 disabled:opacity-40">
           Agregar {seleccion.size} partida{seleccion.size !== 1 ? "s" : ""} al proyecto →
         </button>
       </div>
@@ -2667,7 +2667,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
         const fx = LEFT + (esDay + durDay) * pxPerDia;
         const fw = Math.max(floatDay * pxPerDia - 1, 1);
         const info = FASES_INFO[item.fase];
-        const rgb = hexToRgb(info?.color || "#10b981");
+        const rgb = hexToRgb(info?.color || "#6366f1");
         doc.setFillColor(rgb.r, rgb.g, rgb.b, 0.2);
         doc.setDrawColor(rgb.r, rgb.g, rgb.b);
         doc.setLineWidth(0.3);
@@ -2680,7 +2680,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
       const barX = LEFT + esDay * pxPerDia;
       const barW = Math.max(durDay * pxPerDia - 1, 2);
       const info = FASES_INFO[item.fase];
-      const rgb = crit ? hexToRgb("#ef4444") : hexToRgb(info?.color || "#10b981");
+      const rgb = crit ? hexToRgb("#ef4444") : hexToRgb(info?.color || "#6366f1");
       doc.setFillColor(rgb.r, rgb.g, rgb.b);
       doc.roundedRect(barX, y + 1.5, barW, ROW_H - 3, 0.8, 0.8, "F");
 
@@ -2706,7 +2706,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
         <div className="text-center text-gray-400">
           <p className="text-5xl mb-4">📅</p>
           <p className="text-base font-medium text-gray-500 mb-2">No hay partidas en el proyecto</p>
-          <button onClick={() => onGoTo("biblioteca")} className="text-emerald-600 text-sm underline btn-press">Ir a la biblioteca</button>
+          <button onClick={() => onGoTo("biblioteca")} className="text-indigo-600 text-sm underline btn-press">Ir a la biblioteca</button>
         </div>
       </div>
     );
@@ -2723,7 +2723,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
           <h2 className="text-sm font-semibold text-gray-800">Carta Gantt</h2>
           <p className="text-xs text-gray-400">
             {items.length} partidas ·{" "}
-            <strong className={hasDeps ? "text-emerald-600" : "text-gray-600"}>{totalDias}d</strong>
+            <strong className={hasDeps ? "text-indigo-600" : "text-gray-600"}>{totalDias}d</strong>
             {hasDeps && critCount > 0 && (
               <span className="ml-2 text-red-500 font-medium">· {critCount} en ruta crítica</span>
             )}
@@ -2763,7 +2763,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
             </button>
           )}
           <button onClick={() => setModoEdicion(m => !m)}
-            className={`text-[11px] px-3 py-1.5 rounded-lg border btn-press transition-colors ${modoEdicion ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
+            className={`text-[11px] px-3 py-1.5 rounded-lg border btn-press transition-colors ${modoEdicion ? "border-indigo-400 bg-indigo-50 text-indigo-700" : "border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
             {modoEdicion ? "✓ Editando deps" : "Editar deps"}
           </button>
           <button onClick={sugerirReglas}
@@ -2776,7 +2776,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
             {cargandoIA ? "Analizando..." : "Mejorar con IA"}
           </button>
           <button onClick={exportarGanttPDF}
-            className="text-[11px] px-3 py-1.5 rounded-lg bg-emerald-600 text-white btn-primary hover:bg-emerald-700 flex items-center gap-1.5">
+            className="text-[11px] px-3 py-1.5 rounded-lg bg-indigo-600 text-white btn-primary hover:bg-indigo-700 flex items-center gap-1.5">
             📄 PDF
           </button>
         </div>
@@ -2784,7 +2784,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
 
       {/* Mensaje feedback */}
       {msgSugerencia && (
-        <div className="px-4 py-2 bg-emerald-50 border-b border-emerald-100 text-xs text-emerald-700 anim-slide-down font-medium">
+        <div className="px-4 py-2 bg-indigo-50 border-b border-indigo-100 text-xs text-indigo-700 anim-slide-down font-medium">
           {msgSugerencia}
         </div>
       )}
@@ -2804,7 +2804,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
                 <div key={item.id}
                   className={`border-b border-gray-100 px-3 flex items-center gap-2 ${idx%2===0?"bg-white":"bg-gray-50/40"} ${crit?"border-l-2 border-l-red-400":""}`}
                   style={{ height: ROW_PX }}>
-                  <span className="w-2 h-2 rounded-sm shrink-0" style={{ background: crit ? "#ef4444" : (FASES_INFO[item.fase]?.color || "#10b981") }}/>
+                  <span className="w-2 h-2 rounded-sm shrink-0" style={{ background: crit ? "#ef4444" : (FASES_INFO[item.fase]?.color || "#6366f1") }}/>
                   <div className="min-w-0">
                     <div className="text-[9px] font-mono text-gray-400 leading-none">{item.codigo}</div>
                     <div className="text-[11px] text-gray-700 truncate leading-tight">{item.desc || item.descripcion}</div>
@@ -2860,7 +2860,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
                 style={{ height: ROW_PX }}>
                 <input type="number" min={1} max={365} value={getDur(item)}
                   onChange={e => setDuraciones(d => ({ ...d, [item.id]: Math.max(1, parseInt(e.target.value)||1) }))}
-                  className="w-11 text-center text-xs py-1 rounded-lg border border-gray-200 input-focus focus:outline-none focus:border-emerald-400"/>
+                  className="w-11 text-center text-xs py-1 rounded-lg border border-gray-200 input-focus focus:outline-none focus:border-indigo-400"/>
               </div>
             ))}
           </div>
@@ -2883,7 +2883,7 @@ function GanttView({ proyecto, cfg, proyectoNombre, proyectoMeta, onGoTo }) {
               const barLeft = getPos(item) * PX + 2;
               const barW    = Math.max(getDur(item) * PX - 4, 6);
               const floatW  = Math.max(getFloat(item) * PX - 2, 0);
-              const barColor = crit ? "#ef4444" : (FASES_INFO[item.fase]?.color || "#10b981");
+              const barColor = crit ? "#ef4444" : (FASES_INFO[item.fase]?.color || "#6366f1");
               return (
                 <div key={item.id}
                   className={`border-b border-gray-100 relative ${idx%2===0?"bg-white":"bg-gray-50/30"}`}
@@ -3316,7 +3316,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
           <button
             onClick={exportarPDF}
             disabled={exportando}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-700 btn-primary disabled:opacity-40">
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-700 btn-primary disabled:opacity-40">
             {exportando
               ? <span className="w-3.5 h-3.5 border border-white border-t-transparent rounded-full animate-spin"/>
               : <span>⬇️</span>
@@ -3329,7 +3329,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
       {/* Mensaje IA */}
       {msgMejora && (
         <div className={`mx-5 mt-3 px-4 py-2.5 rounded-xl text-xs font-medium anim-slide-down ${
-          msgMejora.tipo === "ok"   ? "bg-emerald-50 text-emerald-700 border border-emerald-200" :
+          msgMejora.tipo === "ok"   ? "bg-indigo-50 text-indigo-700 border border-indigo-200" :
           msgMejora.tipo === "warn" ? "bg-amber-50 text-amber-700 border border-amber-200" :
                                       "bg-red-50 text-red-700 border border-red-200"
         }`}>

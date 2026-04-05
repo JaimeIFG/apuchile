@@ -8,7 +8,7 @@ const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada"
 
 const ESTADO_ST = {
   "En licitación":  { bg: "#dbeafe", color: "#1d4ed8", dot: "#3b82f6" },
-  "En ejecución":   { bg: "#d1fae5", color: "#065f46", dot: "#059669" },
+  "En ejecución":   { bg: "#eef2ff", color: "#4338ca", dot: "#6366f1" },
   "Paralizada":     { bg: "#fee2e2", color: "#991b1b", dot: "#ef4444" },
   "Recepcionada":   { bg: "#fef3c7", color: "#92400e", dot: "#f59e0b" },
   "Liquidada":      { bg: "#f1f5f9", color: "#475569", dot: "#94a3b8" },
@@ -29,8 +29,8 @@ function diasRestantes(fechaTermino) {
 function PlazoChip({ fecha }) {
   const d = diasRestantes(fecha);
   if (d === null) return null;
-  const color = d < 0 ? "#991b1b" : d <= 30 ? "#b91c1c" : d <= 60 ? "#92400e" : "#065f46";
-  const bg    = d < 0 ? "#fee2e2" : d <= 30 ? "#fee2e2" : d <= 60 ? "#fef3c7" : "#d1fae5";
+  const color = d < 0 ? "#991b1b" : d <= 30 ? "#b91c1c" : d <= 60 ? "#92400e" : "#4338ca";
+  const bg    = d < 0 ? "#fee2e2" : d <= 30 ? "#fee2e2" : d <= 60 ? "#fef3c7" : "#eef2ff";
   const label = d < 0 ? `Vencida hace ${Math.abs(d)}d` : d === 0 ? "Vence hoy" : `${d}d restantes`;
   return (
     <span style={{ background: bg, color, fontSize: 10, fontWeight: 700,
@@ -199,7 +199,7 @@ export default function ObrasPage() {
       `}</style>
 
       {/* ── Header ── */}
-      <div style={{ background: "linear-gradient(135deg, #065f46, #059669)", padding: "24px 32px 20px",
+      <div style={{ background: "linear-gradient(135deg, #4338ca, #6366f1)", padding: "24px 32px 20px",
         position: "relative", overflow: "hidden" }}>
 
         {/* Shimmer sweep decorativo */}
@@ -235,7 +235,7 @@ export default function ObrasPage() {
             </div>
             <button onClick={() => setCreando(true)}
               className={`btn-primary${mounted ? " anim-fade-up delay-100" : ""}`}
-              style={{ background: "#fff", color: "#065f46", border: "none", borderRadius: 12,
+              style={{ background: "#fff", color: "#4338ca", border: "none", borderRadius: 12,
                 padding: "10px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer",
                 display: "flex", alignItems: "center", gap: 6,
                 boxShadow: "0 2px 8px rgba(0,0,0,.15)" }}>
@@ -334,14 +334,14 @@ export default function ObrasPage() {
             style={{ flex: 1, minWidth: 200, padding: "9px 14px", border: "1.5px solid #e2e8f0",
               borderRadius: 10, fontSize: 13, fontFamily: "inherit", outline: "none",
               transition: "border-color .15s" }}
-            onFocus={e => e.target.style.borderColor = "#059669"}
+            onFocus={e => e.target.style.borderColor = "#6366f1"}
             onBlur={e => e.target.style.borderColor = "#e2e8f0"}
           />
           <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)}
             style={{ padding: "9px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10,
               fontSize: 13, fontFamily: "inherit", background: "#fff", color: "#374151",
               outline: "none", cursor: "pointer", transition: "border-color .15s" }}
-            onFocus={e => e.target.style.borderColor = "#059669"}
+            onFocus={e => e.target.style.borderColor = "#6366f1"}
             onBlur={e => e.target.style.borderColor = "#e2e8f0"}>
             <option value="">Todos los estados</option>
             {ESTADOS.map(e => <option key={e} value={e}>{e}</option>)}
@@ -377,7 +377,7 @@ export default function ObrasPage() {
             {obras.length === 0 && (
               <button onClick={() => setCreando(true)}
                 className="btn-primary"
-                style={{ background: "#059669", color: "#fff", border: "none", borderRadius: 10,
+                style={{ background: "#6366f1", color: "#fff", border: "none", borderRadius: 10,
                   padding: "10px 20px", fontSize: 13, fontWeight: 600, cursor: "pointer",
                   fontFamily: "inherit" }}>
                 Crear primera obra
@@ -438,7 +438,7 @@ export default function ObrasPage() {
                           <span style={{ fontSize: 12, color: "#64748b" }}>👤 {obra.inspector_fiscal}</span>
                         )}
                         {obra.monto_contrato && (
-                          <span style={{ fontSize: 12, color: "#059669", fontWeight: 700 }}>
+                          <span style={{ fontSize: 12, color: "#6366f1", fontWeight: 700 }}>
                             💰 {fmtPeso(obra.monto_contrato)}
                           </span>
                         )}
@@ -457,11 +457,11 @@ export default function ObrasPage() {
                         <div style={{ marginTop: 4 }}>
                           <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
                             <span style={{ fontSize:10, color:"#94a3b8", fontWeight:600 }}>AVANCE EP</span>
-                            <span style={{ fontSize:10, color:"#059669", fontWeight:700 }}>{Math.round(obra.porcentaje_avance)}%</span>
+                            <span style={{ fontSize:10, color:"#6366f1", fontWeight:700 }}>{Math.round(obra.porcentaje_avance)}%</span>
                           </div>
                           <div style={{ height:4, background:"#e2e8f0", borderRadius:99, overflow:"hidden" }}>
                             <div style={{ width:`${Math.min(obra.porcentaje_avance,100)}%`, height:"100%",
-                              borderRadius:99, background: obra.porcentaje_avance >= 100 ? "#059669" : "#34d399",
+                              borderRadius:99, background: obra.porcentaje_avance >= 100 ? "#6366f1" : "#818cf8",
                               transition:"width .6s ease" }}/>
                           </div>
                         </div>
@@ -472,12 +472,12 @@ export default function ObrasPage() {
                       <button
                         onClick={e => { e.stopPropagation(); router.push(`/obra?id=${obra.id}`); }}
                         className="btn-press"
-                        style={{ background: "#f0fdf4", color: "#059669", border: "1px solid #bbf7d0",
+                        style={{ background: "#eef2ff", color: "#6366f1", border: "1px solid #bbf7d0",
                           borderRadius: 8, padding: "7px 16px", fontSize: 12, fontWeight: 700,
                           cursor: "pointer", transition: "background .15s, box-shadow .15s",
                           whiteSpace:"nowrap" }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "#dcfce7"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(5,150,105,.2)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "#f0fdf4"; e.currentTarget.style.boxShadow = "none"; }}>
+                        onMouseEnter={e => { e.currentTarget.style.background = "#dcfce7"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(99,102,241,.2)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "#eef2ff"; e.currentTarget.style.boxShadow = "none"; }}>
                         Abrir →
                       </button>
                       <button
@@ -525,7 +525,7 @@ export default function ObrasPage() {
                 style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0",
                   borderRadius: 10, fontSize: 14, fontFamily: "inherit", outline: "none",
                   boxSizing: "border-box", transition: "border-color .15s, box-shadow .15s" }}
-                onFocus={e => { e.target.style.borderColor = "#059669"; e.target.style.boxShadow = "0 0 0 3px rgba(5,150,105,.12)"; }}
+                onFocus={e => { e.target.style.borderColor = "#6366f1"; e.target.style.boxShadow = "0 0 0 3px rgba(99,102,241,.12)"; }}
                 onBlur={e => { e.target.style.borderColor = "#e2e8f0"; e.target.style.boxShadow = "none"; }}
               />
             </div>
@@ -555,7 +555,7 @@ export default function ObrasPage() {
             <div style={{ display: "flex", gap: 10 }}>
               <button onClick={crearObra} disabled={!nombreNuevo.trim() || creandoLoading}
                 className="btn-primary"
-                style={{ flex: 1, background: "#059669", color: "#fff", border: "none", borderRadius: 12,
+                style={{ flex: 1, background: "#6366f1", color: "#fff", border: "none", borderRadius: 12,
                   padding: "12px", fontSize: 14, fontWeight: 700, cursor: "pointer",
                   opacity: !nombreNuevo.trim() ? 0.5 : 1, fontFamily: "inherit",
                   transition: "opacity .15s" }}>

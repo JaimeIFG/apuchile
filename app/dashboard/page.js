@@ -383,16 +383,16 @@ export default function Dashboard() {
         {/* Botón toggle - centrado verticalmente */}
         <button onClick={() => setSidebarAbierto(a => !a)}
           style={{ transition: "transform 0.3s ease", top: "50%", transform: "translateY(-50%)" }}
-          className="absolute -right-3 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full shadow flex items-center justify-center text-gray-400 hover:text-emerald-600 hover:border-emerald-400 transition-colors">
+          className="absolute -right-3 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full shadow flex items-center justify-center text-gray-400 hover:text-indigo-600 hover:border-indigo-400 transition-colors">
           <span style={{ display: "inline-block", transform: sidebarAbierto ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.3s ease", fontSize: "10px" }}>◀</span>
         </button>
 
         {/* Logo */}
         <div className="px-5 py-5 border-b border-gray-100 flex items-center gap-2 overflow-hidden">
           {sidebarAbierto ? (
-            <span className="text-lg font-bold text-emerald-800 whitespace-nowrap">APU<span className="text-emerald-500">chile</span></span>
+            <span className="text-lg font-bold text-indigo-800 whitespace-nowrap">APU<span className="text-indigo-500">chile</span></span>
           ) : (
-            <span className="text-lg font-bold text-emerald-600 mx-auto">A</span>
+            <span className="text-lg font-bold text-indigo-600 mx-auto">A</span>
           )}
         </div>
 
@@ -401,16 +401,16 @@ export default function Dashboard() {
           {/* Avatar — siempre visible con punto verde */}
           <div className="flex flex-col items-center px-3 mb-4">
             <div className="relative group mb-3">
-              <div className={`${sidebarAbierto ? "w-20 h-20 rounded-2xl" : "w-11 h-11 rounded-xl"} bg-emerald-100 overflow-hidden flex items-center justify-center border-2 border-white shadow-md`}
+              <div className={`${sidebarAbierto ? "w-20 h-20 rounded-2xl" : "w-11 h-11 rounded-xl"} bg-indigo-100 overflow-hidden flex items-center justify-center border-2 border-white shadow-md`}
                 style={{ transition: "width 0.3s ease, height 0.3s ease" }}>
                 {avatarUrl ? (
                   <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover"/>
                 ) : (
-                  <span className={`${sidebarAbierto ? "text-3xl" : "text-lg"} font-bold text-emerald-600`}>{nombre.charAt(0).toUpperCase()}</span>
+                  <span className={`${sidebarAbierto ? "text-3xl" : "text-lg"} font-bold text-indigo-600`}>{nombre.charAt(0).toUpperCase()}</span>
                 )}
               </div>
               {/* Punto verde conectado */}
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white"/>
+              <span className="absolute bottom-0 right-0 w-3 h-3 bg-indigo-400 rounded-full border-2 border-white"/>
               {sidebarAbierto && (
                 <button onClick={() => fileInputRef.current?.click()}
                   className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-medium">
@@ -427,25 +427,25 @@ export default function Dashboard() {
                   <div className="w-full space-y-2">
                     <input value={perfilForm.nombre} onChange={e => setPerfilForm(f => ({...f, nombre: e.target.value}))}
                       placeholder="Nombre completo"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
+                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-indigo-400"/>
                     <input value={perfilForm.profesion} onChange={e => setPerfilForm(f => ({...f, profesion: e.target.value}))}
                       placeholder="Profesión"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
+                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-indigo-400"/>
                     <input value={perfilForm.cargo} onChange={e => setPerfilForm(f => ({...f, cargo: e.target.value}))}
                       placeholder="Cargo"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-emerald-400"/>
+                      className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-indigo-400"/>
                     <div className="flex gap-2 pt-1">
                       <button onClick={() => setEditandoPerfil(false)}
                         className="flex-1 text-xs text-gray-400 border border-gray-200 rounded-lg py-1.5 hover:bg-gray-50">Cancelar</button>
                       <button onClick={guardarPerfil}
-                        className="flex-1 text-xs bg-emerald-600 text-white rounded-lg py-1.5 hover:bg-emerald-700">Guardar</button>
+                        className="flex-1 text-xs bg-indigo-600 text-white rounded-lg py-1.5 hover:bg-indigo-700">Guardar</button>
                     </div>
                   </div>
                 ) : (
                   <div className="text-center w-full">
                     <p className="font-semibold text-gray-800 text-sm truncate">{nombre}</p>
                     {profesion && <p className="text-xs text-gray-500 mt-0.5 truncate">{profesion}</p>}
-                    {cargo && <p className="text-xs text-emerald-600 font-medium mt-0.5 truncate">{cargo}</p>}
+                    {cargo && <p className="text-xs text-indigo-600 font-medium mt-0.5 truncate">{cargo}</p>}
                     {regionDetectada && (
                       <p className="text-[11px] text-gray-400 mt-1 flex items-center justify-center gap-1">
                         <span>📍</span>{regionDetectada}
@@ -457,7 +457,7 @@ export default function Dashboard() {
                       </p>
                     )}
                     <button onClick={() => setEditandoPerfil(true)}
-                      className="text-[11px] text-gray-400 hover:text-emerald-600 mt-2 transition-colors">
+                      className="text-[11px] text-gray-400 hover:text-indigo-600 mt-2 transition-colors">
                       Editar perfil
                     </button>
                   </div>
@@ -470,13 +470,13 @@ export default function Dashboard() {
           {sidebarAbierto && (
             <div style={{ opacity: sidebarAbierto ? 1 : 0, transition: "opacity 0.2s ease" }} className="grid grid-cols-2 gap-2 px-3">
               <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
-                <p className="text-2xl font-bold text-emerald-600">{proyectos.length}</p>
+                <p className="text-2xl font-bold text-indigo-600">{proyectos.length}</p>
                 <p className="text-[11px] text-gray-400 mt-0.5">{proyectos.length === 1 ? "proyecto creado" : "proyectos creados"}</p>
               </div>
               <div className="bg-gray-50 rounded-xl px-4 py-3 text-center">
                 <div className="flex items-center justify-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"/>
-                  <p className="text-2xl font-bold text-emerald-600">{usuariosOnline}</p>
+                  <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse inline-block"/>
+                  <p className="text-2xl font-bold text-indigo-600">{usuariosOnline}</p>
                 </div>
                 <p className="text-[11px] text-gray-400 mt-0.5">{usuariosOnline === 1 ? "en línea" : "en línea"}</p>
               </div>
@@ -527,7 +527,7 @@ export default function Dashboard() {
 
           {/* ── Header card ── */}
           <div className="rounded-2xl overflow-hidden anim-scale-in mb-4"
-            style={{background:"linear-gradient(135deg,#065f46 0%,#059669 60%,#10b981 100%)",
+            style={{background:"linear-gradient(135deg,#4338ca 0%,#6366f1 60%,#6366f1 100%)",
               boxShadow:"0 4px 20px rgba(6,95,70,.28)", padding:"20px 24px", position:"relative"}}>
             <div style={{position:"absolute", inset:0, backgroundImage:"radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px)",
               backgroundSize:"20px 20px", pointerEvents:"none"}}/>
@@ -566,7 +566,7 @@ export default function Dashboard() {
           {/* ── Stats row ── */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             {[
-              { num:proyectos.length, lbl:"Proyectos",   sub:"en tu cuenta",          color:"#059669", border:"#059669" },
+              { num:proyectos.length, lbl:"Proyectos",   sub:"en tu cuenta",          color:"#6366f1", border:"#6366f1" },
               { num:totalPartidas,    lbl:"Partidas",    sub:"en todos los proyectos", color:"#f97316", border:"#f97316" },
               { num:totalValorFmt,    lbl:"Valor total", sub:"con utilidades + IVA",   color:"#0891b2", border:"#0891b2", isStr:true },
               { num:usuariosOnline,   lbl:"En línea",    sub:"en este momento",        color:"#16a34a", border:"#16a34a", pulse:true },
@@ -590,9 +590,9 @@ export default function Dashboard() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[
               { icon:"＋", label:"Nuevo proyecto",  action:() => setCreando(true),
-                st:{background:"linear-gradient(135deg,#065f46,#059669)", borderBottom:"3px solid #34d399"}, txt:"#fff" },
+                st:{background:"linear-gradient(135deg,#4338ca,#6366f1)", borderBottom:"3px solid #818cf8"}, txt:"#fff" },
               { icon:"📂", label:"Mis proyectos",   action:() => setModalProyectos(true),
-                st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #059669"}, txt:"#374151" },
+                st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #6366f1"}, txt:"#374151" },
               { icon:"🏗️", label:"Ejecución de Obras", action:() => router.push("/obras"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
               { icon:"⚙️", label:"Configuración",   action:() => { setModalConfig(true); setConfigTab("cuenta"); },
@@ -611,7 +611,7 @@ export default function Dashboard() {
           {confirmarLogout && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 anim-fade-in" style={{backdropFilter:"blur(6px)", background:"rgba(0,0,0,0.35)"}}>
               <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center anim-scale-in">
-                <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-3">
                   <span className="text-2xl">👋</span>
                 </div>
                 <h3 className="text-base font-bold text-gray-800 mb-1">¿Cerrar sesión?</h3>
@@ -622,7 +622,7 @@ export default function Dashboard() {
                     Cancelar
                   </button>
                   <button onClick={ejecutarCierreSesion}
-                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary">
+                    className="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary">
                     Sí, salir
                   </button>
                 </div>
@@ -648,18 +648,18 @@ export default function Dashboard() {
                     <label className="text-xs font-medium text-gray-600 mb-1.5 block">Nombre del proyecto *</label>
                     <input autoFocus type="text" value={nombreNuevo} onChange={e => setNombreNuevo(e.target.value)}
                       placeholder="Ej: Habilitación oficinas piso 3"
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                   </div>
 
                   <div className="mb-4">
                     <label className="text-xs font-medium text-gray-600 mb-1.5 block">Región / Ubicación</label>
                     <select value={meta.region} onChange={e => setM("region", e.target.value)}
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 bg-white">
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 bg-white">
                       <option value="">Selecciona una región...</option>
                       {REGIONES.map(r => <option key={r.label} value={r.label}>{r.label}</option>)}
                     </select>
                     {zonaPreview && (
-                      <p className="text-xs text-emerald-600 mt-1.5">
+                      <p className="text-xs text-indigo-600 mt-1.5">
                         <span className="font-medium">Factor zona:</span> {zonaPreview.zona === 0 ? "Sin recargo (zona base)" : `+${(zonaPreview.zona * 100).toFixed(0)}% sobre mano de obra`}
                       </p>
                     )}
@@ -669,23 +669,23 @@ export default function Dashboard() {
                     <label className="text-xs font-medium text-gray-600 mb-1.5 block">Nombre del mandante</label>
                     <input type="text" value={meta.mandante} onChange={e => setM("mandante", e.target.value)}
                       placeholder="Ej: Ministerio de Obras Públicas"
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mb-2">
                     <div>
                       <label className="text-xs font-medium text-gray-600 mb-1.5 block">Fecha de inicio</label>
                       <input type="date" value={meta.fechaInicio} onChange={e => setM("fechaInicio", e.target.value)}
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                     </div>
                     <div>
                       <label className="text-xs font-medium text-gray-600 mb-1.5 block">Fecha de término</label>
                       <input type="date" value={meta.fechaTermino} onChange={e => setM("fechaTermino", e.target.value)}
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                     </div>
                   </div>
                   {dias !== null && (
-                    <p className="text-xs text-emerald-600 mb-4"><span className="font-medium">Plazo:</span> {dias} días corridos</p>
+                    <p className="text-xs text-indigo-600 mb-4"><span className="font-medium">Plazo:</span> {dias} días corridos</p>
                   )}
                   {dias === null && (meta.fechaInicio || meta.fechaTermino) && (
                     <p className="text-xs text-gray-400 mb-4">Ingresa ambas fechas para calcular el plazo</p>
@@ -695,19 +695,19 @@ export default function Dashboard() {
                     <label className="text-xs font-medium text-gray-600 mb-1.5 block">Persona a cargo</label>
                     <input type="text" value={meta.responsable} onChange={e => setM("responsable", e.target.value)}
                       placeholder="Ej: Ing. Carlos Soto"
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"/>
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
                   </div>
 
                   {(meta.region || meta.mandante || meta.responsable || dias) && (
-                    <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 mb-6 space-y-1.5">
-                      <p className="text-xs font-semibold text-emerald-700 mb-2">Resumen del proyecto</p>
+                    <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-6 space-y-1.5">
+                      <p className="text-xs font-semibold text-indigo-700 mb-2">Resumen del proyecto</p>
                       {nombreNuevo && <p className="text-xs text-gray-600"><span className="text-gray-400">Nombre:</span> {nombreNuevo}</p>}
                       {meta.region && <p className="text-xs text-gray-600"><span className="text-gray-400">Ubicación:</span> {meta.region}</p>}
                       {meta.mandante && <p className="text-xs text-gray-600"><span className="text-gray-400">Mandante:</span> {meta.mandante}</p>}
                       {dias !== null && <p className="text-xs text-gray-600"><span className="text-gray-400">Plazo:</span> {dias} días corridos</p>}
                       {meta.responsable && <p className="text-xs text-gray-600"><span className="text-gray-400">Responsable:</span> {meta.responsable}</p>}
                       {zonaPreview && zonaPreview.zona > 0 && (
-                        <p className="text-xs text-emerald-600 font-medium">Factor zona +{(zonaPreview.zona * 100).toFixed(0)}% aplicado a MO</p>
+                        <p className="text-xs text-indigo-600 font-medium">Factor zona +{(zonaPreview.zona * 100).toFixed(0)}% aplicado a MO</p>
                       )}
                     </div>
                   )}
@@ -718,7 +718,7 @@ export default function Dashboard() {
                       Cancelar
                     </button>
                     <button onClick={crearProyecto} disabled={!nombreNuevo.trim() || creandoLoading}
-                      className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium disabled:opacity-50 btn-primary">
+                      className="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-medium disabled:opacity-50 btn-primary">
                       {creandoLoading ? "Creando..." : "Crear proyecto →"}
                     </button>
                   </div>
@@ -734,7 +734,7 @@ export default function Dashboard() {
                 <button onClick={() => setConfirmarCancelarImport(true)}
                   className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
                 <div className="text-center mb-6">
-                  <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <div className="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-3">
                     <span className="text-2xl">📂</span>
                   </div>
                   <h2 className="text-lg font-bold text-gray-800">¡Proyecto creado!</h2>
@@ -750,7 +750,7 @@ export default function Dashboard() {
                     { key: "otro", label: "Otro documento", desc: "Cualquier referencia", icon: "📄" },
                   ].map(op => (
                     <button key={op.key} onClick={() => setImportTipo(op.key)}
-                      className={`flex items-start gap-2 p-3 rounded-xl border text-left transition-all ${importTipo === op.key ? "border-emerald-500 bg-emerald-50" : "border-gray-200 hover:border-gray-300"}`}>
+                      className={`flex items-start gap-2 p-3 rounded-xl border text-left transition-all ${importTipo === op.key ? "border-indigo-500 bg-indigo-50" : "border-gray-200 hover:border-gray-300"}`}>
                       <span className="text-lg">{op.icon}</span>
                       <div>
                         <p className="text-xs font-semibold text-gray-700">{op.label}</p>
@@ -762,13 +762,13 @@ export default function Dashboard() {
 
                 {/* Drop zone */}
                 <div onClick={() => importFileRef.current?.click()}
-                  className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-colors mb-4 ${importFile ? "border-emerald-400 bg-emerald-50" : "border-gray-200 hover:border-emerald-300"}`}>
+                  className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-colors mb-4 ${importFile ? "border-indigo-400 bg-indigo-50" : "border-gray-200 hover:border-indigo-300"}`}>
                   <input ref={importFileRef} type="file" className="hidden"
                     accept=".pdf,.xlsx,.xls,.dwg,.dxf"
                     onChange={e => setImportFile(e.target.files[0] || null)} />
                   {importFile ? (
                     <div>
-                      <p className="text-sm font-medium text-emerald-700">✓ {importFile.name}</p>
+                      <p className="text-sm font-medium text-indigo-700">✓ {importFile.name}</p>
                       <p className="text-xs text-gray-400">{(importFile.size / 1024).toFixed(0)} KB</p>
                     </div>
                   ) : (
@@ -796,7 +796,7 @@ export default function Dashboard() {
                       const tipoMap = { eett: "eett", presupuesto: "presupuesto", plano: "plano", otro: "eett" };
                       router.push(`/proyecto?id=${importModal.id}&tab=anexos&archivo=${encodeURIComponent(path)}&tipo=${tipoMap[importTipo]}`);
                     }}
-                    className="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-medium disabled:opacity-50 btn-primary">
+                    className="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-medium disabled:opacity-50 btn-primary">
                     {importLoading ? "Subiendo..." : "Importar y abrir →"}
                   </button>
                 </div>
@@ -859,19 +859,19 @@ export default function Dashboard() {
               <h2 className="text-[14px] font-bold text-gray-800">Mis proyectos</h2>
               <div className="flex items-center gap-2">
                 <button onClick={() => { setModalCodigo(true); setCodigoError(""); setCodigoInput(""); }}
-                  className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg btn-press hover:bg-emerald-100">
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-lg btn-press hover:bg-indigo-100">
                   🔑 Unirse a proyecto
                 </button>
                 {(proyectos.length + proyectosCompartidos.length) > 0 && (
-                  <span className="text-[11px] font-semibold text-emerald-600">{proyectos.length + proyectosCompartidos.length} proyecto{(proyectos.length + proyectosCompartidos.length) !== 1 ? "s" : ""}</span>
+                  <span className="text-[11px] font-semibold text-indigo-600">{proyectos.length + proyectosCompartidos.length} proyecto{(proyectos.length + proyectosCompartidos.length) !== 1 ? "s" : ""}</span>
                 )}
               </div>
             </div>
             {proyectos.length === 0 ? (
               <div className="bg-white rounded-2xl p-12 text-center anim-fade-up delay-350"
-                style={{border:"1.5px solid #f1f5f9", borderBottom:"3px solid #059669"}}>
+                style={{border:"1.5px solid #f1f5f9", borderBottom:"3px solid #6366f1"}}>
                 <p className="text-gray-400 text-sm mb-3">No tienes proyectos aún</p>
-                <button onClick={() => setCreando(true)} className="text-emerald-600 text-sm font-semibold underline btn-press">
+                <button onClick={() => setCreando(true)} className="text-indigo-600 text-sm font-semibold underline btn-press">
                   Crea tu primer proyecto
                 </button>
               </div>
@@ -890,7 +890,7 @@ export default function Dashboard() {
                     <button key={p.id} onClick={() => abrirProyecto(p.id)}
                       className="bg-white rounded-2xl text-left group card-hover anim-fade-up"
                       style={{animationDelay:`${350 + idx * 60}ms`, padding:20,
-                        border:"1.5px solid #f1f5f9", borderBottom:"3px solid #059669",
+                        border:"1.5px solid #f1f5f9", borderBottom:"3px solid #6366f1",
                         boxShadow:"0 1px 4px rgba(0,0,0,.05)"}}>
                       <div className="flex items-start justify-between mb-3">
                         <span className="text-2xl transition-transform duration-200 group-hover:scale-110">📋</span>
@@ -900,18 +900,18 @@ export default function Dashboard() {
                       </div>
                       <div className="font-semibold text-sm mb-1 truncate" style={{color:"#1f2937"}}>{p.nombre}</div>
                       {montoLabel && (
-                        <div className="font-extrabold mb-2" style={{fontSize:18, color:"#059669"}}>{montoLabel}</div>
+                        <div className="font-extrabold mb-2" style={{fontSize:18, color:"#6366f1"}}>{montoLabel}</div>
                       )}
                       {(m.region || m.mandante) && (
                         <div className="space-y-0.5 mb-2">
                           {m.region   && <p className="text-xs truncate" style={{color:"#94a3b8"}}>{m.region}</p>}
-                          {m.mandante && <p className="text-xs font-semibold truncate" style={{color:"#059669"}}>{m.mandante}</p>}
+                          {m.mandante && <p className="text-xs font-semibold truncate" style={{color:"#6366f1"}}>{m.mandante}</p>}
                         </div>
                       )}
                       <div className="flex items-center justify-between text-xs pt-2"
                         style={{borderTop:"1px solid #f1f5f9", marginTop:8, color:"#94a3b8"}}>
                         <span>{(p.datos || []).length} partidas</span>
-                        <span style={{color:"#059669", fontWeight:600}}>
+                        <span style={{color:"#6366f1", fontWeight:600}}>
                           {dc ? `${dc} días` : new Date(p.updated_at).toLocaleDateString("es-CL")}
                         </span>
                       </div>
@@ -935,7 +935,7 @@ export default function Dashboard() {
                     const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
                     const total = cd * 1.28 * 1.19;
                     const montoLabel = total >= 1e6 ? `$${(total / 1e6).toFixed(1)}M` : total > 0 ? `$${Math.round(total).toLocaleString("es-CL")}` : null;
-                    const rolColor = { visualizar: "#64748b", editar: "#2563eb", administrar: "#059669" }[p._rol] || "#64748b";
+                    const rolColor = { visualizar: "#64748b", editar: "#2563eb", administrar: "#6366f1" }[p._rol] || "#64748b";
                     const rolLabel = { visualizar: "Solo lectura", editar: "Puede editar", administrar: "Administrador" }[p._rol] || p._rol;
                     return (
                       <button key={p.id} onClick={() => abrirProyecto(p.id)}
@@ -1007,7 +1007,7 @@ export default function Dashboard() {
                 { id: "pdf",      icon: "📄", label: "Exportación" },
               ].map(t => (
                 <button key={t.id} onClick={() => setConfigTab(t.id)}
-                  className={`flex items-center gap-1.5 px-3 py-3 text-[11px] font-semibold whitespace-nowrap border-b-2 transition-colors ${configTab === t.id ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-400 hover:text-gray-600"}`}>
+                  className={`flex items-center gap-1.5 px-3 py-3 text-[11px] font-semibold whitespace-nowrap border-b-2 transition-colors ${configTab === t.id ? "border-indigo-500 text-indigo-700" : "border-transparent text-gray-400 hover:text-gray-600"}`}>
                   <span>{t.icon}</span>{t.label}
                 </button>
               ))}
@@ -1026,13 +1026,13 @@ export default function Dashboard() {
                       <div className="flex gap-2">
                         <input value={cambioPassword.email} onChange={e => setCambioPassword(p => ({ ...p, email: e.target.value, enviado: false }))}
                           placeholder={user?.email || "tu@email.com"}
-                          className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                          className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-400" />
                         <button onClick={enviarResetPassword} disabled={!cambioPassword.email || cambioPassword.cargando || cambioPassword.enviado}
-                          className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700 disabled:opacity-50 btn-press">
+                          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-semibold hover:bg-indigo-700 disabled:opacity-50 btn-press">
                           {cambioPassword.enviado ? "✓ Enviado" : cambioPassword.cargando ? "..." : "Enviar"}
                         </button>
                       </div>
-                      {cambioPassword.enviado && <p className="text-xs text-emerald-600">✓ Revisa tu correo para restablecer tu contraseña.</p>}
+                      {cambioPassword.enviado && <p className="text-xs text-indigo-600">✓ Revisa tu correo para restablecer tu contraseña.</p>}
                     </div>
                   </div>
 
@@ -1046,7 +1046,7 @@ export default function Dashboard() {
                         </div>
                         <select value={configForm.inactividad}
                           onChange={e => setConfigForm(p => ({ ...p, inactividad: Number(e.target.value) }))}
-                          className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-emerald-400">
+                          className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-indigo-400">
                           {[5,10,15,30,60,120].map(m => <option key={m} value={m}>{m} min</option>)}
                         </select>
                       </div>
@@ -1066,7 +1066,7 @@ export default function Dashboard() {
                             <p className="text-[11px] text-gray-400">{n.desc}</p>
                           </div>
                           <button onClick={() => setConfigForm(p => ({ ...p, [n.key]: !p[n.key] }))}
-                            className={`w-10 h-5.5 rounded-full transition-colors relative ${configForm[n.key] ? "bg-emerald-500" : "bg-gray-300"}`}
+                            className={`w-10 h-5.5 rounded-full transition-colors relative ${configForm[n.key] ? "bg-indigo-500" : "bg-gray-300"}`}
                             style={{ width: 40, height: 22 }}>
                             <span className={`absolute top-0.5 w-4.5 h-4.5 bg-white rounded-full shadow transition-transform`}
                               style={{ width: 18, height: 18, top: 2, left: configForm[n.key] ? 20 : 2, transition: "left 0.2s" }} />
@@ -1119,14 +1119,14 @@ export default function Dashboard() {
                         <label className="text-[11px] font-medium text-gray-500 block mb-1">{f.label}</label>
                         <input value={configForm[f.key]} onChange={e => setConfigForm(p => ({ ...p, [f.key]: e.target.value }))}
                           placeholder={f.placeholder}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-400" />
                       </div>
                     ))}
                     <div className="col-span-2">
                       <label className="text-[11px] font-medium text-gray-500 block mb-1">Dirección</label>
                       <input value={configForm.direccionEmpresa} onChange={e => setConfigForm(p => ({ ...p, direccionEmpresa: e.target.value }))}
                         placeholder="Av. Principal 123, Santiago"
-                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-400" />
                     </div>
                   </div>
                 </div>
@@ -1150,7 +1150,7 @@ export default function Dashboard() {
                           <label className="text-[11px] font-medium text-gray-500 block mb-1">{f.label}</label>
                           <input type="number" min={f.min} max={f.max} value={configForm[f.key]}
                             onChange={e => setConfigForm(p => ({ ...p, [f.key]: parseFloat(e.target.value) || 0 }))}
-                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-400" />
                         </div>
                       ))}
                     </div>
@@ -1169,7 +1169,7 @@ export default function Dashboard() {
                           <label className="text-[11px] font-medium text-gray-500 block mb-1">{f.label}</label>
                           <input type="number" min={0} value={configForm[f.key]}
                             onChange={e => setConfigForm(p => ({ ...p, [f.key]: parseFloat(e.target.value) || 0 }))}
-                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400" />
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-400" />
                         </div>
                       ))}
                     </div>
@@ -1180,7 +1180,7 @@ export default function Dashboard() {
                     <div className="bg-gray-50 rounded-xl p-4">
                       <select value={configForm.defRegion}
                         onChange={e => setConfigForm(p => ({ ...p, defRegion: e.target.value }))}
-                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-400">
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-400">
                         <option value="">Sin región por defecto</option>
                         {REGIONES.map(r => <option key={r.label} value={r.label}>{r.label}</option>)}
                       </select>
@@ -1198,7 +1198,7 @@ export default function Dashboard() {
                       <div className="flex gap-2">
                         {["CLP","UF","UTM"].map(m => (
                           <button key={m} onClick={() => setConfigForm(p => ({ ...p, monedaDefault: m }))}
-                            className={`flex-1 py-2 rounded-lg text-xs font-bold border-2 transition-colors btn-press ${configForm.monedaDefault === m ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-500 hover:border-gray-300"}`}>
+                            className={`flex-1 py-2 rounded-lg text-xs font-bold border-2 transition-colors btn-press ${configForm.monedaDefault === m ? "border-indigo-500 bg-indigo-50 text-indigo-700" : "border-gray-200 text-gray-500 hover:border-gray-300"}`}>
                             {m}
                           </button>
                         ))}
@@ -1243,7 +1243,7 @@ export default function Dashboard() {
                         </div>
                         <button onClick={() => setConfigForm(p => ({ ...p, [n.key]: !p[n.key] }))}
                           className={`rounded-full transition-colors relative shrink-0`}
-                          style={{ width: 40, height: 22, background: configForm[n.key] ? "#059669" : "#d1d5db" }}>
+                          style={{ width: 40, height: 22, background: configForm[n.key] ? "#6366f1" : "#d1d5db" }}>
                           <span className="absolute bg-white rounded-full shadow"
                             style={{ width: 18, height: 18, top: 2, left: configForm[n.key] ? 20 : 2, transition: "left 0.2s" }} />
                         </button>
@@ -1259,7 +1259,7 @@ export default function Dashboard() {
             <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between shrink-0">
               <p className="text-[11px] text-gray-400">Los cambios se guardan en tu perfil</p>
               <button onClick={guardarConfig} disabled={configGuardando}
-                className={`px-5 py-2 rounded-xl text-xs font-bold btn-press transition-colors ${configGuardado ? "bg-emerald-100 text-emerald-700" : "bg-emerald-600 text-white hover:bg-emerald-700"} disabled:opacity-50`}>
+                className={`px-5 py-2 rounded-xl text-xs font-bold btn-press transition-colors ${configGuardado ? "bg-indigo-100 text-indigo-700" : "bg-indigo-600 text-white hover:bg-indigo-700"} disabled:opacity-50`}>
                 {configGuardado ? "✓ Guardado" : configGuardando ? "Guardando..." : "Guardar cambios"}
               </button>
             </div>
@@ -1284,7 +1284,7 @@ export default function Dashboard() {
               onChange={e => { setCodigoInput(e.target.value.replace(/\D/g, "").slice(0, 6)); setCodigoError(""); }}
               placeholder="000000"
               maxLength={6}
-              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-center text-2xl font-mono font-bold tracking-widest focus:outline-none focus:border-emerald-400 mb-3"
+              className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-center text-2xl font-mono font-bold tracking-widest focus:outline-none focus:border-indigo-400 mb-3"
               style={{ letterSpacing: "0.3em" }}
             />
             {codigoError && (
@@ -1293,7 +1293,7 @@ export default function Dashboard() {
             <button
               onClick={aceptarCodigoInvitacion}
               disabled={codigoInput.length !== 6 || codigoCargando}
-              className="w-full py-2.5 bg-emerald-600 text-white rounded-xl font-semibold text-sm hover:bg-emerald-700 disabled:opacity-50 btn-primary">
+              className="w-full py-2.5 bg-indigo-600 text-white rounded-xl font-semibold text-sm hover:bg-indigo-700 disabled:opacity-50 btn-primary">
               {codigoCargando ? "Verificando..." : "Unirse al proyecto →"}
             </button>
           </div>
@@ -1315,7 +1315,7 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center gap-2">
                 <button onClick={() => { setModalProyectos(false); setCreando(true); }}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 btn-press">
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 btn-press">
                   + Nuevo
                 </button>
                 <button onClick={() => setModalProyectos(false)}
@@ -1329,7 +1329,7 @@ export default function Dashboard() {
                   <p className="text-3xl mb-3">📋</p>
                   <p className="text-sm mb-3">No tienes proyectos aún</p>
                   <button onClick={() => { setModalProyectos(false); setCreando(true); }}
-                    className="text-emerald-600 text-sm font-semibold underline btn-press">
+                    className="text-indigo-600 text-sm font-semibold underline btn-press">
                     Crea tu primer proyecto
                   </button>
                 </div>
@@ -1350,7 +1350,7 @@ export default function Dashboard() {
                         className="bg-white rounded-xl text-left group card-hover anim-fade-up"
                         style={{animationDelay:`${idx * 40}ms`, padding:16,
                           border: esCompartido ? "1.5px solid #dbeafe" : "1.5px solid #f1f5f9",
-                          borderBottom: esCompartido ? "3px solid #3b82f6" : "3px solid #059669",
+                          borderBottom: esCompartido ? "3px solid #3b82f6" : "3px solid #6366f1",
                           boxShadow:"0 1px 4px rgba(0,0,0,.05)"}}>
                         <div className="flex items-start justify-between mb-2">
                           <span className="text-xl">{esCompartido ? "🤝" : "📋"}</span>
@@ -1362,13 +1362,13 @@ export default function Dashboard() {
                         </div>
                         <div className="font-semibold text-sm mb-1 truncate text-gray-800">{p.nombre}</div>
                         {montoLabel && (
-                          <div className="font-extrabold mb-1" style={{fontSize:16, color: esCompartido ? "#3b82f6" : "#059669"}}>{montoLabel}</div>
+                          <div className="font-extrabold mb-1" style={{fontSize:16, color: esCompartido ? "#3b82f6" : "#6366f1"}}>{montoLabel}</div>
                         )}
                         {m.region && <p className="text-[11px] text-gray-400 truncate">{m.region}</p>}
                         <div className="flex items-center justify-between text-[11px] pt-2 mt-1"
                           style={{borderTop:"1px solid #f1f5f9", color:"#94a3b8"}}>
                           <span>{(p.datos || []).length} partidas</span>
-                          {dc && <span style={{color: esCompartido ? "#3b82f6" : "#059669", fontWeight:600}}>{dc} días</span>}
+                          {dc && <span style={{color: esCompartido ? "#3b82f6" : "#6366f1", fontWeight:600}}>{dc} días</span>}
                         </div>
                       </button>
                     );
