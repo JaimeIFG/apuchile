@@ -60,6 +60,11 @@ export async function POST(request) {
     if (!storagePath || !tipo) return NextResponse.json({ error: "Faltan parámetros" }, { status: 400 });
     if (tipo === "plano") return NextResponse.json({ partidas: [] });
 
+    // Validar que la ruta no contenga traversal
+    if (storagePath.includes('..') || storagePath.includes('//') || storagePath.startsWith('/')) {
+      return NextResponse.json({ error: "Ruta inválida" }, { status: 400 });
+    }
+
     // Verificar que el path pertenece al usuario autenticado (formato: userId/...)
     const pathOwner = storagePath.split("/")[0];
     if (pathOwner !== user.id) {

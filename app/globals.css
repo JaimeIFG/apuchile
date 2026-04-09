@@ -161,3 +161,11 @@ body {
   50%      { opacity: .5; transform: scale(.85); }
 }
 .pulse-dot { animation: pulseDot 1.8s ease infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

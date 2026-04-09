@@ -2,7 +2,10 @@ import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 
 function generarCodigo() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 8; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
 }
 
 export async function POST(req) {
@@ -17,6 +20,9 @@ export async function POST(req) {
     if (!email || !rol || !proyecto_id) {
       return Response.json({ error: "Faltan parámetros" }, { status: 400 });
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return Response.json({ error: "Email inválido" }, { status: 400 });
 
     // Verificar autenticación
     const authHeader = req.headers.get("authorization");

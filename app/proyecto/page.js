@@ -242,7 +242,13 @@ function Home() {
     zona: 0.25, llss: 40, gg: 18, util: 10, iva: 19, herr: 4,
     mo_m1: 6800, mo_m2: 5200, mo_ay: 3800, mo_inst: 9500,
   });
-  const updateCfg = (k, v) => setCfg((c) => ({ ...c, [k]: parseFloat(v) || 0 }));
+  const updateCfg = (k, v) => {
+    const num = parseFloat(v) || 0;
+    const val = ['llss','gg','util','iva','herr'].includes(k) ? Math.max(0, Math.min(num, 100))
+              : k.startsWith('mo_') ? Math.max(0, num)
+              : k === 'zona' ? Math.max(0, num) : num;
+    setCfg((c) => ({ ...c, [k]: val }));
+  };
   const tabParam = searchParams.get("tab");
   const archivoParam = searchParams.get("archivo");
   const tipoParam = searchParams.get("tipo");
@@ -263,6 +269,7 @@ function Home() {
   const [editandoProyecto, setEditandoProyecto] = useState(false);
   const [editandoPartida, setEditandoPartida] = useState(null);
   const [agruparCapitulos, setAgruparCapitulos] = useState(false);
+  const [exportandoPDF, setExportandoPDF] = useState(false);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
   const [dragOverIdx, setDragOverIdx] = useState(null);
@@ -310,7 +317,13 @@ function Home() {
           setProyectoMeta(data.meta || {});
           // Cargar cfg guardada del proyecto (valores personalizados al crearlo, dentro de meta._cfg)
           if (data.meta?._cfg) {
-            setCfg(c => ({ ...c, ...data.meta._cfg }));
+            const raw = data.meta._cfg;
+            const validated = {};
+            for (const [k, v] of Object.entries(raw)) {
+              const num = parseFloat(v);
+              if (!isNaN(num)) validated[k] = ['llss','gg','util','iva','herr'].includes(k) ? Math.max(0, Math.min(num, 100)) : Math.max(0, num);
+            }
+            setCfg(c => ({ ...c, ...validated }));
           } else if (data.meta?.zona !== undefined) {
             setCfg(c => ({ ...c, zona: data.meta.zona }));
           }
@@ -505,7 +518,7 @@ function Home() {
   const CHAT_MAX_LARGO = 500;
   const enviarMensaje = async () => {
     // Sanitizar: recortar, limitar largo, eliminar caracteres de control
-    const texto = mensajeInput.trim().slice(0, CHAT_MAX_LARGO).replace(/[\u0000-\u001F\u007F]/g, "");
+    const texto = mensajeInput.trim().slice(0, CHAT_MAX_LARGO).replace(/[\u0000-\u001F\u007F]/g, "").replace(/<[^>]*>/g, "");
     if (!texto || !proyectoId) return;
     setMensajeInput("");
     // Limpiar typing al enviar
@@ -569,7 +582,7 @@ function Home() {
       if (error) setErrorGuardado(true);
     }, 1500);
     return () => clearTimeout(timer);
-  }, [proyecto, cfg]);
+  }, [proyecto, cfg, proyectoMeta]);
 
   // Guardar inmediatamente al cerrar o salir de la pestaña
   useEffect(() => {
@@ -727,6 +740,8 @@ function Home() {
   };
 
   const exportarPDF = async () => {
+    setExportandoPDF(true);
+    try {
     const { default: jsPDF } = await import("jspdf");
     const { default: autoTable } = await import("jspdf-autotable");
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
@@ -795,7 +810,8 @@ function Home() {
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
-    doc.text(proyectoNombre, ancho - 14, 12, { align: "right" });
+    const nombrePdf = proyectoNombre.length > 35 ? proyectoNombre.substring(0, 32) + "..." : proyectoNombre;
+    doc.text(nombrePdf, ancho - 14, 12, { align: "right" });
     doc.setFontSize(8);
     doc.setFont("helvetica", "normal");
     doc.text(new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" }), ancho - 14, 20, { align: "right" });
@@ -840,7 +856,7 @@ function Home() {
       const { total } = calcAPU(p, cfg);
       return [
         p.codigo,
-        (p.desc || p.descripcion || "").substring(0, 55),
+        (() => { const d = (p.desc || p.descripcion || ""); return d.length > 55 ? d.substring(0, 52) + "..." : d; })(),
         p.unidad,
         p.cantidad,
         "$" + Math.round(total).toLocaleString("es-CL"),
@@ -949,6 +965,7 @@ function Home() {
     }
 
     doc.save(`${proyectoNombre.replace(/\s+/g, "_")}_presupuesto.pdf`);
+    } finally { setExportandoPDF(false); }
   };
 
   // Cargar anexos guardados cuando carga el proyecto
@@ -1375,9 +1392,9 @@ function Home() {
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border btn-press transition-colors ${agruparCapitulos ? "bg-indigo-50 border-indigo-300 text-indigo-700" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
                     <span>⊞</span> {agruparCapitulos ? "Vista plana" : "Agrupar por capítulo"}
                   </button>
-                  <button onClick={exportarPDF}
-                    className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-indigo-700">
-                    📄 Exportar PDF
+                  <button onClick={exportarPDF} disabled={exportandoPDF}
+                    className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-indigo-700 disabled:opacity-50">
+                    📄 {exportandoPDF ? "Generando..." : "Exportar PDF"}
                   </button>
                 </>
               )}
@@ -1436,7 +1453,7 @@ function Home() {
                                   {puedeEditar ? (
                                     <input type="number" value={p.cantidad} min={0.01} step={0.01}
                                       onClick={(e) => { e.stopPropagation(); e.target.select(); }}
-                                      onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:e.target.value===""?0:parseFloat(e.target.value)||0}:x))}
+                                      onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:e.target.value===""?0:Math.max(0,parseFloat(e.target.value)||0)}:x))}
                                       onBlur={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(String(x.cantidad))||1}:x))}
                                       className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-indigo-400"/>
                                   ) : (
@@ -1697,7 +1714,7 @@ function Home() {
 
           {/* Panel chat */}
           {chatAbierto && (
-            <div className="fixed bottom-20 right-6 z-40 w-80 bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100 anim-scale-in"
+            <div className="fixed bottom-20 right-6 z-40 w-80 max-sm:w-[calc(100vw-2rem)] max-sm:right-4 max-sm:left-4 max-sm:bottom-16 bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100 anim-scale-in"
               style={{height: 420}}>
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0"
@@ -1973,6 +1990,7 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
   const handleLogo = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { alert("Imagen muy grande (máximo 2MB)"); return; }
     const reader = new FileReader();
     reader.onload = (ev) => setF("logoEmpresa", ev.target.result);
     reader.readAsDataURL(file);
@@ -1981,6 +1999,7 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
   const handleFirma = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { alert("Imagen muy grande (máximo 2MB)"); return; }
     const reader = new FileReader();
     reader.onload = (ev) => setF("firmaDigital", ev.target.result);
     reader.readAsDataURL(file);

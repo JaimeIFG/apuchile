@@ -15,6 +15,8 @@ export async function POST(request) {
   const authHeader = request.headers.get("authorization");
   const token = authHeader?.replace("Bearer ", "");
 
+  if (!token) return NextResponse.json({ ok: false, error: "No autorizado" }, { status: 401 });
+
   const supabaseAuth = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,

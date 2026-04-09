@@ -108,8 +108,8 @@ const [resetMode, setResetMode] = useState(false);
     if (!form.nombre || !form.correo || !form.usuario || !form.password || !form.anio) {
       setError("Completa todos los campos"); setLoading(false); return;
     }
-    if (form.password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres"); setLoading(false); return;
+    if (form.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres"); setLoading(false); return;
     }
 
     // Verificar correo duplicado consultando usuarios existentes
@@ -299,7 +299,7 @@ const [resetMode, setResetMode] = useState(false);
               <div>
                 <label className="text-xs font-medium text-gray-600 mb-1.5 block">Contraseña</label>
                 <input type="password" required value={form.password} onChange={e => set("password", e.target.value)}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Mínimo 8 caracteres"
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"/>
               </div>
               <div className="grid grid-cols-2 gap-4">

@@ -52,6 +52,8 @@ export default function Dashboard() {
   const [confirmarEliminar, setConfirmarEliminar] = useState(null); // { id }
   const [confirmarCancelarImport, setConfirmarCancelarImport] = useState(false);
   const { uf, utm, fecha } = useIndicadores();
+  const [busquedaProyectos, setBusquedaProyectos] = useState("");
+  const [ordenProyectos, setOrdenProyectos] = useState("reciente");
 
   // Perfil editable
   const [editandoPerfil, setEditandoPerfil] = useState(false);
@@ -150,12 +152,12 @@ export default function Dashboard() {
     return () => { if (canalRef.current) supabase.removeChannel(canalRef.current); };
   }, []);
 
-  useInactividad(supabase, router, 10);
+  useInactividad(supabase, router, configForm?.inactividad || 10);
 
   const cargarProyectos = async (uid) => {
     // Proyectos propios
     // Excluir columna "datos" (JSON pesado con todas las partidas) — no se necesita en el listado
-    const COLS = "id, nombre, meta, user_id, created_at";
+    const COLS = "id, nombre, meta, user_id, created_at, updated_at";
     const { data } = await supabase.from("proyectos").select(COLS).eq("user_id", uid).order("created_at", { ascending: false });
     setProyectos(data || []);
 
@@ -284,6 +286,17 @@ export default function Dashboard() {
     setConfirmarEliminar(null);
   };
 
+  const duplicarProyecto = async (p, e) => {
+    e.stopPropagation();
+    const { data } = await supabase.from("proyectos").insert({
+      nombre: p.nombre + " (copia)",
+      datos: p.datos,
+      meta: p.meta,
+      user_id: user.id,
+    }).select().single();
+    if (data) cargarProyectos(user.id);
+  };
+
   const cerrarSesion = () => setConfirmarLogout(true);
 
   const ejecutarCierreSesion = async () => {
@@ -357,7 +370,7 @@ export default function Dashboard() {
   const totalValorBruto = proyectos.reduce((s, p) => {
     const zona = p.meta?.zona ?? 0;
     const cd = (p.datos || []).reduce((ss, i) => ss + (i.precio || 0) * (1 + zona) * (i.cantidad || 1), 0);
-    return s + cd * 1.28 * 1.19;
+    return s + cd * (1 + (configForm?.defGG || 18) / 100 + (configForm?.defUtil || 10) / 100) * (1 + (configForm?.defIVA || 19) / 100);
   }, 0);
   const totalValorFmt = totalValorBruto >= 1e9
     ? `$${(totalValorBruto / 1e9).toFixed(1)}B`
@@ -867,6 +880,26 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
+            {proyectos.length > 0 && (
+              <div className="flex items-center gap-2 mb-3">
+                <input
+                  type="text"
+                  placeholder="Buscar proyecto..."
+                  value={busquedaProyectos}
+                  onChange={e => setBusquedaProyectos(e.target.value)}
+                  className="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                />
+                <select
+                  value={ordenProyectos}
+                  onChange={e => setOrdenProyectos(e.target.value)}
+                  className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                >
+                  <option value="reciente">Más reciente</option>
+                  <option value="nombre">Nombre A-Z</option>
+                  <option value="valor">Mayor valor</option>
+                </select>
+              </div>
+            )}
             {proyectos.length === 0 ? (
               <div className="bg-white rounded-2xl p-12 text-center anim-fade-up delay-350"
                 style={{border:"1.5px solid #f1f5f9", borderBottom:"3px solid #6366f1"}}>
@@ -877,12 +910,22 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {proyectos.map((p, idx) => {
+                {proyectos
+                  .filter(p => !busquedaProyectos.trim() || p.nombre.toLowerCase().includes(busquedaProyectos.toLowerCase()))
+                  .sort((a, b) => {
+                    if (ordenProyectos === "nombre") return (a.nombre || "").localeCompare(b.nombre || "");
+                    if (ordenProyectos === "valor") {
+                      const valP = (pp) => { const z = pp.meta?.zona ?? 0; return (pp.datos || []).reduce((s, i) => s + (i.precio || 0) * (1 + z) * (i.cantidad || 1), 0); };
+                      return valP(b) - valP(a);
+                    }
+                    return new Date(b.updated_at || b.created_at) - new Date(a.updated_at || a.created_at);
+                  })
+                  .map((p, idx) => {
                   const m = p.meta || {};
                   const dc = m.diasCorridos || diasCorridos(m.fechaInicio, m.fechaTermino);
                   const zona = m.zona ?? 0;
                   const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
-                  const total = cd * 1.28 * 1.19;
+                  const total = cd * (1 + (configForm?.defGG || 18) / 100 + (configForm?.defUtil || 10) / 100) * (1 + (configForm?.defIVA || 19) / 100);
                   const montoLabel = total >= 1e6
                     ? `$${(total / 1e6).toFixed(1)}M`
                     : total > 0 ? `$${Math.round(total).toLocaleString("es-CL")}` : null;
@@ -894,9 +937,14 @@ export default function Dashboard() {
                         boxShadow:"0 1px 4px rgba(0,0,0,.05)"}}>
                       <div className="flex items-start justify-between mb-3">
                         <span className="text-2xl transition-transform duration-200 group-hover:scale-110">📋</span>
-                        <button onClick={e => eliminarProyecto(p.id, e)}
-                          className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 sm:opacity-0 opacity-100 transition-all btn-press"
-                          style={{background:"#fee2e2", color:"#ef4444"}}>✕</button>
+                        <div className="flex items-center gap-1">
+                          <button onClick={e => duplicarProyecto(p, e)}
+                            className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 sm:opacity-0 opacity-100 transition-all btn-press"
+                            style={{background:"#e0e7ff", color:"#6366f1"}} title="Duplicar">⧉</button>
+                          <button onClick={e => eliminarProyecto(p.id, e)}
+                            className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 sm:opacity-0 opacity-100 transition-all btn-press"
+                            style={{background:"#fee2e2", color:"#ef4444"}}>✕</button>
+                        </div>
                       </div>
                       <div className="font-semibold text-sm mb-1 truncate" style={{color:"#1f2937"}}>{p.nombre}</div>
                       {montoLabel && (
@@ -912,7 +960,7 @@ export default function Dashboard() {
                         style={{borderTop:"1px solid #f1f5f9", marginTop:8, color:"#94a3b8"}}>
                         <span>{(p.datos || []).length} partidas</span>
                         <span style={{color:"#6366f1", fontWeight:600}}>
-                          {dc ? `${dc} días` : new Date(p.updated_at).toLocaleDateString("es-CL")}
+                          {dc ? `${dc} días` : new Date(p.updated_at || p.created_at).toLocaleDateString("es-CL")}
                         </span>
                       </div>
                     </button>
@@ -933,7 +981,7 @@ export default function Dashboard() {
                     const dc = m.diasCorridos || diasCorridos(m.fechaInicio, m.fechaTermino);
                     const zona = m.zona ?? 0;
                     const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
-                    const total = cd * 1.28 * 1.19;
+                    const total = cd * (1 + (configForm?.defGG || 18) / 100 + (configForm?.defUtil || 10) / 100) * (1 + (configForm?.defIVA || 19) / 100);
                     const montoLabel = total >= 1e6 ? `$${(total / 1e6).toFixed(1)}M` : total > 0 ? `$${Math.round(total).toLocaleString("es-CL")}` : null;
                     const rolColor = { visualizar: "#64748b", editar: "#2563eb", administrar: "#6366f1" }[p._rol] || "#64748b";
                     const rolLabel = { visualizar: "Solo lectura", editar: "Puede editar", administrar: "Administrador" }[p._rol] || p._rol;
@@ -964,7 +1012,7 @@ export default function Dashboard() {
                           style={{ borderTop: "1px solid #f1f5f9", marginTop: 8, color: "#94a3b8" }}>
                           <span>{(p.datos || []).length} partidas</span>
                           <span style={{ color: "#3b82f6", fontWeight: 600 }}>
-                            {dc ? `${dc} días` : new Date(p.updated_at).toLocaleDateString("es-CL")}
+                            {dc ? `${dc} días` : new Date(p.updated_at || p.created_at).toLocaleDateString("es-CL")}
                           </span>
                         </div>
                       </button>
@@ -1340,7 +1388,7 @@ export default function Dashboard() {
                     const dc = m.diasCorridos || diasCorridos(m.fechaInicio, m.fechaTermino);
                     const zona = m.zona ?? 0;
                     const cd = (p.datos || []).reduce((s, item) => s + (item.precio || 0) * (1 + zona) * (item.cantidad || 1), 0);
-                    const total = cd * 1.28 * 1.19;
+                    const total = cd * (1 + (configForm?.defGG || 18) / 100 + (configForm?.defUtil || 10) / 100) * (1 + (configForm?.defIVA || 19) / 100);
                     const montoLabel = total >= 1e6
                       ? `$${(total / 1e6).toFixed(1)}M`
                       : total > 0 ? `$${Math.round(total).toLocaleString("es-CL")}` : null;

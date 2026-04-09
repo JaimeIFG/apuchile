@@ -479,6 +479,56 @@ export default function Hero() {
         </div>
       </section>
 
+      {/* ── PRECIOS ────────────────────────────────────────────────────────── */}
+      <section id="precios" style={{ padding: "96px 24px", background: "#f8fafc" }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl sm:text-4xl font-bold mb-4"
+            style={{ color: "#0f172a" }}
+          >
+            Planes y precios
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-lg mb-12"
+            style={{ color: "#64748b" }}
+          >
+            Comienza gratis y escala cuando lo necesites.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="max-w-sm mx-auto rounded-2xl p-8 border"
+            style={{ background: "#fff", borderColor: "#e2e8f0", boxShadow: "0 4px 24px -4px rgba(0,0,0,0.08)" }}
+          >
+            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4"
+              style={{ background: "rgba(99,102,241,0.1)", color: "#6366f1" }}>
+              Plan gratuito
+            </div>
+            <div className="text-4xl font-bold mb-1" style={{ color: "#0f172a" }}>$0</div>
+            <div className="text-sm mb-6" style={{ color: "#64748b" }}>Para siempre</div>
+            <ul className="text-left space-y-3 mb-8">
+              {["Hasta 5 proyectos","Exportar PDF","Colaboración básica","Biblioteca 1.100+ partidas"].map((f) => (
+                <li key={f} className="flex items-center gap-2 text-sm" style={{ color: "#334155" }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <Link href="/login">
+              <button className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-200 hover:opacity-90"
+                style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}>
+                Comenzar gratis
+              </button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── DOCUMENTACIÓN / FAQ ───────────────────────────────────────────── */}
       <FAQ />
 
