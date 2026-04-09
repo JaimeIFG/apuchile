@@ -144,8 +144,9 @@ function _calcAPUImpl(apu, cfg) {
     return { ...ins, punit, cant, sub };
   });
   if (rows.length === 0 || (moNet === 0 && mat === 0 && fung === 0)) {
+    // precioOverride es el precio exacto ingresado por el usuario, no se ajusta por zona
     const precioBase = apu.precioOverride
-      ? apu.precioOverride * (1 + zona)
+      ? apu.precioOverride
       : (apu.precio || 0) * IPC_2017_2025 * (1 + zona);
     return { rows, moNet: 0, llssAmt: 0, mat: precioBase, herr: 0, fung: 0, total: precioBase };
   }
@@ -552,20 +553,23 @@ function Home() {
   // Auto-logout por inactividad (10 min)
   useInactividad(supabase, router, 10);
 
-  // Autoguardado cada vez que cambia el proyecto (debounce 1.5s)
+  // Autoguardado cada vez que cambia el proyecto o cfg (debounce 1.5s)
   useEffect(() => {
     if (!proyectoId || !userId) return;
     const timer = setTimeout(async () => {
       setGuardando(true);
       setErrorGuardado(false);
       ignorarRealtime.current += 1;
-      const { error } = await supabase.from("proyectos").update({ datos: proyecto }).eq("id", proyectoId);
+      const { error } = await supabase.from("proyectos").update({
+        datos: proyecto,
+        meta: { ...proyectoMeta, _cfg: cfg },
+      }).eq("id", proyectoId);
       ignorarRealtime.current = Math.max(0, ignorarRealtime.current - 1);
       setGuardando(false);
       if (error) setErrorGuardado(true);
     }, 1500);
     return () => clearTimeout(timer);
-  }, [proyecto]);
+  }, [proyecto, cfg]);
 
   // Guardar inmediatamente al cerrar o salir de la pestaña
   useEffect(() => {
@@ -580,7 +584,7 @@ function Home() {
           "Content-Type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ datos: proyecto }),
+        body: JSON.stringify({ datos: proyecto, meta: { ...proyectoMeta, _cfg: cfg } }),
       });
     };
     window.addEventListener("beforeunload", guardarAhora);
@@ -891,6 +895,45 @@ function Home() {
       margin: { left: ancho - 155 },
       tableWidth: 140,
     });
+
+    // ── Pie de firma ──
+    const firmaUrl    = proyectoMeta.firmaDigital  || "";
+    const firmaNombre = proyectoMeta.nombreFirmante || "";
+    const firmaCargo  = proyectoMeta.cargoFirmante  || "";
+    if (firmaNombre || firmaUrl) {
+      const firmaY = doc.lastAutoTable.finalY + 18;
+      const firmaX = ancho - 70;
+      // Línea de firma
+      doc.setDrawColor(100, 100, 100);
+      doc.setLineWidth(0.3);
+      doc.line(firmaX, firmaY, firmaX + 56, firmaY);
+      if (firmaUrl) {
+        try {
+          await new Promise((resolve) => {
+            const img = new window.Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => {
+              try { doc.addImage(img, "PNG", firmaX, firmaY - 16, 56, 14); } catch {}
+              resolve();
+            };
+            img.onerror = resolve;
+            img.src = firmaUrl;
+          });
+        } catch {}
+      }
+      if (firmaNombre) {
+        doc.setFontSize(8);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(30, 30, 30);
+        doc.text(firmaNombre, firmaX + 28, firmaY + 5, { align: "center" });
+      }
+      if (firmaCargo) {
+        doc.setFontSize(7);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(100, 100, 100);
+        doc.text(firmaCargo, firmaX + 28, firmaY + 10, { align: "center" });
+      }
+    }
 
     // ── Pie de página ──
     const totalPags = doc.internal.getNumberOfPages();
@@ -1392,8 +1435,9 @@ function Home() {
                                 <td className="px-3 py-3 text-right">
                                   {puedeEditar ? (
                                     <input type="number" value={p.cantidad} min={0.01} step={0.01}
-                                      onClick={(e) => e.stopPropagation()}
-                                      onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(e.target.value)||1}:x))}
+                                      onClick={(e) => { e.stopPropagation(); e.target.select(); }}
+                                      onChange={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:e.target.value===""?0:parseFloat(e.target.value)||0}:x))}
+                                      onBlur={(e)=>setProyecto(pr=>pr.map(x=>x.id===p.id?{...x,cantidad:parseFloat(String(x.cantidad))||1}:x))}
                                       className="w-16 border border-gray-200 rounded px-2 py-1 text-right text-xs input-focus focus:outline-none focus:border-indigo-400"/>
                                   ) : (
                                     <span className="text-gray-600">{p.cantidad}</span>
@@ -1909,14 +1953,17 @@ const REGIONES_EDIT = [
 
 function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
   const [form, setForm] = useState({
-    nombre:      nombre || "",
-    region:      meta.region      || "",
-    mandante:    meta.mandante    || "",
-    direccion:   meta.direccion   || "",
-    fechaInicio: meta.fechaInicio || "",
-    fechaTermino:meta.fechaTermino|| "",
-    responsable: meta.responsable || "",
-    logoEmpresa: meta.logoEmpresa || "",
+    nombre:        nombre || "",
+    region:        meta.region        || "",
+    mandante:      meta.mandante      || "",
+    direccion:     meta.direccion     || "",
+    fechaInicio:   meta.fechaInicio   || "",
+    fechaTermino:  meta.fechaTermino  || "",
+    responsable:   meta.responsable   || "",
+    logoEmpresa:   meta.logoEmpresa   || "",
+    firmaDigital:  meta.firmaDigital  || "",
+    nombreFirmante:meta.nombreFirmante|| "",
+    cargoFirmante: meta.cargoFirmante || "",
   });
 
   const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -1931,6 +1978,14 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
     reader.readAsDataURL(file);
   };
 
+  const handleFirma = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setF("firmaDigital", ev.target.result);
+    reader.readAsDataURL(file);
+  };
+
   const handleGuardar = () => {
     const regionInfo = REGIONES_EDIT.find(r => r.label === form.region);
     const nuevaMeta = {
@@ -1941,8 +1996,12 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
       fechaTermino: form.fechaTermino,
       responsable:  form.responsable,
       logoEmpresa:  form.logoEmpresa,
+      firmaDigital: form.firmaDigital,
+      nombreFirmante: form.nombreFirmante,
+      cargoFirmante: form.cargoFirmante,
       zona:         regionInfo ? regionInfo.zona : meta.zona ?? 0,
       diasCorridos: dias,
+      _cfg:         meta._cfg,
     };
     onGuardar(form.nombre, nuevaMeta);
   };
@@ -2015,7 +2074,32 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
               <input value={form.responsable} onChange={e => setF("responsable", e.target.value)} className={inputCls + " input-focus"} placeholder="Nombre del responsable"/>
             </div>
           </div>
-          <div className="flex gap-3 mt-6">
+          {/* Firma digitalizada */}
+          <div className="border-t border-gray-100 pt-4 mt-2">
+            <label className="text-xs font-medium text-gray-600 mb-2 block">Pie de firma y firma digitalizada</label>
+            <div className="flex items-start gap-3 mb-3">
+              <div className="flex-1">
+                <input value={form.nombreFirmante} onChange={e => setF("nombreFirmante", e.target.value)}
+                  className={inputCls + " input-focus mb-2"} placeholder="Nombre del firmante"/>
+                <input value={form.cargoFirmante} onChange={e => setF("cargoFirmante", e.target.value)}
+                  className={inputCls + " input-focus"} placeholder="Cargo (ej: Jefe de Proyecto)"/>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                {form.firmaDigital
+                  ? <img src={form.firmaDigital} alt="firma" className="h-14 w-32 object-contain border border-gray-200 rounded bg-white px-1"/>
+                  : <div className="h-14 w-32 rounded border border-dashed border-gray-300 flex items-center justify-center text-gray-300 text-xs">Firma</div>
+                }
+                <label className="cursor-pointer text-xs text-indigo-600 border border-indigo-200 px-2 py-1 rounded-lg hover:bg-indigo-50 btn-press">
+                  {form.firmaDigital ? "Cambiar" : "Subir firma"}
+                  <input type="file" accept="image/*" className="hidden" onChange={handleFirma}/>
+                </label>
+                {form.firmaDigital && (
+                  <button onClick={() => setF("firmaDigital", "")} className="text-xs text-red-400 hover:text-red-600 btn-press">Quitar</button>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-3 mt-2">
             <button onClick={onCerrar} className="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm hover:bg-gray-50 btn-press">Cancelar</button>
             <button onClick={handleGuardar} disabled={!form.nombre.trim()}
               className="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-medium btn-primary hover:bg-indigo-700 disabled:opacity-40">

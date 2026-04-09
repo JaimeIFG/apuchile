@@ -9,6 +9,7 @@ export async function POST(request) {
 
   const body = await request.json().catch(() => null);
   if (!body?.datos) return NextResponse.json({ ok: false }, { status: 400 });
+  const metaUpdate = body.meta ? { meta: body.meta } : {};
 
   // Verificar autenticación con el anon key (respeta RLS)
   const authHeader = request.headers.get("authorization");
@@ -55,7 +56,7 @@ export async function POST(request) {
 
   const { error } = await supabaseAdmin
     .from("proyectos")
-    .update({ datos: body.datos })
+    .update({ datos: body.datos, ...metaUpdate })
     .eq("id", id);
 
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
