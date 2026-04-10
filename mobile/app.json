@@ -25,9 +25,11 @@
       "package": "cl.apudesk.mobile",
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -37,12 +39,22 @@
       "expo-router",
       [
         "expo-camera",
-        { "cameraPermission": "APUdesk necesita la cámara para subir fotos a la bitácora." }
+        {
+          "cameraPermission": "APUdesk necesita la cámara para subir fotos a la bitácora."
+        }
       ],
       [
         "expo-image-picker",
-        { "photosPermission": "APUdesk necesita acceso a tus fotos para subirlas a la bitácora." }
+        {
+          "photosPermission": "APUdesk necesita acceso a tus fotos para subirlas a la bitácora."
+        }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a072c36d-2441-45df-a8e6-f5ceb6182fe4"
+      }
+    }
   }
 }

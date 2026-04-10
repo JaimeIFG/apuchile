@@ -55,16 +55,31 @@ export default function BitacoraScreen() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Convertir a blob
-      const resp   = await fetch(modalFoto.uri);
-      const blob   = await resp.blob();
-      const ext    = modalFoto.uri.split(".").pop() || "jpg";
-      const path   = `bitacora/${user.id}/${Date.now()}.${ext}`;
+      const ext  = (modalFoto.uri.split(".").pop() || "jpg").split("?")[0];
+      const mime = ext === "png" ? "image/png" : "image/jpeg";
+      const path = `bitacora/${user.id}/${Date.now()}.${ext}`;
 
-      const { error: uploadError } = await supabase.storage.from("obra-archivos").upload(path, blob, {
-        contentType: `image/${ext}`,
-        upsert: false,
-      });
+      // FormData upload — compatible con emulador y dispositivo físico
+      const formData = new FormData();
+      formData.append("file", { uri: modalFoto.uri, name: `foto.${ext}`, type: mime } as any);
+
+      const { data: { session } } = await supabase.auth.getSession();
+      const uploadResp = await fetch(
+        `${process.env.EXPO_PUBLIC_SUPABASE_URL}/storage/v1/object/obra-archivos/${path}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session?.access_token}`,
+            "x-upsert": "false",
+          },
+          body: formData,
+        }
+      );
+      if (!uploadResp.ok) {
+        const errText = await uploadResp.text();
+        throw new Error(errText);
+      }
+      const uploadError = null;
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage.from("obra-archivos").getPublicUrl(path);

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preview — Video Hero APUdesk</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #09090b; overflow-x: hidden; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      padding: 18px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 14px;
+    }
+    .nav-logo-text { color: #fff; font-weight: 700; font-size: 18px; }
+    .nav-logo-text span { color: #818cf8; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { color: rgba(255,255,255,0.55); font-size: 14px; text-decoration: none; }
+    .nav-cta {
+      color: #fff; font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      text-decoration: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; background: #09090b;
+    }
+
+    /* ── SLIDES DE APP ── */
+    .app-slides {
+      position: absolute; inset: 0; z-index: 0;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      animation: slideShow 24s infinite;
+      transform: scale(1.04);
+    }
+    .slide:nth-child(1) { animation-delay: 0s; }
+    .slide:nth-child(2) { animation-delay: 6s; }
+    .slide:nth-child(3) { animation-delay: 12s; }
+    .slide:nth-child(4) { animation-delay: 18s; }
+
+    @keyframes slideShow {
+      0%    { opacity: 0; transform: scale(1.04); }
+      5%    { opacity: 1; transform: scale(1.0); }
+      22%   { opacity: 1; transform: scale(1.0); }
+      27%   { opacity: 0; transform: scale(0.97); }
+      100%  { opacity: 0; transform: scale(1.04); }
+    }
+
+    /* Contenido de cada slide */
+    .slide-inner {
+      width: 900px; max-width: 90vw;
+      background: rgba(15,15,25,0.5);
+      border-radius: 20px;
+      border: 1px solid rgba(99,102,241,0.15);
+      overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.5);
+    }
+    .slide-bar {
+      padding: 12px 16px;
+      background: rgba(20,20,35,0.8);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: rgba(239,68,68,0.6); }
+    .dot-y { background: rgba(234,179,8,0.6); }
+    .dot-g { background: rgba(34,197,94,0.6); }
+    .slide-url {
+      margin-left: 12px; flex: 1; max-width: 280px;
+      background: rgba(255,255,255,0.06); border-radius: 6px;
+      padding: 4px 12px; font-size: 11px; color: rgba(255,255,255,0.35);
+    }
+    .slide-body { padding: 24px; }
+
+    /* Colores del tema */
+    :root {
+      --ind: #6366f1;
+      --ind2: #8b5cf6;
+      --ind-l: rgba(99,102,241,0.12);
+      --ind-b: rgba(99,102,241,0.2);
+    }
+
+    /* ── SLIDE 1: DASHBOARD ── */
+    .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .dash-title { color: #fff; font-weight: 700; font-size: 16px; }
+    .dash-badge {
+      padding: 4px 12px; border-radius: 99px; font-size: 11px; font-weight: 600;
+      background: var(--ind-l); color: #a5b4fc;
+      border: 1px solid var(--ind-b);
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+    .stat-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 16px;
+    }
+    .stat-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+    .stat-val { font-size: 22px; font-weight: 800; }
+    .stat-sub { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 4px; }
+    .projects-list { display: flex; flex-direction: column; gap: 8px; }
+    .project-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 12px 16px;
+    }
+    .project-name { color: #fff; font-size: 13px; font-weight: 600; }
+    .project-meta { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .progress-bar { width: 100px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg,#6366f1,#8b5cf6); }
+
+    /* ── SLIDE 2: APU / BIBLIOTECA ── */
+    .apu-header { display: flex; gap: 12px; margin-bottom: 20px; }
+    .apu-search {
+      flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 10px 16px; color: rgba(255,255,255,0.5); font-size: 13px;
+    }
+    .apu-filter {
+      background: var(--ind-l); border: 1px solid var(--ind-b);
+      border-radius: 10px; padding: 10px 16px; color: #a5b4fc; font-size: 12px; white-space: nowrap;
+    }
+    .apu-table { width: 100%; }
+    .apu-thead { display: grid; grid-template-columns: 60px 1fr 60px 80px 100px; gap: 8px; padding: 8px 12px; }
+    .apu-th { font-size: 10px; color: rgba(255,255,255,0.3); font-weight: 600; text-transform: uppercase; }
+    .apu-row {
+      display: grid; grid-template-columns: 60px 1fr 60px 80px 100px;
+      gap: 8px; padding: 12px; border-radius: 10px; margin-bottom: 4px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+      align-items: center;
+    }
+    .apu-code { font-size: 11px; color: #a5b4fc; font-weight: 700; font-family: monospace; }
+    .apu-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
+    .apu-unit { font-size: 11px; color: rgba(255,255,255,0.4); }
+    .apu-price { font-size: 13px; color: #fff; font-weight: 700; }
+    .apu-btn {
+      font-size: 11px; padding: 5px 12px; border-radius: 8px;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6); color: #fff; font-weight: 600;
+      text-align: center;
+    }
+
+    /* ── SLIDE 3: GANTT ── */
+    .gantt-header { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; }
+    .gantt-title { color: #fff; font-weight: 700; font-size: 15px; }
+    .gantt-tags { display: flex; gap: 8px; }
+    .gantt-tag {
+      padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 700;
+    }
+    .gantt-grid { display: flex; flex-direction: column; gap: 8px; }
+    .gantt-row { display: flex; align-items: center; gap: 12px; }
+    .gantt-label { width: 130px; font-size: 11px; color: rgba(255,255,255,0.6); shrink: 0; }
+    .gantt-track { flex: 1; height: 24px; background: rgba(255,255,255,0.04); border-radius: 6px; position: relative; overflow: hidden; }
+    .gantt-bar {
+      position: absolute; top: 3px; height: 18px; border-radius: 5px;
+      display: flex; align-items: center; padding-left: 8px;
+      font-size: 10px; color: rgba(255,255,255,0.9); font-weight: 600;
+      animation: ganttGrow 1.5s ease both;
+    }
+    @keyframes ganttGrow { from { width: 0 !important; } }
+    .gantt-dur { font-size: 10px; color: rgba(255,255,255,0.3); width: 40px; text-align: right; }
+
+    /* ── SLIDE 4: RESUMEN / PDF ── */
+    .resumen-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .resumen-title { color: #fff; font-weight: 700; font-size: 15px; }
+    .pdf-btn {
+      padding: 8px 18px; border-radius: 10px; font-size: 12px; font-weight: 700; color: #fff;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6); display: flex; align-items: center; gap: 6px;
+    }
+    .resumen-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .resumen-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 16px; text-align: center;
+    }
+    .resumen-card-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .resumen-card-val { font-size: 20px; font-weight: 800; }
+    .desglose { display: flex; flex-direction: column; gap: 10px; }
+    .desglose-row { display: flex; align-items: center; gap: 12px; }
+    .desglose-label { width: 130px; font-size: 11px; color: rgba(255,255,255,0.5); }
+    .desglose-bar { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+    .desglose-fill { height: 100%; border-radius: 4px; animation: ganttGrow 1.5s ease both; }
+    .desglose-val { font-size: 11px; color: rgba(255,255,255,0.6); width: 80px; text-align: right; }
+
+    /* ── OVERLAY ── */
+    .overlay {
+      position: absolute; inset: 0; z-index: 2;
+      background: linear-gradient(to bottom,
+        rgba(9,9,11,0.7) 0%,
+        rgba(9,9,11,0.55) 40%,
+        rgba(9,9,11,0.7) 80%,
+        rgba(9,9,11,0.92) 100%
+      );
+    }
+    /* Lateral fade para difuminar los bordes del mockup */
+    .side-fade {
+      position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(9,9,11,0.9) 0%, transparent 15%, transparent 85%, rgba(9,9,11,0.9) 100%),
+        linear-gradient(to bottom, rgba(9,9,11,0.8) 0%, transparent 12%, transparent 85%, rgba(9,9,11,0.95) 100%);
+    }
+
+    /* Glow superior */
+    .top-glow {
+      position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 500px; z-index: 4; pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(99,102,241,0.18) 0%, transparent 70%);
+      animation: glowPulse 5s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { opacity: 0.7; }
+      50%      { opacity: 1; }
+    }
+
+    /* ── CONTENIDO HERO ── */
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center; max-width: 860px; padding: 0 24px;
+      animation: fadeInUp 1s ease both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(36px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 999px;
+      background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.3);
+      color: #a5b4fc; font-size: 12px; font-weight: 600;
+      margin-bottom: 28px; animation: fadeInUp 1s ease 0.1s both;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #818cf8; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+
+    h1 {
+      font-size: clamp(32px, 5.5vw, 68px); font-weight: 800;
+      line-height: 1.06; color: #fff; margin-bottom: 24px;
+      letter-spacing: -0.03em; animation: fadeInUp 1s ease 0.2s both;
+    }
+    h1 .gradient {
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .subtitle {
+      font-size: clamp(15px, 2.2vw, 19px); color: rgba(255,255,255,0.55);
+      max-width: 560px; margin: 0 auto 40px; line-height: 1.65;
+      animation: fadeInUp 1s ease 0.35s both;
+    }
+    .btn-group {
+      display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+      animation: fadeInUp 1s ease 0.5s both;
+    }
+    .btn-primary {
+      position: relative; overflow: hidden;
+      padding: 14px 32px; border-radius: 14px;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      color: #fff; font-weight: 700; font-size: 15px;
+      border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: scale(1.04); box-shadow: 0 0 40px 8px rgba(99,102,241,0.4); }
+    .btn-primary::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent);
+    }
+    .btn-secondary {
+      padding: 14px 32px; border-radius: 14px;
+      background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.75);
+      font-weight: 600; font-size: 15px; border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.3); font-size: 11px; font-weight: 500;
+      animation: fadeInUp 1s ease 0.8s both;
+    }
+    .scroll-mouse {
+      width: 22px; height: 36px; border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 11px; display: flex; justify-content: center; padding-top: 6px;
+    }
+    .scroll-wheel { width: 3px; height: 8px; border-radius: 2px; background: rgba(255,255,255,0.35); animation: scrollDown 1.5s ease infinite; }
+    @keyframes scrollDown { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(10px);opacity:0} }
+
+    /* Slide indicator dots */
+    .slide-dots {
+      position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; gap: 6px;
+    }
+    .slide-dot {
+      width: 24px; height: 3px; border-radius: 2px;
+      background: rgba(255,255,255,0.2);
+      animation: dotActive 24s infinite;
+    }
+    .slide-dot:nth-child(1) { animation-delay: 0s; }
+    .slide-dot:nth-child(2) { animation-delay: 6s; }
+    .slide-dot:nth-child(3) { animation-delay: 12s; }
+    .slide-dot:nth-child(4) { animation-delay: 18s; }
+    @keyframes dotActive {
+      0%,4%  { background: #6366f1; width: 32px; }
+      25%,100%{ background: rgba(255,255,255,0.2); width: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-logo-icon">A</div>
+      <span class="nav-logo-text">APU<span>desk</span></span>
+    </div>
+    <div class="nav-links">
+      <a href="#">Características</a>
+      <a href="#">Documentación</a>
+      <a href="#">Contacto</a>
+    </div>
+    <a href="#" class="nav-cta">Iniciar sesión</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+
+    <!-- SLIDES DE APP EN EL FONDO -->
+    <div class="app-slides">
+
+      <!-- SLIDE 1: Dashboard de proyectos -->
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bar">
+            <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+            <span class="slide-url">apudesk.cl/dashboard</span>
+          </div>
+          <div class="slide-body">
+            <div class="dash-header">
+              <span class="dash-title">Mis Proyectos</span>
+              <span class="dash-badge">3 activos</span>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card"><div class="stat-label">Proyectos</div><div class="stat-val" style="color:#818cf8">12</div><div class="stat-sub">↑ 2 este mes</div></div>
+              <div class="stat-card"><div class="stat-label">Partidas totales</div><div class="stat-val" style="color:#a78bfa">847</div><div class="stat-sub">en todos los proyectos</div></div>
+              <div class="stat-card"><div class="stat-label">Costo acumulado</div><div class="stat-val" style="color:#60a5fa">$2.1B</div><div class="stat-sub">CLP neto</div></div>
+              <div class="stat-card"><div class="stat-label">Colaboradores</div><div class="stat-val" style="color:#f472b6">8</div><div class="stat-sub">en línea ahora: 3</div></div>
+            </div>
+            <div class="projects-list">
+              <div class="project-row">
+                <div><div class="project-name">Edificio Los Aromos</div><div class="project-meta">Santiago · 48 partidas</div></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+                <div style="font-size:11px;color:#a5b4fc;font-weight:700">72%</div>
+              </div>
+              <div class="project-row">
+                <div><div class="project-name">Pavimentación Av. Central</div><div class="project-meta">Valparaíso · 31 partidas</div></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+                <div style="font-size:11px;color:#a5b4fc;font-weight:700">45%</div>
+              </div>
+              <div class="project-row">
+                <div><div class="project-name">Remodelación Hospital</div><div class="project-meta">Concepción · 62 partidas</div></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:28%"></div></div>
+                <div style="font-size:11px;color:#a5b4fc;font-weight:700">28%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: Biblioteca APU -->
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bar">
+            <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+            <span class="slide-url">apudesk.cl/proyecto → Biblioteca</span>
+          </div>
+          <div class="slide-body">
+            <div class="apu-header">
+              <div class="apu-search">🔍&nbsp; Buscar partida — ej: "hormigón", "pintura"...</div>
+              <div class="apu-filter">📍 Región Metropolitana &nbsp;▾</div>
+            </div>
+            <div class="apu-table">
+              <div class="apu-thead">
+                <span class="apu-th">Código</span>
+                <span class="apu-th">Descripción</span>
+                <span class="apu-th">Unidad</span>
+                <span class="apu-th">P. Unitario</span>
+                <span class="apu-th"></span>
+              </div>
+              <div class="apu-row">
+                <span class="apu-code">RE-0014</span>
+                <span class="apu-desc">Hormigón H30 en losa</span>
+                <span class="apu-unit">m³</span>
+                <span class="apu-price">$142.500</span>
+                <span class="apu-btn">+ Agregar</span>
+              </div>
+              <div class="apu-row">
+                <span class="apu-code">FA-0082</span>
+                <span class="apu-desc">Pintura látex interior 2 manos</span>
+                <span class="apu-unit">m²</span>
+                <span class="apu-price">$8.340</span>
+                <span class="apu-btn">+ Agregar</span>
+              </div>
+              <div class="apu-row">
+                <span class="apu-code">PA-0031</span>
+                <span class="apu-desc">Cañería PVC 110mm agua potable</span>
+                <span class="apu-unit">ml</span>
+                <span class="apu-price">$18.900</span>
+                <span class="apu-btn">+ Agregar</span>
+              </div>
+              <div class="apu-row">
+                <span class="apu-code">KA-0007</span>
+                <span class="apu-desc">Puerta interior madera 90x210</span>
+                <span class="apu-unit">un</span>
+                <span class="apu-price">$215.000</span>
+                <span class="apu-btn">+ Agregar</span>
+              </div>
+              <div class="apu-row">
+                <span class="apu-code">RB-0003</span>
+                <span class="apu-desc">Excavación en terreno normal</span>
+                <span class="apu-unit">m³</span>
+                <span class="apu-price">$12.800</span>
+                <span class="apu-btn">+ Agregar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: Carta Gantt -->
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bar">
+            <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+            <span class="slide-url">apudesk.cl/proyecto → Gantt</span>
+          </div>
+          <div class="slide-body">
+            <div class="gantt-header">
+              <span class="gantt-title">Carta Gantt — Edificio Los Aromos</span>
+              <div class="gantt-tags">
+                <span class="gantt-tag" style="background:rgba(239,68,68,0.15);color:#f87171">Ruta crítica: 128 días</span>
+                <span class="gantt-tag" style="background:rgba(99,102,241,0.15);color:#a5b4fc">IA activada</span>
+              </div>
+            </div>
+            <div class="gantt-grid">
+              <div class="gantt-row">
+                <span class="gantt-label">Demolición</span>
+                <div class="gantt-track"><div class="gantt-bar" style="left:0%;width:12%;background:linear-gradient(90deg,#ef4444,#f97316)">12d</div></div>
+                <span class="gantt-dur">12d</span>
+              </div>
+              <div class="gantt-row">
+                <span class="gantt-label">Obras civiles</span>
+                <div class="gantt-track"><div class="gantt-bar" style="left:10%;width:25%;background:linear-gradient(90deg,#f97316,#f59e0b)">32d</div></div>
+                <span class="gantt-dur">32d</span>
+              </div>
+              <div class="gantt-row">
+                <span class="gantt-label">Estructura</span>
+                <div class="gantt-track"><div class="gantt-bar" style="left:30%;width:22%;background:linear-gradient(90deg,#f59e0b,#eab308)">28d</div></div>
+                <span class="gantt-dur">28d</span>
+              </div>
+              <div class="gantt-row">
+                <span class="gantt-label">Instalaciones</span>
+                <div class="gantt-track"><div class="gantt-bar" style="left:45%;width:20%;background:linear-gradient(90deg,#3b82f6,#6366f1)">25d</div></div>
+                <span class="gantt-dur">25d</span>
+              </div>
+              <div class="gantt-row">
+                <span class="gantt-label">Revestimientos</span>
+                <div class="gantt-track"><div class="gantt-bar" style="left:60%;width:22%;background:linear-gradient(90deg,#10b981,#14b8a6)">28d</div></div>
+                <span class="gantt-dur">28d</span>
+              </div>
+              <div class="gantt-row">
+                <span class="gantt-label">Terminaciones</span>
+                <div class="gantt-track"><div class="gantt-bar" style="left:78%;width:18%;background:linear-gradient(90deg,#8b5cf6,#a855f7)">22d</div></div>
+                <span class="gantt-dur">22d</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: Resumen / PDF -->
+      <div class="slide">
+        <div class="slide-inner">
+          <div class="slide-bar">
+            <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+            <span class="slide-url">apudesk.cl/proyecto → Resumen</span>
+          </div>
+          <div class="slide-body">
+            <div class="resumen-header">
+              <span class="resumen-title">Resumen del Proyecto</span>
+              <div class="pdf-btn">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Exportar PDF
+              </div>
+            </div>
+            <div class="resumen-cards">
+              <div class="resumen-card"><div class="resumen-card-label">Costo Directo</div><div class="resumen-card-val" style="color:#818cf8">$142.8M</div></div>
+              <div class="resumen-card"><div class="resumen-card-label">Con IVA (19%)</div><div class="resumen-card-val" style="color:#a78bfa">$169.9M</div></div>
+              <div class="resumen-card"><div class="resumen-card-label">Partidas</div><div class="resumen-card-val" style="color:#60a5fa">48</div></div>
+            </div>
+            <div class="desglose">
+              <div class="desglose-row">
+                <span class="desglose-label">Mano de obra</span>
+                <div class="desglose-bar"><div class="desglose-fill" style="width:38%;background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div></div>
+                <span class="desglose-val">$54.3M (38%)</span>
+              </div>
+              <div class="desglose-row">
+                <span class="desglose-label">Materiales</span>
+                <div class="desglose-bar"><div class="desglose-fill" style="width:52%;background:linear-gradient(90deg,#3b82f6,#6366f1)"></div></div>
+                <span class="desglose-val">$74.3M (52%)</span>
+              </div>
+              <div class="desglose-row">
+                <span class="desglose-label">Herramientas</span>
+                <div class="desglose-bar"><div class="desglose-fill" style="width:6%;background:linear-gradient(90deg,#f59e0b,#f97316)"></div></div>
+                <span class="desglose-val">$8.6M (6%)</span>
+              </div>
+              <div class="desglose-row">
+                <span class="desglose-label">Leyes sociales</span>
+                <div class="desglose-bar"><div class="desglose-fill" style="width:4%;background:linear-gradient(90deg,#ec4899,#f472b6)"></div></div>
+                <span class="desglose-val">$5.6M (4%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Overlays -->
+    <div class="overlay"></div>
+    <div class="side-fade"></div>
+    <div class="top-glow"></div>
+
+    <!-- Contenido -->
+    <div class="hero-content">
+      <div class="badge"><span class="badge-dot"></span> Potenciado con Inteligencia Artificial</div>
+      <h1>
+        Optimiza tus proyectos<br/>
+        <span class="gradient">de construcción</span><br/>
+        con inteligencia artificial
+      </h1>
+      <p class="subtitle">
+        Automatiza cálculos, análisis y reportes técnicos en segundos.<br/>
+        Desde APUs hasta carta Gantt, todo en un solo lugar.
+      </p>
+      <div class="btn-group">
+        <button class="btn-primary">Entrar al sistema &nbsp;→</button>
+        <button class="btn-secondary">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          Ver demo
+        </button>
+      </div>
+    </div>
+
+    <!-- Dots indicadores -->
+    <div class="slide-dots">
+      <div class="slide-dot"></div>
+      <div class="slide-dot"></div>
+      <div class="slide-dot"></div>
+      <div class="slide-dot"></div>
+    </div>
+
+    <!-- Scroll -->
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      Desplaza para ver más
+    </div>
+
+  </section>
+
+</body>
+</html>

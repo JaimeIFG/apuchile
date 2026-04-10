@@ -469,6 +469,29 @@ export default function Hero() {
         </div>
       </section>
 
+      {/* ── APP MÓVIL ─────────────────────────────────────────────────────── */}
+      <section style={{ background: "#f1f5f9", paddingTop: "64px", paddingBottom: "64px" }}>
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-4"
+              style={{ background: "#dcfce7", color: "#16a34a" }}>
+              📱 Disponible en Android
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: "#0f172a" }}>
+              APUdesk también en tu celular
+            </h2>
+            <p className="text-base mb-6" style={{ color: "#64748b", maxWidth: "560px", margin: "0 auto 24px" }}>
+              Lleva el control de tus obras desde cualquier lugar. Registra avances, sube fotos y gestiona tu bitácora directo desde tu teléfono Android. La versión para iOS estará disponible próximamente.
+            </p>
+            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-xl text-sm font-semibold"
+              style={{ background: "#0f172a", color: "#ffffff" }}>
+              <span>🤖</span>
+              <span>Android — Próximamente disponible para descarga</span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── CARACTERÍSTICAS ───────────────────────────────────────────────── */}
       <section id="caracteristicas" style={{ background: "#ffffff", paddingTop: "96px", paddingBottom: "96px" }}>
         <div className="max-w-6xl mx-auto px-6">
