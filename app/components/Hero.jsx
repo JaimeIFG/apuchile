@@ -336,6 +336,30 @@ export default function Hero() {
           </>
         )}
 
+        {/* ── AppDemo de fondo (detrás del texto) ── */}
+        <div
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          style={{ zIndex: 2 }}
+          aria-hidden
+        >
+          {/* Escala y centra la demo en el fondo */}
+          <div style={{
+            position: "absolute",
+            top: "50%", left: "50%",
+            transform: "translate(-50%, -45%) scale(1.05)",
+            width: "min(900px, 95vw)",
+            opacity: 0.18,
+            filter: "blur(0.5px)",
+          }}>
+            <AppDemo autoplay={true} />
+          </div>
+          {/* Gradiente superior para fundir con el fondo */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to bottom, rgba(248,250,252,0.55) 0%, rgba(248,250,252,0.25) 40%, rgba(248,250,252,0.55) 80%, rgba(248,250,252,0.95) 100%)",
+          }} />
+        </div>
+
         {/* Gradiente animado suave */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
@@ -454,16 +478,6 @@ export default function Hero() {
             </motion.button>
           </motion.div>
 
-          {/* Demo animado de la app */}
-          <motion.div
-            variants={fadeUp} initial="hidden" animate="visible" custom={0.65}
-            className="mt-16 relative mx-auto max-w-4xl"
-          >
-            <div className="absolute -inset-4 rounded-2xl pointer-events-none" aria-hidden
-              style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.18) 0%, transparent 70%)", filter: "blur(30px)" }}
-            />
-            <AppDemo autoplay={true} />
-          </motion.div>
         </div>
       </section>
 
