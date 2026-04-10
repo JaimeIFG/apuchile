@@ -348,7 +348,7 @@ export default function Hero() {
             top: "50%", left: "50%",
             transform: "translate(-50%, -45%) scale(1.05)",
             width: "min(900px, 95vw)",
-            opacity: 0.18,
+            opacity: 0.35,
             filter: "blur(0.5px)",
           }}>
             <AppDemo autoplay={true} />
@@ -356,7 +356,7 @@ export default function Hero() {
           {/* Gradiente superior para fundir con el fondo */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "linear-gradient(to bottom, rgba(248,250,252,0.55) 0%, rgba(248,250,252,0.25) 40%, rgba(248,250,252,0.55) 80%, rgba(248,250,252,0.95) 100%)",
+            background: "linear-gradient(to bottom, rgba(248,250,252,0.35) 0%, rgba(248,250,252,0.10) 40%, rgba(248,250,252,0.35) 80%, rgba(248,250,252,0.90) 100%)",
           }} />
         </div>
 
