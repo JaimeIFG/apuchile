@@ -913,9 +913,11 @@ function Home() {
     });
 
     // ── Pie de firma ──
-    const firmaUrl    = proyectoMeta.firmaDigital  || "";
-    const firmaNombre = proyectoMeta.nombreFirmante || "";
-    const firmaCargo  = proyectoMeta.cargoFirmante  || "";
+    const firmaUrl      = proyectoMeta.firmaDigital   || "";
+    const firmaNombre   = proyectoMeta.nombreFirmante  || "";
+    const firmaRut      = proyectoMeta.rutFirmante     || "";
+    const firmaCargo    = proyectoMeta.cargoFirmante   || "";
+    const firmaContacto = proyectoMeta.contactoFirmante|| "";
     if (firmaNombre || firmaUrl) {
       const firmaY = doc.lastAutoTable.finalY + 18;
       const firmaX = ancho - 70;
@@ -937,17 +939,33 @@ function Home() {
           });
         } catch {}
       }
+      let lineaY = firmaY + 5;
       if (firmaNombre) {
         doc.setFontSize(8);
         doc.setFont("helvetica", "bold");
         doc.setTextColor(30, 30, 30);
-        doc.text(firmaNombre, firmaX + 28, firmaY + 5, { align: "center" });
+        doc.text(firmaNombre, firmaX + 28, lineaY, { align: "center" });
+        lineaY += 4.5;
+      }
+      if (firmaRut) {
+        doc.setFontSize(7);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(80, 80, 80);
+        doc.text(`RUT: ${firmaRut}`, firmaX + 28, lineaY, { align: "center" });
+        lineaY += 4;
       }
       if (firmaCargo) {
         doc.setFontSize(7);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(100, 100, 100);
-        doc.text(firmaCargo, firmaX + 28, firmaY + 10, { align: "center" });
+        doc.text(firmaCargo, firmaX + 28, lineaY, { align: "center" });
+        lineaY += 4;
+      }
+      if (firmaContacto) {
+        doc.setFontSize(7);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(120, 120, 120);
+        doc.text(firmaContacto, firmaX + 28, lineaY, { align: "center" });
       }
     }
 
@@ -1369,6 +1387,101 @@ function Home() {
               </div>
               <div className="mt-4 p-3 bg-amber-50 rounded-lg text-[11px] text-amber-700">
                 Con zona {Math.round(cfg.zona*100)}%: Maestro primera = {fmt(cfg.mo_m1*(1+cfg.zona))}/hr · Ayudante = {fmt(cfg.mo_ay*(1+cfg.zona))}/hr
+              </div>
+            </div>
+
+            {/* ── Logo del presupuesto ── */}
+            <div className="bg-white border border-gray-200 rounded-xl p-5 mt-4 anim-fade-up delay-150">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Logo del presupuesto</div>
+              <div className="flex items-center gap-4">
+                {proyectoMeta.logoEmpresa
+                  ? <img src={proyectoMeta.logoEmpresa} alt="logo" className="h-14 w-auto max-w-[140px] object-contain rounded-lg border border-gray-200 bg-gray-50 px-2"/>
+                  : <div className="h-14 w-28 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-300 text-xs">Sin logo</div>
+                }
+                <div className="flex flex-col gap-2">
+                  <label className="cursor-pointer text-xs text-indigo-600 border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors inline-flex items-center gap-1.5">
+                    🖼️ {proyectoMeta.logoEmpresa ? "Cambiar logo" : "Subir logo"}
+                    <input type="file" accept="image/*" className="hidden" onChange={e => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      if (file.size > 2 * 1024 * 1024) { alert("Máximo 2MB"); return; }
+                      const reader = new FileReader();
+                      reader.onload = ev => setProyectoMeta(m => ({ ...m, logoEmpresa: ev.target.result }));
+                      reader.readAsDataURL(file);
+                    }}/>
+                  </label>
+                  {proyectoMeta.logoEmpresa && (
+                    <button onClick={() => setProyectoMeta(m => ({ ...m, logoEmpresa: "" }))}
+                      className="text-xs text-red-400 hover:text-red-600 transition-colors text-left">
+                      Quitar logo
+                    </button>
+                  )}
+                  <p className="text-[10px] text-gray-400">PNG o JPG · máx. 2MB · aparece en el PDF</p>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Pie de firma ── */}
+            <div className="bg-white border border-gray-200 rounded-xl p-5 mt-4 anim-fade-up delay-200">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Pie de firma del presupuesto</div>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">Nombre firmante</label>
+                  <input type="text" value={proyectoMeta.nombreFirmante || ""} placeholder="Ej: Juan Pérez González"
+                    onChange={e => setProyectoMeta(m => ({ ...m, nombreFirmante: e.target.value }))}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400"/>
+                </div>
+                <div>
+                  <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">RUT</label>
+                  <input type="text" value={proyectoMeta.rutFirmante || ""} placeholder="Ej: 12.345.678-9"
+                    onChange={e => setProyectoMeta(m => ({ ...m, rutFirmante: e.target.value }))}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400"/>
+                </div>
+                <div>
+                  <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">Cargo / Título</label>
+                  <input type="text" value={proyectoMeta.cargoFirmante || ""} placeholder="Ej: Ingeniero Civil · Jefe de Proyecto"
+                    onChange={e => setProyectoMeta(m => ({ ...m, cargoFirmante: e.target.value }))}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400"/>
+                </div>
+                <div>
+                  <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">Email / Teléfono (opcional)</label>
+                  <input type="text" value={proyectoMeta.contactoFirmante || ""} placeholder="Ej: jperez@empresa.cl"
+                    onChange={e => setProyectoMeta(m => ({ ...m, contactoFirmante: e.target.value }))}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-400"/>
+                </div>
+              </div>
+              {/* Firma digitalizada */}
+              <div className="border-t border-gray-100 pt-4">
+                <label className="text-[11px] text-gray-400 uppercase tracking-wider block mb-3">Firma digitalizada (imagen)</label>
+                <div className="flex items-center gap-4">
+                  {proyectoMeta.firmaDigital
+                    ? <img src={proyectoMeta.firmaDigital} alt="firma" className="h-16 w-auto max-w-[180px] object-contain rounded-lg border border-gray-200 bg-white"/>
+                    : <div className="h-16 w-40 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-300 text-xs">Sin firma</div>
+                  }
+                  <div className="flex flex-col gap-2">
+                    <label className="cursor-pointer text-xs text-indigo-600 border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors inline-flex items-center gap-1.5">
+                      ✍️ {proyectoMeta.firmaDigital ? "Cambiar firma" : "Subir firma"}
+                      <input type="file" accept="image/*" className="hidden" onChange={e => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        if (file.size > 2 * 1024 * 1024) { alert("Máximo 2MB"); return; }
+                        const reader = new FileReader();
+                        reader.onload = ev => setProyectoMeta(m => ({ ...m, firmaDigital: ev.target.result }));
+                        reader.readAsDataURL(file);
+                      }}/>
+                    </label>
+                    {proyectoMeta.firmaDigital && (
+                      <button onClick={() => setProyectoMeta(m => ({ ...m, firmaDigital: "" }))}
+                        className="text-xs text-red-400 hover:text-red-600 transition-colors text-left">
+                        Quitar firma
+                      </button>
+                    )}
+                    <p className="text-[10px] text-gray-400">PNG con fondo transparente · máx. 2MB</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 p-3 bg-indigo-50 rounded-lg text-[11px] text-indigo-600 flex items-center gap-2">
+                <span>💾</span> Los datos se guardan automáticamente y aparecen al exportar el PDF
               </div>
             </div>
           </div>
@@ -1978,9 +2091,11 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
     fechaTermino:  meta.fechaTermino  || "",
     responsable:   meta.responsable   || "",
     logoEmpresa:   meta.logoEmpresa   || "",
-    firmaDigital:  meta.firmaDigital  || "",
-    nombreFirmante:meta.nombreFirmante|| "",
-    cargoFirmante: meta.cargoFirmante || "",
+    firmaDigital:    meta.firmaDigital    || "",
+    nombreFirmante:  meta.nombreFirmante  || "",
+    rutFirmante:     meta.rutFirmante     || "",
+    cargoFirmante:   meta.cargoFirmante   || "",
+    contactoFirmante:meta.contactoFirmante|| "",
   });
 
   const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -2015,9 +2130,11 @@ function EditarProyectoModal({ nombre, meta, onGuardar, onCerrar }) {
       fechaTermino: form.fechaTermino,
       responsable:  form.responsable,
       logoEmpresa:  form.logoEmpresa,
-      firmaDigital: form.firmaDigital,
-      nombreFirmante: form.nombreFirmante,
-      cargoFirmante: form.cargoFirmante,
+      firmaDigital:     form.firmaDigital,
+      nombreFirmante:   form.nombreFirmante,
+      rutFirmante:      form.rutFirmante,
+      cargoFirmante:    form.cargoFirmante,
+      contactoFirmante: form.contactoFirmante,
       zona:         regionInfo ? regionInfo.zona : meta.zona ?? 0,
       diasCorridos: dias,
       _cfg:         meta._cfg,
