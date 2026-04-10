@@ -8,6 +8,7 @@ import LicitacionesTicker from "../components/LicitacionesTicker";
 import LoadingOverlay from "../components/LoadingOverlay";
 import SpotlightTour from "../components/SpotlightTour";
 import { diasCorridos } from "../lib/utils";
+import { useTheme } from "../components/ThemeProvider";
 
 const REGIONES = [
   { label: "Región Metropolitana", zona: 0 },
@@ -97,6 +98,12 @@ export default function Dashboard() {
   const [subiendoLogoEmpresa, setSubiendoLogoEmpresa] = useState(false);
   const [logoEmpresaUrl, setLogoEmpresaUrl] = useState(null);
   const [cambioPassword, setCambioPassword] = useState({ email: "", enviado: false, cargando: false });
+
+  // Dark mode
+  const { dark, toggle: toggleTheme } = useTheme();
+
+  // Mobile sidebar
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -430,9 +437,14 @@ export default function Dashboard() {
 
       <SpotlightTour pasos={TOUR_PASOS_DASHBOARD} storageKey="apudesk_tour_dashboard_v1" />
 
+      {/* Mobile sidebar overlay */}
+      {mobileSidebarOpen && (
+        <div className="fixed inset-0 z-40 bg-black/40 md:hidden" onClick={() => setMobileSidebarOpen(false)} />
+      )}
+
       {/* Sidebar izquierdo */}
       <aside style={{ width: sidebarAbierto ? "256px" : "72px", transition: "width 0.3s ease" }}
-        className="bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen relative overflow-hidden">
+        className={`bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen relative overflow-hidden ${mobileSidebarOpen ? "mobile-sidebar-open" : "mobile-sidebar-hidden"} md:transform-none md:position-relative md:h-auto`}>
 
         {/* Botón toggle - centrado verticalmente */}
         <button onClick={() => setSidebarAbierto(a => !a)}
@@ -574,10 +586,21 @@ export default function Dashboard() {
       </aside>
 
       {/* Contenido principal */}
-      <div className="flex-1 overflow-y-auto flex flex-col">
+      <div className="flex-1 overflow-y-auto flex flex-col pb-16 md:pb-0">
+        {/* Mobile top bar with hamburger */}
+        <div className="flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-100 md:hidden">
+          <button onClick={() => setMobileSidebarOpen(o => !o)}
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 4, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center" }}
+            aria-label="Abrir menú">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2.2" strokeLinecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <span className="text-base font-bold text-indigo-800">APU<span className="text-indigo-500">chile</span></span>
+        </div>
         {/* Ticker licitaciones */}
         <LicitacionesTicker />
-        <main className="max-w-4xl mx-auto px-8 py-6 flex-1 w-full">
+        <main className="max-w-4xl mx-auto px-4 md:px-8 py-6 flex-1 w-full">
 
           {/* ── Header card ── */}
           <div className="rounded-2xl overflow-hidden anim-scale-in mb-4"
@@ -1302,12 +1325,29 @@ export default function Dashboard() {
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-xs font-medium text-gray-700">Modo oscuro</p>
-                          <p className="text-[11px] text-gray-400">Próximamente disponible</p>
+                          <p className="text-[11px] text-gray-400">Cambia la apariencia de APUdesk</p>
                         </div>
-                        <button disabled
-                          className="opacity-40 cursor-not-allowed"
-                          style={{ width: 40, height: 22, borderRadius: 11, background: "#d1d5db", position: "relative" }}>
-                          <span style={{ position: "absolute", width: 18, height: 18, top: 2, left: 2, background: "#fff", borderRadius: "50%", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+                        <button
+                          onClick={() => {
+                            const next = !configForm.temaOscuro;
+                            setConfigForm(f => ({ ...f, temaOscuro: next }));
+                            toggleTheme(next);
+                          }}
+                          className="relative transition-colors duration-200"
+                          style={{
+                            width: 40, height: 22, borderRadius: 11,
+                            background: configForm.temaOscuro ? "#6366f1" : "#d1d5db",
+                            border: "none", cursor: "pointer", padding: 0,
+                          }}
+                          aria-label="Activar modo oscuro"
+                        >
+                          <span style={{
+                            position: "absolute", width: 18, height: 18, top: 2,
+                            left: configForm.temaOscuro ? 20 : 2,
+                            background: "#fff", borderRadius: "50%",
+                            boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                            transition: "left 0.2s ease",
+                          }} />
                         </button>
                       </div>
                     </div>
@@ -1468,6 +1508,25 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* ── Mobile bottom nav ── */}
+      <nav className="mobile-bottom-nav">
+        {[
+          { icon: "🏠", label: "Inicio",      action: () => {} },
+          { icon: "📂", label: "Proyectos",   action: () => setModalProyectos(true) },
+          { icon: "🏗️", label: "Obras",       action: () => router.push("/obras") },
+          { icon: "⚙️", label: "Config",      action: () => { setModalConfig(true); setConfigTab("cuenta"); } },
+        ].map((item, i) => (
+          <button key={i} onClick={item.action}
+            style={{ flex: 1, background: "none", border: "none", cursor: "pointer",
+              display: "flex", flexDirection: "column", alignItems: "center",
+              justifyContent: "center", gap: 2, padding: "8px 0",
+              color: "#6366f1", fontSize: 10, fontWeight: 600 }}>
+            <span style={{ fontSize: 20 }}>{item.icon}</span>
+            {item.label}
+          </button>
+        ))}
+      </nav>
     </div>
   );
 }

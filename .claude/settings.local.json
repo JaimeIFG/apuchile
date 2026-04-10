@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs grep:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node -e \"const fs=require\\(''fs''\\);const logs=JSON.parse\\(fs.readFileSync\\(''C:/Users/jaimi/.claude/projects/C--Users-jaimi-Documents-apuchile--claude-worktrees-silly-satoshi/081327c8-d01e-4190-93d1-a91063bc9d1c/tool-results/mcp-Claude_Preview-preview_console_logs-1775775411668.txt'',''utf8''\\)\\);const errors=logs.filter\\(l=>l.type===''error''||/error/i.test\\(l.text\\)\\);console.log\\(JSON.stringify\\(errors.slice\\(-15\\),null,2\\)\\)\")",
+      "Bash(node -e \"const fs=require\\(''fs''\\);const logs=JSON.parse\\(fs.readFileSync\\(''C:/Users/jaimi/.claude/projects/C--Users-jaimi-Documents-apuchile--claude-worktrees-silly-satoshi/081327c8-d01e-4190-93d1-a91063bc9d1c/tool-results/mcp-Claude_Preview-preview_console_logs-1775775411668.txt'',''utf8''\\)\\);const errors=logs.filter\\(l=>l.type===''error''&&\\(l.text||''''\\).includes\\(''proyecto''\\)\\);console.log\\(JSON.stringify\\(errors.slice\\(-10\\),null,2\\)\\)\")",
+      "Bash(npx next:*)"
+    ]
+  }
+}
