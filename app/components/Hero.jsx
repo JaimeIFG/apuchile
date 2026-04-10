@@ -336,30 +336,6 @@ export default function Hero() {
           </>
         )}
 
-        {/* ── AppDemo de fondo (detrás del texto) ── */}
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{ zIndex: 2 }}
-          aria-hidden
-        >
-          {/* Escala y centra la demo en el fondo */}
-          <div style={{
-            position: "absolute",
-            top: "50%", left: "50%",
-            transform: "translate(-50%, -45%) scale(1.05)",
-            width: "min(900px, 95vw)",
-            opacity: 0.35,
-            filter: "blur(0.5px)",
-          }}>
-            <AppDemo autoplay={true} />
-          </div>
-          {/* Gradiente superior para fundir con el fondo */}
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(to bottom, rgba(248,250,252,0.35) 0%, rgba(248,250,252,0.10) 40%, rgba(248,250,252,0.35) 80%, rgba(248,250,252,0.90) 100%)",
-          }} />
-        </div>
-
         {/* Gradiente animado suave */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
@@ -478,6 +454,18 @@ export default function Hero() {
             </motion.button>
           </motion.div>
 
+        </div>
+      </section>
+
+      {/* ── Demo animada ───────────────────────────────────────────────────── */}
+      <section style={{ background: "#f8fafc", paddingTop: "48px", paddingBottom: "64px" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div
+            variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 24px 80px rgba(99,102,241,0.12), 0 8px 32px rgba(0,0,0,0.08)", border: "1px solid rgba(99,102,241,0.12)" }}
+          >
+            <AppDemo autoplay={true} showControls={true} />
+          </motion.div>
         </div>
       </section>
 
