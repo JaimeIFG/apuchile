@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import AppDemo from "./AppDemo";
 
 // ── URL del video de demo (pon aquí tu link de YouTube o URL directa de video) ──
 // Para YouTube: "https://www.youtube.com/embed/TU_ID_VIDEO?autoplay=1&mute=1&loop=1&playlist=TU_ID_VIDEO&controls=0&rel=0"
@@ -286,13 +287,10 @@ function ModalVideo({ onClose }) {
             <video src={VIDEO_DEMO_URL} controls autoPlay className="w-full" style={{ maxHeight: "80vh" }} />
           )
         ) : (
-          /* Placeholder cuando no hay video */
-          <div className="flex flex-col items-center justify-center py-20 px-8 text-center" style={{ background: "#0f172a" }}>
-            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: "rgba(99,102,241,0.2)" }}>
-              <svg className="w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-            </div>
-            <p className="text-white text-lg font-semibold mb-2">Video demo próximamente</p>
-            <p className="text-slate-400 text-sm">Agrega tu URL de YouTube o video en <code className="text-indigo-400">VIDEO_DEMO_URL</code></p>
+          /* Demo animada cuando no hay video real */
+          <div style={{ background: "#0f172a", padding: "24px" }}>
+            <p className="text-center text-xs font-semibold mb-4" style={{ color: "#94a3b8", letterSpacing: "0.1em" }}>TOUR INTERACTIVO · APUdesk</p>
+            <AppDemo autoplay={true} showControls={true} />
           </div>
         )}
       </motion.div>
@@ -456,62 +454,15 @@ export default function Hero() {
             </motion.button>
           </motion.div>
 
-          {/* Preview app */}
+          {/* Demo animado de la app */}
           <motion.div
             variants={fadeUp} initial="hidden" animate="visible" custom={0.65}
-            className="mt-20 relative mx-auto max-w-4xl"
+            className="mt-16 relative mx-auto max-w-4xl"
           >
             <div className="absolute -inset-4 rounded-2xl pointer-events-none" aria-hidden
               style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.18) 0%, transparent 70%)", filter: "blur(30px)" }}
             />
-            <div className="relative rounded-2xl overflow-hidden"
-              style={{ background: "#ffffff", border: "1px solid rgba(99,102,241,0.12)", boxShadow: "0 2px 4px rgba(0,0,0,0.04), 0 20px 60px rgba(99,102,241,0.12), 0 0 0 1px rgba(99,102,241,0.06)" }}
-            >
-              {/* Barra título */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b" style={{ background: "#f8fafc", borderColor: "#e2e8f0" }}>
-                <span className="w-3 h-3 rounded-full bg-red-400" />
-                <span className="w-3 h-3 rounded-full bg-yellow-400" />
-                <span className="w-3 h-3 rounded-full bg-green-400" />
-                <span className="ml-4 flex-1 h-6 rounded-md text-xs flex items-center px-3"
-                  style={{ background: "#e2e8f0", color: "#94a3b8", maxWidth: 240 }}>
-                  apudesk.vercel.app/dashboard
-                </span>
-              </div>
-              {/* Dashboard simulado */}
-              <div className="p-6 grid grid-cols-3 gap-4" style={{ background: "#f8fafc" }}>
-                {[
-                  { label: "Costo Directo", value: "$142.8M", color: "#6366f1" },
-                  { label: "Partidas",       value: "38",      color: "#8b5cf6" },
-                  { label: "Avance",         value: "67%",     color: "#10b981" },
-                ].map((stat) => (
-                  <div key={stat.label} className="rounded-xl p-4 bg-white" style={{ border: "1px solid #e2e8f0", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
-                    <p className="text-xs mb-1" style={{ color: "#94a3b8" }}>{stat.label}</p>
-                    <p className="text-xl font-bold" style={{ color: stat.color }}>{stat.value}</p>
-                  </div>
-                ))}
-                <div className="col-span-3 rounded-xl p-4 bg-white" style={{ border: "1px solid #e2e8f0", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
-                  <p className="text-xs mb-3" style={{ color: "#94a3b8" }}>Desglose por partida</p>
-                  <div className="space-y-2">
-                    {[
-                      { name: "Obras civiles",  pct: 78, color: "#6366f1" },
-                      { name: "Instalaciones",   pct: 54, color: "#8b5cf6" },
-                      { name: "Revestimientos",  pct: 41, color: "#a855f7" },
-                      { name: "Terminaciones",   pct: 22, color: "#10b981" },
-                    ].map((row) => (
-                      <div key={row.name} className="flex items-center gap-3">
-                        <span className="text-xs w-28 shrink-0" style={{ color: "#64748b" }}>{row.name}</span>
-                        <div className="flex-1 h-1.5 rounded-full" style={{ background: "#e2e8f0" }}>
-                          <motion.div className="h-full rounded-full" style={{ background: row.color }}
-                            initial={{ width: 0 }} animate={{ width: `${row.pct}%` }}
-                            transition={{ duration: 1, delay: 1, ease: "easeOut" }} />
-                        </div>
-                        <span className="text-xs w-8 text-right" style={{ color: "#64748b" }}>{row.pct}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <AppDemo autoplay={true} />
           </motion.div>
         </div>
       </section>
