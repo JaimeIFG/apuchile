@@ -169,3 +169,186 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Dark mode variables ── */
+:root {
+  --dm-bg: #f8fafc;
+  --dm-bg2: #ffffff;
+  --dm-bg3: #f1f5f9;
+  --dm-border: #e2e8f0;
+  --dm-text: #0f172a;
+  --dm-text2: #475569;
+  --dm-text3: #94a3b8;
+  --dm-card: #ffffff;
+  --dm-sidebar: #ffffff;
+  --dm-header: #f8fafc;
+  --dm-input-bg: #ffffff;
+  --dm-input-border: #e2e8f0;
+  --dm-hover: rgba(99,102,241,0.06);
+  --dm-shadow: rgba(0,0,0,0.06);
+}
+
+html.dark {
+  --dm-bg: #0f172a;
+  --dm-bg2: #1e293b;
+  --dm-bg3: #1e293b;
+  --dm-border: #334155;
+  --dm-text: #f1f5f9;
+  --dm-text2: #cbd5e1;
+  --dm-text3: #64748b;
+  --dm-card: #1e293b;
+  --dm-sidebar: #1e293b;
+  --dm-header: #0f172a;
+  --dm-input-bg: #1e293b;
+  --dm-input-border: #334155;
+  --dm-hover: rgba(99,102,241,0.12);
+  --dm-shadow: rgba(0,0,0,0.3);
+}
+
+/* Dark mode overrides for common patterns */
+html.dark body {
+  background: var(--dm-bg);
+  color: var(--dm-text);
+}
+
+/* Sidebar */
+html.dark aside {
+  background: var(--dm-sidebar) !important;
+  border-color: var(--dm-border) !important;
+}
+
+/* Cards y contenedores blancos */
+html.dark .bg-white {
+  background: var(--dm-card) !important;
+}
+html.dark .bg-gray-50 {
+  background: var(--dm-bg3) !important;
+}
+html.dark .bg-gray-100 {
+  background: #1e293b !important;
+}
+
+/* Bordes */
+html.dark .border-gray-100,
+html.dark .border-gray-200 {
+  border-color: var(--dm-border) !important;
+}
+
+/* Textos */
+html.dark .text-gray-800,
+html.dark .text-gray-900 {
+  color: var(--dm-text) !important;
+}
+html.dark .text-gray-600,
+html.dark .text-gray-700 {
+  color: var(--dm-text2) !important;
+}
+html.dark .text-gray-400,
+html.dark .text-gray-500 {
+  color: var(--dm-text3) !important;
+}
+
+/* Inputs */
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+html.dark select,
+html.dark textarea {
+  background: var(--dm-input-bg) !important;
+  border-color: var(--dm-input-border) !important;
+  color: var(--dm-text) !important;
+}
+
+/* Hover states */
+html.dark .hover\:bg-gray-50:hover {
+  background: #334155 !important;
+}
+html.dark .hover\:bg-gray-100:hover {
+  background: #334155 !important;
+}
+
+/* Tabla */
+html.dark table {
+  background: var(--dm-card);
+}
+html.dark th {
+  background: #1e293b !important;
+  color: var(--dm-text2) !important;
+  border-color: var(--dm-border) !important;
+}
+html.dark td {
+  border-color: var(--dm-border) !important;
+  color: var(--dm-text) !important;
+}
+html.dark tr:hover td {
+  background: #334155 !important;
+}
+
+/* Modal overlays - mantener oscuro */
+html.dark .fixed.inset-0:not([aria-hidden]) > div {
+  background: var(--dm-card) !important;
+}
+
+/* Scrollbar dark */
+html.dark ::-webkit-scrollbar-track { background: #1e293b; }
+html.dark ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+html.dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  /* Sidebar oculto en mobile - se controla via JS */
+  .mobile-sidebar-hidden {
+    transform: translateX(-100%) !important;
+    position: fixed !important;
+    z-index: 50 !important;
+    height: 100vh !important;
+  }
+  .mobile-sidebar-open {
+    transform: translateX(0) !important;
+    position: fixed !important;
+    z-index: 50 !important;
+    height: 100vh !important;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15) !important;
+  }
+  /* Bottom nav mobile */
+  .mobile-bottom-nav {
+    display: flex !important;
+  }
+  /* Main content full width en mobile */
+  .mobile-full-width {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+  /* Tablas en mobile - scroll horizontal */
+  .mobile-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Grid responsive */
+  .mobile-grid-1 {
+    grid-template-columns: 1fr !important;
+  }
+  /* Texto más pequeño en mobile */
+  .mobile-text-sm {
+    font-size: 12px !important;
+  }
+}
+
+/* Bottom nav - oculto en desktop */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--dm-card);
+  border-top: 1px solid var(--dm-border);
+  z-index: 40;
+  align-items: stretch;
+  justify-content: space-around;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+}
+
+html.dark .mobile-bottom-nav {
+  background: var(--dm-sidebar);
+  border-color: var(--dm-border);
+}
