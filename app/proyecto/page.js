@@ -1431,15 +1431,15 @@ function Home() {
                           return (
                             <React.Fragment key={p.id}>
                               <tr
-                                draggable
-                                onDragStart={() => { dragItem.current = globalIdx; }}
                                 onDragEnter={() => { dragOverItem.current = globalIdx; setDragOverIdx(globalIdx); }}
-                                onDragEnd={handleDragSort}
                                 onDragOver={(e) => e.preventDefault()}
-                                className={`border-b border-gray-100 cursor-pointer select-none transition-colors ${dragOverIdx === globalIdx ? "bg-indigo-100 border-indigo-400 border-2" : expanded ? "bg-indigo-50" : "hover:bg-gray-50"}`}
+                                className={`border-b border-gray-100 cursor-pointer transition-colors ${dragOverIdx === globalIdx ? "bg-indigo-100 border-indigo-400 border-2" : expanded ? "bg-indigo-50" : "hover:bg-gray-50"}`}
                                 onClick={(e) => { if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON") setExpandedResumen(expanded ? null : p.id); }}>
-                                {/* Drag handle */}
-                                <td className="px-2 py-3 text-center text-gray-300 cursor-grab active:cursor-grabbing select-none">⠿</td>
+                                {/* Drag handle — solo este td es draggable */}
+                                <td className="px-2 py-3 text-center text-gray-300 cursor-grab active:cursor-grabbing select-none"
+                                  draggable
+                                  onDragStart={() => { dragItem.current = globalIdx; }}
+                                  onDragEnd={handleDragSort}>⠿</td>
                                 <td className="px-3 py-3">
                                   <div className="text-[10px] text-gray-400 font-mono">{p.codigo}</div>
                                   <div className="text-gray-700 leading-snug flex items-center gap-1">

@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+
+// ── URL del video de demo (pon aquí tu link de YouTube o URL directa de video) ──
+// Para YouTube: "https://www.youtube.com/embed/TU_ID_VIDEO?autoplay=1&mute=1&loop=1&playlist=TU_ID_VIDEO&controls=0&rel=0"
+// Para video directo: "/demo.mp4" o URL pública del archivo
+const VIDEO_DEMO_URL = ""; // ← Pega aquí el link de YouTube embed o URL del video
+const VIDEO_FONDO_URL = ""; // ← Pega aquí el link directo del video de fondo (mp4)
 
 // ── Variantes de animación ────────────────────────────────────────────────────
 const fadeUp = {
@@ -224,17 +230,114 @@ const FEATURES = [
   },
 ];
 
+// ── Modal de video demo ───────────────────────────────────────────────────────
+function ModalVideo({ onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  const isYoutube = VIDEO_DEMO_URL.includes("youtube.com") || VIDEO_DEMO_URL.includes("youtu.be");
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full max-w-4xl rounded-2xl overflow-hidden"
+        style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.1), 0 30px 80px rgba(0,0,0,0.6)" }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Botón cerrar */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
+          style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+          aria-label="Cerrar video"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        {VIDEO_DEMO_URL ? (
+          isYoutube ? (
+            <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+              <iframe
+                src={VIDEO_DEMO_URL.includes("autoplay") ? VIDEO_DEMO_URL : VIDEO_DEMO_URL + "?autoplay=1&rel=0"}
+                className="absolute inset-0 w-full h-full"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                title="Demo APUdesk"
+              />
+            </div>
+          ) : (
+            <video src={VIDEO_DEMO_URL} controls autoPlay className="w-full" style={{ maxHeight: "80vh" }} />
+          )
+        ) : (
+          /* Placeholder cuando no hay video */
+          <div className="flex flex-col items-center justify-center py-20 px-8 text-center" style={{ background: "#0f172a" }}>
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: "rgba(99,102,241,0.2)" }}>
+              <svg className="w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+            <p className="text-white text-lg font-semibold mb-2">Video demo próximamente</p>
+            <p className="text-slate-400 text-sm">Agrega tu URL de YouTube o video en <code className="text-indigo-400">VIDEO_DEMO_URL</code></p>
+          </div>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+}
+
 // ── Hero principal ────────────────────────────────────────────────────────────
 export default function Hero() {
+  const [modalAbierto, setModalAbierto] = useState(false);
+
   return (
     <div style={{ background: "#f8fafc", fontFamily: "'Inter', sans-serif" }}>
       <Navbar />
+
+      {/* Modal video demo */}
+      <AnimatePresence>
+        {modalAbierto && <ModalVideo onClose={() => setModalAbierto(false)} />}
+      </AnimatePresence>
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
         style={{ background: "linear-gradient(160deg, #f8fafc 0%, #f1f5f9 40%, #ede9fe 100%)" }}
       >
+        {/* ── Video de fondo (si existe VIDEO_FONDO_URL) ── */}
+        {VIDEO_FONDO_URL && (
+          <>
+            <video
+              autoPlay muted loop playsInline
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              style={{ zIndex: 0 }}
+              aria-hidden
+            >
+              <source src={VIDEO_FONDO_URL} type="video/mp4" />
+            </video>
+            {/* Overlay para mantener legibilidad del texto */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ zIndex: 1, background: "linear-gradient(160deg, rgba(248,250,252,0.82) 0%, rgba(241,245,249,0.78) 40%, rgba(237,233,254,0.80) 100%)" }}
+              aria-hidden
+            />
+          </>
+        )}
+
         {/* Gradiente animado suave */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
@@ -343,6 +446,8 @@ export default function Hero() {
               style={{ borderColor: "rgba(99,102,241,0.25)", background: "rgba(99,102,241,0.04)", color: "#6366f1" }}
               onMouseEnter={e => { e.currentTarget.style.background = "rgba(99,102,241,0.08)"; e.currentTarget.style.borderColor = "rgba(99,102,241,0.4)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "rgba(99,102,241,0.04)"; e.currentTarget.style.borderColor = "rgba(99,102,241,0.25)"; }}
+              onClick={() => setModalAbierto(true)}
+              aria-label="Ver demo de APUdesk"
             >
               <span className="flex items-center gap-2">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
