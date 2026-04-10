@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabase';
 import { useInactividad } from '../lib/useInactividad';
 import { useIndicadores } from '../lib/useIndicadores';
 import LoadingOverlay from '../components/LoadingOverlay';
+import OnboardingTour from '../components/OnboardingTour';
 import { getTemplatesParaProyecto } from '../data/eett_templates.js';
 import { diasCorridos } from '../lib/utils';
 
@@ -1058,6 +1059,7 @@ function Home() {
   return (
     <div className="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
       <LoadingOverlay visible={procesando} mensaje="Analizando documento..." />
+      <OnboardingTour onCambiarTab={setTab} />
 
       {/* ── Rail lateral ── */}
       <div className="w-[68px] bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-1 shrink-0 shadow-sm z-10">
