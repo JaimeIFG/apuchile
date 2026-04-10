@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
+import LoadingOverlay from "../components/LoadingOverlay";
+import SpotlightTour from "../components/SpotlightTour";
 
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
 
@@ -191,6 +193,16 @@ export default function ObrasPage() {
   return (
     <div style={{ minHeight:"100vh", background:"#f8fafc", fontFamily:"sans-serif" }}>
 
+      <LoadingOverlay visible={loading} mensaje="Cargando obras..." blur={false} />
+
+      <SpotlightTour storageKey="apudesk_tour_obras_v1" pasos={[
+        { titulo: "Proyectos en Ejecución", descripcion: "Aquí controlas todas tus obras en terreno. Puedes registrar estados, garantías, estados de pago y fechas contractuales. Te mostramos las secciones principales.", icono: "🏗️", targetId: null, posPanel: "center" },
+        { titulo: "Estadísticas de obras", descripcion: "En el encabezado ves el resumen de tus obras: cuántas están en ejecución, paralizadas o recepcionadas. Se actualiza automáticamente al cambiar los estados.", icono: "📊", targetId: "tour-obras-stats", posPanel: "bottom" },
+        { titulo: "Alertas automáticas", descripcion: "APUdesk detecta alertas críticas: garantías próximas a vencer, plazos contractuales y obras sin estado de pago reciente. Aparecen aquí en amarillo o rojo.", icono: "🚨", targetId: "tour-obras-alertas", posPanel: "bottom" },
+        { titulo: "Buscar y filtrar", descripcion: "Filtra tus obras por nombre, contratista o estado. Ideal cuando tienes muchos proyectos activos simultáneamente.", icono: "🔍", targetId: "tour-obras-filtros", posPanel: "bottom" },
+        { titulo: "Nueva obra", descripcion: "Usa este botón para registrar una nueva obra. Ingresa el nombre, mandante, fechas contractuales, monto y estado. Cada obra tiene su propio módulo de seguimiento.", icono: "➕", targetId: "tour-obras-nueva", posPanel: "bottom" },
+      ]} />
+
       <style>{`
         @keyframes shimmerPulse {
           0%,100% { opacity: 1; }
@@ -233,7 +245,7 @@ export default function ObrasPage() {
                 Control y seguimiento de obras en ejecución
               </p>
             </div>
-            <button onClick={() => setCreando(true)}
+            <button id="tour-obras-nueva" onClick={() => setCreando(true)}
               className={`btn-primary${mounted ? " anim-fade-up delay-100" : ""}`}
               style={{ background: "#fff", color: "#4338ca", border: "none", borderRadius: 12,
                 padding: "10px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer",
@@ -244,7 +256,7 @@ export default function ObrasPage() {
           </div>
 
           {/* Stats row */}
-          <div style={{ display: "flex", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
+          <div id="tour-obras-stats" style={{ display: "flex", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
             {[
               { label: "Total obras",   val: stats.total,         icon: "🏗️" },
               { label: "En ejecución",  val: stats.ejecucion,     icon: "⚙️" },
@@ -272,7 +284,7 @@ export default function ObrasPage() {
 
         {/* ── Panel de Alertas ── */}
         {alertas.length > 0 && (
-          <div className={mounted ? "anim-fade-up" : ""}
+          <div id="tour-obras-alertas" className={mounted ? "anim-fade-up" : ""}
             style={{ marginBottom: 20, border: "1.5px solid #fbbf24", borderRadius: 14,
               background: "#fffbeb", overflow: "hidden" }}>
             <button onClick={() => setAlertasCollapsed(p => !p)}
@@ -325,7 +337,7 @@ export default function ObrasPage() {
         )}
 
         {/* ── Filtros ── */}
-        <div className={mounted ? "anim-slide-down delay-100" : ""}
+        <div id="tour-obras-filtros" className={mounted ? "anim-slide-down delay-100" : ""}
           style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
           <input
             placeholder="Buscar por nombre o contratista..."
