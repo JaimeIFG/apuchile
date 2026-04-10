@@ -6,6 +6,7 @@ import { useInactividad } from "../lib/useInactividad";
 import { useIndicadores } from "../lib/useIndicadores";
 import LicitacionesTicker from "../components/LicitacionesTicker";
 import LoadingOverlay from "../components/LoadingOverlay";
+import SpotlightTour from "../components/SpotlightTour";
 import { diasCorridos } from "../lib/utils";
 
 const REGIONES = [
@@ -386,8 +387,48 @@ export default function Dashboard() {
     </div>
   );
 
+  const TOUR_PASOS_DASHBOARD = [
+    {
+      titulo: "¡Bienvenido a APUdesk!",
+      descripcion: "Este es tu panel principal. Aquí administras tus proyectos, ves indicadores en tiempo real y accedes a todas las herramientas. Te mostramos las secciones clave en segundos.",
+      icono: "👋",
+      targetId: null,
+      posPanel: "center",
+    },
+    {
+      titulo: "Tu perfil",
+      descripcion: "Aquí aparece tu nombre, profesión y foto. Haz clic en «Editar perfil» para actualizar tu información, subir una foto y personalizar tu cuenta.",
+      icono: "👤",
+      targetId: "tour-perfil",
+      posPanel: "right",
+    },
+    {
+      titulo: "Acciones principales",
+      descripcion: "Desde aquí puedes crear un nuevo proyecto, ver todos tus proyectos, acceder a Ejecución de Obras y configurar tu cuenta. El botón azul «Nuevo proyecto» es tu punto de partida.",
+      icono: "⚡",
+      targetId: "tour-acciones",
+      posPanel: "bottom",
+    },
+    {
+      titulo: "Tus proyectos",
+      descripcion: "Aquí aparecen todos tus presupuestos. Puedes buscarlos, ordenarlos y hacer clic en uno para abrirlo. También puedes duplicarlos o eliminarlos desde el menú de cada tarjeta.",
+      icono: "📂",
+      targetId: "mis-proyectos",
+      posPanel: "top",
+    },
+    {
+      titulo: "Unirse a un proyecto",
+      descripcion: "Si un colega te compartió un código de invitación, úsalo aquí para unirte a su proyecto como colaborador. Podrás ver y editar según el rol que te asignen.",
+      icono: "🔑",
+      targetId: "tour-unirse",
+      posPanel: "bottom",
+    },
+  ];
+
   return (
     <div className="min-h-screen flex bg-gray-50">
+
+      <SpotlightTour pasos={TOUR_PASOS_DASHBOARD} storageKey="apudesk_tour_dashboard_v1" />
 
       {/* Sidebar izquierdo */}
       <aside style={{ width: sidebarAbierto ? "256px" : "72px", transition: "width 0.3s ease" }}
@@ -410,7 +451,7 @@ export default function Dashboard() {
         </div>
 
         {/* Perfil */}
-        <div className="py-6 border-b border-gray-100 overflow-hidden">
+        <div id="tour-perfil" className="py-6 border-b border-gray-100 overflow-hidden">
           {/* Avatar — siempre visible con punto verde */}
           <div className="flex flex-col items-center px-3 mb-4">
             <div className="relative group mb-3">
@@ -600,7 +641,7 @@ export default function Dashboard() {
           </div>
 
           {/* ── Acciones principales ── */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div id="tour-acciones" className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[
               { icon:"＋", label:"Nuevo proyecto",  action:() => setCreando(true),
                 st:{background:"linear-gradient(135deg,#4338ca,#6366f1)", borderBottom:"3px solid #818cf8"}, txt:"#fff" },
@@ -871,7 +912,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-4 anim-fade-up delay-300">
               <h2 className="text-[14px] font-bold text-gray-800">Mis proyectos</h2>
               <div className="flex items-center gap-2">
-                <button onClick={() => { setModalCodigo(true); setCodigoError(""); setCodigoInput(""); }}
+                <button id="tour-unirse" onClick={() => { setModalCodigo(true); setCodigoError(""); setCodigoInput(""); }}
                   className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-lg btn-press hover:bg-indigo-100">
                   🔑 Unirse a proyecto
                 </button>

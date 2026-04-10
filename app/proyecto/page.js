@@ -7,7 +7,7 @@ import { supabase } from '../lib/supabase';
 import { useInactividad } from '../lib/useInactividad';
 import { useIndicadores } from '../lib/useIndicadores';
 import LoadingOverlay from '../components/LoadingOverlay';
-import OnboardingTour from '../components/OnboardingTour';
+import SpotlightTour from '../components/SpotlightTour';
 import { getTemplatesParaProyecto } from '../data/eett_templates.js';
 import { diasCorridos } from '../lib/utils';
 
@@ -1059,7 +1059,13 @@ function Home() {
   return (
     <div className="flex h-screen bg-gray-50 font-sans text-sm text-gray-800">
       <LoadingOverlay visible={procesando} mensaje="Analizando documento..." />
-      <OnboardingTour onCambiarTab={setTab} />
+      <SpotlightTour storageKey="apudesk_tour_proyecto_v1" pasos={[
+        { titulo: "Tu proyecto de presupuesto", descripcion: "Aquí construyes tu presupuesto APU. Usa el rail lateral para navegar entre las secciones. Te mostramos cada una en este tour.", icono: "📋", targetId: null, posPanel: "center" },
+        { titulo: "Biblioteca de APUs", descripcion: "Busca partidas por nombre o código y agrégalas a tu presupuesto con un clic. Filtra por familia o usa el buscador inteligente.", icono: "📚", targetId: "tour-tab-biblioteca", posPanel: "right" },
+        { titulo: "Presupuesto", descripcion: "Ve el resumen de todas tus partidas agrupadas por capítulo. Edita cantidades, reordena con arrastrar y exporta el PDF final.", icono: "📝", targetId: "tour-tab-resumen", posPanel: "right" },
+        { titulo: "Carta Gantt", descripcion: "Asigna plazos a cada partida y genera automáticamente tu carta Gantt para incluir en la propuesta técnica.", icono: "📅", targetId: "tour-tab-gantt", posPanel: "right" },
+        { titulo: "Configuración del proyecto", descripcion: "Define zona geográfica, IVA, Gastos Generales, Utilidad y valores de MO. También sube el logo y tu firma para el PDF.", icono: "⚙️", targetId: "tour-tab-config", posPanel: "right" },
+      ]} />
 
       {/* ── Rail lateral ── */}
       <div className="w-[68px] bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-1 shrink-0 shadow-sm z-10">
@@ -1068,7 +1074,7 @@ function Home() {
           <div className="text-[9px] text-gray-400 font-medium">chile</div>
         </div>
         {TABS_RAIL.map((t, i) => (
-          <button key={t.id} onClick={() => setTab(t.id)} title={t.label}
+          <button key={t.id} id={`tour-tab-${t.id}`} onClick={() => setTab(t.id)} title={t.label}
             style={{ animationDelay: `${i * 40}ms` }}
             className={`relative w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 rail-btn anim-fade-up ${tab === t.id ? "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200 shadow-sm" : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"}`}>
             <span className={`text-lg leading-none transition-transform duration-150 ${tab === t.id ? "scale-110" : "scale-100"}`}>{t.icon}</span>
