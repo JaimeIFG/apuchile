@@ -102,16 +102,25 @@ function getFase(apu) {
   return FASE_ORDEN[fam.substring(0,2)] || FASE_ORDEN[fam[0]] || 7;
 }
 
-// Caché de calcAPU: evita recalcular la misma partida+cfg en cada render
+// Caché de calcAPU: evita recalcular la misma partida+cfg en cada render (LRU 200 entradas)
 const _calcAPUCache = new Map();
+const _CACHE_MAX = 200;
 function calcAPU(apu, cfg) {
-  // Clave basada en insumos + overrides + cfg relevante
   const key = `${apu.id||apu.codigo||""}|${apu.precioOverride||""}|${JSON.stringify(apu.insumos||[])}|${cfg.zona}|${cfg.llss}|${cfg.herr}|${cfg.mo_m1}|${cfg.mo_m2}|${cfg.mo_ay}|${cfg.mo_inst}`;
-  if (_calcAPUCache.has(key)) return _calcAPUCache.get(key);
+  if (_calcAPUCache.has(key)) {
+    const val = _calcAPUCache.get(key);
+    // Mover al final (LRU refresh)
+    _calcAPUCache.delete(key);
+    _calcAPUCache.set(key, val);
+    return val;
+  }
   const result = _calcAPUImpl(apu, cfg);
-  // Limitar tamaño de caché para no acumular memoria indefinidamente
-  if (_calcAPUCache.size > 500) _calcAPUCache.clear();
   _calcAPUCache.set(key, result);
+  // Evictar las entradas más antiguas si excede el límite
+  if (_calcAPUCache.size > _CACHE_MAX) {
+    const firstKey = _calcAPUCache.keys().next().value;
+    _calcAPUCache.delete(firstKey);
+  }
   return result;
 }
 function _calcAPUImpl(apu, cfg) {
@@ -416,11 +425,15 @@ function Home() {
             table: "proyecto_colaboradores",
             filter: `proyecto_id=eq.${proyectoId}`,
           }, async () => {
-            const { data: colabs } = await supabase
-              .from("proyecto_colaboradores")
-              .select("*")
-              .eq("proyecto_id", proyectoId);
-            setColaboradores(colabs || []);
+            try {
+              const { data: colabs } = await supabase
+                .from("proyecto_colaboradores")
+                .select("*")
+                .eq("proyecto_id", proyectoId);
+              setColaboradores(colabs || []);
+            } catch (err) {
+              console.error("Error cargando colaboradores en realtime:", err);
+            }
           })
           .subscribe();
         setCanalColabs(canalColabs);
@@ -434,8 +447,12 @@ function Home() {
             table: "proyectos",
             filter: `id=eq.${proyectoId}`,
           }, (payload) => {
-            if (payload.new?.datos && ignorarRealtime.current === 0) {
-              setProyecto(payload.new.datos);
+            if (payload.new?.datos && ignorarRealtime.current <= 0) {
+              try {
+                setProyecto(payload.new.datos);
+              } catch (err) {
+                console.error("Error aplicando datos realtime:", err);
+              }
             }
           })
           .subscribe();
@@ -467,12 +484,15 @@ function Home() {
   // Cleanup canales al salir o al cambiar de proyecto
   useEffect(() => {
     return () => {
-      if (canalPresencia.current) supabase.removeChannel(canalPresencia.current);
+      if (canalPresencia.current) {
+        supabase.removeChannel(canalPresencia.current);
+        canalPresencia.current = null;
+      }
       if (canalChat)   supabase.removeChannel(canalChat);
       if (canalColabs) supabase.removeChannel(canalColabs);
       if (canalDatos)  supabase.removeChannel(canalDatos);
     };
-  }, [canalChat, canalColabs, canalDatos]);
+  }, [proyectoId, canalChat, canalColabs, canalDatos]);
 
   // Permisos derivados del rol
   const puedeEditar     = ["owner", "administrar", "editar"].includes(rolUsuario);
@@ -507,7 +527,11 @@ function Home() {
   };
 
   const eliminarColaborador = async (colabId) => {
-    await supabase.from("proyecto_colaboradores").delete().eq("id", colabId).eq("proyecto_id", proyectoId);
+    const { error } = await supabase.from("proyecto_colaboradores").delete().eq("id", colabId).eq("proyecto_id", proyectoId);
+    if (error) {
+      alert("Error al eliminar colaborador: " + error.message);
+      return;
+    }
     setColaboradores(prev => prev.filter(c => c.id !== colabId));
   };
 
@@ -603,7 +627,7 @@ function Home() {
     };
     window.addEventListener("beforeunload", guardarAhora);
     return () => window.removeEventListener("beforeunload", guardarAhora);
-  }, [proyectoId, userId, proyecto]);
+  }, [proyectoId, userId, proyecto, cfg, proyectoMeta]);
 
   const [famAbierta, setFamAbierta] = useState(null);
 

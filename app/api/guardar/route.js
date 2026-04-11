@@ -5,7 +5,9 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
-  if (!id) return NextResponse.json({ ok: false }, { status: 400 });
+  if (!id || typeof id !== "string" || id.length > 100 || !/^[a-zA-Z0-9\-]+$/.test(id)) {
+    return NextResponse.json({ ok: false, error: "ID de proyecto inválido" }, { status: 400 });
+  }
 
   const body = await request.json().catch(() => null);
   if (!body?.datos) return NextResponse.json({ ok: false }, { status: 400 });

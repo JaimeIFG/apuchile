@@ -62,18 +62,19 @@ export async function POST(req) {
     }
 
     // Verificar que no tenga ya 3 colaboradores (incluyendo dueño = 2 colaboradores más)
+    // Verificar también si ya es colaborador
     const { data: colabs } = await supabase
       .from("proyecto_colaboradores")
-      .select("id")
+      .select("id, email")
       .eq("proyecto_id", proyecto_id);
+
+    if ((colabs || []).some(c => c.email === email)) {
+      return Response.json({ error: "Este usuario ya es colaborador del proyecto" }, { status: 400 });
+    }
 
     if ((colabs?.length || 0) >= 2) {
       return Response.json({ error: "El proyecto ya tiene el máximo de 2 colaboradores (3 usuarios en total)" }, { status: 400 });
     }
-
-    // Generar código de 6 dígitos válido por 5 minutos
-    const codigo = generarCodigo();
-    const expires_at = new Date(Date.now() + 5 * 60 * 1000).toISOString();
 
     // Invalidar invitaciones previas al mismo email para este proyecto
     await supabase
@@ -82,6 +83,10 @@ export async function POST(req) {
       .eq("proyecto_id", proyecto_id)
       .eq("email", email)
       .eq("usado", false);
+
+    // Generar código de 8 caracteres válido por 5 minutos
+    const codigo = generarCodigo();
+    const expires_at = new Date(Date.now() + 5 * 60 * 1000).toISOString();
 
     // Guardar nueva invitación
     const { error: insertError } = await supabase

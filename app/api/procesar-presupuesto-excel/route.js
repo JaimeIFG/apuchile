@@ -57,7 +57,7 @@ export async function POST(req) {
       const s = String(v).replace(/\$/g, "").replace(/\s/g, "")
         .replace(/\.(?=\d{3})/g, "").replace(",", ".").trim();
       const n = parseFloat(s);
-      return isNaN(n) ? null : n;
+      return isNaN(n) || !isFinite(n) ? null : n;
     };
 
     // Columnas: A=item, B=partida, C=unidad, D=cantidad, E=valor_serviu, F=valor_unitario, G=valor_total

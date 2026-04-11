@@ -35,7 +35,7 @@ export async function POST(req) {
       const s = String(v).replace(/\$/g,"").replace(/\s/g,"")
         .replace(/\.(?=\d{3})/g,"").replace(",",".").trim();
       const n = parseFloat(s);
-      return isNaN(n) ? null : n;
+      return isNaN(n) || !isFinite(n) ? null : n;
     };
     const parseDate = v => {
       if (!v) return null;

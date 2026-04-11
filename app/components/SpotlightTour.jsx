@@ -18,7 +18,6 @@ export default function SpotlightTour({ pasos, storageKey, onFin }) {
   const [rect, setRect]       = useState(null); // BoundingRect del target
   const [panelPos, setPanelPos] = useState({ top: 0, left: 0 });
   const panelRef = useRef(null);
-  const rafRef   = useRef(null);
 
   // Mostrar solo si no se vio antes
   useEffect(() => {
