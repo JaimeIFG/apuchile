@@ -10,6 +10,9 @@ import LoadingOverlay from '../components/LoadingOverlay';
 import SpotlightTour from '../components/SpotlightTour';
 import { getTemplatesParaProyecto } from '../data/eett_templates.js';
 import { diasCorridos } from '../lib/utils';
+import Cubicaciones from '../components/Cubicaciones';
+import ComparadorOfertas from '../components/ComparadorOfertas';
+import LineaBase from '../components/LineaBase';
 
 // Factor IPC acumulado Chile 2017→2025 (INE)
 const IPC_2017_2025 = 1.65;
@@ -283,6 +286,10 @@ function Home() {
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
   const [dragOverIdx, setDragOverIdx] = useState(null);
+
+  // Cubicaciones, Comparador, Línea Base
+  const [cubicacionPartida, setCubicacionPartida] = useState(null); // partida activa para cubicación
+  const [mostrarComparador, setMostrarComparador] = useState(false);
 
   // Colaboración
   const [rolUsuario, setRolUsuario] = useState("owner"); // owner | administrar | editar | visualizar
@@ -1078,6 +1085,7 @@ function Home() {
     { id: "editor",      icon: "🔧", label: "Editor APU"  },
     { id: "anexos",      icon: "📎", label: "Anexos"      },
     { id: "config",      icon: "⚙️", label: "Config"      },
+    { id: "ofertas",     icon: "📊", label: "Ofertas"     },
   ];
 
   return (
@@ -1610,6 +1618,8 @@ function Home() {
                                 <td className="px-3 py-3 text-right">
                                   {puedeEditar && (
                                   <div className="flex items-center gap-1 justify-end">
+                                    <button onClick={(e)=>{e.stopPropagation();setCubicacionPartida(p);}}
+                                      className="text-gray-300 hover:text-green-600 text-xs btn-press transition-colors px-1" title="Cubicación">📐</button>
                                     <button onClick={(e)=>{e.stopPropagation();setEditandoPartida(p);}}
                                       className="text-gray-300 hover:text-indigo-600 text-xs btn-press transition-colors px-1" title="Editar partida">✏️</button>
                                     <button onClick={(e)=>{e.stopPropagation();duplicarPartida(p);}}
@@ -1749,10 +1759,60 @@ function Home() {
                     <span className="text-xl font-bold tabular-nums">{fmtM(resumen.total)}</span>
                   </div>
                 </div>
+
+                {/* Línea Base */}
+                <div className="mt-5">
+                  <LineaBase
+                    proyecto={proyecto}
+                    cfg={cfg}
+                    calcAPU={calcAPU}
+                    proyectoId={proyectoId}
+                  />
+                </div>
               </>
             )}
           </div>
         )}
+
+          {/* OFERTAS / COMPARADOR */}
+          {tab === "ofertas" && (
+            <div className="flex-1 overflow-y-auto p-5 anim-fade-up">
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <h2 className="text-base font-semibold text-gray-800">Comparación de Ofertas</h2>
+                  <p className="text-xs text-gray-400 mt-1">Compara cotizaciones de proveedores y selecciona los mejores precios.</p>
+                </div>
+                {proyecto.length > 0 && (
+                  <button onClick={() => setMostrarComparador(true)}
+                    className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-indigo-700">
+                    📊 Comparar ofertas
+                  </button>
+                )}
+              </div>
+              {proyecto.length === 0 ? (
+                <div className="text-center py-20 text-gray-400">
+                  <p className="text-4xl mb-4">📊</p>
+                  <p className="mb-2 font-medium text-gray-500">Agrega partidas primero para comparar ofertas</p>
+                  <button onClick={()=>setTab("biblioteca")} className="text-indigo-600 text-sm underline btn-press">Ir a la biblioteca</button>
+                </div>
+              ) : (
+                <div className="bg-white border border-gray-200 rounded-xl p-5">
+                  <p className="text-sm text-gray-600 mb-4">
+                    Tienes <strong>{proyecto.length}</strong> partidas en tu presupuesto. Haz clic en "Comparar ofertas" para subir hasta 3 cotizaciones y encontrar los mejores precios.
+                  </p>
+                  <div className="grid grid-cols-3 gap-4">
+                    {[["📥","Sube cotizaciones","Excel o ingreso manual"],["🔍","Compara precios","Lado a lado por partida"],["✅","Aplica mejores","Un clic para actualizar"]].map(([ic,t,s],i)=>(
+                      <div key={i} className="bg-gray-50 rounded-xl p-4 text-center">
+                        <div className="text-2xl mb-2">{ic}</div>
+                        <div className="text-xs font-semibold text-gray-700">{t}</div>
+                        <div className="text-[10px] text-gray-400 mt-1">{s}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* ANEXOS */}
           {tab === "anexos" && (
@@ -1828,6 +1888,43 @@ function Home() {
           cfg={cfg}
           onGuardar={guardarPartidaEditada}
           onCerrar={() => setEditandoPartida(null)}
+        />
+      )}
+
+      {/* Modal cubicación */}
+      {cubicacionPartida && (
+        <Cubicaciones
+          partida={cubicacionPartida}
+          onSave={(partidaId, cubicaciones, totalCantidad) => {
+            setProyecto(pr => pr.map(p => p.id === partidaId ? { ...p, cubicaciones, cantidad: totalCantidad } : p));
+            setCubicacionPartida(null);
+          }}
+          onClose={() => setCubicacionPartida(null)}
+        />
+      )}
+
+      {/* Modal comparador de ofertas */}
+      {mostrarComparador && (
+        <ComparadorOfertas
+          partidas={proyecto.map(p => ({
+            id: p.id,
+            partida: p.desc || p.descripcion || "Sin descripción",
+            unidad: p.unidad,
+            cantidad: p.cantidad,
+            valor_unitario: calcAPU(p, cfg).total,
+            valor_total: calcAPU(p, cfg).total * p.cantidad,
+          }))}
+          onClose={() => setMostrarComparador(false)}
+          onSave={(mejoresPrecios) => {
+            setProyecto(pr => pr.map(p => {
+              const mejor = mejoresPrecios[p.id];
+              if (mejor !== undefined && mejor !== null) {
+                return { ...p, precioOverride: mejor };
+              }
+              return p;
+            }));
+            setMostrarComparador(false);
+          }}
         />
       )}
 

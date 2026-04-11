@@ -5,6 +5,8 @@ import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
 import { extractBudgetFromPDF } from "../lib/extractPresupuesto";
 import ONDAC_APUS from "../ondac_data_nuevo.json";
+import CurvaS from "../components/CurvaS";
+import IndicadoresEVM from "../components/IndicadoresEVM";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -1795,6 +1797,34 @@ ${partidas.map(p=>`
                       </div>
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* ── Indicadores EVM ── */}
+              {(pagos.length > 0 || presupuesto.length > 0) && (
+                <div style={{ marginBottom: 16 }}>
+                  <IndicadoresEVM
+                    fechaInicio={obra.fecha_inicio}
+                    fechaTermino={obra.fecha_termino_contractual}
+                    montoContrato={montoContrato || presupuesto.reduce((s,p) => s + (p.valor_total||0), 0)}
+                    pagos={pagos}
+                    presupuesto={presupuesto}
+                  />
+                </div>
+              )}
+
+              {/* ── Curva S ── */}
+              {(pagos.length > 0 || obra.fecha_inicio) && (
+                <div style={{ marginBottom: 16 }}>
+                  <Section title="📈 Curva S — Avance planificado vs real">
+                    <CurvaS
+                      fechaInicio={obra.fecha_inicio}
+                      fechaTermino={obra.fecha_termino_contractual}
+                      montoContrato={montoContrato || presupuesto.reduce((s,p) => s + (p.valor_total||0), 0)}
+                      pagos={pagos}
+                      presupuesto={presupuesto}
+                    />
+                  </Section>
                 </div>
               )}
 
