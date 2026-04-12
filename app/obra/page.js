@@ -7,6 +7,8 @@ import { extractBudgetFromPDF } from "../lib/extractPresupuesto";
 import ONDAC_APUS from "../ondac_data_nuevo.json";
 import CurvaS from "../components/CurvaS";
 import IndicadoresEVM from "../components/IndicadoresEVM";
+import EstadoPagoGenerator from "../components/EstadoPagoGenerator";
+import GanttObra from "../components/GanttObra";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -1247,6 +1249,7 @@ function ObraDetail() {
   const [previsualizando, setPrevisualizando] = useState(null); // informe en preview
   const [mFoto,setMFoto]  = useState(false);
   const [mPresupuesto, setMPresupuesto] = useState(false);
+  const [mEPGenerator, setMEPGenerator] = useState(false);
   const [lightbox,setLb]  = useState(null);
   const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
   const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
@@ -1558,6 +1561,7 @@ ${partidas.map(p=>`
     { id:"recepciones",    icon:"🏁", label:"Recepciones"    },
     { id:"fotos",     icon:"📸", label:"Fotos", badge:fotos.length },
     { id:"presupuesto", icon:"💰", label:"Presupuesto", badge:presupuesto.length },
+    { id:"gantt",        icon:"📅", label:"Carta Gantt" },
   ];
 
   return (
@@ -2042,9 +2046,16 @@ ${partidas.map(p=>`
                     {montoContrato>0&&` · Saldo: ${fmtPeso(saldo)}`}
                   </p>
                 </div>
-                <button onClick={()=>setMPago(true)}
-                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
-                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Agregar</button>
+                <div style={{ display:"flex", gap:8 }}>
+                  {presupuesto.length>0 && (
+                    <button onClick={()=>setMEPGenerator(true)}
+                      style={{ background:"#fff", color:"#4338ca", border:"1.5px solid #c7d2fe", borderRadius:10,
+                        padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>📊 Generar EP por partida</button>
+                  )}
+                  <button onClick={()=>setMPago(true)}
+                    style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
+                      padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Agregar</button>
+                </div>
               </div>
               {montoContrato>0&&(
                 <div style={{ marginBottom:14, background:"#fff", border:"1px solid #e2e8f0",
@@ -2672,8 +2683,32 @@ ${partidas.map(p=>`
             </div>
           )}
 
+          {/* ═══ CARTA GANTT ═══ */}
+          {tab==="gantt" && (
+            <GanttObra obra={obra} presupuesto={presupuesto} />
+          )}
+
         </div>
       </div>
+
+      {/* EP Generator Modal */}
+      {mEPGenerator && (
+        <EstadoPagoGenerator
+          obra={obra}
+          presupuesto={presupuesto}
+          pagosAnteriores={pagos}
+          onClose={() => setMEPGenerator(false)}
+          onSave={async (epData) => {
+            const { data, error } = await supabase.from("obra_estados_pago")
+              .insert({ obra_id: obraId, ...epData })
+              .select().single();
+            if (!error && data) {
+              setPagos(prev => [data, ...prev]);
+              setMEPGenerator(false);
+            }
+          }}
+        />
+      )}
 
       {/* Lightbox */}
       {lightbox && (

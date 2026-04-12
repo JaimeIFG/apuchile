@@ -1,0 +1,263 @@
+"use client";
+import { useState, useMemo } from "react";
+
+const COLORS = [
+  "#6366f1", "#f59e0b", "#10b981", "#ef4444", "#8b5cf6",
+  "#ec4899", "#06b6d4", "#f97316", "#14b8a6", "#3b82f6",
+];
+
+const fmtFecha = d => d ? new Date(d).toLocaleDateString("es-CL", { day: "2-digit", month: "short" }) : "—";
+
+export default function GanttObra({ obra, presupuesto }) {
+  const fechaInicio = obra?.fecha_inicio ? new Date(obra.fecha_inicio) : new Date();
+  const plazoDias = obra?.plazo_dias || 180;
+  const [hoveredId, setHoveredId] = useState(null);
+
+  // Build items from presupuesto sections
+  const items = useMemo(() => {
+    const secciones = [...new Set(presupuesto.map(p => p.seccion))];
+    const totalItems = secciones.length;
+    if (totalItems === 0) return [];
+
+    const durPorItem = Math.max(7, Math.floor(plazoDias / totalItems));
+    let offset = 0;
+
+    return secciones.map((sec, idx) => {
+      const partidasSec = presupuesto.filter(p => p.seccion === sec);
+      const montoSec = partidasSec.reduce((s, p) => s + (p.valor_total || 0), 0);
+      const item = {
+        id: idx,
+        label: sec,
+        start: offset,
+        duration: durPorItem,
+        color: COLORS[idx % COLORS.length],
+        monto: montoSec,
+        partidas: partidasSec.length,
+      };
+      // Overlap sections by 30% for realism
+      offset += Math.floor(durPorItem * 0.7);
+      return item;
+    });
+  }, [presupuesto, plazoDias]);
+
+  const totalDias = plazoDias;
+  const PX_PER_DAY = Math.max(2, Math.min(8, 800 / totalDias));
+  const CHART_W = totalDias * PX_PER_DAY;
+  const ROW_H = 36;
+  const LABEL_W = 200;
+
+  // Generate week markers
+  const weeks = useMemo(() => {
+    const w = [];
+    for (let d = 0; d < totalDias; d += 7) {
+      const fecha = new Date(fechaInicio);
+      fecha.setDate(fecha.getDate() + d);
+      w.push({ day: d, label: fmtFecha(fecha) });
+    }
+    return w;
+  }, [totalDias, fechaInicio]);
+
+  // Today marker
+  const hoy = Math.floor((new Date() - fechaInicio) / 86400000);
+
+  const exportarPDF = async () => {
+    const { default: jsPDF } = await import("jspdf");
+    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+    const W = doc.internal.pageSize.getWidth();
+
+    // Header
+    doc.setFillColor(67, 56, 202);
+    doc.rect(0, 0, W, 22, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14); doc.setFont("helvetica", "bold");
+    doc.text("Carta Gantt", 10, 10);
+    doc.setFontSize(9); doc.setFont("helvetica", "normal");
+    doc.text(obra?.nombre || "Obra", 10, 17);
+    doc.text(`Plazo: ${plazoDias} días · Inicio: ${fmtFecha(obra?.fecha_inicio)}`, W - 10, 10, { align: "right" });
+
+    const LEFT = 70;
+    const BAR_AREA = W - LEFT - 10;
+    const ROW = 7;
+    let y = 28;
+
+    // Column headers
+    doc.setFillColor(245, 247, 250);
+    doc.rect(0, y, W, 7, "F");
+    doc.setTextColor(100, 100, 100);
+    doc.setFontSize(6.5); doc.setFont("helvetica", "bold");
+    doc.text("Sección", 3, y + 4.5);
+
+    // Week lines
+    const pxD = BAR_AREA / totalDias;
+    weeks.forEach(w => {
+      const x = LEFT + w.day * pxD;
+      if (x > W - 5) return;
+      doc.setDrawColor(220, 220, 220);
+      doc.setLineWidth(0.2);
+      doc.line(x, y, x, y + 7 + items.length * ROW + 4);
+      doc.setFontSize(5); doc.setFont("helvetica", "normal");
+      doc.setTextColor(140, 140, 140);
+      doc.text(w.label, x + 1, y + 4.5);
+    });
+
+    y += 7;
+
+    items.forEach((item, idx) => {
+      const iy = y + idx * ROW;
+      if (idx % 2 === 0) { doc.setFillColor(252, 252, 252); doc.rect(0, iy, W, ROW, "F"); }
+
+      const desc = item.label.substring(0, 35);
+      doc.setTextColor(50, 50, 50);
+      doc.setFontSize(6); doc.setFont("helvetica", "normal");
+      doc.text(desc, 3, iy + ROW * 0.65);
+
+      // Bar
+      const bx = LEFT + item.start * pxD;
+      const bw = Math.max(item.duration * pxD, 2);
+      const rgb = hexToRgb(item.color);
+      doc.setFillColor(rgb.r, rgb.g, rgb.b);
+      doc.roundedRect(bx, iy + 1.5, bw, ROW - 3, 1, 1, "F");
+
+      doc.setFontSize(5); doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold");
+      if (bw > 15) doc.text(`${item.duration}d`, bx + bw / 2, iy + ROW * 0.6, { align: "center" });
+    });
+
+    // Footer
+    doc.setFontSize(7); doc.setTextColor(160, 160, 160);
+    doc.text("Generado por APUdesk", 14, 205);
+
+    doc.save(`Gantt_${(obra?.nombre || "obra").replace(/\s+/g, "_")}.pdf`);
+  };
+
+  if (items.length === 0) {
+    return (
+      <div style={{ textAlign: "center", padding: 40, color: "#94a3b8" }}>
+        <div style={{ fontSize: 40, marginBottom: 8 }}>📅</div>
+        <div style={{ fontSize: 14 }}>Importa un presupuesto para generar la Carta Gantt automáticamente</div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+        <div>
+          <h2 style={{ fontSize: 15, fontWeight: 800, color: "#1e293b", margin: 0 }}>📅 Carta Gantt</h2>
+          <p style={{ fontSize: 12, color: "#64748b", margin: "2px 0 0" }}>
+            {items.length} secciones · {plazoDias} días de plazo
+          </p>
+        </div>
+        <button onClick={exportarPDF}
+          style={{ background: "#fff", color: "#4338ca", border: "1.5px solid #c7d2fe",
+            borderRadius: 10, padding: "8px 16px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+          📄 Exportar PDF
+        </button>
+      </div>
+
+      <div style={{ border: "1px solid #e2e8f0", borderRadius: 14, overflow: "hidden", background: "#fff" }}>
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ display: "flex", minWidth: LABEL_W + CHART_W + 20 }}>
+            {/* Labels column */}
+            <div style={{ width: LABEL_W, flexShrink: 0, borderRight: "1px solid #e2e8f0" }}>
+              <div style={{ height: 32, background: "#f8fafc", borderBottom: "1px solid #e2e8f0",
+                display: "flex", alignItems: "center", padding: "0 12px",
+                fontSize: 10, fontWeight: 700, color: "#64748b", textTransform: "uppercase" }}>
+                Sección
+              </div>
+              {items.map((item, idx) => (
+                <div key={item.id}
+                  onMouseEnter={() => setHoveredId(item.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                  style={{ height: ROW_H, display: "flex", alignItems: "center", padding: "0 12px",
+                    background: hoveredId === item.id ? "#eef2ff" : idx % 2 === 0 ? "#fff" : "#fafafa",
+                    borderBottom: "1px solid #f1f5f9", transition: "background .1s", cursor: "default" }}>
+                  <div style={{ width: 8, height: 8, borderRadius: 4, background: item.color, marginRight: 8, flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis",
+                    whiteSpace: "nowrap" }}>{item.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Chart area */}
+            <div style={{ flex: 1, position: "relative" }}>
+              {/* Week headers */}
+              <div style={{ height: 32, background: "#f8fafc", borderBottom: "1px solid #e2e8f0",
+                position: "relative" }}>
+                {weeks.map((w, i) => (
+                  <div key={i} style={{ position: "absolute", left: w.day * PX_PER_DAY,
+                    fontSize: 9, color: "#94a3b8", top: 10, whiteSpace: "nowrap" }}>
+                    {w.label}
+                  </div>
+                ))}
+              </div>
+
+              {/* Rows + bars */}
+              {items.map((item, idx) => (
+                <div key={item.id} style={{ height: ROW_H, position: "relative",
+                  background: hoveredId === item.id ? "#eef2ff" : idx % 2 === 0 ? "#fff" : "#fafafa",
+                  borderBottom: "1px solid #f1f5f9" }}
+                  onMouseEnter={() => setHoveredId(item.id)}
+                  onMouseLeave={() => setHoveredId(null)}>
+                  {/* Week gridlines */}
+                  {weeks.map((w, i) => (
+                    <div key={i} style={{ position: "absolute", left: w.day * PX_PER_DAY,
+                      top: 0, bottom: 0, width: 1, background: "#f1f5f9" }} />
+                  ))}
+                  {/* Bar */}
+                  <div style={{
+                    position: "absolute",
+                    left: item.start * PX_PER_DAY,
+                    top: 6,
+                    height: ROW_H - 12,
+                    width: Math.max(item.duration * PX_PER_DAY, 4),
+                    background: `linear-gradient(135deg, ${item.color}, ${item.color}dd)`,
+                    borderRadius: 6,
+                    boxShadow: hoveredId === item.id ? `0 2px 8px ${item.color}44` : "none",
+                    transition: "box-shadow .15s",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}>
+                    <span style={{ fontSize: 10, color: "#fff", fontWeight: 700, whiteSpace: "nowrap",
+                      padding: "0 6px" }}>
+                      {item.duration * PX_PER_DAY > 40 ? `${item.duration}d` : ""}
+                    </span>
+                  </div>
+                  {/* Today line */}
+                  {hoy >= 0 && hoy <= totalDias && (
+                    <div style={{ position: "absolute", left: hoy * PX_PER_DAY, top: 0, bottom: 0,
+                      width: 2, background: "#ef4444", zIndex: 5, opacity: 0.6 }} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Legend */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 12, padding: "8px 12px",
+        background: "#f8fafc", borderRadius: 10, border: "1px solid #e2e8f0" }}>
+        {hoy >= 0 && hoy <= totalDias && (
+          <span style={{ fontSize: 11, color: "#ef4444", fontWeight: 600 }}>
+            ▎Hoy (día {hoy})
+          </span>
+        )}
+        <span style={{ fontSize: 11, color: "#64748b" }}>
+          Inicio: {fmtFecha(obra?.fecha_inicio)} · Plazo: {plazoDias} días ·
+          Término: {fmtFecha(obra?.fecha_termino_contractual)}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+  } : { r: 100, g: 100, b: 241 };
+}
