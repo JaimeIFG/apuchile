@@ -1589,12 +1589,115 @@ ${partidas.map(p=>`
       <div style={{ display:"flex", flex:1, overflow:"hidden" }}>
 
         {/* SIDEBAR */}
-        <div style={{ width:210, background:"#fff", borderRight:"1px solid #e2e8f0",
-          display:"flex", flexDirection:"column", overflowY:"auto", flexShrink:0 }}>
-          <div style={{ padding:"10px 8px", flex:1 }}>
-            {NAV.map(item => (
-              <div key={item.id}>
-                <button
+        <div className="hidden md:flex" style={{ width:220, background:"#fff", borderRight:"1px solid #e2e8f0",
+          flexDirection:"column", overflowY:"auto", flexShrink:0 }}>
+          <div style={{ padding:"12px 10px", flex:1 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6 }}>
+              {NAV.map(item => {
+                const active = tab===item.id;
+                const colors = {
+                  resumen:       { bg:"linear-gradient(135deg,#4338ca,#6366f1)", border:"#818cf8", activeTxt:"#fff" },
+                  ficha:         { bg:"#fff", border:"#6366f1", activeTxt:"#4338ca" },
+                  docs:          { bg:"#fff", border:"#f59e0b", activeTxt:"#92400e" },
+                  pagos:         { bg:"#fff", border:"#0891b2", activeTxt:"#0e7490" },
+                  garantias:     { bg:"#fff", border:"#ef4444", activeTxt:"#991b1b" },
+                  bitacora:      { bg:"#fff", border:"#8b5cf6", activeTxt:"#6d28d9" },
+                  informes:      { bg:"#fff", border:"#3b82f6", activeTxt:"#1d4ed8" },
+                  modificaciones:{ bg:"#fff", border:"#f97316", activeTxt:"#c2410c" },
+                  recepciones:   { bg:"#fff", border:"#10b981", activeTxt:"#047857" },
+                  fotos:         { bg:"#fff", border:"#ec4899", activeTxt:"#be185d" },
+                  presupuesto:   { bg:"#fff", border:"#eab308", activeTxt:"#a16207" },
+                };
+                const c = colors[item.id] || colors.resumen;
+                const isFirst = item.id === "resumen";
+                return (
+                  <button key={item.id}
+                    onClick={() => {
+                      if (item.sub) {
+                        setDocsOpen(o=>!o);
+                        if (tab!=="docs") { setTab("docs"); setCatActiva(null); }
+                      } else {
+                        setTab(item.id); setDocsOpen(false);
+                      }
+                    }}
+                    className="btn-press card-hover"
+                    style={{
+                      display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
+                      gap:4, padding:"12px 6px", borderRadius:14, border:"none", cursor:"pointer",
+                      fontFamily:"inherit", transition:"all .15s",
+                      background: active && isFirst ? c.bg : active ? "#eef2ff" : "#fff",
+                      border: active ? `1.5px solid ${c.border}` : "1.5px solid #e2e8f0",
+                      borderBottom: `3px solid ${active ? c.border : "#e2e8f0"}`,
+                      boxShadow: active ? `0 2px 8px ${c.border}22` : "0 1px 3px rgba(0,0,0,.04)",
+                      position:"relative",
+                    }}>
+                    <span style={{ fontSize:20 }}>{item.icon}</span>
+                    <span style={{
+                      fontSize:10, fontWeight:active?700:600, textAlign:"center", lineHeight:1.2,
+                      color: active && isFirst ? "#fff" : active ? c.activeTxt : "#64748b",
+                    }}>{item.label}</span>
+                    {item.badge>0 && (
+                      <span style={{ position:"absolute", top:4, right:4, background:"#6366f1", color:"#fff",
+                        fontSize:8, fontWeight:800, padding:"1px 5px", borderRadius:99, minWidth:16,
+                        textAlign:"center" }}>{item.badge}</span>
+                    )}
+                    {item.sub && <span style={{ fontSize:7, color:"#94a3b8", position:"absolute", bottom:3, right:6 }}>{docsOpen?"▲":"▼"}</span>}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Subcategorías docs expandidas debajo del grid */}
+            {docsOpen && (
+              <div style={{ marginTop:8, background:"#fafbfc", borderRadius:10, padding:"6px", border:"1px solid #e2e8f0" }}>
+                <button onClick={()=>{ setTab("docs"); setCatActiva(null); }}
+                  style={{ width:"100%", padding:"5px 10px", borderRadius:7, border:"none",
+                    cursor:"pointer", fontSize:11, fontFamily:"inherit", textAlign:"left",
+                    background:tab==="docs"&&!catActiva?"#eef2ff":"transparent",
+                    color:tab==="docs"&&!catActiva?"#6366f1":"#94a3b8", fontWeight:tab==="docs"&&!catActiva?700:400 }}>
+                  Todas las categorías
+                </button>
+                {CATEGORIAS_DOCS.map(cat => {
+                  const cnt = docs.filter(d=>d.categoria===cat).length;
+                  const active = tab==="docs"&&catActiva===cat;
+                  return (
+                    <button key={cat} onClick={()=>{ setTab("docs"); setCatActiva(cat); }}
+                      style={{ width:"100%", display:"flex", alignItems:"center", gap:4,
+                        padding:"5px 10px", borderRadius:7, border:"none", cursor:"pointer",
+                        background:active?"#eef2ff":"transparent",
+                        color:active?"#6366f1":"#64748b",
+                        fontSize:11, fontFamily:"inherit", textAlign:"left", fontWeight:active?700:400 }}>
+                      <span style={{ flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{cat}</span>
+                      {cnt>0 && <span style={{ background:"#eef2ff", color:"#6366f1", fontSize:9,
+                        fontWeight:700, padding:"1px 4px", borderRadius:99, flexShrink:0 }}>{cnt}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {tab==="ficha" && (
+            <div style={{ padding:"10px 8px", borderTop:"1px solid #f1f5f9" }}>
+              <button onClick={guardar} disabled={guardando}
+                className="btn-primary"
+                style={{ width:"100%", background:guardadoOk?"#818cf8":"#6366f1",
+                  color:"#fff", border:"none", borderRadius:10, padding:"10px",
+                  fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit", transition:"background .2s" }}>
+                {guardando?"Guardando...":guardadoOk?"✓ Guardado":"Guardar ficha"}
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* MOBILE NAV - horizontal scroll */}
+        <div className="md:hidden" style={{ background:"#fff", borderBottom:"1px solid #e2e8f0",
+          overflowX:"auto", flexShrink:0, padding:"8px 8px" }}>
+          <div style={{ display:"flex", gap:6, minWidth:"max-content" }}>
+            {NAV.map(item => {
+              const active = tab===item.id;
+              return (
+                <button key={item.id}
                   onClick={() => {
                     if (item.sub) {
                       setDocsOpen(o=>!o);
@@ -1603,62 +1706,21 @@ ${partidas.map(p=>`
                       setTab(item.id); setDocsOpen(false);
                     }
                   }}
-                  style={{ width:"100%", display:"flex", alignItems:"center", gap:8,
-                    padding:"9px 10px", borderRadius:10, border:"none", cursor:"pointer",
-                    background:tab===item.id?"#eef2ff":"transparent",
-                    color:tab===item.id?"#6366f1":"#475569",
-                    fontWeight:tab===item.id?700:500, fontSize:13,
-                    fontFamily:"inherit", textAlign:"left", transition:"all .1s" }}>
-                  <span style={{ fontSize:14 }}>{item.icon}</span>
-                  <span style={{ flex:1 }}>{item.label}</span>
+                  style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2,
+                    padding:"8px 12px", borderRadius:10, border:"none", cursor:"pointer",
+                    background:active?"#eef2ff":"transparent", fontFamily:"inherit",
+                    position:"relative", flexShrink:0 }}>
+                  <span style={{ fontSize:18 }}>{item.icon}</span>
+                  <span style={{ fontSize:9, fontWeight:active?700:500,
+                    color:active?"#6366f1":"#64748b", whiteSpace:"nowrap" }}>{item.label}</span>
                   {item.badge>0 && (
-                    <span style={{ background:"#eef2ff", color:"#4338ca", fontSize:9,
-                      fontWeight:700, padding:"1px 5px", borderRadius:99 }}>{item.badge}</span>
+                    <span style={{ position:"absolute", top:2, right:2, background:"#6366f1", color:"#fff",
+                      fontSize:7, fontWeight:800, padding:"0px 4px", borderRadius:99 }}>{item.badge}</span>
                   )}
-                  {item.sub && <span style={{ fontSize:9, color:"#94a3b8" }}>{docsOpen?"▲":"▼"}</span>}
                 </button>
-
-                {item.sub && docsOpen && (
-                  <div style={{ marginLeft:6, marginBottom:2 }}>
-                    <button onClick={()=>{ setTab("docs"); setCatActiva(null); }}
-                      style={{ width:"100%", padding:"5px 10px", borderRadius:7, border:"none",
-                        cursor:"pointer", fontSize:11, fontFamily:"inherit", textAlign:"left",
-                        background:tab==="docs"&&!catActiva?"#eef2ff":"transparent",
-                        color:tab==="docs"&&!catActiva?"#6366f1":"#94a3b8", fontWeight:tab==="docs"&&!catActiva?700:400 }}>
-                      Todas las categorías
-                    </button>
-                    {CATEGORIAS_DOCS.map(cat => {
-                      const cnt = docs.filter(d=>d.categoria===cat).length;
-                      const active = tab==="docs"&&catActiva===cat;
-                      return (
-                        <button key={cat} onClick={()=>{ setTab("docs"); setCatActiva(cat); }}
-                          style={{ width:"100%", display:"flex", alignItems:"center", gap:4,
-                            padding:"5px 10px", borderRadius:7, border:"none", cursor:"pointer",
-                            background:active?"#eef2ff":"transparent",
-                            color:active?"#6366f1":"#64748b",
-                            fontSize:11, fontFamily:"inherit", textAlign:"left", fontWeight:active?700:400 }}>
-                          <span style={{ flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{cat}</span>
-                          {cnt>0 && <span style={{ background:"#eef2ff", color:"#6366f1", fontSize:9,
-                            fontWeight:700, padding:"1px 4px", borderRadius:99, flexShrink:0 }}>{cnt}</span>}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
-
-          {tab==="ficha" && (
-            <div style={{ padding:"10px 8px", borderTop:"1px solid #f1f5f9" }}>
-              <button onClick={guardar} disabled={guardando}
-                style={{ width:"100%", background:guardadoOk?"#818cf8":"#6366f1",
-                  color:"#fff", border:"none", borderRadius:10, padding:"10px",
-                  fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit", transition:"background .2s" }}>
-                {guardando?"Guardando...":guardadoOk?"✓ Guardado":"Guardar ficha"}
-              </button>
-            </div>
-          )}
         </div>
 
         {/* CONTENIDO */}
