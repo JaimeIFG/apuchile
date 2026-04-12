@@ -191,7 +191,7 @@ export default function ObrasPage() {
   };
 
   return (
-    <div style={{ minHeight:"100vh", background:"#f8fafc", fontFamily:"sans-serif" }}>
+    <div className="min-h-screen bg-gray-50">
 
       <LoadingOverlay visible={loading} mensaje="Cargando obras..." blur={false} />
 
@@ -210,77 +210,77 @@ export default function ObrasPage() {
         }
       `}</style>
 
-      {/* ── Header ── */}
-      <div style={{ background: "linear-gradient(135deg, #4338ca, #6366f1)", padding: "24px 32px 20px",
-        position: "relative", overflow: "hidden" }}>
-
-        {/* Shimmer sweep decorativo */}
-        <div className="shimmer-sweep" style={{ opacity: 0.6 }}/>
-
-        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
-
-          {/* Breadcrumb */}
-          <div className={mounted ? "anim-slide-down" : ""}
-            style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      {/* ── Top bar ── */}
+      <div className="bg-white border-b border-gray-100 px-4 md:px-8 py-3">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <button onClick={() => router.push("/dashboard")}
-              className="btn-press"
-              style={{ background: "rgba(255,255,255,.15)", border: "none", borderRadius: 8,
-                padding: "6px 12px", color: "#fff", fontSize: 12, cursor: "pointer",
-                backdropFilter: "blur(4px)", transition: "background .15s" }}
-              onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.25)"}
-              onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.15)"}>
+              className="btn-press text-xs text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1.5 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors">
               ← Dashboard
             </button>
-            <span style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>/</span>
-            <span style={{ color: "#fff", fontSize: 12, fontWeight: 600 }}>Ejecución de Obras</span>
+            <span className="text-gray-300 text-xs">/</span>
+            <span className="text-gray-700 text-xs font-semibold">Ejecución de Obras</span>
           </div>
-
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end",
-            flexWrap: "wrap", gap: 12 }}>
-            <div className={mounted ? "anim-fade-up" : ""}>
-              <h1 style={{ color: "#fff", fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: "-.02em" }}>
-                🏗️ Ejecución de Obras
-              </h1>
-              <p style={{ color: "rgba(255,255,255,.7)", fontSize: 13, margin: "4px 0 0" }}>
-                Control y seguimiento de obras en ejecución
-              </p>
-            </div>
-            <button id="tour-obras-nueva" onClick={() => setCreando(true)}
-              className={`btn-primary${mounted ? " anim-fade-up delay-100" : ""}`}
-              style={{ background: "#fff", color: "#4338ca", border: "none", borderRadius: 12,
-                padding: "10px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer",
-                display: "flex", alignItems: "center", gap: 6,
-                boxShadow: "0 2px 8px rgba(0,0,0,.15)" }}>
-              ＋ Nueva Obra
-            </button>
-          </div>
-
-          {/* Stats row */}
-          <div id="tour-obras-stats" style={{ display: "flex", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
-            {[
-              { label: "Total obras",   val: stats.total,         icon: "🏗️" },
-              { label: "En ejecución",  val: stats.ejecucion,     icon: "⚙️" },
-              { label: "Paralizadas",   val: stats.paralizadas,   icon: "⏸️" },
-              { label: "Recepcionadas", val: stats.recepcionadas, icon: "✅" },
-            ].map((s, i) => (
-              <div key={i}
-                className={mounted ? `anim-fade-up delay-${(i+1)*50}` : ""}
-                style={{ background: "rgba(255,255,255,.15)", borderRadius: 12,
-                  padding: "10px 16px", backdropFilter: "blur(4px)", minWidth: 120,
-                  transition: "background .2s", cursor: "default" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.22)"}
-                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.15)"}>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,.7)", marginBottom: 2 }}>
-                  {s.icon} {s.label}
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 800, color: "#fff" }}>{s.val}</div>
-              </div>
-            ))}
-          </div>
+          <button id="tour-obras-nueva" onClick={() => setCreando(true)}
+            className="btn-primary anim-fade-up text-sm font-bold px-5 py-2.5 rounded-xl flex items-center gap-2"
+            style={{background:"linear-gradient(135deg,#4338ca,#6366f1)", color:"#fff", border:"none", cursor:"pointer",
+              boxShadow:"0 2px 10px rgba(99,102,241,.3)"}}>
+            ＋ Nueva Obra
+          </button>
         </div>
       </div>
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 32px" }}>
+      <main className="max-w-4xl mx-auto px-4 md:px-8 py-6">
+
+        {/* ── Header card ── */}
+        <div className="rounded-2xl overflow-hidden anim-scale-in mb-4"
+          style={{background:"linear-gradient(135deg,#4338ca 0%,#6366f1 60%,#0891b2 100%)",
+            boxShadow:"0 4px 20px rgba(67,56,202,.28)", padding:"20px 24px", position:"relative"}}>
+          <div style={{position:"absolute", inset:0, backgroundImage:"radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px)",
+            backgroundSize:"20px 20px", pointerEvents:"none"}}/>
+          <div className="shimmer-sweep"/>
+          <div style={{position:"relative", zIndex:1, display:"flex", alignItems:"center",
+            justifyContent:"space-between", gap:16, flexWrap:"wrap"}}>
+            <div>
+              <p style={{fontSize:9, fontWeight:700, textTransform:"uppercase", letterSpacing:".14em",
+                color:"rgba(255,255,255,.55)", marginBottom:4}}>CONTROL DE OBRAS</p>
+              <h1 style={{fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-.02em", lineHeight:1.2}}>
+                🏗️ Ejecución de Obras
+              </h1>
+              <p style={{fontSize:12, color:"rgba(255,255,255,.5)", marginTop:4}}>
+                Control y seguimiento de obras en ejecución
+              </p>
+            </div>
+            <div style={{display:"flex", flexDirection:"column", alignItems:"flex-end", gap:6}}>
+              <span style={{background:"rgba(255,255,255,.14)", border:"1px solid rgba(255,255,255,.18)",
+                color:"rgba(255,255,255,.85)", borderRadius:99, padding:"4px 12px", fontSize:11, fontWeight:600}}>
+                {new Date().toLocaleDateString("es-CL",{weekday:"long",day:"2-digit",month:"short",year:"numeric"})}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Stats row ── */}
+        <div id="tour-obras-stats" className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          {[
+            { num: stats.total,         lbl: "Total obras",   color: "#6366f1", border: "#6366f1", icon: "🏗️" },
+            { num: stats.ejecucion,     lbl: "En ejecución",  color: "#0891b2", border: "#0891b2", icon: "⚙️", pulse: true },
+            { num: stats.paralizadas,   lbl: "Paralizadas",   color: "#ef4444", border: "#ef4444", icon: "⏸️" },
+            { num: stats.recepcionadas, lbl: "Recepcionadas", color: "#f59e0b", border: "#f59e0b", icon: "✅" },
+          ].map(({ num, lbl, color, border, icon, pulse }, i) => (
+            <div key={lbl} className="bg-white rounded-2xl shadow-sm anim-fade-up"
+              style={{padding:"14px 16px", borderBottom:`3px solid ${border}`, animationDelay:`${i*50}ms`}}>
+              <div style={{fontSize:24, fontWeight:900, color, lineHeight:1, marginBottom:3,
+                display:"flex", alignItems:"center", gap:6}}>
+                {pulse && <span className="pulse-dot" style={{display:"inline-block", width:8, height:8,
+                  borderRadius:"50%", background:color, flexShrink:0}}/>}
+                {num}
+              </div>
+              <div style={{fontSize:9, textTransform:"uppercase", letterSpacing:".06em",
+                fontWeight:700, color:"#64748b", marginBottom:2}}>{lbl}</div>
+            </div>
+          ))}
+        </div>
 
         {/* ── Panel de Alertas ── */}
         {alertas.length > 0 && (
@@ -337,38 +337,25 @@ export default function ObrasPage() {
         )}
 
         {/* ── Filtros ── */}
-        <div id="tour-obras-filtros" className={mounted ? "anim-slide-down delay-100" : ""}
-          style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
-          <input
-            placeholder="Buscar por nombre o contratista..."
-            value={busqueda} onChange={e => setBusqueda(e.target.value)}
-            className="input-focus"
-            style={{ flex: 1, minWidth: 200, padding: "9px 14px", border: "1.5px solid #e2e8f0",
-              borderRadius: 10, fontSize: 13, fontFamily: "inherit", outline: "none",
-              transition: "border-color .15s" }}
-            onFocus={e => e.target.style.borderColor = "#6366f1"}
-            onBlur={e => e.target.style.borderColor = "#e2e8f0"}
-          />
-          <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)}
-            style={{ padding: "9px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10,
-              fontSize: 13, fontFamily: "inherit", background: "#fff", color: "#374151",
-              outline: "none", cursor: "pointer", transition: "border-color .15s" }}
-            onFocus={e => e.target.style.borderColor = "#6366f1"}
-            onBlur={e => e.target.style.borderColor = "#e2e8f0"}>
-            <option value="">Todos los estados</option>
-            {ESTADOS.map(e => <option key={e} value={e}>{e}</option>)}
-          </select>
-          {(busqueda || filtroEstado) && (
-            <button onClick={() => { setBusqueda(""); setFiltroEstado(""); }}
-              className="btn-press"
-              style={{ background: "#f1f5f9", border: "none", borderRadius: 8,
-                padding: "9px 14px", fontSize: 12, color: "#64748b", cursor: "pointer",
-                transition: "background .15s" }}
-              onMouseEnter={e => e.currentTarget.style.background = "#e2e8f0"}
-              onMouseLeave={e => e.currentTarget.style.background = "#f1f5f9"}>
-              ✕ Limpiar
-            </button>
-          )}
+        <div id="tour-obras-filtros" className={`bg-white rounded-2xl shadow-sm p-4 mb-4 ${mounted ? "anim-slide-down delay-100" : ""}`}>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+            <input
+              placeholder="Buscar por nombre o contratista..."
+              value={busqueda} onChange={e => setBusqueda(e.target.value)}
+              className="flex-1 min-w-[200px] border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+            />
+            <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)}
+              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white text-gray-700 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 cursor-pointer">
+              <option value="">Todos los estados</option>
+              {ESTADOS.map(e => <option key={e} value={e}>{e}</option>)}
+            </select>
+            {(busqueda || filtroEstado) && (
+              <button onClick={() => { setBusqueda(""); setFiltroEstado(""); }}
+                className="btn-press bg-gray-100 hover:bg-gray-200 border-none rounded-lg px-3.5 py-2.5 text-xs text-gray-500 cursor-pointer transition-colors">
+                ✕ Limpiar
+              </button>
+            )}
+          </div>
         </div>
 
         {/* ── Lista ── */}
@@ -509,7 +496,7 @@ export default function ObrasPage() {
             })}
           </div>
         )}
-      </div>
+      </main>
 
       {/* ── Modal nueva obra ── */}
       {creando && (
