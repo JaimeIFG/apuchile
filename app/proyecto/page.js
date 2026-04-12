@@ -944,6 +944,138 @@ function Home() {
       tableWidth: 140,
     });
 
+    // ── FICHAS APU (desglose de cada partida) ──
+    const incluirDesglose = cfgEmpresa.pdfIncluirDesglose !== false;
+    if (incluirDesglose && proyecto.length > 0) {
+      proyecto.forEach((p, idx) => {
+        const { rows, moNet, llssAmt, mat, herr, fung, total } = calcAPU(p, cfg);
+        doc.addPage();
+        let fy = 14;
+
+        // Header ficha
+        doc.setFillColor(67, 56, 202);
+        doc.rect(0, 0, ancho, 24, "F");
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(11); doc.setFont("helvetica", "bold");
+        doc.text(`Ficha APU N°${idx + 1}`, 14, 10);
+        doc.setFontSize(8); doc.setFont("helvetica", "normal");
+        doc.text(`${p.codigo || ""} — ${(p.desc || p.descripcion || "").substring(0, 70)}`, 14, 17);
+        doc.setFontSize(8);
+        doc.text(`Unidad: ${p.unidad || "u"}  |  Cantidad: ${p.cantidad || 1}`, ancho - 14, 10, { align: "right" });
+        doc.text(`Precio Unitario: $${Math.round(total).toLocaleString("es-CL")}`, ancho - 14, 17, { align: "right" });
+
+        fy = 30;
+
+        // Tabla de insumos
+        if (rows.length > 0) {
+          const tipoLabel = { mo: "Mano de Obra", mat: "Material", fung: "Fungible" };
+          const tipoColor = { mo: [219, 234, 254], mat: [238, 242, 255], fung: [243, 232, 255] };
+          const grupos = {};
+          rows.forEach(r => {
+            const t = r.tipo || "mat";
+            if (!grupos[t]) grupos[t] = [];
+            grupos[t].push(r);
+          });
+
+          ["mo", "mat", "fung"].forEach(tipo => {
+            if (!grupos[tipo]) return;
+            const color = tipoColor[tipo] || [245, 245, 245];
+
+            // Subtítulo del grupo
+            doc.setFillColor(color[0], color[1], color[2]);
+            doc.rect(14, fy - 3, ancho - 28, 7, "F");
+            doc.setFontSize(8); doc.setFont("helvetica", "bold");
+            doc.setTextColor(50, 50, 50);
+            doc.text(tipoLabel[tipo] || tipo, 16, fy + 1);
+            fy += 8;
+
+            const filasTipo = grupos[tipo].map(r => [
+              (r.desc || "").substring(0, 40),
+              r.unidad || "u",
+              (r.cant || 0).toFixed(3),
+              "$" + Math.round(r.punit || 0).toLocaleString("es-CL"),
+              r.perd ? `${r.perd}%` : "—",
+              "$" + Math.round(r.sub || 0).toLocaleString("es-CL"),
+            ]);
+
+            autoTable(doc, {
+              startY: fy,
+              head: [["Descripción", "Un.", "Cantidad", "P. Unit.", "Pérdida", "Subtotal"]],
+              body: filasTipo,
+              styles: { fontSize: 7, cellPadding: 2 },
+              headStyles: { fillColor: [67, 56, 202], textColor: 255, fontStyle: "bold" },
+              alternateRowStyles: { fillColor: [250, 250, 255] },
+              columnStyles: {
+                0: { cellWidth: 55 },
+                1: { cellWidth: 12, halign: "center" },
+                2: { cellWidth: 20, halign: "right" },
+                3: { cellWidth: 25, halign: "right" },
+                4: { cellWidth: 15, halign: "center" },
+                5: { cellWidth: 25, halign: "right" },
+              },
+              margin: { left: 14, right: 14 },
+            });
+            fy = doc.lastAutoTable.finalY + 6;
+          });
+
+          // Resumen de la ficha
+          const resumenAPU = [
+            ["Mano de Obra Neta", moNet],
+            ["Leyes Sociales", llssAmt],
+            ["Materiales", mat],
+            ["Herramientas", herr],
+            ["Fungibles", fung],
+            ["TOTAL UNITARIO", total],
+          ].filter(([, v]) => v > 0);
+
+          autoTable(doc, {
+            startY: fy + 2,
+            body: resumenAPU.map(([label, val]) => [label, "$" + Math.round(val).toLocaleString("es-CL")]),
+            styles: { fontSize: 8, cellPadding: 2.5 },
+            columnStyles: { 0: { cellWidth: 60 }, 1: { cellWidth: 35, halign: "right" } },
+            bodyStyles: { fillColor: false },
+            didParseCell: (data) => {
+              if (data.row.index === resumenAPU.length - 1) {
+                data.cell.styles.fillColor = [67, 56, 202];
+                data.cell.styles.textColor = 255;
+                data.cell.styles.fontStyle = "bold";
+                data.cell.styles.fontSize = 9;
+              }
+            },
+            margin: { left: ancho - 110 },
+            tableWidth: 95,
+          });
+        } else {
+          doc.setFontSize(9); doc.setFont("helvetica", "normal");
+          doc.setTextColor(100, 100, 100);
+          doc.text("Partida sin desglose de insumos — precio global.", 14, fy + 4);
+        }
+
+        // Cubicaciones si existen
+        if (p.cubicaciones?.length) {
+          const cubY = (rows.length > 0 ? doc.lastAutoTable.finalY : fy) + 12;
+          doc.setFontSize(9); doc.setFont("helvetica", "bold");
+          doc.setTextColor(67, 56, 202);
+          doc.text("📐 Cubicación", 14, cubY);
+
+          const filaCub = p.cubicaciones.map(c => {
+            const dims = [c.largo, c.ancho, c.alto].filter(v => v > 0);
+            const sub = (c.n || 1) * (dims.length ? dims.reduce((a, b) => a * b, 1) : 0);
+            return [c.descripcion || "—", c.n || 1, c.largo || "—", c.ancho || "—", c.alto || "—", sub.toFixed(2)];
+          });
+
+          autoTable(doc, {
+            startY: cubY + 4,
+            head: [["Descripción", "N°", "Largo", "Ancho", "Alto", "Subtotal"]],
+            body: filaCub,
+            styles: { fontSize: 7, cellPadding: 2 },
+            headStyles: { fillColor: [99, 102, 241], textColor: 255 },
+            margin: { left: 14, right: 14 },
+          });
+        }
+      });
+    }
+
     // ── Pie de firma ──
     const firmaUrl      = proyectoMeta.firmaDigital   || "";
     const firmaNombre   = proyectoMeta.nombreFirmante  || "";

@@ -664,7 +664,7 @@ export default function Dashboard() {
           </div>
 
           {/* ── Acciones principales ── */}
-          <div id="tour-acciones" className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div id="tour-acciones" className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
             {[
               { icon:"＋", label:"Nuevo proyecto",  action:() => setCreando(true),
                 st:{background:"linear-gradient(135deg,#4338ca,#6366f1)", borderBottom:"3px solid #818cf8"}, txt:"#fff" },
@@ -672,7 +672,9 @@ export default function Dashboard() {
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #6366f1"}, txt:"#374151" },
               { icon:"🏗️", label:"Ejecución de Obras", action:() => router.push("/obras"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
-              { icon:"⚙️", label:"Configuración",   action:() => { setModalConfig(true); setConfigTab("cuenta"); },
+              { icon:"📦", label:"Banco de Precios", action:() => router.push("/banco-precios"),
+                st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #10b981"}, txt:"#374151" },
+              { icon:"���️", label:"Configuración",   action:() => { setModalConfig(true); setConfigTab("cuenta"); },
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #64748b"}, txt:"#374151" },
             ].map((c, i) => (
               <button key={i} onClick={c.action}
@@ -1515,6 +1517,7 @@ export default function Dashboard() {
           { icon: "🏠", label: "Inicio",      action: () => {} },
           { icon: "📂", label: "Proyectos",   action: () => setModalProyectos(true) },
           { icon: "🏗️", label: "Obras",       action: () => router.push("/obras") },
+          { icon: "📦", label: "Precios",     action: () => router.push("/banco-precios") },
           { icon: "⚙️", label: "Config",      action: () => { setModalConfig(true); setConfigTab("cuenta"); } },
         ].map((item, i) => (
           <button key={i} onClick={item.action}
