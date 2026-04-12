@@ -9,6 +9,8 @@ import CurvaS from "../components/CurvaS";
 import IndicadoresEVM from "../components/IndicadoresEVM";
 import EstadoPagoGenerator from "../components/EstadoPagoGenerator";
 import GanttObra from "../components/GanttObra";
+import ControlCostos from "../components/ControlCostos";
+import FlujoCaja from "../components/FlujoCaja";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -1562,6 +1564,8 @@ ${partidas.map(p=>`
     { id:"fotos",     icon:"📸", label:"Fotos", badge:fotos.length },
     { id:"presupuesto", icon:"💰", label:"Presupuesto", badge:presupuesto.length },
     { id:"gantt",        icon:"📅", label:"Carta Gantt" },
+    { id:"costos",       icon:"📊", label:"Control Costos" },
+    { id:"flujo",        icon:"💰", label:"Flujo de Caja" },
   ];
 
   return (
@@ -2594,9 +2598,9 @@ ${partidas.map(p=>`
                           <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
                             <thead style={{ background:"#f9fafb" }}>
                               <tr>
-                                {["Ítem","Partida","Un.","Cantidad","V. Unitario","V. Total",""].map((h,i)=>(
+                                {["Ítem","Partida","Un.","Cantidad","V. Unitario","V. Total","C. Objetivo",""].map((h,i)=>(
                                   <th key={i} style={{ padding:"8px 10px", fontWeight:600, color:"#64748b",
-                                    textAlign: i>=3&&i<=5 ? "right" : "left",
+                                    textAlign: i>=3&&i<=6 ? "right" : "left",
                                     borderBottom:"1px solid #e2e8f0", whiteSpace:"nowrap", fontSize:11 }}>{h}</th>
                                 ))}
                               </tr>
@@ -2657,6 +2661,26 @@ ${partidas.map(p=>`
                                       color: p.valor_total ? "#6366f1" : "#cbd5e1" }}>
                                       {p.valor_total ? "$"+Math.round(p.valor_total).toLocaleString("es-CL") : "—"}
                                     </td>
+                                    {/* Costo objetivo — editable */}
+                                    <td style={{ padding:"4px 6px", textAlign:"right" }}>
+                                      {editingCell?.id===p.id && editingCell?.field==="costo_objetivo" ? (
+                                        <input autoFocus defaultValue={p.costo_objetivo ?? ""}
+                                          onBlur={e=>updatePresupuesto(p.id,"costo_objetivo",e.target.value)}
+                                          onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
+                                          style={{ width:90, textAlign:"right", border:"1.5px solid #f59e0b",
+                                            borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
+                                      ) : (
+                                        <span onClick={()=>setEditingCell({id:p.id,field:"costo_objetivo"})}
+                                          title="Clic para editar costo objetivo"
+                                          style={{ cursor:"pointer", padding:"3px 8px", borderRadius:6, display:"inline-block",
+                                            color: p.costo_objetivo ? "#f59e0b" : "#cbd5e1",
+                                            border:"1px dashed #fde68a", minWidth:70, textAlign:"right",
+                                            background: p.costo_objetivo ? "#fefce8" : "#fafafa",
+                                            fontWeight: p.costo_objetivo ? 600 : 400 }}>
+                                          {p.costo_objetivo ? "$"+Math.round(p.costo_objetivo).toLocaleString("es-CL") : "—"}
+                                        </span>
+                                      )}
+                                    </td>
                                     <td style={{ padding:"7px 8px", textAlign:"center" }}>
                                       <button onClick={()=>delPresupuesto(p.id)}
                                         style={{ background:"none", border:"none", color:"#fca5a5",
@@ -2686,6 +2710,16 @@ ${partidas.map(p=>`
           {/* ═══ CARTA GANTT ═══ */}
           {tab==="gantt" && (
             <GanttObra obra={obra} presupuesto={presupuesto} />
+          )}
+
+          {/* ═══ CONTROL DE COSTOS ═══ */}
+          {tab==="costos" && (
+            <ControlCostos obra={obra} presupuesto={presupuesto} pagos={pagos} />
+          )}
+
+          {/* ═══ FLUJO DE CAJA ═══ */}
+          {tab==="flujo" && (
+            <FlujoCaja obra={obra} presupuesto={presupuesto} pagos={pagos} />
           )}
 
         </div>
