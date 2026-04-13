@@ -13,6 +13,7 @@ import { diasCorridos } from '../lib/utils';
 import Cubicaciones from '../components/Cubicaciones';
 import ComparadorOfertas from '../components/ComparadorOfertas';
 import LineaBase from '../components/LineaBase';
+import { Library, ClipboardList, CalendarDays, FileEdit, Wrench, Paperclip, Settings, BarChart3, Home as HomeIcon, FileText, Hammer, Ruler, Upload, Search, CheckCircle } from 'lucide-react';
 
 // Factor IPC acumulado Chile 2017→2025 (INE)
 const IPC_2017_2025 = 1.65;
@@ -1209,15 +1210,16 @@ function Home() {
     setTab("resumen");
   };
 
+  const ICON_MAP = { biblioteca: Library, resumen: ClipboardList, gantt: CalendarDays, eett: FileEdit, editor: Wrench, anexos: Paperclip, config: Settings, ofertas: BarChart3 };
   const TABS_RAIL = [
-    { id: "biblioteca",  icon: "📚", label: "Biblioteca"  },
-    { id: "resumen",     icon: "📋", label: "Presupuesto" },
-    { id: "gantt",       icon: "📅", label: "Gantt"       },
-    { id: "eett",        icon: "📝", label: "EE.TT."      },
-    { id: "editor",      icon: "🔧", label: "Editor APU"  },
-    { id: "anexos",      icon: "📎", label: "Anexos"      },
-    { id: "config",      icon: "⚙️", label: "Config"      },
-    { id: "ofertas",     icon: "📊", label: "Ofertas"     },
+    { id: "biblioteca",  label: "Biblioteca"  },
+    { id: "resumen",     label: "Presupuesto" },
+    { id: "gantt",       label: "Gantt"       },
+    { id: "eett",        label: "EE.TT."      },
+    { id: "editor",      label: "Editor APU"  },
+    { id: "anexos",      label: "Anexos"      },
+    { id: "config",      label: "Config"      },
+    { id: "ofertas",     label: "Ofertas"     },
   ];
 
   return (
@@ -1241,7 +1243,7 @@ function Home() {
           <button key={t.id} id={`tour-tab-${t.id}`} onClick={() => setTab(t.id)} title={t.label}
             style={{ animationDelay: `${i * 40}ms` }}
             className={`relative w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 rail-btn anim-fade-up ${tab === t.id ? "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200 shadow-sm" : "text-gray-400 hover:bg-gray-50 hover:text-gray-700"}`}>
-            <span className={`text-lg leading-none transition-transform duration-150 ${tab === t.id ? "scale-110" : "scale-100"}`}>{t.icon}</span>
+            {React.createElement(ICON_MAP[t.id], { size: 20, strokeWidth: 1.8, className: `transition-transform duration-150 ${tab === t.id ? "scale-110" : "scale-100"}` })}
             <span className="text-[9px] font-medium leading-none">{t.label}</span>
             {t.id === "resumen" && proyecto.length > 0 && (
               <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-indigo-500 text-white text-[9px] rounded-full flex items-center justify-center font-bold shadow-sm">{proyecto.length}</span>
@@ -1251,7 +1253,7 @@ function Home() {
         <div className="flex-1" />
         <button onClick={() => router.push("/dashboard")} title="Volver al dashboard"
           className="w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 text-gray-400 hover:bg-red-50 hover:text-red-400 rail-btn">
-          <span className="text-lg leading-none">🏠</span>
+          <HomeIcon size={20} strokeWidth={1.8}/>
           <span className="text-[9px] font-medium">Inicio</span>
         </button>
       </div>
@@ -1933,9 +1935,9 @@ function Home() {
                     Tienes <strong>{proyecto.length}</strong> partidas en tu presupuesto. Haz clic en "Comparar ofertas" para subir hasta 3 cotizaciones y encontrar los mejores precios.
                   </p>
                   <div className="grid grid-cols-3 gap-4">
-                    {[["📥","Sube cotizaciones","Excel o ingreso manual"],["🔍","Compara precios","Lado a lado por partida"],["✅","Aplica mejores","Un clic para actualizar"]].map(([ic,t,s],i)=>(
+                    {[[Upload,"Sube cotizaciones","Excel o ingreso manual"],[Search,"Compara precios","Lado a lado por partida"],[CheckCircle,"Aplica mejores","Un clic para actualizar"]].map(([ic,t,s],i)=>(
                       <div key={i} className="bg-gray-50 rounded-xl p-4 text-center">
-                        <div className="text-2xl mb-2">{ic}</div>
+                        <div className="flex justify-center mb-2">{React.createElement(ic, {size:24, strokeWidth:1.8, className:"text-indigo-500"})}</div>
                         <div className="text-xs font-semibold text-gray-700">{t}</div>
                         <div className="text-[10px] text-gray-400 mt-1">{s}</div>
                       </div>
@@ -3768,10 +3770,10 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
   }
 
   const SECCION_INFO = [
-    { key: "descripcion",   label: "Descripción",        icon: "📄" },
-    { key: "materiales",    label: "Materiales y Equipos", icon: "🧱" },
-    { key: "ejecucion",     label: "Ejecución",           icon: "🔨" },
-    { key: "medicion_pago", label: "Medición y Pago",     icon: "📐" },
+    { key: "descripcion",   label: "Descripción",        Icon: FileText },
+    { key: "materiales",    label: "Materiales y Equipos", Icon: Hammer },
+    { key: "ejecucion",     label: "Ejecución",           Icon: Wrench },
+    { key: "medicion_pago", label: "Medición y Pago",     Icon: Ruler },
   ];
 
   return (
@@ -3975,7 +3977,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
               {/* Sections */}
               {isOpen && (
                 <div className="border-t border-gray-100 divide-y divide-gray-50 accordion-item">
-                  {SECCION_INFO.map(({ key, label, icon }) => {
+                  {SECCION_INFO.map(({ key, label, Icon }) => {
                     const texto = getSeccion(codigo, key);
                     if (!texto) return null;
                     const isCustom = templatesExtra[codigo]?.[key];
@@ -3983,7 +3985,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
                       <div key={key} className="px-5 py-3.5 pl-[72px]">
                         {/* Section label: 9px vivid blue + fade line */}
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm shrink-0">{icon}</span>
+                          <Icon size={14} strokeWidth={1.8} className="text-blue-500 shrink-0"/>
                           <span className="text-[9px] font-extrabold uppercase tracking-[.12em] text-blue-600">{label}</span>
                           <div className="flex-1 h-px rounded" style={{background:"linear-gradient(90deg,#dbeafe,transparent)"}}/>
                           {isCustom && (

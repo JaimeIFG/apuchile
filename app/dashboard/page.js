@@ -9,6 +9,7 @@ import LoadingOverlay from "../components/LoadingOverlay";
 import SpotlightTour from "../components/SpotlightTour";
 import { diasCorridos } from "../lib/utils";
 import { useTheme } from "../components/ThemeProvider";
+import { Plus, FolderOpen, HardHat, Package, Settings, Home, Lock, Building2, Ruler, Palette, FileOutput, Hand, User, Zap, FolderSearch, Key, Trash2 } from "lucide-react";
 
 const REGIONES = [
   { label: "Región Metropolitana", zona: 0 },
@@ -666,15 +667,15 @@ export default function Dashboard() {
           {/* ── Acciones principales ── */}
           <div id="tour-acciones" className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
             {[
-              { icon:"＋", label:"Nuevo proyecto",  action:() => setCreando(true),
+              { icon:<Plus size={28} strokeWidth={2.2}/>, label:"Nuevo proyecto",  action:() => setCreando(true),
                 st:{background:"linear-gradient(135deg,#4338ca,#6366f1)", borderBottom:"3px solid #818cf8"}, txt:"#fff" },
-              { icon:"📂", label:"Mis proyectos",   action:() => setModalProyectos(true),
+              { icon:<FolderOpen size={28} strokeWidth={1.8}/>, label:"Mis proyectos",   action:() => setModalProyectos(true),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #6366f1"}, txt:"#374151" },
-              { icon:"🏗️", label:"Ejecución de Obras", action:() => router.push("/obras"),
+              { icon:<HardHat size={28} strokeWidth={1.8}/>, label:"Ejecución de Obras", action:() => router.push("/obras"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #0891b2"}, txt:"#374151" },
-              { icon:"📦", label:"Banco de Precios", action:() => router.push("/banco-precios"),
+              { icon:<Package size={28} strokeWidth={1.8}/>, label:"Banco de Precios", action:() => router.push("/banco-precios"),
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #10b981"}, txt:"#374151" },
-              { icon:"���️", label:"Configuración",   action:() => { setModalConfig(true); setConfigTab("cuenta"); },
+              { icon:<Settings size={28} strokeWidth={1.8}/>, label:"Configuración",   action:() => { setModalConfig(true); setConfigTab("cuenta"); },
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #64748b"}, txt:"#374151" },
             ].map((c, i) => (
               <button key={i} onClick={c.action}
@@ -1114,11 +1115,11 @@ export default function Dashboard() {
             {/* Tabs */}
             <div className="flex border-b border-gray-100 px-6 gap-1 shrink-0 overflow-x-auto">
               {[
-                { id: "cuenta",   icon: "🔐", label: "Cuenta" },
-                { id: "empresa",  icon: "🏢", label: "Empresa" },
-                { id: "proyecto", icon: "📐", label: "Valores default" },
-                { id: "apariencia", icon: "🎨", label: "Apariencia" },
-                { id: "pdf",      icon: "📄", label: "Exportación" },
+                { id: "cuenta",   icon: <Lock size={15}/>, label: "Cuenta" },
+                { id: "empresa",  icon: <Building2 size={15}/>, label: "Empresa" },
+                { id: "proyecto", icon: <Ruler size={15}/>, label: "Valores default" },
+                { id: "apariencia", icon: <Palette size={15}/>, label: "Apariencia" },
+                { id: "pdf",      icon: <FileOutput size={15}/>, label: "Exportación" },
               ].map(t => (
                 <button key={t.id} onClick={() => setConfigTab(t.id)}
                   className={`flex items-center gap-1.5 px-3 py-3 text-[11px] font-semibold whitespace-nowrap border-b-2 transition-colors ${configTab === t.id ? "border-indigo-500 text-indigo-700" : "border-transparent text-gray-400 hover:text-gray-600"}`}>
@@ -1514,11 +1515,11 @@ export default function Dashboard() {
       {/* ── Mobile bottom nav ── */}
       <nav className="mobile-bottom-nav">
         {[
-          { icon: "🏠", label: "Inicio",      action: () => {} },
-          { icon: "📂", label: "Proyectos",   action: () => setModalProyectos(true) },
-          { icon: "🏗️", label: "Obras",       action: () => router.push("/obras") },
-          { icon: "📦", label: "Precios",     action: () => router.push("/banco-precios") },
-          { icon: "⚙️", label: "Config",      action: () => { setModalConfig(true); setConfigTab("cuenta"); } },
+          { icon: <Home size={20}/>, label: "Inicio",      action: () => {} },
+          { icon: <FolderOpen size={20}/>, label: "Proyectos",   action: () => setModalProyectos(true) },
+          { icon: <HardHat size={20}/>, label: "Obras",       action: () => router.push("/obras") },
+          { icon: <Package size={20}/>, label: "Precios",     action: () => router.push("/banco-precios") },
+          { icon: <Settings size={20}/>, label: "Config",      action: () => { setModalConfig(true); setConfigTab("cuenta"); } },
         ].map((item, i) => (
           <button key={i} onClick={item.action}
             style={{ flex: 1, background: "none", border: "none", cursor: "pointer",
