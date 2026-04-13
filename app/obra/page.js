@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
@@ -3726,11 +3726,29 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
   );
 }
 
+class ObraErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { error: null }; }
+  static getDerivedStateFromError(error) { return { error }; }
+  render() {
+    if (this.state.error) return (
+      <div style={{padding:40,fontFamily:"monospace",color:"#ef4444",whiteSpace:"pre-wrap"}}>
+        <h2>Error en página de obra</h2>
+        <p>{this.state.error?.message}</p>
+        <pre style={{fontSize:11,color:"#64748b",maxHeight:400,overflow:"auto"}}>{this.state.error?.stack}</pre>
+        <button onClick={()=>window.location.reload()} style={{marginTop:16,padding:"8px 16px",background:"#4338ca",color:"#fff",border:"none",borderRadius:8,cursor:"pointer"}}>Recargar</button>
+      </div>
+    );
+    return this.props.children;
+  }
+}
+
 function ObraPage() {
   return (
-    <Suspense fallback={<div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",color:"#64748b"}}>Cargando obra…</div>}>
-      <ObraDetail />
-    </Suspense>
+    <ObraErrorBoundary>
+      <Suspense fallback={<div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",color:"#64748b"}}>Cargando obra…</div>}>
+        <ObraDetail />
+      </Suspense>
+    </ObraErrorBoundary>
   );
 }
 
