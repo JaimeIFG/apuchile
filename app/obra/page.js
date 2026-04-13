@@ -1,33 +1,25 @@
 "use client";
-import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
 import { extractBudgetFromPDF } from "../lib/extractPresupuesto";
 import ONDAC_APUS from "../ondac_data_nuevo.json";
+import CurvaS from "../components/CurvaS";
+import IndicadoresEVM from "../components/IndicadoresEVM";
+import EstadoPagoGenerator from "../components/EstadoPagoGenerator";
+import GanttObra from "../components/GanttObra";
+import ControlCostos from "../components/ControlCostos";
+import FlujoCaja from "../components/FlujoCaja";
+import HistogramaRecursos from "../components/HistogramaRecursos";
+import ComparadorCotizaciones from "../components/ComparadorCotizaciones";
+import MedidorPlano from "../components/MedidorPlano";
 import {
   LayoutDashboard, FolderOpen, CircleDollarSign, CalendarRange,
   FileText, BookOpen, ClipboardList, FilePen, CheckCircle, Camera,
   Receipt, Banknote, ShieldCheck, TrendingUp, ArrowLeftRight,
   GanttChart, HardHat,
 } from "lucide-react";
-
-const CurvaS = lazy(() => import("../components/CurvaS"));
-const IndicadoresEVM = lazy(() => import("../components/IndicadoresEVM"));
-const EstadoPagoGenerator = lazy(() => import("../components/EstadoPagoGenerator"));
-const GanttObra = lazy(() => import("../components/GanttObra"));
-const ControlCostos = lazy(() => import("../components/ControlCostos"));
-const FlujoCaja = lazy(() => import("../components/FlujoCaja"));
-const HistogramaRecursos = lazy(() => import("../components/HistogramaRecursos"));
-const ComparadorCotizaciones = lazy(() => import("../components/ComparadorCotizaciones"));
-const MedidorPlano = lazy(() => import("../components/MedidorPlano"));
-
-const LUCIDE_ICONS = {
-  LayoutDashboard, FolderOpen, CircleDollarSign, CalendarRange,
-  FileText, BookOpen, ClipboardList, FilePen, CheckCircle, Camera,
-  Receipt, Banknote, ShieldCheck, TrendingUp, ArrowLeftRight,
-  GanttChart, HardHat,
-};
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -1570,72 +1562,22 @@ ${partidas.map(p=>`
 </body></html>`;
   }
 
-  // ── Navegación agrupada ──
-  const [seccionActiva, setSeccionActiva] = useState("resumen");
-  const [subTab, setSubTab] = useState(null);
-
-  const SECCIONES = [
-    { id:"resumen",      label:"Resumen",       iconName:"LayoutDashboard" },
-    { id:"documentos",   label:"Documentos",    iconName:"FolderOpen" },
-    { id:"financiero",   label:"Financiero",    iconName:"CircleDollarSign" },
-    { id:"planificacion",label:"Planificación", iconName:"CalendarRange" },
-  ];
-
-  const SUB_TABS = {
-    documentos: [
-      { id:"ficha",          label:"Ficha técnica",  iconName:"FileText" },
-      { id:"docs",           label:"Archivos",       iconName:"FolderOpen", badge:docs.length },
-      { id:"bitacora",       label:"Bitácora",       iconName:"BookOpen" },
-      { id:"informes",       label:"Informes",       iconName:"ClipboardList" },
-      { id:"modificaciones", label:"Modificaciones", iconName:"FilePen" },
-      { id:"recepciones",    label:"Recepciones",    iconName:"CheckCircle" },
-      { id:"fotos",          label:"Fotos",          iconName:"Camera", badge:fotos.length },
-    ],
-    financiero: [
-      { id:"presupuesto", label:"Presupuesto",     iconName:"Receipt", badge:presupuesto.length },
-      { id:"pagos",       label:"Estados de Pago",  iconName:"Banknote" },
-      { id:"garantias",   label:"Garantías",        iconName:"ShieldCheck" },
-      { id:"costos",      label:"Control Costos",   iconName:"TrendingUp" },
-      { id:"flujo",       label:"Flujo de Caja",    iconName:"ArrowLeftRight" },
-    ],
-    planificacion: [
-      { id:"gantt",     label:"Carta Gantt",   iconName:"GanttChart" },
-      { id:"recursos",  label:"Recursos",      iconName:"HardHat" },
-    ],
-  };
-
-  const handleSeccion = (secId) => {
-    setSeccionActiva(secId);
-    if (secId === "resumen") { setTab("resumen"); setSubTab(null); }
-    else {
-      const subs = SUB_TABS[secId];
-      if (subs?.length) { setTab(subs[0].id); setSubTab(subs[0].id); }
-    }
-  };
-
-  const handleSubTab = (subId) => {
-    setSubTab(subId);
-    setTab(subId);
-    if (subId === "docs") { setDocsOpen(false); setCatActiva(null); }
-  };
-
-  // Legacy NAV for mobile (kept for backward compat)
   const NAV = [
-    { id:"resumen",   icon:"", label:"Resumen"         },
-    { id:"ficha",     icon:"", label:"Ficha"            },
-    { id:"docs",      icon:"", label:"Archivos", sub:true },
-    { id:"pagos",     icon:"", label:"EP" },
-    { id:"garantias", icon:"", label:"Garantías"        },
-    { id:"bitacora",  icon:"", label:"Bitácora"         },
-    { id:"informes",  icon:"", label:"Informes"         },
-    { id:"modificaciones", icon:"", label:"Modif." },
-    { id:"recepciones",    icon:"", label:"Recep."    },
-    { id:"fotos",     icon:"", label:"Fotos", badge:fotos.length },
-    { id:"presupuesto", icon:"", label:"Presup.", badge:presupuesto.length },
-    { id:"gantt",        icon:"", label:"Gantt" },
-    { id:"costos",       icon:"", label:"Costos" },
-    { id:"flujo",        icon:"", label:"Flujo" },
-    { id:"recursos",     icon:"", label:"Recursos" },
+    { id:"resumen",   Icon:LayoutDashboard, label:"Resumen"         },
+    { id:"ficha",     Icon:FileText, label:"Ficha"            },
+    { id:"docs",      Icon:FolderOpen, label:"Banco de Datos", sub:true },
+    { id:"pagos",     Icon:Banknote, label:"Estados de Pago" },
+    { id:"garantias", Icon:ShieldCheck, label:"Garantías"        },
+    { id:"bitacora",  Icon:BookOpen, label:"Bitácora"         },
+    { id:"informes",  Icon:ClipboardList, label:"Informes"         },
+    { id:"modificaciones", Icon:FilePen, label:"Modificaciones" },
+    { id:"recepciones",    Icon:CheckCircle, label:"Recepciones"    },
+    { id:"fotos",     Icon:Camera, label:"Fotos", badge:fotos.length },
+    { id:"presupuesto", Icon:Receipt, label:"Presupuesto", badge:presupuesto.length },
+    { id:"gantt",        Icon:GanttChart, label:"Carta Gantt" },
+    { id:"costos",       Icon:TrendingUp, label:"Control Costos" },
+    { id:"flujo",        Icon:ArrowLeftRight, label:"Flujo de Caja" },
+    { id:"recursos",     Icon:HardHat, label:"Recursos" },
   ];
 
   return (
@@ -1666,106 +1608,100 @@ ${partidas.map(p=>`
       {/* Body */}
       <div style={{ display:"flex", flex:1, overflow:"hidden" }}>
 
-        {/* SIDEBAR — Grouped navigation */}
-        <div className="hidden md:flex" style={{ width:230, background:"#fff", borderRight:"1px solid #e2e8f0",
+        {/* SIDEBAR */}
+        <div className="hidden md:flex" style={{ width:220, background:"#fff", borderRight:"1px solid #e2e8f0",
           flexDirection:"column", overflowY:"auto", flexShrink:0 }}>
-
-          {/* Main sections */}
-          <div style={{ padding:"14px 12px 8px" }}>
-            <div style={{ display:"flex", gap:4 }}>
-              {SECCIONES.map(sec => {
-                const Icon = LUCIDE_ICONS[sec.iconName];
-                const active = seccionActiva === sec.id;
+          <div style={{ padding:"12px 10px", flex:1 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6 }}>
+              {NAV.map(item => {
+                const active = tab===item.id;
+                const colors = {
+                  resumen:       { bg:"linear-gradient(135deg,#4338ca,#6366f1)", border:"#818cf8", activeTxt:"#fff" },
+                  ficha:         { bg:"#fff", border:"#6366f1", activeTxt:"#4338ca" },
+                  docs:          { bg:"#fff", border:"#f59e0b", activeTxt:"#92400e" },
+                  pagos:         { bg:"#fff", border:"#0891b2", activeTxt:"#0e7490" },
+                  garantias:     { bg:"#fff", border:"#ef4444", activeTxt:"#991b1b" },
+                  bitacora:      { bg:"#fff", border:"#8b5cf6", activeTxt:"#6d28d9" },
+                  informes:      { bg:"#fff", border:"#3b82f6", activeTxt:"#1d4ed8" },
+                  modificaciones:{ bg:"#fff", border:"#f97316", activeTxt:"#c2410c" },
+                  recepciones:   { bg:"#fff", border:"#10b981", activeTxt:"#047857" },
+                  fotos:         { bg:"#fff", border:"#ec4899", activeTxt:"#be185d" },
+                  presupuesto:   { bg:"#fff", border:"#eab308", activeTxt:"#a16207" },
+                };
+                const c = colors[item.id] || colors.resumen;
+                const isFirst = item.id === "resumen";
                 return (
-                  <button key={sec.id} onClick={() => handleSeccion(sec.id)}
-                    style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:4,
-                      padding:"10px 4px", borderRadius:12, border:"none", cursor:"pointer",
+                  <button key={item.id}
+                    onClick={() => {
+                      if (item.sub) {
+                        setDocsOpen(o=>!o);
+                        if (tab!=="docs") { setTab("docs"); setCatActiva(null); }
+                      } else {
+                        setTab(item.id); setDocsOpen(false);
+                      }
+                    }}
+                    className="btn-press card-hover"
+                    style={{
+                      display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
+                      gap:4, padding:"12px 6px", borderRadius:14, border:"none", cursor:"pointer",
                       fontFamily:"inherit", transition:"all .15s",
-                      background: active ? "#4338ca" : "#f8fafc",
-                      boxShadow: active ? "0 2px 12px rgba(67,56,202,.25)" : "none" }}>
-                    {Icon && <Icon size={18} strokeWidth={active?2.2:1.6}
-                      color={active?"#fff":"#94a3b8"} />}
-                    <span style={{ fontSize:9, fontWeight:active?700:500,
-                      color:active?"#fff":"#64748b", lineHeight:1.1, textAlign:"center" }}>
-                      {sec.label}
-                    </span>
+                      background: active && isFirst ? c.bg : active ? "#eef2ff" : "#fff",
+                      border: active ? `1.5px solid ${c.border}` : "1.5px solid #e2e8f0",
+                      borderBottom: `3px solid ${active ? c.border : "#e2e8f0"}`,
+                      boxShadow: active ? `0 2px 8px ${c.border}22` : "0 1px 3px rgba(0,0,0,.04)",
+                      position:"relative",
+                    }}>
+                    {item.Icon && <item.Icon size={20} strokeWidth={1.8} color={active && isFirst ? "#fff" : active ? c.activeTxt : "#94a3b8"} />}
+                    <span style={{
+                      fontSize:10, fontWeight:active?700:600, textAlign:"center", lineHeight:1.2,
+                      color: active && isFirst ? "#fff" : active ? c.activeTxt : "#64748b",
+                    }}>{item.label}</span>
+                    {item.badge>0 && (
+                      <span style={{ position:"absolute", top:4, right:4, background:"#6366f1", color:"#fff",
+                        fontSize:8, fontWeight:800, padding:"1px 5px", borderRadius:99, minWidth:16,
+                        textAlign:"center" }}>{item.badge}</span>
+                    )}
+                    {item.sub && <span style={{ fontSize:7, color:"#94a3b8", position:"absolute", bottom:3, right:6 }}>{docsOpen?"▲":"▼"}</span>}
                   </button>
                 );
               })}
             </div>
+
+            {/* Subcategorías docs expandidas debajo del grid */}
+            {docsOpen && (
+              <div style={{ marginTop:8, background:"#fafbfc", borderRadius:10, padding:"6px", border:"1px solid #e2e8f0" }}>
+                <button onClick={()=>{ setTab("docs"); setCatActiva(null); }}
+                  style={{ width:"100%", padding:"5px 10px", borderRadius:7, border:"none",
+                    cursor:"pointer", fontSize:11, fontFamily:"inherit", textAlign:"left",
+                    background:tab==="docs"&&!catActiva?"#eef2ff":"transparent",
+                    color:tab==="docs"&&!catActiva?"#6366f1":"#94a3b8", fontWeight:tab==="docs"&&!catActiva?700:400 }}>
+                  Todas las categorías
+                </button>
+                {CATEGORIAS_DOCS.map(cat => {
+                  const cnt = docs.filter(d=>d.categoria===cat).length;
+                  const active = tab==="docs"&&catActiva===cat;
+                  return (
+                    <button key={cat} onClick={()=>{ setTab("docs"); setCatActiva(cat); }}
+                      style={{ width:"100%", display:"flex", alignItems:"center", gap:4,
+                        padding:"5px 10px", borderRadius:7, border:"none", cursor:"pointer",
+                        background:active?"#eef2ff":"transparent",
+                        color:active?"#6366f1":"#64748b",
+                        fontSize:11, fontFamily:"inherit", textAlign:"left", fontWeight:active?700:400 }}>
+                      <span style={{ flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{cat}</span>
+                      {cnt>0 && <span style={{ background:"#eef2ff", color:"#6366f1", fontSize:9,
+                        fontWeight:700, padding:"1px 4px", borderRadius:99, flexShrink:0 }}>{cnt}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Sub-tabs for active section */}
-          {SUB_TABS[seccionActiva] && (
-            <div style={{ padding:"0 12px 12px", flex:1 }}>
-              <div style={{ fontSize:9, fontWeight:700, color:"#94a3b8", textTransform:"uppercase",
-                letterSpacing:".06em", padding:"6px 8px 6px", marginBottom:2 }}>
-                {SECCIONES.find(s=>s.id===seccionActiva)?.label}
-              </div>
-              {SUB_TABS[seccionActiva].map(st => {
-                const Icon = LUCIDE_ICONS[st.iconName];
-                const active = tab === st.id;
-                return (
-                  <button key={st.id} onClick={() => handleSubTab(st.id)}
-                    style={{ width:"100%", display:"flex", alignItems:"center", gap:10,
-                      padding:"9px 12px", borderRadius:10, border:"none", cursor:"pointer",
-                      fontFamily:"inherit", transition:"all .12s", marginBottom:2,
-                      background: active ? "#eef2ff" : "transparent",
-                      position:"relative" }}>
-                    {Icon && <Icon size={16} strokeWidth={active?2:1.5}
-                      color={active?"#4338ca":"#94a3b8"} />}
-                    <span style={{ fontSize:12, fontWeight:active?650:450,
-                      color: active?"#1e293b":"#64748b", flex:1, textAlign:"left" }}>
-                      {st.label}
-                    </span>
-                    {st.badge>0 && (
-                      <span style={{ background:active?"#4338ca":"#e2e8f0",
-                        color:active?"#fff":"#64748b", fontSize:9, fontWeight:700,
-                        padding:"1px 6px", borderRadius:99, minWidth:18, textAlign:"center" }}>
-                        {st.badge}
-                      </span>
-                    )}
-                    {active && <div style={{ position:"absolute", left:0, top:"20%", bottom:"20%",
-                      width:3, borderRadius:2, background:"#4338ca" }}/>}
-                  </button>
-                );
-              })}
-
-              {/* Doc categories sub-list */}
-              {seccionActiva==="documentos" && tab==="docs" && (
-                <div style={{ marginTop:4, marginLeft:24, borderLeft:"1px solid #e2e8f0", paddingLeft:8 }}>
-                  <button onClick={()=>setCatActiva(null)}
-                    style={{ width:"100%", padding:"4px 8px", borderRadius:6, border:"none",
-                      cursor:"pointer", fontSize:10, fontFamily:"inherit", textAlign:"left",
-                      background:!catActiva?"#eef2ff":"transparent",
-                      color:!catActiva?"#4338ca":"#94a3b8", fontWeight:!catActiva?700:400 }}>
-                    Todas
-                  </button>
-                  {CATEGORIAS_DOCS.map(cat => {
-                    const cnt = docs.filter(d=>d.categoria===cat).length;
-                    const active = catActiva===cat;
-                    return (
-                      <button key={cat} onClick={()=>setCatActiva(cat)}
-                        style={{ width:"100%", display:"flex", alignItems:"center", gap:4,
-                          padding:"4px 8px", borderRadius:6, border:"none", cursor:"pointer",
-                          background:active?"#eef2ff":"transparent",
-                          color:active?"#4338ca":"#64748b",
-                          fontSize:10, fontFamily:"inherit", textAlign:"left", fontWeight:active?600:400 }}>
-                        <span style={{ flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{cat}</span>
-                        {cnt>0 && <span style={{ fontSize:8, color:"#94a3b8" }}>{cnt}</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Save button for ficha */}
           {tab==="ficha" && (
-            <div style={{ padding:"10px 12px", borderTop:"1px solid #f1f5f9" }}>
+            <div style={{ padding:"10px 8px", borderTop:"1px solid #f1f5f9" }}>
               <button onClick={guardar} disabled={guardando}
-                style={{ width:"100%", background:guardadoOk?"#818cf8":"#4338ca",
+                className="btn-primary"
+                style={{ width:"100%", background:guardadoOk?"#818cf8":"#6366f1",
                   color:"#fff", border:"none", borderRadius:10, padding:"10px",
                   fontSize:13, fontWeight:700, cursor:"pointer", fontFamily:"inherit", transition:"background .2s" }}>
                 {guardando?"Guardando...":guardadoOk?"✓ Guardado":"Guardar ficha"}
@@ -1774,45 +1710,37 @@ ${partidas.map(p=>`
           )}
         </div>
 
-        {/* MOBILE NAV - grouped */}
+        {/* MOBILE NAV - horizontal scroll */}
         <div className="md:hidden" style={{ background:"#fff", borderBottom:"1px solid #e2e8f0",
-          flexShrink:0 }}>
-          {/* Main sections */}
-          <div style={{ display:"flex", borderBottom:"1px solid #f1f5f9" }}>
-            {SECCIONES.map(sec => {
-              const Icon = LUCIDE_ICONS[sec.iconName];
-              const active = seccionActiva === sec.id;
+          overflowX:"auto", flexShrink:0, padding:"8px 8px" }}>
+          <div style={{ display:"flex", gap:6, minWidth:"max-content" }}>
+            {NAV.map(item => {
+              const active = tab===item.id;
               return (
-                <button key={sec.id} onClick={() => handleSeccion(sec.id)}
-                  style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:2,
-                    padding:"8px 4px", border:"none", cursor:"pointer", fontFamily:"inherit",
-                    background: active ? "#eef2ff" : "transparent",
-                    borderBottom: active ? "2px solid #4338ca" : "2px solid transparent" }}>
-                  {Icon && <Icon size={16} strokeWidth={active?2.2:1.5}
-                    color={active?"#4338ca":"#94a3b8"} />}
+                <button key={item.id}
+                  onClick={() => {
+                    if (item.sub) {
+                      setDocsOpen(o=>!o);
+                      if (tab!=="docs") { setTab("docs"); setCatActiva(null); }
+                    } else {
+                      setTab(item.id); setDocsOpen(false);
+                    }
+                  }}
+                  style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2,
+                    padding:"8px 12px", borderRadius:10, border:"none", cursor:"pointer",
+                    background:active?"#eef2ff":"transparent", fontFamily:"inherit",
+                    position:"relative", flexShrink:0 }}>
+                  {item.Icon && <item.Icon size={16} strokeWidth={1.8} color={active?"#6366f1":"#94a3b8"} />}
                   <span style={{ fontSize:9, fontWeight:active?700:500,
-                    color:active?"#4338ca":"#64748b" }}>{sec.label}</span>
+                    color:active?"#6366f1":"#64748b", whiteSpace:"nowrap" }}>{item.label}</span>
+                  {item.badge>0 && (
+                    <span style={{ position:"absolute", top:2, right:2, background:"#6366f1", color:"#fff",
+                      fontSize:7, fontWeight:800, padding:"0px 4px", borderRadius:99 }}>{item.badge}</span>
+                  )}
                 </button>
               );
             })}
           </div>
-          {/* Sub-tabs */}
-          {SUB_TABS[seccionActiva] && (
-            <div style={{ display:"flex", gap:2, overflowX:"auto", padding:"6px 8px" }}>
-              {SUB_TABS[seccionActiva].map(st => {
-                const active = tab === st.id;
-                return (
-                  <button key={st.id} onClick={() => handleSubTab(st.id)}
-                    style={{ padding:"5px 10px", borderRadius:8, border:"none", cursor:"pointer",
-                      fontSize:10, fontWeight:active?700:500, whiteSpace:"nowrap", fontFamily:"inherit",
-                      background: active ? "#4338ca" : "#f1f5f9",
-                      color: active ? "#fff" : "#64748b", flexShrink:0 }}>
-                    {st.label}
-                  </button>
-                );
-              })}
-            </div>
-          )}
         </div>
 
         {/* CONTENIDO */}
@@ -3727,29 +3655,11 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
   );
 }
 
-class ObraErrorBoundary extends React.Component {
-  constructor(props) { super(props); this.state = { error: null }; }
-  static getDerivedStateFromError(error) { return { error }; }
-  render() {
-    if (this.state.error) return (
-      <div style={{padding:40,fontFamily:"monospace",color:"#ef4444",whiteSpace:"pre-wrap"}}>
-        <h2>Error en página de obra</h2>
-        <p>{this.state.error?.message}</p>
-        <pre style={{fontSize:11,color:"#64748b",maxHeight:400,overflow:"auto"}}>{this.state.error?.stack}</pre>
-        <button onClick={()=>window.location.reload()} style={{marginTop:16,padding:"8px 16px",background:"#4338ca",color:"#fff",border:"none",borderRadius:8,cursor:"pointer"}}>Recargar</button>
-      </div>
-    );
-    return this.props.children;
-  }
-}
-
 function ObraPage() {
   return (
-    <ObraErrorBoundary>
-      <Suspense fallback={<div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",color:"#64748b"}}>Cargando obra…</div>}>
-        <ObraDetail />
-      </Suspense>
-    </ObraErrorBoundary>
+    <Suspense fallback={<div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",color:"#64748b"}}>Cargando obra…</div>}>
+      <ObraDetail />
+    </Suspense>
   );
 }
 
