@@ -11,6 +11,9 @@ import EstadoPagoGenerator from "../components/EstadoPagoGenerator";
 import GanttObra from "../components/GanttObra";
 import ControlCostos from "../components/ControlCostos";
 import FlujoCaja from "../components/FlujoCaja";
+import HistogramaRecursos from "../components/HistogramaRecursos";
+import ComparadorCotizaciones from "../components/ComparadorCotizaciones";
+import MedidorPlano from "../components/MedidorPlano";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -1252,6 +1255,8 @@ function ObraDetail() {
   const [mFoto,setMFoto]  = useState(false);
   const [mPresupuesto, setMPresupuesto] = useState(false);
   const [mEPGenerator, setMEPGenerator] = useState(false);
+  const [mComparador, setMComparador] = useState(false);
+  const [mMedidor, setMMedidor] = useState(false);
   const [lightbox,setLb]  = useState(null);
   const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
   const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
@@ -1566,6 +1571,7 @@ ${partidas.map(p=>`
     { id:"gantt",        icon:"📅", label:"Carta Gantt" },
     { id:"costos",       icon:"📊", label:"Control Costos" },
     { id:"flujo",        icon:"💰", label:"Flujo de Caja" },
+    { id:"recursos",     icon:"👷", label:"Recursos" },
   ];
 
   return (
@@ -2722,6 +2728,27 @@ ${partidas.map(p=>`
             <FlujoCaja obra={obra} presupuesto={presupuesto} pagos={pagos} />
           )}
 
+          {/* ═══ RECURSOS ═══ */}
+          {tab==="recursos" && (
+            <div>
+              <HistogramaRecursos obra={obra} presupuesto={presupuesto} />
+              <div style={{ marginTop:20, display:"flex", gap:10 }}>
+                {presupuesto.length>0 && (
+                  <button onClick={()=>setMComparador(true)}
+                    style={{ background:"#fff", color:"#4338ca", border:"1.5px solid #c7d2fe", borderRadius:10,
+                      padding:"10px 20px", fontSize:13, fontWeight:600, cursor:"pointer" }}>
+                    📊 Comparar Cotizaciones
+                  </button>
+                )}
+                <button onClick={()=>setMMedidor(true)}
+                  style={{ background:"#fff", color:"#4338ca", border:"1.5px solid #c7d2fe", borderRadius:10,
+                    padding:"10px 20px", fontSize:13, fontWeight:600, cursor:"pointer" }}>
+                  📐 Medir sobre Plano
+                </button>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
 
@@ -2742,6 +2769,16 @@ ${partidas.map(p=>`
             }
           }}
         />
+      )}
+
+      {/* Comparador Cotizaciones */}
+      {mComparador && (
+        <ComparadorCotizaciones presupuesto={presupuesto} onClose={()=>setMComparador(false)} />
+      )}
+
+      {/* Medidor de Plano */}
+      {mMedidor && (
+        <MedidorPlano onClose={()=>setMMedidor(false)} />
       )}
 
       {/* Lightbox */}
