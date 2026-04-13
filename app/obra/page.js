@@ -1,25 +1,26 @@
 "use client";
-import React, { useState, useEffect, useRef, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { useInactividad } from "../lib/useInactividad";
 import { extractBudgetFromPDF } from "../lib/extractPresupuesto";
 import ONDAC_APUS from "../ondac_data_nuevo.json";
-import CurvaS from "../components/CurvaS";
-import IndicadoresEVM from "../components/IndicadoresEVM";
-import EstadoPagoGenerator from "../components/EstadoPagoGenerator";
-import GanttObra from "../components/GanttObra";
-import ControlCostos from "../components/ControlCostos";
-import FlujoCaja from "../components/FlujoCaja";
-import HistogramaRecursos from "../components/HistogramaRecursos";
-import ComparadorCotizaciones from "../components/ComparadorCotizaciones";
-import MedidorPlano from "../components/MedidorPlano";
 import {
   LayoutDashboard, FolderOpen, CircleDollarSign, CalendarRange,
   FileText, BookOpen, ClipboardList, FilePen, CheckCircle, Camera,
   Receipt, Banknote, ShieldCheck, TrendingUp, ArrowLeftRight,
-  GanttChart, HardHat, ChevronLeft, ChevronRight,
+  GanttChart, HardHat,
 } from "lucide-react";
+
+const CurvaS = lazy(() => import("../components/CurvaS"));
+const IndicadoresEVM = lazy(() => import("../components/IndicadoresEVM"));
+const EstadoPagoGenerator = lazy(() => import("../components/EstadoPagoGenerator"));
+const GanttObra = lazy(() => import("../components/GanttObra"));
+const ControlCostos = lazy(() => import("../components/ControlCostos"));
+const FlujoCaja = lazy(() => import("../components/FlujoCaja"));
+const HistogramaRecursos = lazy(() => import("../components/HistogramaRecursos"));
+const ComparadorCotizaciones = lazy(() => import("../components/ComparadorCotizaciones"));
+const MedidorPlano = lazy(() => import("../components/MedidorPlano"));
 
 const LUCIDE_ICONS = {
   LayoutDashboard, FolderOpen, CircleDollarSign, CalendarRange,
@@ -27,12 +28,6 @@ const LUCIDE_ICONS = {
   Receipt, Banknote, ShieldCheck, TrendingUp, ArrowLeftRight,
   GanttChart, HardHat,
 };
-
-// DEBUG: check for undefined imports
-if (typeof window !== "undefined") {
-  const _dbg = {CurvaS,IndicadoresEVM,EstadoPagoGenerator,GanttObra,ControlCostos,FlujoCaja,HistogramaRecursos,ComparadorCotizaciones,MedidorPlano,LayoutDashboard,FolderOpen,CircleDollarSign,CalendarRange,FileText,BookOpen,ClipboardList,FilePen,CheckCircle,Camera,Receipt,Banknote,ShieldCheck,TrendingUp,ArrowLeftRight,GanttChart,HardHat};
-  Object.entries(_dbg).forEach(([k,v]) => { if (!v) console.error("UNDEFINED IMPORT:", k); });
-}
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
