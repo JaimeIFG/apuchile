@@ -28,6 +28,12 @@ const LUCIDE_ICONS = {
   GanttChart, HardHat,
 };
 
+// DEBUG: check for undefined imports
+if (typeof window !== "undefined") {
+  const _dbg = {CurvaS,IndicadoresEVM,EstadoPagoGenerator,GanttObra,ControlCostos,FlujoCaja,HistogramaRecursos,ComparadorCotizaciones,MedidorPlano,LayoutDashboard,FolderOpen,CircleDollarSign,CalendarRange,FileText,BookOpen,ClipboardList,FilePen,CheckCircle,Camera,Receipt,Banknote,ShieldCheck,TrendingUp,ArrowLeftRight,GanttChart,HardHat};
+  Object.entries(_dbg).forEach(([k,v]) => { if (!v) console.error("UNDEFINED IMPORT:", k); });
+}
+
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
 const ESTADO_ST = {
