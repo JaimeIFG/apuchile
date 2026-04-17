@@ -75,6 +75,7 @@ export default function ObrasPage() {
   const router = useRouter();
   const [obras, setObras] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [navegando, setNavegando] = useState(false);
   const [creando, setCreando] = useState(false);
   const [nombreNuevo, setNombreNuevo] = useState("");
   const [estadoNuevo, setEstadoNuevo] = useState("En ejecución");
@@ -165,7 +166,7 @@ export default function ObrasPage() {
       setObras(p => [data, ...p]);
       setCreando(false);
       setNombreNuevo("");
-      router.push(`/obra?id=${data.id}`);
+      setNavegando(true); router.push(`/obra?id=${data.id}`);
     }
   };
 
@@ -194,6 +195,7 @@ export default function ObrasPage() {
     <div className="min-h-screen bg-gray-50">
 
       <LoadingOverlay visible={loading} mensaje="Cargando obras..." blur={false} />
+      <LoadingOverlay visible={navegando} mensaje="Abriendo obra..." blur={true} />
 
       <SpotlightTour storageKey="apudesk_tour_obras_v1" pasos={[
         { titulo: "Proyectos en Ejecución", descripcion: "Aquí controlas todas tus obras en terreno. Puedes registrar estados, garantías, estados de pago y fechas contractuales. Te mostramos las secciones principales.", icono: "🏗️", targetId: null, posPanel: "center" },
@@ -310,7 +312,7 @@ export default function ObrasPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   {alertas.map((a, i) => (
                     <div key={i}
-                      onClick={() => router.push(`/obra?id=${a.obraId}`)}
+                      onClick={() => { setNavegando(true); router.push(`/obra?id=${a.obraId}`); }}
                       style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px",
                         borderRadius: 10, cursor: "pointer",
                         background: a.nivel === "rojo" ? "#fee2e2" : "#fef3c7",
@@ -396,7 +398,7 @@ export default function ObrasPage() {
                     padding: "18px 22px", cursor: "pointer",
                     borderLeft: `4px solid ${est.dot}`,
                     boxShadow: "0 1px 4px rgba(0,0,0,.04)" }}
-                  onClick={() => router.push(`/obra?id=${obra.id}`)}>
+                  onClick={() => { setNavegando(true); router.push(`/obra?id=${obra.id}`); }}>
 
                   <div style={{ display: "flex", justifyContent: "space-between",
                     alignItems: "flex-start", gap: 12 }}>
@@ -469,7 +471,7 @@ export default function ObrasPage() {
 
                     <div style={{ display: "flex", flexDirection:"column", gap: 6, flexShrink: 0, alignItems:"flex-end" }}>
                       <button
-                        onClick={e => { e.stopPropagation(); router.push(`/obra?id=${obra.id}`); }}
+                        onClick={e => { e.stopPropagation(); setNavegando(true); router.push(`/obra?id=${obra.id}`); }}
                         className="btn-press"
                         style={{ background: "#eef2ff", color: "#6366f1", border: "1px solid #bbf7d0",
                           borderRadius: 8, padding: "7px 16px", fontSize: 12, fontWeight: 700,
