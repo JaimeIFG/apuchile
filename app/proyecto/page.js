@@ -13,7 +13,7 @@ import { diasCorridos } from '../lib/utils';
 import Cubicaciones from '../components/Cubicaciones';
 import ComparadorOfertas from '../components/ComparadorOfertas';
 import LineaBase from '../components/LineaBase';
-import { Library, ClipboardList, CalendarDays, FileEdit, Wrench, Paperclip, Settings, BarChart3, Home as HomeIcon, FileText, Hammer, Ruler, Upload, Search, CheckCircle } from 'lucide-react';
+import { FcLibrary, FcTodoList, FcCalendar, FcDocument, FcSettings, FcBarChart, FcHome, FcBriefcase, FcRuler, FcUpload, FcSearch, FcApproval, FcEngineering, FcReadingEbook } from 'react-icons/fc';
 
 // Factor IPC acumulado Chile 2017→2025 (INE)
 const IPC_2017_2025 = 1.65;
@@ -1210,7 +1210,7 @@ function Home() {
     setTab("resumen");
   };
 
-  const ICON_MAP = { biblioteca: Library, resumen: ClipboardList, gantt: CalendarDays, eett: FileEdit, editor: Wrench, anexos: Paperclip, config: Settings, ofertas: BarChart3 };
+  const ICON_MAP = { biblioteca: FcLibrary, resumen: FcTodoList, gantt: FcCalendar, eett: FcDocument, editor: FcEngineering, anexos: FcBriefcase, config: FcSettings, ofertas: FcBarChart };
   const TABS_RAIL = [
     { id: "biblioteca",  label: "Biblioteca"  },
     { id: "resumen",     label: "Presupuesto" },
@@ -1253,7 +1253,7 @@ function Home() {
         <div className="flex-1" />
         <button onClick={() => router.push("/dashboard")} title="Volver al dashboard"
           className="w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-0.5 text-gray-400 hover:bg-red-50 hover:text-red-400 rail-btn">
-          <HomeIcon size={20} strokeWidth={1.8}/>
+          <FcHome size={22}/>
           <span className="text-[9px] font-medium">Inicio</span>
         </button>
       </div>
@@ -1935,9 +1935,9 @@ function Home() {
                     Tienes <strong>{proyecto.length}</strong> partidas en tu presupuesto. Haz clic en "Comparar ofertas" para subir hasta 3 cotizaciones y encontrar los mejores precios.
                   </p>
                   <div className="grid grid-cols-3 gap-4">
-                    {[[Upload,"Sube cotizaciones","Excel o ingreso manual"],[Search,"Compara precios","Lado a lado por partida"],[CheckCircle,"Aplica mejores","Un clic para actualizar"]].map(([ic,t,s],i)=>(
+                    {[[FcUpload,"Sube cotizaciones","Excel o ingreso manual"],[FcSearch,"Compara precios","Lado a lado por partida"],[FcApproval,"Aplica mejores","Un clic para actualizar"]].map(([ic,t,s],i)=>(
                       <div key={i} className="bg-gray-50 rounded-xl p-4 text-center">
-                        <div className="flex justify-center mb-2">{React.createElement(ic, {size:24, strokeWidth:1.8, className:"text-indigo-500"})}</div>
+                        <div className="flex justify-center mb-2">{React.createElement(ic, {size:28})}</div>
                         <div className="text-xs font-semibold text-gray-700">{t}</div>
                         <div className="text-[10px] text-gray-400 mt-1">{s}</div>
                       </div>
@@ -3770,10 +3770,10 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
   }
 
   const SECCION_INFO = [
-    { key: "descripcion",   label: "Descripción",        Icon: FileText },
-    { key: "materiales",    label: "Materiales y Equipos", Icon: Hammer },
-    { key: "ejecucion",     label: "Ejecución",           Icon: Wrench },
-    { key: "medicion_pago", label: "Medición y Pago",     Icon: Ruler },
+    { key: "descripcion",   label: "Descripción",        Icon: FcDocument },
+    { key: "materiales",    label: "Materiales y Equipos", Icon: FcEngineering },
+    { key: "ejecucion",     label: "Ejecución",           Icon: FcSettings },
+    { key: "medicion_pago", label: "Medición y Pago",     Icon: FcRuler },
   ];
 
   return (
@@ -3985,7 +3985,7 @@ function EETTView({ proyecto, proyectoNombre, proyectoMeta }) {
                       <div key={key} className="px-5 py-3.5 pl-[72px]">
                         {/* Section label: 9px vivid blue + fade line */}
                         <div className="flex items-center gap-2 mb-2">
-                          <Icon size={14} strokeWidth={1.8} className="text-blue-500 shrink-0"/>
+                          <Icon size={16} className="shrink-0"/>
                           <span className="text-[9px] font-extrabold uppercase tracking-[.12em] text-blue-600">{label}</span>
                           <div className="flex-1 h-px rounded" style={{background:"linear-gradient(90deg,#dbeafe,transparent)"}}/>
                           {isCustom && (

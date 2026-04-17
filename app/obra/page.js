@@ -15,11 +15,10 @@ import HistogramaRecursos from "../components/HistogramaRecursos";
 import ComparadorCotizaciones from "../components/ComparadorCotizaciones";
 import MedidorPlano from "../components/MedidorPlano";
 import {
-  LayoutDashboard, FolderOpen, CircleDollarSign, CalendarRange,
-  FileText, BookOpen, ClipboardList, FilePen, CheckCircle, Camera,
-  Receipt, Banknote, ShieldCheck, TrendingUp, ArrowLeftRight,
-  GanttChart, HardHat,
-} from "lucide-react";
+  FcStatistics, FcOpenedFolder, FcPaid, FcCalendar,
+  FcDocument, FcReadingEbook, FcSurvey, FcEditImage, FcApproval, FcOldTimeCamera,
+  FcCalculator, FcTimeline, FcBullish, FcFlowChart, FcEngineering,
+} from "react-icons/fc";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
 const ESTADOS = ["En licitación", "En ejecución", "Paralizada", "Recepcionada", "Liquidada"];
@@ -1563,21 +1562,21 @@ ${partidas.map(p=>`
   }
 
   const NAV = [
-    { id:"resumen",   Icon:LayoutDashboard, label:"Resumen"         },
-    { id:"ficha",     Icon:FileText, label:"Ficha"            },
-    { id:"docs",      Icon:FolderOpen, label:"Banco de Datos", sub:true },
-    { id:"pagos",     Icon:Banknote, label:"Estados de Pago" },
-    { id:"garantias", Icon:ShieldCheck, label:"Garantías"        },
-    { id:"bitacora",  Icon:BookOpen, label:"Bitácora"         },
-    { id:"informes",  Icon:ClipboardList, label:"Informes"         },
-    { id:"modificaciones", Icon:FilePen, label:"Modificaciones" },
-    { id:"recepciones",    Icon:CheckCircle, label:"Recepciones"    },
-    { id:"fotos",     Icon:Camera, label:"Fotos", badge:fotos.length },
-    { id:"presupuesto", Icon:Receipt, label:"Presupuesto", badge:presupuesto.length },
-    { id:"gantt",        Icon:GanttChart, label:"Carta Gantt" },
-    { id:"costos",       Icon:TrendingUp, label:"Control Costos" },
-    { id:"flujo",        Icon:ArrowLeftRight, label:"Flujo de Caja" },
-    { id:"recursos",     Icon:HardHat, label:"Recursos" },
+    { id:"resumen",   Icon:FcStatistics, label:"Resumen"         },
+    { id:"ficha",     Icon:FcDocument, label:"Ficha"            },
+    { id:"docs",      Icon:FcOpenedFolder, label:"Banco de Datos", sub:true },
+    { id:"pagos",     Icon:FcPaid, label:"Estados de Pago" },
+    { id:"garantias", Icon:FcApproval, label:"Garantías"        },
+    { id:"bitacora",  Icon:FcReadingEbook, label:"Bitácora"         },
+    { id:"informes",  Icon:FcSurvey, label:"Informes"         },
+    { id:"modificaciones", Icon:FcEditImage, label:"Modificaciones" },
+    { id:"recepciones",    Icon:FcApproval, label:"Recepciones"    },
+    { id:"fotos",     Icon:FcOldTimeCamera, label:"Fotos", badge:fotos.length },
+    { id:"presupuesto", Icon:FcCalculator, label:"Presupuesto", badge:presupuesto.length },
+    { id:"gantt",        Icon:FcTimeline, label:"Carta Gantt" },
+    { id:"costos",       Icon:FcBullish, label:"Control Costos" },
+    { id:"flujo",        Icon:FcFlowChart, label:"Flujo de Caja" },
+    { id:"recursos",     Icon:FcEngineering, label:"Recursos" },
   ];
 
   return (
@@ -1651,7 +1650,7 @@ ${partidas.map(p=>`
                       boxShadow: active ? `0 2px 8px ${c.border}22` : "0 1px 3px rgba(0,0,0,.04)",
                       position:"relative",
                     }}>
-                    {item.Icon && <item.Icon size={20} strokeWidth={1.8} color={active && isFirst ? "#fff" : active ? c.activeTxt : "#94a3b8"} />}
+                    {item.Icon && <item.Icon size={22}/>}
                     <span style={{
                       fontSize:10, fontWeight:active?700:600, textAlign:"center", lineHeight:1.2,
                       color: active && isFirst ? "#fff" : active ? c.activeTxt : "#64748b",
@@ -1730,7 +1729,7 @@ ${partidas.map(p=>`
                     padding:"8px 12px", borderRadius:10, border:"none", cursor:"pointer",
                     background:active?"#eef2ff":"transparent", fontFamily:"inherit",
                     position:"relative", flexShrink:0 }}>
-                  {item.Icon && <item.Icon size={16} strokeWidth={1.8} color={active?"#6366f1":"#94a3b8"} />}
+                  {item.Icon && <item.Icon size={18}/>}
                   <span style={{ fontSize:9, fontWeight:active?700:500,
                     color:active?"#6366f1":"#64748b", whiteSpace:"nowrap" }}>{item.label}</span>
                   {item.badge>0 && (
