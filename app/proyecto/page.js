@@ -800,19 +800,36 @@ function Home() {
     const firmaEmpresaLabel = cfgEmpresa.firmaEmpresaLabel || "Responsable / Proyectista";
     const incluirIVA      = cfgEmpresa.pdfIncluirIVA !== false;
 
-    // ── Helper: carga imagen como base64 para evitar problemas CORS con jsPDF ──
-    const cargarImagenBase64 = (url) => new Promise((resolve) => {
-      if (!url) return resolve(null);
-      fetch(url)
-        .then(r => r.blob())
-        .then(blob => {
+    // ── Helper: carga imagen como base64 usando Supabase Storage (sin CORS) ──
+    const cargarImagenBase64 = async (url) => {
+      if (!url) return null;
+      try {
+        // Extraer el path relativo dentro del bucket "avatars"
+        const marker = "/object/public/avatars/";
+        const idx = url.indexOf(marker);
+        if (idx !== -1) {
+          const path = url.substring(idx + marker.length).split("?")[0];
+          const { data, error } = await supabase.storage.from("avatars").download(path);
+          if (!error && data) {
+            return await new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = () => resolve(null);
+              reader.readAsDataURL(data);
+            });
+          }
+        }
+        // Fallback: fetch directo
+        const r = await fetch(url);
+        const blob = await r.blob();
+        return await new Promise((resolve) => {
           const reader = new FileReader();
           reader.onloadend = () => resolve(reader.result);
           reader.onerror = () => resolve(null);
           reader.readAsDataURL(blob);
-        })
-        .catch(() => resolve(null));
-    });
+        });
+      } catch { return null; }
+    };
 
     // ── Helper: dibuja header verde en página actual ──
     const dibujarHeader = () => {
