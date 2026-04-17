@@ -476,10 +476,9 @@ export default function Dashboard() {
 
         {/* Logo */}
         <div className="px-5 py-5 border-b border-gray-100 flex items-center gap-2 overflow-hidden">
-          {sidebarAbierto ? (
-            <span className="text-lg font-bold text-indigo-800 whitespace-nowrap">APU<span className="text-indigo-500">chile</span></span>
-          ) : (
-            <span className="text-lg font-bold text-indigo-600 mx-auto">A</span>
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 800, fontSize: 11, flexShrink: 0, animation: "pulsoHalo 2s ease-in-out infinite" }}>AD</div>
+          {sidebarAbierto && (
+            <span className="text-lg font-bold text-indigo-800 whitespace-nowrap">APU<span className="text-indigo-500">desk</span></span>
           )}
         </div>
 
@@ -617,7 +616,10 @@ export default function Dashboard() {
               <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
             </svg>
           </button>
-          <span className="text-base font-bold text-indigo-800">APU<span className="text-indigo-500">chile</span></span>
+          <div className="flex items-center gap-2">
+            <div style={{ width: 28, height: 28, borderRadius: 7, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 800, fontSize: 10, animation: "pulsoHalo 2s ease-in-out infinite" }}>AD</div>
+            <span className="text-base font-bold text-indigo-800">APU<span className="text-indigo-500">desk</span></span>
+          </div>
         </div>
         {/* Ticker licitaciones */}
         <LicitacionesTicker />

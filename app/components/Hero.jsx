@@ -86,9 +86,9 @@ function Navbar() {
         <div className="flex items-center gap-2">
           <div
             className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
-            style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}
+            style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", animation: "pulsoHalo 2s ease-in-out infinite" }}
           >
-            A
+            AD
           </div>
           <span className="font-bold text-lg tracking-tight" style={{ color: "#0f172a" }}>
             APU<span style={{ color: "#6366f1" }}>desk</span>
@@ -622,7 +622,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
-                style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}>A</div>
+                style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", animation: "pulsoHalo 2s ease-in-out infinite" }}>AD</div>
               <span className="font-bold text-lg" style={{ color: "#fff" }}>APU<span style={{ color: "#818cf8" }}>desk</span></span>
             </div>
             <div className="flex items-center gap-6">
