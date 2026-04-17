@@ -284,6 +284,11 @@ function Home() {
   const [editandoPartida, setEditandoPartida] = useState(null);
   const [agruparCapitulos, setAgruparCapitulos] = useState(false);
   const [exportandoPDF, setExportandoPDF] = useState(false);
+  const [modalExport, setModalExport] = useState(false);
+  const [optsExport, setOptsExport] = useState({
+    presupuesto: true, fichasAPU: false, gantt: false, eett: false,
+    firmasMandante: true, firmasResponsable: true, firmasITO: false, firmasContratista: false,
+  });
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
   const [dragOverIdx, setDragOverIdx] = useState(null);
@@ -772,13 +777,15 @@ function Home() {
     setEditandoProyecto(false);
   };
 
-  const exportarPDF = async () => {
+  const exportarPDF = async (opts = optsExport) => {
     setExportandoPDF(true);
+    setModalExport(false);
     try {
     const { default: jsPDF } = await import("jspdf");
     const { default: autoTable } = await import("jspdf-autotable");
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
     const ancho = doc.internal.pageSize.getWidth();
+    const VERDE = [6, 95, 70];
 
     // Leer config de empresa del usuario
     const { data: { user: currentUser } } = await supabase.auth.getUser();
@@ -791,12 +798,17 @@ function Home() {
     const logoUrl       = cfgEmpresa.pdfIncluirLogo !== false ? (cfgEmpresa.logoEmpresaUrl || "") : "";
     const incluirIVA    = cfgEmpresa.pdfIncluirIVA !== false;
 
-    // ── Encabezado ──
-    doc.setFillColor(6, 95, 70);
-    doc.rect(0, 0, ancho, 30, "F");
-    doc.setTextColor(255, 255, 255);
+    // ── Helper: dibuja header verde en página actual ──
+    const dibujarHeader = () => {
+      doc.setFillColor(...VERDE);
+      doc.rect(0, 0, ancho, 32, "F");
+      doc.setTextColor(255, 255, 255);
+    };
 
-    // Logo de empresa (si existe)
+    // ── Encabezado página 1 ──
+    dibujarHeader();
+
+    // Logo de empresa
     let logoOk = false;
     if (logoUrl) {
       try {
@@ -804,7 +816,7 @@ function Home() {
           const img = new window.Image();
           img.crossOrigin = "anonymous";
           img.onload = () => {
-            try { doc.addImage(img, "PNG", 14, 4, 0, 22); logoOk = true; } catch {}
+            try { doc.addImage(img, "PNG", 14, 5, 0, 22); logoOk = true; } catch {}
             resolve();
           };
           img.onerror = resolve;
@@ -813,45 +825,40 @@ function Home() {
       } catch {}
     }
 
-    const textoX = logoOk ? 46 : 14;
+    const textoX = logoOk ? 48 : 14;
 
+    // Izquierda: empresa o "Presupuesto"
     if (nombreEmpresa) {
-      doc.setFontSize(14);
-      doc.setFont("helvetica", "bold");
-      doc.text(nombreEmpresa, textoX, 11);
-      const datosEmpresa = [rutEmpresa, telEmpresa, emailEmpresa, dirEmpresa].filter(Boolean).join("  ·  ");
-      if (datosEmpresa) {
-        doc.setFontSize(7);
-        doc.setFont("helvetica", "normal");
+      doc.setFontSize(15); doc.setFont("helvetica", "bold");
+      doc.text(nombreEmpresa, textoX, 12);
+      const datosEmp = [rutEmpresa, telEmpresa, emailEmpresa].filter(Boolean).join("  ·  ");
+      if (datosEmp) {
+        doc.setFontSize(6.5); doc.setFont("helvetica", "normal");
         doc.setTextColor(200, 240, 220);
-        doc.text(datosEmpresa, textoX, 17);
+        doc.text(datosEmp, textoX, 18);
       }
       doc.setTextColor(255, 255, 255);
-      doc.setFontSize(7);
-      doc.setFont("helvetica", "normal");
-      doc.text("Análisis de Precios Unitarios", textoX, 23);
+      doc.setFontSize(7.5); doc.setFont("helvetica", "normal");
+      doc.text("PRESUPUESTO", textoX, 25);
     } else {
-      doc.setFontSize(18);
-      doc.setFont("helvetica", "bold");
-      doc.text("APUdesk", textoX, 12);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      doc.text("Análisis de Precios Unitarios", textoX, 20);
+      doc.setFontSize(15); doc.setFont("helvetica", "bold");
+      doc.text("PRESUPUESTO", textoX, 14);
+      doc.setFontSize(8); doc.setFont("helvetica", "normal");
+      doc.setTextColor(200, 240, 220);
+      doc.text("Análisis de Precios Unitarios", textoX, 22);
     }
 
-    // Proyecto nombre y fecha (derecha)
+    // Derecha: nombre proyecto y fecha
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "bold");
-    const nombrePdf = proyectoNombre.length > 35 ? proyectoNombre.substring(0, 32) + "..." : proyectoNombre;
-    doc.text(nombrePdf, ancho - 14, 12, { align: "right" });
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
-    doc.text(new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" }), ancho - 14, 20, { align: "right" });
+    const nombrePdf = proyectoNombre.length > 38 ? proyectoNombre.substring(0, 35) + "..." : proyectoNombre;
+    doc.setFontSize(12); doc.setFont("helvetica", "bold");
+    doc.text(nombrePdf, ancho - 14, 13, { align: "right" });
+    doc.setFontSize(7.5); doc.setFont("helvetica", "normal");
+    doc.setTextColor(200, 240, 220);
+    doc.text(new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" }), ancho - 14, 21, { align: "right" });
 
-    // ── Info del proyecto ──
-    let y = 38;
-    doc.setTextColor(30, 30, 30);
+    // ── Info del proyecto — caja centrada ──
+    let y = 42;
     const infoItems = [
       proyectoMeta.mandante    && ["Mandante",    proyectoMeta.mandante],
       proyectoMeta.region      && ["Región",      proyectoMeta.region],
@@ -863,19 +870,22 @@ function Home() {
     ].filter(Boolean);
 
     if (infoItems.length > 0) {
-      doc.setFillColor(247, 250, 249);
-      doc.rect(14, y - 4, ancho - 28, infoItems.length * 6 + 4, "F");
+      const boxW = 110; const boxX = (ancho - boxW) / 2;
+      const boxH = infoItems.length * 7 + 8;
+      doc.setFillColor(245, 250, 247);
+      doc.setDrawColor(180, 215, 200);
+      doc.roundedRect(boxX, y, boxW, boxH, 3, 3, "FD");
+      let iy = y + 9;
       infoItems.forEach(([label, val]) => {
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(8);
+        doc.setFontSize(8); doc.setFont("helvetica", "bold");
         doc.setTextColor(80, 80, 80);
-        doc.text(label + ":", 18, y);
+        doc.text(label + ":", boxX + 8, iy);
         doc.setFont("helvetica", "normal");
-        doc.setTextColor(30, 30, 30);
-        doc.text(String(val), 52, y);
-        y += 6;
+        doc.setTextColor(20, 20, 20);
+        doc.text(String(val), boxX + 42, iy);
+        iy += 7;
       });
-      y += 4;
+      y += boxH + 8;
     }
 
     // ── Tabla de partidas ──
@@ -945,27 +955,26 @@ function Home() {
       tableWidth: 140,
     });
 
-    // ── FICHAS APU (desglose de cada partida) ──
-    const incluirDesglose = cfgEmpresa.pdfIncluirDesglose !== false;
-    if (incluirDesglose && proyecto.length > 0) {
+    // ── FICHAS APU ──
+    if (opts.fichasAPU && proyecto.length > 0) {
       proyecto.forEach((p, idx) => {
         const { rows, moNet, llssAmt, mat, herr, fung, total } = calcAPU(p, cfg);
         doc.addPage();
         let fy = 14;
 
-        // Header ficha
-        doc.setFillColor(67, 56, 202);
-        doc.rect(0, 0, ancho, 24, "F");
+        // Header ficha — mismo verde
+        dibujarHeader();
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(11); doc.setFont("helvetica", "bold");
-        doc.text(`Ficha APU N°${idx + 1}`, 14, 10);
+        doc.text(`Ficha APU N°${idx + 1}`, 14, 12);
         doc.setFontSize(8); doc.setFont("helvetica", "normal");
-        doc.text(`${p.codigo || ""} — ${(p.desc || p.descripcion || "").substring(0, 70)}`, 14, 17);
-        doc.setFontSize(8);
-        doc.text(`Unidad: ${p.unidad || "u"}  |  Cantidad: ${p.cantidad || 1}`, ancho - 14, 10, { align: "right" });
-        doc.text(`Precio Unitario: $${Math.round(total).toLocaleString("es-CL")}`, ancho - 14, 17, { align: "right" });
+        doc.text(`${p.codigo || ""} — ${(p.desc || p.descripcion || "").substring(0, 65)}`, 14, 20);
+        doc.text(`Unidad: ${p.unidad || "u"}  |  Cantidad: ${p.cantidad || 1}`, ancho - 14, 12, { align: "right" });
+        doc.text(`Precio Unitario: $${Math.round(total).toLocaleString("es-CL")}`, ancho - 14, 20, { align: "right" });
+        doc.setTextColor(200, 240, 220);
+        doc.text(nombrePdf, ancho - 14, 27, { align: "right" });
 
-        fy = 30;
+        fy = 40;
 
         // Tabla de insumos
         if (rows.length > 0) {
@@ -1004,7 +1013,7 @@ function Home() {
               head: [["Descripción", "Un.", "Cantidad", "P. Unit.", "Pérdida", "Subtotal"]],
               body: filasTipo,
               styles: { fontSize: 7, cellPadding: 2 },
-              headStyles: { fillColor: [67, 56, 202], textColor: 255, fontStyle: "bold" },
+              headStyles: { fillColor: VERDE, textColor: 255, fontStyle: "bold" },
               alternateRowStyles: { fillColor: [250, 250, 255] },
               columnStyles: {
                 0: { cellWidth: 55 },
@@ -1037,7 +1046,7 @@ function Home() {
             bodyStyles: { fillColor: false },
             didParseCell: (data) => {
               if (data.row.index === resumenAPU.length - 1) {
-                data.cell.styles.fillColor = [67, 56, 202];
+                data.cell.styles.fillColor = VERDE;
                 data.cell.styles.textColor = 255;
                 data.cell.styles.fontStyle = "bold";
                 data.cell.styles.fontSize = 9;
@@ -1077,60 +1086,48 @@ function Home() {
       });
     }
 
-    // ── Pie de firma ──
-    const firmaUrl      = proyectoMeta.firmaDigital   || "";
-    const firmaNombre   = proyectoMeta.nombreFirmante  || "";
-    const firmaRut      = proyectoMeta.rutFirmante     || "";
-    const firmaCargo    = proyectoMeta.cargoFirmante   || "";
-    const firmaContacto = proyectoMeta.contactoFirmante|| "";
-    if (firmaNombre || firmaUrl) {
-      const firmaY = doc.lastAutoTable.finalY + 18;
-      const firmaX = ancho - 70;
-      // Línea de firma
-      doc.setDrawColor(100, 100, 100);
-      doc.setLineWidth(0.3);
-      doc.line(firmaX, firmaY, firmaX + 56, firmaY);
-      if (firmaUrl) {
-        try {
-          await new Promise((resolve) => {
-            const img = new window.Image();
-            img.crossOrigin = "anonymous";
-            img.onload = () => {
-              try { doc.addImage(img, "PNG", firmaX, firmaY - 16, 56, 14); } catch {}
-              resolve();
-            };
-            img.onerror = resolve;
-            img.src = firmaUrl;
-          });
-        } catch {}
-      }
-      let lineaY = firmaY + 5;
-      if (firmaNombre) {
-        doc.setFontSize(8);
-        doc.setFont("helvetica", "bold");
-        doc.setTextColor(30, 30, 30);
-        doc.text(firmaNombre, firmaX + 28, lineaY, { align: "center" });
-        lineaY += 4.5;
-      }
-      if (firmaRut) {
-        doc.setFontSize(7);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(80, 80, 80);
-        doc.text(`RUT: ${firmaRut}`, firmaX + 28, lineaY, { align: "center" });
-        lineaY += 4;
-      }
-      if (firmaCargo) {
-        doc.setFontSize(7);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(100, 100, 100);
-        doc.text(firmaCargo, firmaX + 28, lineaY, { align: "center" });
-        lineaY += 4;
-      }
-      if (firmaContacto) {
-        doc.setFontSize(7);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(120, 120, 120);
-        doc.text(firmaContacto, firmaX + 28, lineaY, { align: "center" });
+    // ── Pie de firma centrado ──
+    const firmaUrl    = proyectoMeta.firmaDigital  || "";
+    const firmaNombre = proyectoMeta.nombreFirmante || "";
+    const firmaRut    = proyectoMeta.rutFirmante    || "";
+    const firmaCargo  = proyectoMeta.cargoFirmante  || "";
+
+    const firmasSelec = [
+      opts.firmasMandante    && { label: "Mandante" },
+      opts.firmasResponsable && { label: firmaNombre || "Responsable / Proyectista", rut: firmaRut, cargo: firmaCargo, url: firmaUrl },
+      opts.firmasITO         && { label: "ITO / Inspector Técnico" },
+      opts.firmasContratista && { label: "Contratista" },
+    ].filter(Boolean);
+
+    if (firmasSelec.length > 0) {
+      const lastY = doc.lastAutoTable ? doc.lastAutoTable.finalY : y;
+      const firmaBaseY = Math.min(lastY + 20, 250);
+      const lineaW = 50;
+      const totalW = firmasSelec.length * lineaW + (firmasSelec.length - 1) * 10;
+      let fx = (ancho - totalW) / 2;
+
+      for (const f of firmasSelec) {
+        // Imagen de firma si aplica
+        if (f.url) {
+          try {
+            await new Promise((resolve) => {
+              const img = new window.Image();
+              img.crossOrigin = "anonymous";
+              img.onload = () => { try { doc.addImage(img, "PNG", fx, firmaBaseY - 14, lineaW, 12); } catch {} resolve(); };
+              img.onerror = resolve;
+              img.src = f.url;
+            });
+          } catch {}
+        }
+        doc.setDrawColor(100, 100, 100);
+        doc.setLineWidth(0.3);
+        doc.line(fx, firmaBaseY, fx + lineaW, firmaBaseY);
+        let ty = firmaBaseY + 5;
+        doc.setFontSize(7.5); doc.setFont("helvetica", "bold"); doc.setTextColor(30, 30, 30);
+        doc.text(f.label, fx + lineaW / 2, ty, { align: "center" });
+        if (f.rut) { ty += 4; doc.setFontSize(6.5); doc.setFont("helvetica", "normal"); doc.setTextColor(90,90,90); doc.text(`RUT: ${f.rut}`, fx + lineaW / 2, ty, { align: "center" }); }
+        if (f.cargo) { ty += 4; doc.text(f.cargo, fx + lineaW / 2, ty, { align: "center" }); }
+        fx += lineaW + 10;
       }
     }
 
@@ -1679,7 +1676,7 @@ function Home() {
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium border btn-press transition-colors ${agruparCapitulos ? "bg-indigo-50 border-indigo-300 text-indigo-700" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
                     <span>⊞</span> {agruparCapitulos ? "Vista plana" : "Agrupar por capítulo"}
                   </button>
-                  <button onClick={exportarPDF} disabled={exportandoPDF}
+                  <button onClick={() => setModalExport(true)} disabled={exportandoPDF}
                     className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-medium btn-primary hover:bg-indigo-700 disabled:opacity-50">
                     📄 {exportandoPDF ? "Generando..." : "Exportar PDF"}
                   </button>
@@ -2060,6 +2057,59 @@ function Home() {
             setMostrarComparador(false);
           }}
         />
+      )}
+
+      {/* ── Modal exportar PDF ── */}
+      {modalExport && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{background:"rgba(0,0,0,0.45)", backdropFilter:"blur(4px)"}}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 anim-scale-in">
+            <h2 className="text-base font-bold text-gray-800 mb-4">📄 Exportar Presupuesto PDF</h2>
+
+            {/* Secciones */}
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Secciones a incluir</p>
+            {[
+              ["presupuesto",  "Presupuesto (tabla de partidas)", true],
+              ["fichasAPU",    "Fichas APU (desglose por partida)", false],
+              ["gantt",        "Carta Gantt", false],
+              ["eett",         "Especificaciones Técnicas (EETT)", false],
+            ].map(([key, label, locked]) => (
+              <label key={key} className={`flex items-center gap-3 py-2 px-3 rounded-xl mb-1 cursor-pointer transition-colors ${optsExport[key] ? "bg-indigo-50" : "hover:bg-gray-50"} ${locked ? "opacity-60 cursor-not-allowed" : ""}`}>
+                <input type="checkbox" checked={optsExport[key]} disabled={locked}
+                  onChange={e => setOptsExport(o => ({...o, [key]: e.target.checked}))}
+                  className="w-4 h-4 rounded accent-indigo-600"/>
+                <span className="text-sm text-gray-700">{label}</span>
+                {locked && <span className="ml-auto text-[10px] text-gray-400">siempre</span>}
+              </label>
+            ))}
+
+            {/* Firmas */}
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-4 mb-2">Firmas al pie de página</p>
+            {[
+              ["firmasMandante",    "Mandante"],
+              ["firmasResponsable", "Responsable / Proyectista"],
+              ["firmasITO",        "ITO / Inspector Técnico"],
+              ["firmasContratista","Contratista"],
+            ].map(([key, label]) => (
+              <label key={key} className={`flex items-center gap-3 py-2 px-3 rounded-xl mb-1 cursor-pointer transition-colors ${optsExport[key] ? "bg-indigo-50" : "hover:bg-gray-50"}`}>
+                <input type="checkbox" checked={optsExport[key]}
+                  onChange={e => setOptsExport(o => ({...o, [key]: e.target.checked}))}
+                  className="w-4 h-4 rounded accent-indigo-600"/>
+                <span className="text-sm text-gray-700">{label}</span>
+              </label>
+            ))}
+
+            <div className="flex gap-3 mt-5">
+              <button onClick={() => setModalExport(false)}
+                className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 font-medium">
+                Cancelar
+              </button>
+              <button onClick={() => exportarPDF(optsExport)}
+                className="flex-1 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700">
+                Generar PDF →
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Modal editar proyecto */}
