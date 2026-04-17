@@ -467,11 +467,11 @@ export default function Dashboard() {
       <aside style={{ width: sidebarAbierto ? "256px" : "72px", transition: "width 0.3s ease" }}
         className={`bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen relative overflow-hidden ${mobileSidebarOpen ? "mobile-sidebar-open" : "mobile-sidebar-hidden"} md:transform-none md:position-relative md:h-auto`}>
 
-        {/* Botón toggle - centrado verticalmente */}
+        {/* Botón toggle */}
         <button onClick={() => setSidebarAbierto(a => !a)}
-          style={{ transition: "transform 0.3s ease", top: "50%", transform: "translateY(-50%)" }}
-          className="absolute -right-3 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full shadow flex items-center justify-center text-gray-400 hover:text-indigo-600 hover:border-indigo-400 transition-colors">
-          <span style={{ display: "inline-block", transform: sidebarAbierto ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.3s ease", fontSize: "10px" }}>◀</span>
+          style={{ top: "50%", transform: "translateY(-50%)" }}
+          className="absolute -right-3.5 z-10 w-7 h-7 bg-indigo-600 border-2 border-white rounded-full shadow-md flex items-center justify-center text-white hover:bg-indigo-700 transition-colors">
+          <span style={{ display: "inline-block", transform: sidebarAbierto ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.3s ease", fontSize: "11px", lineHeight: 1 }}>◀</span>
         </button>
 
         {/* Logo */}
@@ -701,6 +701,7 @@ export default function Dashboard() {
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #64748b"}, txt:"#374151" },
             ].map((c, i) => (
               <button key={i} onClick={c.action}
+                onMouseEnter={() => setSidebarAbierto(false)}
                 className="rounded-2xl flex flex-col items-center justify-center gap-3 aspect-square shadow-sm anim-fade-up card-hover btn-press"
                 style={{...c.st, padding:"18px 12px", animationDelay:`${i*50+100}ms`}}>
                 <span className="text-3xl">{c.icon}</span>
