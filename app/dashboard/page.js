@@ -465,12 +465,12 @@ export default function Dashboard() {
 
       {/* Sidebar izquierdo */}
       <aside style={{ width: sidebarAbierto ? "256px" : "72px", transition: "width 0.3s ease" }}
-        className={`bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen relative overflow-hidden ${mobileSidebarOpen ? "mobile-sidebar-open" : "mobile-sidebar-hidden"} md:transform-none md:position-relative md:h-auto`}>
+        className={`bg-white border-r border-gray-100 flex flex-col shrink-0 min-h-screen relative ${mobileSidebarOpen ? "mobile-sidebar-open" : "mobile-sidebar-hidden"} md:transform-none md:position-relative md:h-auto`}>
 
-        {/* Botón toggle */}
+        {/* Botón toggle — fixed en el borde del sidebar */}
         <button onClick={() => setSidebarAbierto(a => !a)}
-          style={{ top: "50%", transform: "translateY(-50%)" }}
-          className="absolute -right-3.5 z-10 w-7 h-7 bg-indigo-600 border-2 border-white rounded-full shadow-md flex items-center justify-center text-white hover:bg-indigo-700 transition-colors">
+          style={{ position: "fixed", left: sidebarAbierto ? "242px" : "58px", top: "50%", transform: "translateY(-50%)", transition: "left 0.3s ease", zIndex: 50 }}
+          className="w-7 h-7 bg-indigo-600 border-2 border-white rounded-full shadow-md flex items-center justify-center text-white hover:bg-indigo-700 transition-colors hidden md:flex">
           <span style={{ display: "inline-block", transform: sidebarAbierto ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.3s ease", fontSize: "11px", lineHeight: 1 }}>◀</span>
         </button>
 
