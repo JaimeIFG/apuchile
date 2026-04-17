@@ -98,6 +98,10 @@ export default function Dashboard() {
   const logoEmpresaRef = useRef(null);
   const [subiendoLogoEmpresa, setSubiendoLogoEmpresa] = useState(false);
   const [logoEmpresaUrl, setLogoEmpresaUrl] = useState(null);
+  const firmaEmpresaRef = useRef(null);
+  const [subiendoFirmaEmpresa, setSubiendoFirmaEmpresa] = useState(false);
+  const [firmaEmpresaUrl, setFirmaEmpresaUrl] = useState(null);
+  const [firmaEmpresaLabel, setFirmaEmpresaLabel] = useState("");
   const [cambioPassword, setCambioPassword] = useState({ email: "", enviado: false, cargando: false });
 
   // Dark mode
@@ -117,6 +121,8 @@ export default function Dashboard() {
       if (m.config) {
         setConfigForm(prev => ({ ...prev, ...m.config }));
         if (m.config.logoEmpresaUrl) setLogoEmpresaUrl(m.config.logoEmpresaUrl);
+        if (m.config.firmaEmpresaUrl) setFirmaEmpresaUrl(m.config.firmaEmpresaUrl);
+        if (m.config.firmaEmpresaLabel) setFirmaEmpresaLabel(m.config.firmaEmpresaLabel);
       }
 
       // Guardar última conexión y cargar la anterior
@@ -335,7 +341,7 @@ export default function Dashboard() {
 
   const guardarConfig = async () => {
     setConfigGuardando(true);
-    const configData = { ...configForm, logoEmpresaUrl };
+    const configData = { ...configForm, logoEmpresaUrl, firmaEmpresaUrl, firmaEmpresaLabel };
     await supabase.auth.updateUser({ data: { config: configData } });
     setUser(prev => ({ ...prev, user_metadata: { ...prev?.user_metadata, config: configData } }));
     setConfigGuardando(false);
@@ -355,6 +361,20 @@ export default function Dashboard() {
       setLogoEmpresaUrl(publicUrl);
     }
     setSubiendoLogoEmpresa(false);
+  };
+
+  const subirFirmaEmpresa = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSubiendoFirmaEmpresa(true);
+    const ext = file.name.split(".").pop();
+    const path = `logos-empresa/${user.id}/firma.${ext}`;
+    const { error } = await supabase.storage.from("avatars").upload(path, file, { upsert: true });
+    if (!error) {
+      const { data: { publicUrl } } = supabase.storage.from("avatars").getPublicUrl(path);
+      setFirmaEmpresaUrl(publicUrl);
+    }
+    setSubiendoFirmaEmpresa(false);
   };
 
   const enviarResetPassword = async () => {
@@ -1221,6 +1241,36 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <input ref={logoEmpresaRef} type="file" accept="image/*" className="hidden" onChange={subirLogoEmpresa} />
+                  </div>
+
+                  {/* Firma */}
+                  <div className="bg-gray-50 rounded-xl p-4">
+                    <p className="text-xs font-medium text-gray-700 mb-3">Firma digital</p>
+                    <div className="flex items-center gap-4 mb-3">
+                      {firmaEmpresaUrl ? (
+                        <img src={firmaEmpresaUrl} alt="Firma" className="h-14 w-auto object-contain rounded-lg border border-gray-200 bg-white p-1" />
+                      ) : (
+                        <div className="h-14 w-20 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-300 text-2xl">✍️</div>
+                      )}
+                      <div className="space-y-1">
+                        <button onClick={() => firmaEmpresaRef.current?.click()}
+                          disabled={subiendoFirmaEmpresa}
+                          className="px-3 py-1.5 border border-gray-200 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50 btn-press disabled:opacity-50">
+                          {subiendoFirmaEmpresa ? "Subiendo..." : firmaEmpresaUrl ? "Cambiar firma" : "Subir firma"}
+                        </button>
+                        {firmaEmpresaUrl && (
+                          <button onClick={() => setFirmaEmpresaUrl(null)} className="block text-[11px] text-red-400 hover:text-red-600">Quitar firma</button>
+                        )}
+                        <p className="text-[10px] text-gray-400">PNG con fondo transparente — máx. 2MB</p>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-medium text-gray-500 block mb-1">Cargo / Rol (aparecerá bajo la firma en PDF)</label>
+                      <input value={firmaEmpresaLabel} onChange={e => setFirmaEmpresaLabel(e.target.value)}
+                        placeholder="ej: Responsable / Proyectista"
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-indigo-400" />
+                    </div>
+                    <input ref={firmaEmpresaRef} type="file" accept="image/*" className="hidden" onChange={subirFirmaEmpresa} />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">

@@ -795,8 +795,10 @@ function Home() {
     const telEmpresa    = cfgEmpresa.telefonoEmpresa || "";
     const emailEmpresa  = cfgEmpresa.emailEmpresa  || "";
     const dirEmpresa    = cfgEmpresa.direccionEmpresa || "";
-    const logoUrl       = cfgEmpresa.pdfIncluirLogo !== false ? (cfgEmpresa.logoEmpresaUrl || "") : "";
-    const incluirIVA    = cfgEmpresa.pdfIncluirIVA !== false;
+    const logoUrl         = cfgEmpresa.pdfIncluirLogo !== false ? (cfgEmpresa.logoEmpresaUrl || "") : "";
+    const firmaEmpresaUrl = cfgEmpresa.firmaEmpresaUrl || "";
+    const firmaEmpresaLabel = cfgEmpresa.firmaEmpresaLabel || "Responsable / Proyectista";
+    const incluirIVA      = cfgEmpresa.pdfIncluirIVA !== false;
 
     // ── Helper: dibuja header verde en página actual ──
     const dibujarHeader = () => {
@@ -816,7 +818,11 @@ function Home() {
           const img = new window.Image();
           img.crossOrigin = "anonymous";
           img.onload = () => {
-            try { doc.addImage(img, "PNG", 14, 5, 0, 22); logoOk = true; } catch {}
+            try {
+              const h = 22;
+              const w = img.naturalWidth && img.naturalHeight ? (img.naturalWidth / img.naturalHeight) * h : 30;
+              doc.addImage(img, "PNG", 14, 5, w, h); logoOk = true;
+            } catch {}
             resolve();
           };
           img.onerror = resolve;
@@ -842,10 +848,7 @@ function Home() {
       doc.text("PRESUPUESTO", textoX, 25);
     } else {
       doc.setFontSize(15); doc.setFont("helvetica", "bold");
-      doc.text("PRESUPUESTO", textoX, 14);
-      doc.setFontSize(8); doc.setFont("helvetica", "normal");
-      doc.setTextColor(200, 240, 220);
-      doc.text("Análisis de Precios Unitarios", textoX, 22);
+      doc.text("PRESUPUESTO", textoX, 18);
     }
 
     // Derecha: nombre proyecto y fecha
@@ -1087,14 +1090,9 @@ function Home() {
     }
 
     // ── Pie de firma centrado ──
-    const firmaUrl    = proyectoMeta.firmaDigital  || "";
-    const firmaNombre = proyectoMeta.nombreFirmante || "";
-    const firmaRut    = proyectoMeta.rutFirmante    || "";
-    const firmaCargo  = proyectoMeta.cargoFirmante  || "";
-
     const firmasSelec = [
       opts.firmasMandante    && { label: "Mandante" },
-      opts.firmasResponsable && { label: firmaNombre || "Responsable / Proyectista", rut: firmaRut, cargo: firmaCargo, url: firmaUrl },
+      opts.firmasResponsable && { label: firmaEmpresaLabel, url: firmaEmpresaUrl },
       opts.firmasITO         && { label: "ITO / Inspector Técnico" },
       opts.firmasContratista && { label: "Contratista" },
     ].filter(Boolean);
@@ -1113,7 +1111,7 @@ function Home() {
             await new Promise((resolve) => {
               const img = new window.Image();
               img.crossOrigin = "anonymous";
-              img.onload = () => { try { doc.addImage(img, "PNG", fx, firmaBaseY - 14, lineaW, 12); } catch {} resolve(); };
+              img.onload = () => { try { const fmt = f.url.toLowerCase().includes(".jpg") || f.url.toLowerCase().includes(".jpeg") ? "JPEG" : "PNG"; doc.addImage(img, fmt, fx, firmaBaseY - 14, lineaW, 12); } catch {} resolve(); };
               img.onerror = resolve;
               img.src = f.url;
             });
