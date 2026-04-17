@@ -800,35 +800,47 @@ function Home() {
     const firmaEmpresaLabel = cfgEmpresa.firmaEmpresaLabel || "Responsable / Proyectista";
     const incluirIVA      = cfgEmpresa.pdfIncluirIVA !== false;
 
-    // ── Helper: carga imagen como base64 usando Supabase Storage (sin CORS) ──
+    // ── Helper: blob → base64 ──
+    const blobToBase64 = (blob) => new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(blob);
+    });
+
+    // ── Helper: carga imagen como base64 usando múltiples estrategias ──
     const cargarImagenBase64 = async (url) => {
       if (!url) return null;
-      try {
-        // Extraer el path relativo dentro del bucket "avatars"
-        const marker = "/object/public/avatars/";
-        const idx = url.indexOf(marker);
-        if (idx !== -1) {
-          const path = url.substring(idx + marker.length).split("?")[0];
+      const marker = "/object/public/avatars/";
+      const idx = url.indexOf(marker);
+      const path = idx !== -1 ? url.substring(idx + marker.length).split("?")[0] : null;
+
+      // Estrategia 1: download directo por Supabase Storage
+      if (path) {
+        try {
           const { data, error } = await supabase.storage.from("avatars").download(path);
-          if (!error && data) {
-            return await new Promise((resolve) => {
-              const reader = new FileReader();
-              reader.onloadend = () => resolve(reader.result);
-              reader.onerror = () => resolve(null);
-              reader.readAsDataURL(data);
-            });
+          if (!error && data) return await blobToBase64(data);
+        } catch {}
+      }
+
+      // Estrategia 2: URL firmada (bypassa RLS)
+      if (path) {
+        try {
+          const { data: signed } = await supabase.storage.from("avatars").createSignedUrl(path, 120);
+          if (signed?.signedUrl) {
+            const r = await fetch(signed.signedUrl);
+            if (r.ok) return await blobToBase64(await r.blob());
           }
-        }
-        // Fallback: fetch directo
+        } catch {}
+      }
+
+      // Estrategia 3: fetch directo a la URL pública
+      try {
         const r = await fetch(url);
-        const blob = await r.blob();
-        return await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = () => resolve(null);
-          reader.readAsDataURL(blob);
-        });
-      } catch { return null; }
+        if (r.ok) return await blobToBase64(await r.blob());
+      } catch {}
+
+      return null;
     };
 
     // ── Helper: dibuja header verde en página actual ──
