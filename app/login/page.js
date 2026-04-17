@@ -22,7 +22,13 @@ function LeftPanel({ mensaje }) {
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-10">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-base"
-            style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}>A</div>
+            style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", animation: "pulsoHalo 2s ease-in-out infinite" }}>AD</div>
+          <style>{`
+            @keyframes pulsoHalo {
+              0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
+              50% { transform: scale(1.07); box-shadow: 0 0 0 10px rgba(99,102,241,0); }
+            }
+          `}</style>
           <span className="text-2xl font-bold tracking-tight" style={{ color: "#0f172a" }}>
             APU<span style={{ color: "#6366f1" }}>desk</span>
           </span>
