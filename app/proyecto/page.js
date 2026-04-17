@@ -800,6 +800,20 @@ function Home() {
     const firmaEmpresaLabel = cfgEmpresa.firmaEmpresaLabel || "Responsable / Proyectista";
     const incluirIVA      = cfgEmpresa.pdfIncluirIVA !== false;
 
+    // ── Helper: carga imagen como base64 para evitar problemas CORS con jsPDF ──
+    const cargarImagenBase64 = (url) => new Promise((resolve) => {
+      if (!url) return resolve(null);
+      fetch(url)
+        .then(r => r.blob())
+        .then(blob => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = () => resolve(null);
+          reader.readAsDataURL(blob);
+        })
+        .catch(() => resolve(null));
+    });
+
     // ── Helper: dibuja header verde en página actual ──
     const dibujarHeader = () => {
       doc.setFillColor(...VERDE);
@@ -814,20 +828,19 @@ function Home() {
     let logoOk = false;
     if (logoUrl) {
       try {
-        await new Promise((resolve) => {
+        const logoB64 = await cargarImagenBase64(logoUrl);
+        if (logoB64) {
           const img = new window.Image();
-          img.crossOrigin = "anonymous";
-          img.onload = () => {
-            try {
-              const h = 22;
-              const w = img.naturalWidth && img.naturalHeight ? (img.naturalWidth / img.naturalHeight) * h : 30;
-              doc.addImage(img, "PNG", 14, 5, w, h); logoOk = true;
-            } catch {}
-            resolve();
-          };
-          img.onerror = resolve;
-          img.src = logoUrl;
-        });
+          await new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+            img.src = logoB64;
+          });
+          const h = 22;
+          const w = img.naturalWidth && img.naturalHeight ? (img.naturalWidth / img.naturalHeight) * h : 30;
+          const fmt = logoB64.startsWith("data:image/png") ? "PNG" : "JPEG";
+          try { doc.addImage(logoB64, fmt, 14, 5, w, h); logoOk = true; } catch {}
+        }
       } catch {}
     }
 
@@ -1108,13 +1121,11 @@ function Home() {
         // Imagen de firma si aplica
         if (f.url) {
           try {
-            await new Promise((resolve) => {
-              const img = new window.Image();
-              img.crossOrigin = "anonymous";
-              img.onload = () => { try { const fmt = f.url.toLowerCase().includes(".jpg") || f.url.toLowerCase().includes(".jpeg") ? "JPEG" : "PNG"; doc.addImage(img, fmt, fx, firmaBaseY - 14, lineaW, 12); } catch {} resolve(); };
-              img.onerror = resolve;
-              img.src = f.url;
-            });
+            const firmaB64 = await cargarImagenBase64(f.url);
+            if (firmaB64) {
+              const fmt = firmaB64.startsWith("data:image/png") ? "PNG" : "JPEG";
+              try { doc.addImage(firmaB64, fmt, fx, firmaBaseY - 14, lineaW, 12); } catch {}
+            }
           } catch {}
         }
         doc.setDrawColor(100, 100, 100);
