@@ -1260,9 +1260,8 @@ function Home() {
 
       {/* ── Rail lateral ── */}
       <div className="w-[68px] bg-white border-r border-gray-200 flex flex-col items-center py-4 gap-1 shrink-0 shadow-sm z-10">
-        <div className="mb-3 text-center leading-none select-none">
-          <div className="text-[11px] font-black text-indigo-600">APU</div>
-          <div className="text-[9px] text-gray-400 font-medium">chile</div>
+        <div className="mb-3 flex items-center justify-center select-none">
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 800, fontSize: 11, animation: "pulsoHalo 2s ease-in-out infinite" }}>AD</div>
         </div>
         {TABS_RAIL.map((t, i) => (
           <button key={t.id} id={`tour-tab-${t.id}`} onClick={() => setTab(t.id)} title={t.label}

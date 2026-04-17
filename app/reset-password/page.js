@@ -43,9 +43,10 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen flex">
       {/* Panel izquierdo */}
       <div className="hidden lg:flex lg:w-1/2 bg-indigo-800 flex-col items-center justify-center px-16 text-white">
-        <span className="text-4xl font-bold tracking-tight mb-6">
-          APU<span className="text-indigo-300">chile</span>
-        </span>
+        <div className="flex items-center gap-3 mb-6">
+          <div style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 800, fontSize: 13, animation: "pulsoHalo 2s ease-in-out infinite" }}>AD</div>
+          <span className="text-3xl font-bold tracking-tight">APU<span className="text-indigo-300">desk</span></span>
+        </div>
         <p className="text-indigo-200 text-center text-sm">
           Crea una nueva contraseña segura para tu cuenta
         </p>
@@ -55,10 +56,9 @@ export default function ResetPasswordPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-8 bg-white">
         <div className="w-full max-w-md">
 
-          <div className="lg:hidden text-center mb-8">
-            <span className="text-3xl font-bold text-indigo-800">
-              APU<span className="text-indigo-500">chile</span>
-            </span>
+          <div className="lg:hidden flex items-center justify-center gap-2 mb-8">
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 800, fontSize: 11, animation: "pulsoHalo 2s ease-in-out infinite" }}>AD</div>
+            <span className="text-2xl font-bold text-indigo-800">APU<span className="text-indigo-500">desk</span></span>
           </div>
 
           {success ? (

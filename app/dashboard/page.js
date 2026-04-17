@@ -701,7 +701,8 @@ export default function Dashboard() {
                 st:{background:"#fff", border:"1.5px solid #e2e8f0", borderBottom:"3px solid #64748b"}, txt:"#374151" },
             ].map((c, i) => (
               <button key={i} onClick={c.action}
-                onMouseEnter={() => setSidebarAbierto(false)}
+                onMouseEnter={() => { clearTimeout(window._sidebarTimer); window._sidebarTimer = setTimeout(() => setSidebarAbierto(false), 3000); }}
+                onMouseLeave={() => clearTimeout(window._sidebarTimer)}
                 className="rounded-2xl flex flex-col items-center justify-center gap-3 aspect-square shadow-sm anim-fade-up card-hover btn-press"
                 style={{...c.st, padding:"18px 12px", animationDelay:`${i*50+100}ms`}}>
                 <span className="text-3xl">{c.icon}</span>
