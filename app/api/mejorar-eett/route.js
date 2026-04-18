@@ -1,19 +1,34 @@
 import { NextResponse } from "next/server";
+import { rateLimit } from "../../lib/rateLimit";
+import { rateLimitResponse, handleUnexpected, jsonError } from "../../lib/apiHelpers";
+import { LIMITS } from "../../lib/config";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
 export async function POST(req) {
-  const { partidas, familias } = await req.json();
-  if (!familias?.length) return NextResponse.json({ error: "Sin familias" }, { status: 400 });
-
-  if (!ANTHROPIC_API_KEY) {
-    return NextResponse.json({ error: "Sin créditos API. Las especificaciones base están disponibles sin IA." });
-  }
+  const rl = rateLimit(req, "ia");
+  if (!rl.ok) return rateLimitResponse(rl.retryAfter);
 
   try {
-    // Preparar contexto de partidas para el prompt
+    const body = await req.json().catch(() => null);
+    if (!body) return jsonError("JSON inválido", 400);
+
+    const { partidas, familias } = body;
+    if (!Array.isArray(familias) || !familias.length) {
+      return jsonError("Sin familias", 400);
+    }
+    if (!Array.isArray(partidas)) {
+      return jsonError("Partidas inválidas", 400);
+    }
+
+    if (!ANTHROPIC_API_KEY) {
+      return NextResponse.json({
+        error: "Sin créditos API. Las especificaciones base están disponibles sin IA.",
+      });
+    }
+
     const resumen = partidas
-      .slice(0, 40)
+      .slice(0, LIMITS.maxPartidasIA)
       .map(p => `${p.codigo} | ${p.familia || "-"} | ${(p.descripcion || "").substring(0, 60)}`)
       .join("\n");
 
@@ -56,13 +71,20 @@ Solo incluye las familias solicitadas. Sin texto adicional.`;
       }),
     });
 
+    if (!res.ok) {
+      console.error("[mejorar-eett] Anthropic status:", res.status);
+      return jsonError("La IA no pudo generar las especificaciones", 502);
+    }
+
     const data = await res.json();
     const text = data.content?.[0]?.text || "{}";
     const jsonMatch = text.match(/\{[\s\S]*\}/);
-    const mejoras = jsonMatch ? JSON.parse(jsonMatch[0]) : {};
+    let mejoras = {};
+    if (jsonMatch) {
+      try { mejoras = JSON.parse(jsonMatch[0]); } catch { mejoras = {}; }
+    }
     return NextResponse.json({ mejoras, source: "ia" });
   } catch (err) {
-    console.error("Error mejorar-eett:", err.message);
-    return NextResponse.json({ error: "Error al llamar a la IA: " + err.message }, { status: 500 });
+    return handleUnexpected(err, "mejorar-eett");
   }
 }

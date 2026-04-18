@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { requireAuth } from "../_auth";
+import { rateLimit } from "../../lib/rateLimit";
+import { isSafeStoragePath, rateLimitResponse } from "../../lib/apiHelpers";
+import { MAX_FILE_SIZE, LIMITS } from "../../lib/config";
 import ONDAC_APUS from "../../ondac_data_nuevo.json";
 
 // Normalizar texto: minúsculas, sin tildes, sin puntuación
@@ -46,6 +49,10 @@ async function extraerTexto(buffer, ext) {
 }
 
 export async function POST(request) {
+  // Rate limit
+  const rl = rateLimit(request, "procesar");
+  if (!rl.ok) return rateLimitResponse(rl.retryAfter);
+
   // Verificar autenticación
   const { user, errorResponse } = await requireAuth(request);
   if (errorResponse) return errorResponse;
@@ -56,12 +63,18 @@ export async function POST(request) {
       process.env.SUPABASE_SERVICE_ROLE_KEY
     );
 
-    const { storagePath, tipo } = await request.json();
+    const body = await request.json().catch(() => null);
+    if (!body) return NextResponse.json({ error: "JSON inválido" }, { status: 400 });
+
+    const { storagePath, tipo } = body;
     if (!storagePath || !tipo) return NextResponse.json({ error: "Faltan parámetros" }, { status: 400 });
+    if (!["presupuesto", "eett", "plano"].includes(tipo)) {
+      return NextResponse.json({ error: "Tipo inválido" }, { status: 400 });
+    }
     if (tipo === "plano") return NextResponse.json({ partidas: [] });
 
-    // Validar que la ruta no contenga traversal
-    if (storagePath.includes('..') || storagePath.includes('//') || storagePath.startsWith('/')) {
+    // Validación robusta: anti-traversal + alfanumérico + extensión permitida
+    if (!isSafeStoragePath(storagePath, [".pdf", ".xlsx", ".xls"])) {
       return NextResponse.json({ error: "Ruta inválida" }, { status: 400 });
     }
 
@@ -78,6 +91,14 @@ export async function POST(request) {
 
     if (dlErr || !fileData) {
       return NextResponse.json({ error: "No se pudo descargar el archivo" }, { status: 500 });
+    }
+
+    // Validar tamaño antes de procesar (DoS guard)
+    if (fileData.size && fileData.size > MAX_FILE_SIZE.anexo) {
+      return NextResponse.json(
+        { error: `El archivo supera el máximo de ${Math.round(MAX_FILE_SIZE.anexo / 1024 / 1024)} MB` },
+        { status: 413 }
+      );
     }
 
     const ext = storagePath.split(".").pop().toLowerCase();
@@ -123,9 +144,9 @@ export async function POST(request) {
       }
     }
 
-    // Ordenar por similitud descendente y limitar a 30
+    // Ordenar por similitud descendente y limitar al tope configurado
     resultados.sort((a, b) => b.similitud - a.similitud);
-    const partidas = resultados.slice(0, 30);
+    const partidas = resultados.slice(0, LIMITS.maxPartidasIA);
 
     return NextResponse.json({ partidas, metodo: "local" });
   } catch (err) {

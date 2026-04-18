@@ -63,7 +63,10 @@ export async function POST(request) {
     .update({ datos: body.datos, ...metaUpdate })
     .eq("id", id);
 
-  if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+  if (error) {
+    console.error("[guardar] update:", error);
+    return NextResponse.json({ ok: false, error: "No se pudo guardar" }, { status: 500 });
+  }
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, savedAt: new Date().toISOString() });
 }

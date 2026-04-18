@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { pathToFileURL } from "url";
 import { resolve } from "path";
+import { rateLimit } from "../../lib/rateLimit";
+import { rateLimitResponse, handleUnexpected } from "../../lib/apiHelpers";
+import { MAX_FILE_SIZE } from "../../lib/config";
 
 // Polyfills para pdfjs en Node.js
 if (typeof globalThis.DOMMatrix === "undefined") {
@@ -21,10 +24,22 @@ if (typeof globalThis.ImageData === "undefined") {
 }
 
 export async function POST(req) {
+  const rl = rateLimit(req, "procesar");
+  if (!rl.ok) return rateLimitResponse(rl.retryAfter);
+
   try {
     const formData = await req.formData();
     const file = formData.get("file");
     if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
+
+    // Validación de tamaño (evita DoS)
+    const size = file.size ?? 0;
+    if (size > MAX_FILE_SIZE.presupuesto) {
+      return NextResponse.json(
+        { error: `Archivo demasiado grande. Máximo ${Math.round(MAX_FILE_SIZE.presupuesto / 1024 / 1024)} MB` },
+        { status: 413 }
+      );
+    }
 
     const arrayBuffer = await file.arrayBuffer();
     const data = new Uint8Array(arrayBuffer);
@@ -69,8 +84,7 @@ export async function POST(req) {
       totales: { costo_directo: costoDirecto },
     });
   } catch (e) {
-    console.error("Error procesando presupuesto:", e);
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    return handleUnexpected(e, "procesar-presupuesto");
   }
 }
 

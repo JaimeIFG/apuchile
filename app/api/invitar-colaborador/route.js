@@ -1,171 +1,130 @@
-import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
-
-function generarCodigo() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < 8; i++) code += chars[Math.floor(Math.random() * chars.length)];
-  return code;
-}
+import {
+  jsonOk, jsonError, handleUnexpected, rateLimitResponse,
+  isEmail, isUuid, isRol, generarCodigoInvitacion,
+  getUserFromRequest, getAdminClient,
+} from "../../lib/apiHelpers";
+import { rateLimit } from "../../lib/rateLimit";
+import { MAX_COLABORADORES_POR_PROYECTO, INVITACION_TTL_MIN, INVITACION_TTL_MS } from "../../lib/config";
 
 export async function POST(req) {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  );
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  // Rate limit por IP (anti-spam/brute-force).
+  const rl = rateLimit(req, "invitar");
+  if (!rl.ok) return rateLimitResponse(rl.retryAfter);
+
   try {
-    const { email, rol, proyecto_id, proyecto_nombre, invitado_por_nombre } = await req.json();
+    const body = await req.json().catch(() => null);
+    if (!body) return jsonError("JSON inválido", 400);
 
-    if (!email || !rol || !proyecto_id) {
-      return Response.json({ error: "Faltan parámetros" }, { status: 400 });
-    }
+    const { email, rol, proyecto_id, proyecto_nombre, invitado_por_nombre } = body;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return Response.json({ error: "Email inválido" }, { status: 400 });
+    // Validaciones estrictas
+    if (!email || !rol || !proyecto_id) return jsonError("Faltan parámetros", 400);
+    if (!isEmail(email)) return jsonError("Email inválido", 400);
+    if (!isRol(rol)) return jsonError("Rol inválido", 400);
+    if (!isUuid(proyecto_id)) return jsonError("Proyecto inválido", 400);
+    if (proyecto_nombre && (typeof proyecto_nombre !== "string" || proyecto_nombre.length > 200))
+      return jsonError("Nombre de proyecto inválido", 400);
 
-    // Verificar autenticación
-    const authHeader = req.headers.get("authorization");
-    const token = authHeader?.replace("Bearer ", "");
-    let callerId = null;
-    if (token) {
-      const supabaseAuth = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-        { global: { headers: { Authorization: `Bearer ${token}` } } }
-      );
-      const { data: { user } } = await supabaseAuth.auth.getUser();
-      callerId = user?.id || null;
-    }
-    if (!callerId) {
-      return Response.json({ error: "No autorizado" }, { status: 401 });
-    }
+    // Autenticación
+    const caller = await getUserFromRequest(req);
+    if (!caller?.userId) return jsonError("No autorizado", 401);
 
-    // Verificar que el que invita es dueño o administrador del proyecto
+    const supabase = getAdminClient();
+
+    // Permiso: dueño o administrador del proyecto
     const { data: proyecto } = await supabase
-      .from("proyectos")
-      .select("user_id")
-      .eq("id", proyecto_id)
-      .single();
-
-    const esOwner = proyecto?.user_id === callerId;
+      .from("proyectos").select("user_id").eq("id", proyecto_id).single();
+    const esOwner = proyecto?.user_id === caller.userId;
     if (!esOwner) {
       const { data: colab } = await supabase
         .from("proyecto_colaboradores")
-        .select("rol")
-        .eq("proyecto_id", proyecto_id)
-        .eq("user_id", callerId)
-        .single();
+        .select("rol").eq("proyecto_id", proyecto_id).eq("user_id", caller.userId).single();
       if (!colab || colab.rol !== "administrar") {
-        return Response.json({ error: "Sin permiso para invitar colaboradores" }, { status: 403 });
+        return jsonError("Sin permiso para invitar colaboradores", 403);
       }
     }
 
-    // Verificar que no tenga ya 3 colaboradores (incluyendo dueño = 2 colaboradores más)
-    // Verificar también si ya es colaborador
+    // Chequear colaboradores existentes
     const { data: colabs } = await supabase
-      .from("proyecto_colaboradores")
-      .select("id, email")
-      .eq("proyecto_id", proyecto_id);
+      .from("proyecto_colaboradores").select("id, email").eq("proyecto_id", proyecto_id);
 
     if ((colabs || []).some(c => c.email === email)) {
-      return Response.json({ error: "Este usuario ya es colaborador del proyecto" }, { status: 400 });
+      return jsonError("Este usuario ya es colaborador del proyecto", 400);
+    }
+    if ((colabs?.length || 0) >= MAX_COLABORADORES_POR_PROYECTO) {
+      return jsonError(`El proyecto ya tiene el máximo de ${MAX_COLABORADORES_POR_PROYECTO} colaboradores`, 400);
     }
 
-    if ((colabs?.length || 0) >= 2) {
-      return Response.json({ error: "El proyecto ya tiene el máximo de 2 colaboradores (3 usuarios en total)" }, { status: 400 });
-    }
-
-    // Invalidar invitaciones previas al mismo email para este proyecto
+    // Invalidar invitaciones previas al mismo email
     await supabase
       .from("proyecto_invitaciones")
       .update({ usado: true })
-      .eq("proyecto_id", proyecto_id)
-      .eq("email", email)
-      .eq("usado", false);
+      .eq("proyecto_id", proyecto_id).eq("email", email).eq("usado", false);
 
-    // Generar código de 8 caracteres válido por 5 minutos
-    const codigo = generarCodigo();
-    const expires_at = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+    // Generar código criptográficamente aleatorio (16 chars → >10^24 combinaciones)
+    const codigo = generarCodigoInvitacion();
+    const expires_at = new Date(Date.now() + INVITACION_TTL_MS).toISOString();
 
-    // Guardar nueva invitación
     const { error: insertError } = await supabase
       .from("proyecto_invitaciones")
       .insert({
-        proyecto_id,
-        email,
-        codigo,
-        rol,
-        proyecto_nombre,
-        invitado_por_nombre,
-        expires_at,
+        proyecto_id, email, codigo, rol, proyecto_nombre, invitado_por_nombre,
+        expires_at, invited_by: caller.userId,
       });
-
     if (insertError) {
-      return Response.json({ error: "Error al crear invitación: " + insertError.message }, { status: 500 });
+      console.error("[invitar] insert:", insertError);
+      return jsonError("No se pudo crear la invitación", 500);
     }
 
-    // Enviar email con Resend
-    const rolLabel = { visualizar: "visualizar", editar: "editar", administrar: "administrar" }[rol] || rol;
-
-    const { error: emailError } = await resend.emails.send({
-      from: "APUdesk <onboarding@resend.dev>",
-      to: [email],
-      subject: `${invitado_por_nombre || "Un usuario"} te invita a colaborar en "${proyecto_nombre}"`,
-      html: `
+    // Enviar email (no bloquear si falla)
+    let emailEnviado = false;
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const rolLabel = { visualizar: "visualizar", editar: "editar", administrar: "administrar" }[rol] || rol;
+      const { error: emailError } = await resend.emails.send({
+        from: "APUdesk <onboarding@resend.dev>",
+        to: [email],
+        subject: `${invitado_por_nombre || "Un usuario"} te invita a colaborar en "${proyecto_nombre}"`,
+        html: `
         <div style="font-family: Arial, sans-serif; max-width: 520px; margin: 0 auto; background: #f8fafc; padding: 32px 20px;">
           <div style="background: #fff; border-radius: 16px; padding: 32px; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
-
             <div style="text-align: center; margin-bottom: 28px;">
               <div style="background: linear-gradient(135deg,#4338ca,#6366f1); border-radius: 12px; display: inline-block; padding: 10px 20px;">
                 <span style="color: #fff; font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">APUdesk</span>
               </div>
             </div>
-
-            <h2 style="color: #1e293b; font-size: 20px; margin: 0 0 8px; text-align: center;">
-              Invitación a colaborar
-            </h2>
+            <h2 style="color: #1e293b; font-size: 20px; margin: 0 0 8px; text-align: center;">Invitación a colaborar</h2>
             <p style="color: #64748b; text-align: center; margin: 0 0 24px; font-size: 14px; line-height: 1.6;">
               <strong style="color: #1e293b;">${invitado_por_nombre || "Un usuario"}</strong> te ha invitado a colaborar en el proyecto
-              <strong style="color: #6366f1;">"${proyecto_nombre}"</strong>
-              con rol de <strong>${rolLabel}</strong>.
+              <strong style="color: #6366f1;">"${proyecto_nombre}"</strong> con rol de <strong>${rolLabel}</strong>.
             </p>
-
             <div style="background: #eef2ff; border: 2px solid #6366f1; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
-              <p style="color: #4338ca; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px;">
-                Tu código de acceso
-              </p>
-              <p style="font-size: 42px; font-weight: 900; color: #6366f1; letter-spacing: 10px; margin: 0; font-family: monospace;">
-                ${codigo}
-              </p>
-              <p style="color: #64748b; font-size: 12px; margin: 10px 0 0;">
-                ⏱️ Válido por 5 minutos
-              </p>
+              <p style="color: #4338ca; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px;">Tu código de acceso</p>
+              <p style="font-size: 28px; font-weight: 900; color: #6366f1; letter-spacing: 4px; margin: 0; font-family: monospace; word-break: break-all;">${codigo}</p>
+              <p style="color: #64748b; font-size: 12px; margin: 10px 0 0;">⏱️ Válido por ${INVITACION_TTL_MIN} minutos</p>
             </div>
-
             <p style="color: #64748b; font-size: 13px; text-align: center; line-height: 1.6; margin: 0 0 20px;">
               Ingresa a <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://apudesk.vercel.app"}" style="color: #6366f1; font-weight: 700;">APUdesk</a>,
               ve a tu dashboard y haz clic en <strong>"Unirse a proyecto"</strong> para ingresar el código.
             </p>
-
             <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; text-align: center;">
-              <p style="color: #94a3b8; font-size: 11px; margin: 0;">
-                Si no esperabas esta invitación, puedes ignorar este correo.
-              </p>
+              <p style="color: #94a3b8; font-size: 11px; margin: 0;">Si no esperabas esta invitación, puedes ignorar este correo.</p>
             </div>
           </div>
-        </div>
-      `,
-    });
-
-    if (emailError) {
-      console.error("Error Resend:", emailError);
-      return Response.json({ ok: true, emailEnviado: false, codigo, warning: "No se pudo enviar el email" });
+        </div>`,
+      });
+      emailEnviado = !emailError;
+      if (emailError) console.error("[invitar] resend:", emailError);
+    } catch (e) {
+      console.error("[invitar] resend throw:", e);
     }
 
-    return Response.json({ ok: true, emailEnviado: true, codigo });
+    // No devolvemos el código al cliente si el email se envió correctamente
+    // (así un colaborador 'administrar' no puede extraer códigos para otros).
+    // Si falla el email, permitimos al owner/caller copiarlo.
+    return jsonOk({ emailEnviado, ...(emailEnviado ? {} : { codigo }) });
   } catch (err) {
-    console.error("Error invitar colaborador:", err);
-    return Response.json({ error: err.message }, { status: 500 });
+    return handleUnexpected(err, "invitar-colaborador");
   }
 }

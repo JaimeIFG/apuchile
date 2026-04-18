@@ -1,11 +1,24 @@
 import { NextResponse } from "next/server";
 import * as XLSX from "xlsx";
+import { rateLimit } from "../../lib/rateLimit";
+import { rateLimitResponse, handleUnexpected } from "../../lib/apiHelpers";
+import { MAX_FILE_SIZE } from "../../lib/config";
 
 export async function POST(req) {
+  const rl = rateLimit(req, "procesar");
+  if (!rl.ok) return rateLimitResponse(rl.retryAfter);
+
   try {
     const formData = await req.formData();
     const file = formData.get("file");
     if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
+
+    if ((file.size ?? 0) > MAX_FILE_SIZE.ep) {
+      return NextResponse.json(
+        { error: `Archivo demasiado grande. Máximo ${Math.round(MAX_FILE_SIZE.ep / 1024 / 1024)} MB` },
+        { status: 413 }
+      );
+    }
 
     const arrayBuffer = await file.arrayBuffer();
     const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: "array" });
@@ -215,7 +228,6 @@ export async function POST(req) {
       total: totalEP,
     });
   } catch (e) {
-    console.error("Error procesando EP Excel:", e);
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    return handleUnexpected(e, "procesar-ep-excel");
   }
 }

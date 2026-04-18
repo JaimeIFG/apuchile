@@ -29,11 +29,22 @@ function LogoLoader({ progress }) {
  *
  * Props:
  *  - visible: boolean — mostrar u ocultar
- *  - mensaje: string — texto opcional (default "Cargando...")
+ *  - mensaje: string — texto opcional (se ignora si `variant` se pasa)
  *  - progress: number|null — si es null usa animación indeterminada (0-80 loop)
  *  - blur: boolean — difumina el fondo (default true, false = fondo opaco para carga inicial)
+ *  - variant: 'loading' | 'saving' | 'processing' | 'uploading' | null
+ *             atajo para mensajes consistentes en toda la app.
  */
-export default function LoadingOverlay({ visible, mensaje = "Cargando...", progress = null, blur = true }) {
+const VARIANT_MSG = {
+  loading:    "Cargando…",
+  saving:     "Guardando…",
+  processing: "Procesando…",
+  uploading:  "Subiendo archivo…",
+  ia:         "Consultando IA…",
+};
+
+export default function LoadingOverlay({ visible, mensaje, progress = null, blur = true, variant = null }) {
+  const textoFinal = mensaje || VARIANT_MSG[variant] || "Cargando…";
   const [prog, setProg] = useState(0);
   const [dir, setDir] = useState(1);
 
@@ -66,7 +77,7 @@ export default function LoadingOverlay({ visible, mensaje = "Cargando...", progr
         <LogoLoader progress={displayProg} />
         <div className="w-44">
           <div className="flex justify-between text-xs mb-1.5">
-            <span className="text-indigo-300 font-medium">{mensaje}</span>
+            <span className="text-indigo-300 font-medium">{textoFinal}</span>
             {progress !== null && (
               <span className="text-white font-bold">{displayProg}%</span>
             )}

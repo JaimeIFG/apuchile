@@ -167,6 +167,21 @@ export default function Dashboard() {
     return () => { if (canalRef.current) supabase.removeChannel(canalRef.current); };
   }, []);
 
+  // Realtime: refrescar proyectos cuando un colaborador modifica/inserta/elimina.
+  // Escucha postgres_changes y re-carga la lista. Evita que dos usuarios tengan
+  // estados divergentes sin refrescar manualmente.
+  useEffect(() => {
+    if (!user) return;
+    const ch = supabase
+      .channel("proyectos-rt-" + user.id)
+      .on("postgres_changes", { event: "*", schema: "public", table: "proyectos" },
+        () => cargarProyectos(user.id))
+      .on("postgres_changes", { event: "*", schema: "public", table: "proyecto_colaboradores", filter: `user_id=eq.${user.id}` },
+        () => cargarProyectos(user.id))
+      .subscribe();
+    return () => { supabase.removeChannel(ch); };
+  }, [user?.id]);
+
   useInactividad(supabase, router, configForm?.inactividad || 10);
 
   const cargarProyectos = async (uid) => {

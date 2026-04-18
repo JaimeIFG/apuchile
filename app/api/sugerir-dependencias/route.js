@@ -1,15 +1,23 @@
 import { NextResponse } from "next/server";
 import { requireAuth } from "../_auth";
+import { rateLimit } from "../../lib/rateLimit";
+import { rateLimitResponse, jsonError } from "../../lib/apiHelpers";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
 export async function POST(req) {
+  const rl = rateLimit(req, "ia");
+  if (!rl.ok) return rateLimitResponse(rl.retryAfter);
+
   // Verificar autenticación
   const { user, errorResponse } = await requireAuth(req);
   if (errorResponse) return errorResponse;
 
-  const { partidas } = await req.json();
-  if (!partidas?.length) return NextResponse.json({ predecessors: {} });
+  const body = await req.json().catch(() => null);
+  if (!body) return jsonError("JSON inválido", 400);
+  const { partidas } = body;
+  if (!Array.isArray(partidas)) return jsonError("Partidas inválidas", 400);
+  if (!partidas.length) return NextResponse.json({ predecessors: {} });
 
   // ── Si hay clave API, usar Claude ────────────────────────────────────────
   if (ANTHROPIC_API_KEY) {
