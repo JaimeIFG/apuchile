@@ -122,6 +122,7 @@ export default function Dashboard() {
   const [nuevaEmpresaNombre, setNuevaEmpresaNombre] = useState("");
   const [nuevaEmpresaRut, setNuevaEmpresaRut] = useState("");
   const [creandoEmpresaLoading, setCreandoEmpresaLoading] = useState(false);
+  const [crearEmpresaError, setCrearEmpresaError] = useState("");
 
   const setEmpresaActiva = (emp) => {
     setEmpresaActivaState(emp);
@@ -248,21 +249,24 @@ export default function Dashboard() {
       rut: nuevaEmpresaRut.trim() || null,
       created_by: user.id,
     }).select().single();
-    if (!error && data) {
-      // Agregar creador como admin en empresa_miembros
-      await supabase.from("empresa_miembros").insert({
-        empresa_id: data.id,
-        user_id: user.id,
-        email: user.email,
-        rol: "admin",
-      });
-      setEmpresas(p => [data, ...p]);
-      setModalCrearEmpresa(false);
-      setNuevaEmpresaNombre("");
-      setNuevaEmpresaRut("");
-      router.push(`/empresa/${data.id}`);
-    }
     setCreandoEmpresaLoading(false);
+    if (error || !data) {
+      setCrearEmpresaError(error?.message || "Error al crear empresa, intenta de nuevo");
+      return;
+    }
+    setCrearEmpresaError("");
+    // Agregar creador como admin en empresa_miembros
+    await supabase.from("empresa_miembros").insert({
+      empresa_id: data.id,
+      user_id: user.id,
+      email: user.email,
+      rol: "admin",
+    });
+    setEmpresas(p => [data, ...p]);
+    setModalCrearEmpresa(false);
+    setNuevaEmpresaNombre("");
+    setNuevaEmpresaRut("");
+    // No redirigir — la card aparece inmediatamente en el dashboard
   };
 
   const aceptarCodigoEmpresa = async () => {
@@ -1767,7 +1771,7 @@ export default function Dashboard() {
                   value={nuevaEmpresaNombre}
                   onChange={e => setNuevaEmpresaNombre(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && crearEmpresa()}
-                  placeholder="Ej: Retecsold SpA"
+                  placeholder="Nombre de la empresa"
                   className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 />
               </div>
@@ -1781,9 +1785,12 @@ export default function Dashboard() {
                 />
               </div>
               <p className="text-xs text-gray-400">Podrás completar dirección, teléfono, logo y más desde el perfil de la empresa.</p>
+              {crearEmpresaError && (
+                <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{crearEmpresaError}</p>
+              )}
             </div>
             <div className="flex gap-3 mt-5">
-              <button onClick={() => setModalCrearEmpresa(false)}
+              <button onClick={() => { setModalCrearEmpresa(false); setCrearEmpresaError(""); }}
                 className="flex-1 py-2 rounded-lg text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition">
                 Cancelar
               </button>
