@@ -14,10 +14,11 @@ import FlujoCaja from "../components/FlujoCaja";
 import HistogramaRecursos from "../components/HistogramaRecursos";
 import ComparadorCotizaciones from "../components/ComparadorCotizaciones";
 import MedidorPlano from "../components/MedidorPlano";
+import OrdenCompraGenerator from "../components/OrdenCompraGenerator";
 import {
   FcStatistics, FcOpenedFolder, FcPaid, FcCalendar,
   FcDocument, FcReadingEbook, FcSurvey, FcEditImage, FcApproval, FcOldTimeCamera,
-  FcCalculator, FcTimeline, FcBullish, FcFlowChart, FcEngineering,
+  FcCalculator, FcTimeline, FcBullish, FcFlowChart, FcEngineering, FcShop,
 } from "react-icons/fc";
 
 // ── Constantes ─────────────────────────────────────────────────────────────
@@ -1262,6 +1263,8 @@ function ObraDetail() {
   const [mEPGenerator, setMEPGenerator] = useState(false);
   const [mComparador, setMComparador] = useState(false);
   const [mMedidor, setMMedidor] = useState(false);
+  const [ordenes, setOrdenes] = useState([]);
+  const [mOC, setMOC] = useState(false);
   const [lightbox,setLb]  = useState(null);
   const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
   const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
@@ -1296,6 +1299,8 @@ function ObraDetail() {
       setModificaciones(modR.data || []);
       const recR = await supabase.from("obra_recepciones").select("*").eq("obra_id", obraId).order("created_at",{ascending:false});
       setRecepciones(recR.data || []);
+      const ocR = await supabase.from("obra_ordenes_compra").select("*").eq("obra_id", obraId).order("created_at",{ascending:false});
+      setOrdenes(ocR.data || []);
       // Agrupar anexos por bitacora_id
       const anexosMap = {};
       (aR.data||[]).forEach(a=>{ if(!anexosMap[a.bitacora_id]) anexosMap[a.bitacora_id]=[]; anexosMap[a.bitacora_id].push(a); });
@@ -1573,6 +1578,7 @@ ${partidas.map(p=>`
     { id:"recepciones",    Icon:FcApproval, label:"Recepciones"    },
     { id:"fotos",     Icon:FcOldTimeCamera, label:"Fotos", badge:fotos.length },
     { id:"presupuesto", Icon:FcCalculator, label:"Presupuesto", badge:presupuesto.length },
+    { id:"ordenes",     Icon:FcShop, label:"Órdenes de Compra", badge:ordenes.length },
     { id:"gantt",        Icon:FcTimeline, label:"Carta Gantt" },
     { id:"costos",       Icon:FcBullish, label:"Control Costos" },
     { id:"flujo",        Icon:FcFlowChart, label:"Flujo de Caja" },
@@ -2718,6 +2724,70 @@ ${partidas.map(p=>`
             </div>
           )}
 
+          {/* ═══ ÓRDENES DE COMPRA ═══ */}
+          {tab==="ordenes" && (
+            <div style={{ padding:"0 4px" }}>
+              <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:20 }}>
+                <div>
+                  <h2 style={{ margin:0, fontSize:18, fontWeight:700, color:"#0f172a" }}>Órdenes de Compra</h2>
+                  <p style={{ margin:"4px 0 0", fontSize:13, color:"#64748b" }}>
+                    {ordenes.length === 0 ? "Sin órdenes emitidas aún" : `${ordenes.length} orden${ordenes.length !== 1 ? "es" : ""} registrada${ordenes.length !== 1 ? "s" : ""}`}
+                  </p>
+                </div>
+                <button onClick={() => setMOC(true)}
+                  style={{ background:"#4338ca", color:"#fff", border:"none", borderRadius:10,
+                    padding:"10px 20px", fontSize:13, fontWeight:600, cursor:"pointer",
+                    display:"flex", alignItems:"center", gap:6 }}>
+                  + Nueva Orden de Compra
+                </button>
+              </div>
+
+              {ordenes.length === 0 ? (
+                <div style={{ textAlign:"center", padding:"60px 20px", background:"#f8fafc",
+                  borderRadius:16, border:"2px dashed #e2e8f0" }}>
+                  <div style={{ fontSize:48, marginBottom:12 }}>🛒</div>
+                  <p style={{ color:"#94a3b8", fontSize:15, margin:0 }}>Aún no hay órdenes de compra para esta obra.</p>
+                  <p style={{ color:"#cbd5e1", fontSize:13, marginTop:6 }}>Haz clic en "Nueva Orden de Compra" para comenzar.</p>
+                </div>
+              ) : (
+                <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                  {ordenes.map(o => {
+                    const estadoStyle = {
+                      borrador: { bg:"#fef3c7", color:"#92400e" },
+                      emitida:  { bg:"#dcfce7", color:"#166534" },
+                      anulada:  { bg:"#fee2e2", color:"#991b1b" },
+                    }[o.estado] || { bg:"#f1f5f9", color:"#475569" };
+                    return (
+                      <div key={o.id} style={{ background:"#fff", border:"1px solid #e2e8f0",
+                        borderRadius:12, padding:"16px 20px",
+                        display:"flex", alignItems:"center", gap:16 }}>
+                        <div style={{ flex:1 }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:4 }}>
+                            <span style={{ fontWeight:700, fontSize:15, color:"#0f172a" }}>{o.numero}</span>
+                            <span style={{ fontSize:11, fontWeight:600, padding:"2px 10px",
+                              borderRadius:20, background:estadoStyle.bg, color:estadoStyle.color }}>
+                              {o.estado.charAt(0).toUpperCase() + o.estado.slice(1)}
+                            </span>
+                          </div>
+                          <div style={{ fontSize:13, color:"#475569" }}>
+                            {o.proveedor_nombre && <span style={{ marginRight:16 }}>🏢 {o.proveedor_nombre}</span>}
+                            {o.fecha && <span style={{ marginRight:16 }}>📅 {new Date(o.fecha+"T12:00:00").toLocaleDateString("es-CL")}</span>}
+                          </div>
+                        </div>
+                        <div style={{ textAlign:"right" }}>
+                          <div style={{ fontWeight:700, fontSize:15, color:"#4338ca" }}>
+                            ${Math.round(o.total||0).toLocaleString("es-CL")}
+                          </div>
+                          <div style={{ fontSize:11, color:"#94a3b8" }}>Total con IVA</div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* ═══ CARTA GANTT ═══ */}
           {tab==="gantt" && (
             <GanttObra obra={obra} presupuesto={presupuesto} />
@@ -2772,6 +2842,19 @@ ${partidas.map(p=>`
               setPagos(prev => [data, ...prev]);
               setMEPGenerator(false);
             }
+          }}
+        />
+      )}
+
+      {/* Orden de Compra Generator */}
+      {mOC && (
+        <OrdenCompraGenerator
+          obra={obra}
+          ordenesAnteriores={ordenes}
+          onClose={() => setMOC(false)}
+          onSave={(newOC) => {
+            setOrdenes(prev => [newOC, ...prev]);
+            setMOC(false);
           }}
         />
       )}
