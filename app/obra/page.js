@@ -3761,8 +3761,8 @@ function ResumenFinanciero({ presupuesto, pctGG, setPctGG, pctUt, setPctUt, pctI
   const total= neto + iva;
   const fmtN = v => "$" + Math.round(v).toLocaleString("es-CL");
   const PctInput = ({ val, onChange }) => (
-    <input type="number" min="0" max="100" value={val}
-      onChange={e => { const n = parseFloat(e.target.value); onChange(isNaN(n) ? 0 : Math.max(0, n)); }}
+    <input type="text" inputMode="numeric" value={val}
+      onChange={e => { const n = parseFloat(e.target.value.replace(",",".")); if (!isNaN(n) && n >= 0) onChange(n); else if (e.target.value === "" || e.target.value === "-") onChange(0); }}
       onFocus={e => e.target.select()}
       onClick={e => e.stopPropagation()}
       style={{ width:44, border:"1.5px solid #c7d2fe", borderRadius:6, padding:"2px 5px",
