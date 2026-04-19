@@ -1,9 +1,17 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabase";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
-const fmt = (n) => "$\u00a0" + Math.round(n || 0).toLocaleString("es-CL");
+const fmtM = (n, moneda) => {
+  const prefixes = { CLP: "$\u00a0", UF: "UF\u00a0", USD: "US$\u00a0", EUR: "€\u00a0" };
+  const prefix = prefixes[moneda] || "$\u00a0";
+  if (!moneda || moneda === "CLP") {
+    return prefix + Math.round(n || 0).toLocaleString("es-CL");
+  }
+  const v = +(n || 0);
+  return prefix + v.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+};
 const num = (v) => parseFloat(v) || 0;
 const uid = () => Math.random().toString(36).slice(2, 10);
 
@@ -54,7 +62,7 @@ function TextArea({ label, value, onChange, rows = 2, className = "" }) {
 function Select({ label, value, onChange, options, className = "" }) {
   return (
     <div className={`flex flex-col gap-0.5 ${className}`}>
-      <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">{label}</label>
+      {label && <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">{label}</label>}
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
@@ -76,49 +84,108 @@ function SectionTitle({ children }) {
   );
 }
 
-// ─── Componente principal ────────────────────────────────────────────────────
-export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onSave, onClose }) {
+function ImgUploadBox({ label, img, onUpload, onClear, hint }) {
+  const ref = useRef();
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">{label}</label>
+      {img ? (
+        <div className="relative group rounded-lg overflow-hidden border border-slate-600 bg-slate-800 flex items-center justify-center" style={{ height: 80 }}>
+          <img src={img} alt={label} className="max-h-full max-w-full object-contain p-1" />
+          <button
+            onClick={onClear}
+            className="absolute top-1 right-1 bg-red-500/80 hover:bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+          >✕</button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => ref.current?.click()}
+          className="flex flex-col items-center justify-center gap-1.5 h-20 border border-dashed border-slate-600 hover:border-indigo-500 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition text-slate-500 hover:text-indigo-400"
+        >
+          <span className="text-xl">📎</span>
+          <span className="text-[10px] font-medium">{hint || "Subir imagen"}</span>
+        </button>
+      )}
+      <input
+        ref={ref}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={e => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = ev => onUpload(ev.target.result);
+          reader.readAsDataURL(file);
+          e.target.value = "";
+        }}
+      />
+    </div>
+  );
+}
 
+// ─── Componente principal ────────────────────────────────────────────────────
+export default function OrdenCompraGenerator({ obra, ocData, ordenesAnteriores = [], onSave, onClose, onEstadoChange }) {
+  const isEdit = !!ocData?.id;
   const nextNum = `OC-${new Date().getFullYear()}-${String((ordenesAnteriores.length || 0) + 1).padStart(4, "0")}`;
 
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [emitiendo, setEmitiendo] = useState(false);
+
+  // Imágenes
+  const [firmaImg, setFirmaImg] = useState(null);
+  const [logoImg, setLogoImg] = useState(null);
 
   // ── Estado formulario ────────────────────────────────────────────────────
   const [oc, setOc] = useState({
-    numero: nextNum,
-    fecha: new Date().toISOString().split("T")[0],
-    estado: "borrador",
-    moneda: "CLP",
-    // Proveedor
-    proveedor_nombre: "",
-    proveedor_rut: "",
-    proveedor_direccion: "",
-    proveedor_contacto: "",
-    proveedor_email: "",
-    proveedor_telefono: "",
-    // Referencia
-    ref_obra: obra?.nombre || "",
-    condicion_pago: "30 días factura",
-    plazo_entrega: "",
-    lugar_entrega: "",
-    observaciones: "",
-    // Empresa
-    empresa_nombre: "",
-    empresa_rut: "",
-    empresa_direccion: "",
-    empresa_telefono: "",
-    empresa_email: "",
-    // Firma
-    firma_nombre: "",
-    firma_cargo: "",
-    firma_rut: "",
+    numero:            ocData?.numero            || nextNum,
+    fecha:             ocData?.fecha             || new Date().toISOString().split("T")[0],
+    estado:            ocData?.estado            || "borrador",
+    moneda:            ocData?.moneda            || "CLP",
+    proveedor_nombre:  ocData?.proveedor_nombre  || "",
+    proveedor_rut:     ocData?.proveedor_rut     || "",
+    proveedor_direccion: ocData?.proveedor_direccion || "",
+    proveedor_contacto: ocData?.proveedor_contacto || "",
+    proveedor_email:   ocData?.proveedor_email   || "",
+    proveedor_telefono: ocData?.proveedor_telefono || "",
+    ref_obra:          ocData?.ref_obra          || obra?.nombre || "",
+    condicion_pago:    ocData?.condicion_pago    || "30 días factura",
+    plazo_entrega:     ocData?.plazo_entrega     || "",
+    lugar_entrega:     ocData?.lugar_entrega     || "",
+    observaciones:     ocData?.observaciones     || "",
+    empresa_nombre:    ocData?.empresa_nombre    || "",
+    empresa_rut:       ocData?.empresa_rut       || "",
+    empresa_direccion: ocData?.empresa_direccion || "",
+    empresa_telefono:  ocData?.empresa_telefono  || "",
+    empresa_email:     ocData?.empresa_email     || "",
+    firma_nombre:      ocData?.firma_nombre      || "",
+    firma_cargo:       ocData?.firma_cargo       || "",
+    firma_rut:         ocData?.firma_rut         || "",
   });
 
   const setF = (k) => (v) => setOc(prev => ({ ...prev, [k]: v }));
 
+  // fmt usa la moneda actual
+  const fmt = (n) => fmtM(n, oc.moneda);
+
   // ── Ítems ────────────────────────────────────────────────────────────────
   const [items, setItems] = useState([emptyItem(1)]);
+
+  // Si es edición, cargar ítems
+  useEffect(() => {
+    if (!ocData?.id) return;
+    supabase.from("obra_oc_items")
+      .select("*")
+      .eq("oc_id", ocData.id)
+      .order("orden")
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setItems(data.map(i => ({ ...i, _id: i.id || uid() })));
+        }
+      });
+  }, [ocData?.id]);
 
   const updateItem = useCallback((idx, field, raw) => {
     setItems(prev => {
@@ -144,42 +211,72 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
 
   // ── Totales ──────────────────────────────────────────────────────────────
   const subtotal = items.reduce((s, i) => s + num(i.total), 0);
-  const iva = Math.round(subtotal * 0.19);
-  const total = subtotal + iva;
+  const iva = oc.moneda === "CLP"
+    ? Math.round(subtotal * 0.19)
+    : +(subtotal * 0.19).toFixed(2);
+  const total = oc.moneda === "CLP"
+    ? subtotal + iva
+    : +(subtotal + iva).toFixed(2);
+
+  // ── Emitir OC ─────────────────────────────────────────────────────────────
+  const handleEmitir = async () => {
+    if (!ocData?.id) return;
+    setEmitiendo(true);
+    try {
+      const { error } = await supabase.from("obra_ordenes_compra")
+        .update({ estado: "emitida" })
+        .eq("id", ocData.id);
+      if (error) throw error;
+      setOc(p => ({ ...p, estado: "emitida" }));
+      onEstadoChange?.({ ...ocData, estado: "emitida" });
+    } catch (e) {
+      alert("Error al emitir: " + e.message);
+    } finally {
+      setEmitiendo(false);
+    }
+  };
 
   // ── Guardar en Supabase ──────────────────────────────────────────────────
   const handleGuardar = async () => {
     setSaving(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      const ocData = {
-        obra_id: obra.id,
-        user_id: user.id,
-        ...oc,
-        subtotal,
-        iva,
-        total,
-      };
-      const { data: ocRow, error } = await supabase
-        .from("obra_ordenes_compra")
-        .insert(ocData)
-        .select()
-        .single();
-      if (error) throw error;
+      const ocPayload = { ...oc, subtotal, iva, total };
 
-      const itemsData = items.map((item, i) => ({
-        oc_id: ocRow.id,
-        orden: i,
-        descripcion: item.descripcion,
-        unidad: item.unidad,
-        cantidad: num(item.cantidad),
-        precio_unitario: num(item.precio_unitario),
-        total: num(item.total),
-      }));
-      const { error: err2 } = await supabase.from("obra_oc_items").insert(itemsData);
-      if (err2) throw err2;
+      if (isEdit) {
+        // Actualizar OC existente
+        const { error } = await supabase.from("obra_ordenes_compra")
+          .update(ocPayload)
+          .eq("id", ocData.id);
+        if (error) throw error;
 
-      onSave?.({ ...ocRow, items: itemsData });
+        // Reemplazar ítems
+        await supabase.from("obra_oc_items").delete().eq("oc_id", ocData.id);
+        const itemsData = items.map((item, i) => ({
+          oc_id: ocData.id, orden: i,
+          descripcion: item.descripcion, unidad: item.unidad,
+          cantidad: num(item.cantidad), precio_unitario: num(item.precio_unitario), total: num(item.total),
+        }));
+        const { error: err2 } = await supabase.from("obra_oc_items").insert(itemsData);
+        if (err2) throw err2;
+        onSave?.({ ...ocData, ...ocPayload, items: itemsData });
+      } else {
+        // Crear nueva OC
+        const { data: ocRow, error } = await supabase
+          .from("obra_ordenes_compra")
+          .insert({ obra_id: obra.id, user_id: user.id, ...ocPayload })
+          .select().single();
+        if (error) throw error;
+
+        const itemsData = items.map((item, i) => ({
+          oc_id: ocRow.id, orden: i,
+          descripcion: item.descripcion, unidad: item.unidad,
+          cantidad: num(item.cantidad), precio_unitario: num(item.precio_unitario), total: num(item.total),
+        }));
+        const { error: err2 } = await supabase.from("obra_oc_items").insert(itemsData);
+        if (err2) throw err2;
+        onSave?.({ ...ocRow, items: itemsData });
+      }
     } catch (e) {
       alert("Error al guardar: " + e.message);
     } finally {
@@ -207,18 +304,30 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
       doc.setFillColor(...INDIGO);
       doc.rect(0, 0, W, 32, "F");
 
-      // Placeholder logo
-      doc.setDrawColor(255, 255, 255);
-      doc.setLineWidth(0.4);
-      doc.roundedRect(M, 5, 28, 22, 2, 2, "FD");
-      doc.setTextColor(...WHITE);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(6);
-      doc.text("LOGO", M + 14, 14, { align: "center" });
-      doc.setFontSize(5);
-      doc.text("EMPRESA", M + 14, 18, { align: "center" });
+      // Logo empresa (si existe imagen, usarla; si no, placeholder)
+      if (logoImg) {
+        try {
+          doc.addImage(logoImg, M, 5, 28, 22);
+        } catch (_) {
+          // fallback placeholder
+          doc.setDrawColor(255, 255, 255);
+          doc.setLineWidth(0.4);
+          doc.roundedRect(M, 5, 28, 22, 2, 2, "D");
+        }
+      } else {
+        doc.setDrawColor(255, 255, 255);
+        doc.setLineWidth(0.4);
+        doc.roundedRect(M, 5, 28, 22, 2, 2, "FD");
+        doc.setTextColor(...WHITE);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(6);
+        doc.text("LOGO", M + 14, 14, { align: "center" });
+        doc.setFontSize(5);
+        doc.text("EMPRESA", M + 14, 18, { align: "center" });
+      }
 
       // Título
+      doc.setTextColor(...WHITE);
       doc.setFontSize(18);
       doc.setFont("helvetica", "bold");
       doc.text("ORDEN DE COMPRA", W / 2, 14, { align: "center" });
@@ -410,22 +519,20 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
       doc.setTextColor(...WHITE);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(7);
-      doc.text("FIRMA DIGITAL AUTORIZADA", M + 4, y + 4.5);
+      doc.text("FIRMA AUTORIZADA", M + 4, y + 4.5);
 
-      doc.setDrawColor(...INDIGO);
-      doc.setLineWidth(0.6);
-      doc.roundedRect(M + 3, y + 8, fw - 6, 7, 1, 1);
-      doc.setTextColor(...INDIGO);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(5.5);
-      doc.text("✓  FIRMADO DIGITALMENTE", M + fw / 2, y + 12.5, { align: "center" });
-
-      // Trazo de firma
-      doc.setDrawColor(...INDIGO);
-      doc.setLineWidth(0.9);
-      const fx = M + fw / 2 - 18, fy = y + 22;
-      [[0,2,6,-2],[6,-2,10,3],[10,3,16,-1],[16,-1,22,2],[22,2,28,-3],[28,-3,34,1],[34,1,36,-1]]
-        .forEach(([x1,y1,x2,y2]) => doc.line(fx+x1, fy+y1, fx+x2, fy+y2));
+      if (firmaImg) {
+        try {
+          doc.addImage(firmaImg, M + fw / 2 - 22, y + 8, 44, 18);
+        } catch (_) {}
+      } else {
+        // Trazo decorativo
+        doc.setDrawColor(...INDIGO);
+        doc.setLineWidth(0.9);
+        const fx = M + fw / 2 - 18, fy = y + 22;
+        [[0,2,6,-2],[6,-2,10,3],[10,3,16,-1],[16,-1,22,2],[22,2,28,-3],[28,-3,34,1],[34,1,36,-1]]
+          .forEach(([x1,y1,x2,y2]) => doc.line(fx+x1, fy+y1, fx+x2, fy+y2));
+      }
 
       doc.setLineWidth(0.3);
       doc.setDrawColor(226, 232, 240);
@@ -452,16 +559,22 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
       doc.setFontSize(7);
       doc.text("SELLO / LOGO EMPRESA", lx + 4, y + 4.5);
 
-      doc.setFillColor(237, 236, 254);
-      doc.setDrawColor(...INDIGO);
-      doc.setLineWidth(0.4);
-      doc.roundedRect(lx + fw / 2 - 18, y + 9, 36, 22, 3, 3, "FD");
-      doc.setTextColor(...INDIGO);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(9);
-      doc.text("LOGO", lx + fw / 2, y + 20, { align: "center" });
-      doc.setFontSize(6);
-      doc.text("Tu logo aquí", lx + fw / 2, y + 26, { align: "center" });
+      if (logoImg) {
+        try {
+          doc.addImage(logoImg, lx + fw / 2 - 18, y + 9, 36, 22);
+        } catch (_) {}
+      } else {
+        doc.setFillColor(237, 236, 254);
+        doc.setDrawColor(...INDIGO);
+        doc.setLineWidth(0.4);
+        doc.roundedRect(lx + fw / 2 - 18, y + 9, 36, 22, 3, 3, "FD");
+        doc.setTextColor(...INDIGO);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9);
+        doc.text("LOGO", lx + fw / 2, y + 20, { align: "center" });
+        doc.setFontSize(6);
+        doc.text("Tu logo aquí", lx + fw / 2, y + 26, { align: "center" });
+      }
 
       doc.setTextColor(...DARK);
       doc.setFont("helvetica", "bold");
@@ -505,14 +618,16 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700 shrink-0">
           <div>
-            <h2 className="text-white font-bold text-lg">Nueva Orden de Compra</h2>
+            <h2 className="text-white font-bold text-lg">
+              {isEdit ? `Orden de Compra — ${oc.numero}` : "Nueva Orden de Compra"}
+            </h2>
             <p className="text-slate-400 text-sm">{obra?.nombre || "Obra"}</p>
           </div>
           <div className="flex items-center gap-2">
             <span className={`text-xs px-2.5 py-1 rounded-full border font-semibold ${ESTADO_COLOR[oc.estado]}`}>
               {oc.estado.charAt(0).toUpperCase() + oc.estado.slice(1)}
             </span>
-            <Select value={oc.estado} onChange={setF("estado")} options={ESTADOS} className="w-36" />
+            <Select value={oc.estado} onChange={setF("estado")} options={ESTADOS} />
             <button onClick={onClose} className="ml-2 text-slate-400 hover:text-white transition text-xl font-bold">✕</button>
           </div>
         </div>
@@ -540,6 +655,13 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
               <Field label="Teléfono" value={oc.empresa_telefono} onChange={setF("empresa_telefono")} placeholder="+56 2 …" />
               <Field label="Dirección" value={oc.empresa_direccion} onChange={setF("empresa_direccion")} className="col-span-2" />
               <Field label="Email" value={oc.empresa_email} onChange={setF("empresa_email")} type="email" />
+              <ImgUploadBox
+                label="Logo empresa"
+                img={logoImg}
+                onUpload={setLogoImg}
+                onClear={() => setLogoImg(null)}
+                hint="Subir logo (PNG/JPG)"
+              />
             </div>
           </section>
 
@@ -662,14 +784,18 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
           {/* ── Firma ───────────────────────────────────────────────────── */}
           <section>
             <SectionTitle>Firma Autorizada</SectionTitle>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <Field label="Nombre firmante" value={oc.firma_nombre} onChange={setF("firma_nombre")} />
               <Field label="Cargo" value={oc.firma_cargo} onChange={setF("firma_cargo")} />
               <Field label="RUT firmante" value={oc.firma_rut} onChange={setF("firma_rut")} placeholder="12.345.678-9" />
+              <ImgUploadBox
+                label="Imagen de firma"
+                img={firmaImg}
+                onUpload={setFirmaImg}
+                onClear={() => setFirmaImg(null)}
+                hint="Subir firma (PNG)"
+              />
             </div>
-            <p className="text-xs text-slate-500 mt-2">
-              La firma digital se añade automáticamente al PDF con los datos ingresados.
-            </p>
           </section>
 
         </div>
@@ -684,14 +810,23 @@ export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onS
             disabled={generating}
             className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-slate-700 hover:bg-slate-600 text-white transition disabled:opacity-60"
           >
-            {generating ? "Generando…" : "Vista previa PDF"}
+            {generating ? "Generando…" : "Descargar PDF"}
           </button>
+          {isEdit && oc.estado === "borrador" && (
+            <button
+              onClick={handleEmitir}
+              disabled={emitiendo}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition disabled:opacity-60"
+            >
+              {emitiendo ? "Emitiendo…" : "✓ Emitir OC"}
+            </button>
+          )}
           <button
             onClick={handleGuardar}
             disabled={saving}
             className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition disabled:opacity-60"
           >
-            {saving ? "Guardando…" : "Guardar OC"}
+            {saving ? "Guardando…" : isEdit ? "Guardar cambios" : "Guardar OC"}
           </button>
         </div>
       </div>

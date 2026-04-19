@@ -1265,6 +1265,7 @@ function ObraDetail() {
   const [mMedidor, setMMedidor] = useState(false);
   const [ordenes, setOrdenes] = useState([]);
   const [mOC, setMOC] = useState(false);
+  const [ocSeleccionada, setOcSeleccionada] = useState(null);
   const [lightbox,setLb]  = useState(null);
   const [docSelec,setDocSelec]=useState(null);  // documento seleccionado para previsualización
   const [anexos,setAnexos]=useState({});  // { bitacora_id: [anexos] }
@@ -2757,10 +2758,20 @@ ${partidas.map(p=>`
                       emitida:  { bg:"#dcfce7", color:"#166534" },
                       anulada:  { bg:"#fee2e2", color:"#991b1b" },
                     }[o.estado] || { bg:"#f1f5f9", color:"#475569" };
+                    const monedaPrefix = { CLP:"$", UF:"UF ", USD:"US$", EUR:"€" }[o.moneda] || "$";
+                    const totalFmt = o.moneda === "CLP"
+                      ? "$" + Math.round(o.total||0).toLocaleString("es-CL")
+                      : monedaPrefix + (+(o.total||0)).toLocaleString("es-CL", { minimumFractionDigits:2, maximumFractionDigits:2 });
                     return (
-                      <div key={o.id} style={{ background:"#fff", border:"1px solid #e2e8f0",
-                        borderRadius:12, padding:"16px 20px",
-                        display:"flex", alignItems:"center", gap:16 }}>
+                      <div key={o.id}
+                        onClick={() => setOcSeleccionada(o)}
+                        style={{ background:"#fff", border:"1px solid #e2e8f0",
+                          borderRadius:12, padding:"16px 20px",
+                          display:"flex", alignItems:"center", gap:16,
+                          cursor:"pointer", transition:"box-shadow 0.15s" }}
+                        onMouseEnter={e => e.currentTarget.style.boxShadow="0 0 0 2px #6366f1"}
+                        onMouseLeave={e => e.currentTarget.style.boxShadow="none"}
+                      >
                         <div style={{ flex:1 }}>
                           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:4 }}>
                             <span style={{ fontWeight:700, fontSize:15, color:"#0f172a" }}>{o.numero}</span>
@@ -2774,11 +2785,25 @@ ${partidas.map(p=>`
                             {o.fecha && <span style={{ marginRight:16 }}>📅 {new Date(o.fecha+"T12:00:00").toLocaleDateString("es-CL")}</span>}
                           </div>
                         </div>
-                        <div style={{ textAlign:"right" }}>
-                          <div style={{ fontWeight:700, fontSize:15, color:"#4338ca" }}>
-                            ${Math.round(o.total||0).toLocaleString("es-CL")}
+                        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+                          {o.estado === "borrador" && (
+                            <button
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                const { error } = await supabase.from("obra_ordenes_compra")
+                                  .update({ estado:"emitida" }).eq("id", o.id);
+                                if (!error) setOrdenes(prev => prev.map(x => x.id===o.id ? {...x, estado:"emitida"} : x));
+                              }}
+                              style={{ background:"#dcfce7", color:"#166534", border:"1px solid #bbf7d0",
+                                borderRadius:8, padding:"5px 12px", fontSize:12, fontWeight:600, cursor:"pointer" }}
+                            >
+                              ✓ Emitir
+                            </button>
+                          )}
+                          <div style={{ textAlign:"right" }}>
+                            <div style={{ fontWeight:700, fontSize:15, color:"#4338ca" }}>{totalFmt}</div>
+                            <div style={{ fontSize:11, color:"#94a3b8" }}>Total con IVA</div>
                           </div>
-                          <div style={{ fontSize:11, color:"#94a3b8" }}>Total con IVA</div>
                         </div>
                       </div>
                     );
@@ -2846,7 +2871,7 @@ ${partidas.map(p=>`
         />
       )}
 
-      {/* Orden de Compra Generator */}
+      {/* Orden de Compra Generator — nueva */}
       {mOC && (
         <OrdenCompraGenerator
           obra={obra}
@@ -2855,6 +2880,23 @@ ${partidas.map(p=>`
           onSave={(newOC) => {
             setOrdenes(prev => [newOC, ...prev]);
             setMOC(false);
+          }}
+        />
+      )}
+
+      {/* Orden de Compra Generator — ver/editar existente */}
+      {ocSeleccionada && (
+        <OrdenCompraGenerator
+          obra={obra}
+          ocData={ocSeleccionada}
+          ordenesAnteriores={ordenes}
+          onClose={() => setOcSeleccionada(null)}
+          onEstadoChange={(updated) => {
+            setOrdenes(prev => prev.map(x => x.id === updated.id ? { ...x, ...updated } : x));
+          }}
+          onSave={(updated) => {
+            setOrdenes(prev => prev.map(x => x.id === updated.id ? { ...x, ...updated } : x));
+            setOcSeleccionada(null);
           }}
         />
       )}
