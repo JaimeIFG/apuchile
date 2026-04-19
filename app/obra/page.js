@@ -1245,6 +1245,9 @@ function ObraDetail() {
   const [garSeleccionada, setGarSeleccionada] = useState(null);
   const [gastos, setGastos] = useState([]);
   const [mGasto, setMGasto] = useState(false);
+  const [pctGG,  setPctGG]  = useState(25);
+  const [pctUt,  setPctUt]  = useState(15);
+  const [pctIva, setPctIva] = useState(19);
   const [gastoSeleccionado, setGastoSeleccionado] = useState(null);
   const [bitacora,  setBitacora]  = useState([]);
   const [fotos,     setFotos]     = useState([]);
@@ -2861,7 +2864,7 @@ ${partidas.map(p=>`
                   })}
 
                   {/* Resumen financiero */}
-                  <ResumenFinanciero presupuesto={presupuesto}/>
+                  <ResumenFinanciero presupuesto={presupuesto} pctGG={pctGG} setPctGG={setPctGG} pctUt={pctUt} setPctUt={setPctUt} pctIva={pctIva} setPctIva={setPctIva}/>
 
                   <p style={{ fontSize:11, color:"#94a3b8", marginTop:10, textAlign:"center" }}>
                     ✏️ Haz clic en <strong>Cantidad</strong> o <strong>V. Unitario</strong> para editar · El total se calcula automáticamente
@@ -3749,10 +3752,7 @@ function ModalFotos({ obraId, onClose, onSave }) {
   );
 }
 
-function ResumenFinanciero({ presupuesto }) {
-  const [pctGG,  setPctGG]  = useState(25);
-  const [pctUt,  setPctUt]  = useState(15);
-  const [pctIva, setPctIva] = useState(19);
+function ResumenFinanciero({ presupuesto, pctGG, setPctGG, pctUt, setPctUt, pctIva, setPctIva }) {
   const cd   = presupuesto.reduce((s,p) => s + (p.valor_total||0), 0);
   const gg   = cd * (pctGG / 100);
   const ut   = cd * (pctUt / 100);
@@ -3762,7 +3762,8 @@ function ResumenFinanciero({ presupuesto }) {
   const fmtN = v => "$" + Math.round(v).toLocaleString("es-CL");
   const PctInput = ({ val, onChange }) => (
     <input type="number" min="0" max="100" value={val}
-      onChange={e => onChange(Math.max(0, parseFloat(e.target.value)||0))}
+      onChange={e => { const n = parseFloat(e.target.value); onChange(isNaN(n) ? 0 : Math.max(0, n)); }}
+      onFocus={e => e.target.select()}
       onClick={e => e.stopPropagation()}
       style={{ width:44, border:"1.5px solid #c7d2fe", borderRadius:6, padding:"2px 5px",
         fontSize:12, fontFamily:"inherit", textAlign:"right", outline:"none",
