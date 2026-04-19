@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
-import { createClient } from "../lib/supabase";
+import { supabase } from "../lib/supabase";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 const fmt = (n) => "$\u00a0" + Math.round(n || 0).toLocaleString("es-CL");
@@ -78,7 +78,6 @@ function SectionTitle({ children }) {
 
 // ─── Componente principal ────────────────────────────────────────────────────
 export default function OrdenCompraGenerator({ obra, ordenesAnteriores = [], onSave, onClose }) {
-  const supabase = createClient();
 
   const nextNum = `OC-${new Date().getFullYear()}-${String((ordenesAnteriores.length || 0) + 1).padStart(4, "0")}`;
 

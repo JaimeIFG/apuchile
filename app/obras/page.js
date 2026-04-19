@@ -86,15 +86,37 @@ export default function ObrasPage() {
   const [mounted, setMounted] = useState(false);
   const [alertas, setAlertas] = useState([]);
   const [alertasCollapsed, setAlertasCollapsed] = useState(false);
+  const [empresaActiva, setEmpresaActivaLocal] = useState(null); // { id, nombre }
 
   useInactividad(supabase, router, 10);
 
   useEffect(() => {
     setMounted(true);
+    // Leer empresa activa desde localStorage
+    try {
+      const stored = localStorage.getItem("apudesk_empresa_activa");
+      if (stored) setEmpresaActivaLocal(JSON.parse(stored));
+    } catch {}
+
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) { router.push("/login"); return; }
+
+      // Leer empresa activa (puede cambiar async)
+      let empActiva = null;
+      try {
+        const stored = localStorage.getItem("apudesk_empresa_activa");
+        if (stored) empActiva = JSON.parse(stored);
+      } catch {}
+
+      let obrasQuery = supabase.from("obras").select("*").order("created_at", { ascending: false });
+      if (empActiva?.id) {
+        obrasQuery = obrasQuery.eq("empresa_id", empActiva.id);
+      } else {
+        obrasQuery = obrasQuery.eq("user_id", user.id);
+      }
+
       const [obrasR, garR, pagosR] = await Promise.all([
-        supabase.from("obras").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
+        obrasQuery,
         supabase.from("obra_garantias").select("*"),
         supabase.from("obra_estados_pago").select("*").order("created_at", { ascending: false }),
       ]);
@@ -156,10 +178,13 @@ export default function ObrasPage() {
     if (!nombreNuevo.trim()) return;
     setCreandoLoading(true);
     const { data: { user } } = await supabase.auth.getUser();
+    let empActiva = null;
+    try { const s = localStorage.getItem("apudesk_empresa_activa"); if (s) empActiva = JSON.parse(s); } catch {}
     const { data, error } = await supabase.from("obras").insert({
       nombre: nombreNuevo.trim(),
       estado_obra: estadoNuevo,
       user_id: user.id,
+      ...(empActiva?.id ? { empresa_id: empActiva.id } : {}),
     }).select().single();
     setCreandoLoading(false);
     if (!error && data) {
@@ -233,6 +258,22 @@ export default function ObrasPage() {
       </div>
 
       <main className="max-w-4xl mx-auto px-4 md:px-8 py-6">
+
+        {/* ── Banner empresa activa ── */}
+        {empresaActiva && (
+          <div className="flex items-center justify-between gap-3 mb-4 px-4 py-2.5 rounded-xl"
+            style={{ background: "#eef2ff", border: "1.5px solid #c7d2fe" }}>
+            <div className="flex items-center gap-2 text-sm">
+              <span>🏢</span>
+              <span className="font-semibold text-indigo-800">{empresaActiva.nombre}</span>
+              <span className="text-indigo-400 text-xs">— viendo obras de esta empresa</span>
+            </div>
+            <button onClick={() => { localStorage.removeItem("apudesk_empresa_activa"); window.location.reload(); }}
+              className="text-indigo-400 hover:text-indigo-700 text-xs font-semibold transition">
+              Ver todo ×
+            </button>
+          </div>
+        )}
 
         {/* ── Header card ── */}
         <div className="rounded-2xl overflow-hidden anim-scale-in mb-4"

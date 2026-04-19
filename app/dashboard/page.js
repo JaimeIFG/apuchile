@@ -110,6 +110,25 @@ export default function Dashboard() {
   // Mobile sidebar
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
+  // Empresas
+  const [empresas, setEmpresas] = useState([]);
+  const [empresasComoMiembro, setEmpresasComoMiembro] = useState([]);
+  const [empresaActiva, setEmpresaActivaState] = useState(null);
+  const [modalCrearEmpresa, setModalCrearEmpresa] = useState(false);
+  const [modalCodigoEmpresa, setModalCodigoEmpresa] = useState(false);
+  const [codigoEmpresaInput, setCodigoEmpresaInput] = useState("");
+  const [codigoEmpresaError, setCodigoEmpresaError] = useState("");
+  const [codigoEmpresaCargando, setCodigoEmpresaCargando] = useState(false);
+  const [nuevaEmpresaNombre, setNuevaEmpresaNombre] = useState("");
+  const [nuevaEmpresaRut, setNuevaEmpresaRut] = useState("");
+  const [creandoEmpresaLoading, setCreandoEmpresaLoading] = useState(false);
+
+  const setEmpresaActiva = (emp) => {
+    setEmpresaActivaState(emp);
+    if (emp) localStorage.setItem("apudesk_empresa_activa", JSON.stringify(emp));
+    else localStorage.removeItem("apudesk_empresa_activa");
+  };
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) { router.push("/login"); return; }
@@ -132,6 +151,13 @@ export default function Dashboard() {
       supabase.auth.updateUser({ data: { ultima_conexion: ahora } });
 
       cargarProyectos(user.id);
+      cargarEmpresas(user.id);
+      // Restaurar empresa activa desde localStorage
+      try {
+        const stored = localStorage.getItem("apudesk_empresa_activa");
+        if (stored) setEmpresaActivaState(JSON.parse(stored));
+      } catch {}
+
 
       // Presencia en tiempo real
       const canal = supabase.channel("presencia-global", {
@@ -191,6 +217,71 @@ export default function Dashboard() {
       })));
     }
     setLoading(false);
+  };
+
+  const cargarEmpresas = async (uid) => {
+    // Empresas propias
+    const { data: propias } = await supabase
+      .from("empresas").select("*").eq("created_by", uid).order("created_at", { ascending: false });
+    setEmpresas(propias || []);
+
+    // Empresas donde soy miembro
+    const { data: membs } = await supabase
+      .from("empresa_miembros").select("empresa_id, rol").eq("user_id", uid);
+    if (membs?.length) {
+      const ids = membs.map(m => m.empresa_id);
+      const { data: empsMiembro } = await supabase
+        .from("empresas").select("*").in("id", ids).order("created_at", { ascending: false });
+      setEmpresasComoMiembro((empsMiembro || []).map(e => ({
+        ...e,
+        _miembro: true,
+        _rol: membs.find(m => m.empresa_id === e.id)?.rol || "editor",
+      })));
+    }
+  };
+
+  const crearEmpresa = async () => {
+    if (!nuevaEmpresaNombre.trim() || !user) return;
+    setCreandoEmpresaLoading(true);
+    const { data, error } = await supabase.from("empresas").insert({
+      nombre: nuevaEmpresaNombre.trim(),
+      rut: nuevaEmpresaRut.trim() || null,
+      created_by: user.id,
+    }).select().single();
+    if (!error && data) {
+      // Agregar creador como admin en empresa_miembros
+      await supabase.from("empresa_miembros").insert({
+        empresa_id: data.id,
+        user_id: user.id,
+        email: user.email,
+        rol: "admin",
+      });
+      setEmpresas(p => [data, ...p]);
+      setModalCrearEmpresa(false);
+      setNuevaEmpresaNombre("");
+      setNuevaEmpresaRut("");
+      router.push(`/empresa/${data.id}`);
+    }
+    setCreandoEmpresaLoading(false);
+  };
+
+  const aceptarCodigoEmpresa = async () => {
+    if (!codigoEmpresaInput.trim() || !user) return;
+    setCodigoEmpresaCargando(true);
+    setCodigoEmpresaError("");
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token;
+    const res = await fetch("/api/aceptar-empresa", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      body: JSON.stringify({ codigo: codigoEmpresaInput.trim(), email: user.email }),
+    });
+    const d = await res.json();
+    setCodigoEmpresaCargando(false);
+    if (d.error) { setCodigoEmpresaError(d.error); return; }
+    setModalCodigoEmpresa(false);
+    setCodigoEmpresaInput("");
+    await cargarEmpresas(user.id);
   };
 
   const aceptarCodigoInvitacion = async () => {
@@ -957,6 +1048,102 @@ export default function Dashboard() {
             </div>
           )}
 
+          {/* ── Banner contexto empresa activo ── */}
+          {empresaActiva && (
+            <div className="flex items-center justify-between gap-3 mb-5 px-4 py-3 rounded-xl"
+              style={{ background: "linear-gradient(90deg,#eef2ff,#e0e7ff)", border: "1.5px solid #c7d2fe" }}>
+              <div className="flex items-center gap-2">
+                <span className="text-indigo-500 text-lg">🏢</span>
+                <div>
+                  <p className="text-indigo-800 font-bold text-sm">Contexto activo: {empresaActiva.nombre}</p>
+                  <p className="text-indigo-500 text-xs">Las obras que crees se asociarán a esta empresa</p>
+                </div>
+              </div>
+              <button onClick={() => setEmpresaActiva(null)}
+                className="text-indigo-400 hover:text-indigo-700 text-xs font-semibold transition">
+                Volver a personal ×
+              </button>
+            </div>
+          )}
+
+          {/* ── Mis Empresas ── */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-[14px] font-bold text-gray-800">🏢 Mis Empresas</h2>
+              <div className="flex items-center gap-2">
+                <button onClick={() => { setModalCodigoEmpresa(true); setCodigoEmpresaError(""); setCodigoEmpresaInput(""); }}
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">
+                  🔑 Unirse a empresa
+                </button>
+                <button onClick={() => setModalCrearEmpresa(true)}
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-100 transition">
+                  + Crear empresa
+                </button>
+              </div>
+            </div>
+
+            {(empresas.length + empresasComoMiembro.length) === 0 ? (
+              <div className="bg-white rounded-2xl p-8 text-center"
+                style={{ border: "1.5px dashed #e2e8f0" }}>
+                <p className="text-3xl mb-2">🏢</p>
+                <p className="text-gray-400 text-sm mb-2">No tienes perfil de empresa aún</p>
+                <button onClick={() => setModalCrearEmpresa(true)}
+                  className="text-indigo-600 text-sm font-semibold underline">
+                  Crea tu primer perfil de empresa
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {[...empresas, ...empresasComoMiembro].map(emp => {
+                  const isActiva = empresaActiva?.id === emp.id;
+                  return (
+                    <div key={emp.id}
+                      className="bg-white rounded-2xl p-4 border cursor-pointer transition hover:shadow-md"
+                      style={{ borderColor: isActiva ? "#6366f1" : "#e2e8f0", borderWidth: isActiva ? 2 : 1.5 }}>
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center font-bold text-indigo-600 text-base border border-indigo-100">
+                            {emp.nombre.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm text-gray-800 leading-tight">{emp.nombre}</p>
+                            {emp.rut && <p className="text-[11px] text-gray-400">RUT {emp.rut}</p>}
+                          </div>
+                        </div>
+                        {emp._miembro && (
+                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-600">
+                            {emp._rol === "admin" ? "Admin" : emp._rol === "editor" ? "Editor" : "Visor"}
+                          </span>
+                        )}
+                        {!emp._miembro && (
+                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-600">
+                            Propietario
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        <button
+                          onClick={() => setEmpresaActiva({ id: emp.id, nombre: emp.nombre, rut: emp.rut })}
+                          className={`flex-1 py-1.5 rounded-lg text-[11px] font-semibold transition ${
+                            isActiva
+                              ? "bg-indigo-600 text-white"
+                              : "bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
+                          }`}>
+                          {isActiva ? "✓ Activo" : "Activar"}
+                        </button>
+                        <button
+                          onClick={() => router.push(`/empresa/${emp.id}`)}
+                          className="px-3 py-1.5 rounded-lg text-[11px] font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 transition">
+                          Gestionar →
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
           {/* ── Proyectos recientes ── */}
           <div id="mis-proyectos">
             <div className="flex items-center justify-between mb-4 anim-fade-up delay-300">
@@ -1561,6 +1748,81 @@ export default function Dashboard() {
                   })}
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Modal Crear Empresa ── */}
+      {modalCrearEmpresa && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+            <h3 className="font-bold text-gray-800 text-lg mb-1">🏢 Crear perfil de empresa</h3>
+            <p className="text-gray-400 text-sm mb-5">Los datos del perfil aparecerán en tus documentos (OC, EP, informes).</p>
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Nombre empresa *</label>
+                <input
+                  autoFocus
+                  value={nuevaEmpresaNombre}
+                  onChange={e => setNuevaEmpresaNombre(e.target.value)}
+                  onKeyDown={e => e.key === "Enter" && crearEmpresa()}
+                  placeholder="Ej: Retecsold SpA"
+                  className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">RUT (opcional)</label>
+                <input
+                  value={nuevaEmpresaRut}
+                  onChange={e => setNuevaEmpresaRut(e.target.value)}
+                  placeholder="76.543.210-K"
+                  className="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+              <p className="text-xs text-gray-400">Podrás completar dirección, teléfono, logo y más desde el perfil de la empresa.</p>
+            </div>
+            <div className="flex gap-3 mt-5">
+              <button onClick={() => setModalCrearEmpresa(false)}
+                className="flex-1 py-2 rounded-lg text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition">
+                Cancelar
+              </button>
+              <button onClick={crearEmpresa} disabled={!nuevaEmpresaNombre.trim() || creandoEmpresaLoading}
+                className="flex-1 py-2 rounded-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition disabled:opacity-60">
+                {creandoEmpresaLoading ? "Creando…" : "Crear empresa"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Modal Unirse a Empresa ── */}
+      {modalCodigoEmpresa && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+            <h3 className="font-bold text-gray-800 text-lg mb-1">🔑 Unirse a empresa</h3>
+            <p className="text-gray-400 text-sm mb-5">Ingresa el código que recibiste por email para unirte al perfil de empresa de tu organización.</p>
+            <input
+              autoFocus
+              value={codigoEmpresaInput}
+              onChange={e => setCodigoEmpresaInput(e.target.value.toUpperCase())}
+              onKeyDown={e => e.key === "Enter" && aceptarCodigoEmpresa()}
+              placeholder="XXXXXXXX"
+              maxLength={8}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-center text-2xl font-mono font-bold tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-400 mb-3"
+            />
+            {codigoEmpresaError && (
+              <p className="text-red-500 text-sm text-center mb-3">{codigoEmpresaError}</p>
+            )}
+            <div className="flex gap-3">
+              <button onClick={() => setModalCodigoEmpresa(false)}
+                className="flex-1 py-2 rounded-lg text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition">
+                Cancelar
+              </button>
+              <button onClick={aceptarCodigoEmpresa} disabled={codigoEmpresaCargando || codigoEmpresaInput.length < 8}
+                className="flex-1 py-2 rounded-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition disabled:opacity-60">
+                {codigoEmpresaCargando ? "Verificando…" : "Unirse"}
+              </button>
             </div>
           </div>
         </div>
