@@ -91,34 +91,39 @@ function SectionTitle({ children }) {
   );
 }
 
+let _imgBoxCount = 0;
 function ImgUploadBox({ label, img, onUpload, onClear, hint }) {
-  const ref = useRef();
+  const inputId = useState(() => `imgbox-${++_imgBoxCount}`)[0];
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">{label}</label>
+      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">{label}</span>
       {img ? (
         <div className="relative group rounded-lg overflow-hidden border border-slate-600 bg-slate-800 flex items-center justify-center" style={{ height: 80 }}>
-          <img src={img} alt={label} className="max-h-full max-w-full object-contain p-1" />
+          <img src={img} alt={label} style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain", padding: 4 }} />
           <button
+            type="button"
             onClick={onClear}
             className="absolute top-1 right-1 bg-red-500/80 hover:bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
           >✕</button>
         </div>
       ) : (
-        <button
-          type="button"
-          onClick={() => ref.current?.click()}
-          className="flex flex-col items-center justify-center gap-1.5 h-20 border border-dashed border-slate-600 hover:border-indigo-500 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition text-slate-500 hover:text-indigo-400"
-        >
-          <span className="text-xl">📎</span>
-          <span className="text-[10px] font-medium">{hint || "Subir imagen"}</span>
-        </button>
+        <label htmlFor={inputId} style={{
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          gap: 6, height: 80, border: "1.5px dashed #475569", borderRadius: 8,
+          background: "rgba(30,41,59,0.5)", cursor: "pointer", color: "#94a3b8",
+          transition: "border-color .15s, color .15s",
+        }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "#6366f1"; e.currentTarget.style.color = "#818cf8"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "#475569"; e.currentTarget.style.color = "#94a3b8"; }}>
+          <span style={{ fontSize: 20 }}>🖼️</span>
+          <span style={{ fontSize: 10, fontWeight: 600 }}>{hint || "Subir imagen"}</span>
+        </label>
       )}
       <input
-        ref={ref}
+        id={inputId}
         type="file"
         accept="image/*"
-        className="hidden"
+        style={{ display: "none" }}
         onChange={e => {
           const file = e.target.files?.[0];
           if (!file) return;

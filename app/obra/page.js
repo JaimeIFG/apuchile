@@ -2707,6 +2707,18 @@ ${partidas.map(p=>`
                       style={{ background:"#fff", color:"#ef4444", border:"1px solid #fca5a5", borderRadius:10,
                         padding:"8px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>🗑 Limpiar</button>
                   )}
+                  {presupuesto.length>0 && (
+                    <button onClick={async()=>{
+                      const { data } = await supabase.from("obra_presupuesto")
+                        .insert({ obra_id:obraId, item:String(presupuesto.length+1), seccion:"General",
+                          partida:"Nueva partida", unidad:"", cantidad:0, valor_unitario:0, valor_total:0,
+                          orden:presupuesto.length+1 })
+                        .select().single();
+                      if(data) setPresupuesto(p=>[...p,data]);
+                    }}
+                      style={{ background:"#fff", color:"#6366f1", border:"1.5px solid #c7d2fe", borderRadius:10,
+                        padding:"8px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>＋ Agregar fila</button>
+                  )}
                   <button onClick={()=>setMPresupuesto(true)}
                     style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
                       padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>
@@ -2745,16 +2757,30 @@ ${partidas.map(p=>`
                             </thead>
                             <tbody>
                               {items.map((p,i)=>{
-                                const editCant = editingCell?.id===p.id && editingCell?.field==="cantidad";
-                                const editUnit = editingCell?.id===p.id && editingCell?.field==="valor_unitario";
+                                const editCant    = editingCell?.id===p.id && editingCell?.field==="cantidad";
+                                const editUnit    = editingCell?.id===p.id && editingCell?.field==="valor_unitario";
+                                const editPartida = editingCell?.id===p.id && editingCell?.field==="partida";
                                 return (
                                   <tr key={p.id} style={{ background:i%2===0?"#fff":"#fafafa",
                                     borderBottom:"1px solid #f1f5f9", transition:"background .1s" }}
                                     onMouseEnter={e=>e.currentTarget.style.background="#eef2ff"}
                                     onMouseLeave={e=>e.currentTarget.style.background=i%2===0?"#fff":"#fafafa"}>
                                     <td style={{ padding:"7px 10px", color:"#94a3b8", fontSize:11 }}>{p.item}</td>
-                                    <td style={{ padding:"7px 10px", color:"#1e293b", maxWidth:280,
-                                      overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{p.partida}</td>
+                                    <td style={{ padding:"4px 6px", color:"#1e293b", maxWidth:280 }}>
+                                      {editPartida ? (
+                                        <input autoFocus defaultValue={p.partida ?? ""}
+                                          onBlur={async e=>{ const v=e.target.value.trim()||p.partida; setPresupuesto(prev=>prev.map(x=>x.id===p.id?{...x,partida:v}:x)); setEditingCell(null); await supabase.from("obra_presupuesto").update({partida:v}).eq("id",p.id); }}
+                                          onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
+                                          style={{ width:"100%", border:"1.5px solid #6366f1", borderRadius:6,
+                                            padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
+                                      ) : (
+                                        <span onClick={()=>setEditingCell({id:p.id,field:"partida"})}
+                                          title="Clic para editar" style={{ cursor:"pointer", display:"block",
+                                            overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                                          {p.partida}
+                                        </span>
+                                      )}
+                                    </td>
                                     <td style={{ padding:"7px 10px", color:"#64748b" }}>{p.unidad}</td>
                                     {/* Cantidad — editable */}
                                     <td style={{ padding:"4px 6px", textAlign:"right" }}>
@@ -3724,29 +3750,45 @@ function ModalFotos({ obraId, onClose, onSave }) {
 }
 
 function ResumenFinanciero({ presupuesto }) {
-  const cd    = presupuesto.reduce((s,p) => s + (p.valor_total||0), 0);
-  const gg    = cd * 0.25;
-  const ut    = cd * 0.15;
-  const neto  = cd + gg + ut;
-  const iva   = neto * 0.19;
-  const total = neto + iva;
-  const fmtN  = v => "$" + Math.round(v).toLocaleString("es-CL");
-  const filas = [
-    { label:"Costo Directo",          val:cd,    bold:false },
-    { label:"Gastos Generales (25%)", val:gg,    bold:false },
-    { label:"Utilidades (15%)",       val:ut,    bold:false },
-    { label:"Costo Neto",             val:neto,  bold:true  },
-    { label:"IVA (19%)",              val:iva,   bold:false },
-  ];
+  const [pctGG,  setPctGG]  = useState(25);
+  const [pctUt,  setPctUt]  = useState(15);
+  const [pctIva, setPctIva] = useState(19);
+  const cd   = presupuesto.reduce((s,p) => s + (p.valor_total||0), 0);
+  const gg   = cd * (pctGG / 100);
+  const ut   = cd * (pctUt / 100);
+  const neto = cd + gg + ut;
+  const iva  = neto * (pctIva / 100);
+  const total= neto + iva;
+  const fmtN = v => "$" + Math.round(v).toLocaleString("es-CL");
+  const PctInput = ({ val, onChange }) => (
+    <input type="number" min="0" max="100" value={val}
+      onChange={e => onChange(Math.max(0, parseFloat(e.target.value)||0))}
+      onClick={e => e.stopPropagation()}
+      style={{ width:44, border:"1.5px solid #c7d2fe", borderRadius:6, padding:"2px 5px",
+        fontSize:12, fontFamily:"inherit", textAlign:"right", outline:"none",
+        background:"#eef2ff", color:"#4338ca", fontWeight:700 }}/>
+  );
   return (
     <div style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:14,
       padding:"18px 22px", marginTop:8 }}>
-      <h3 style={{ fontSize:12, fontWeight:700, color:"#4338ca", margin:"0 0 12px",
-        textTransform:"uppercase", letterSpacing:".05em" }}>📊 Resumen Financiero</h3>
-      {filas.map(({label,val,bold}) => (
-        <div key={label} style={{ display:"flex", justifyContent:"space-between",
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
+        <h3 style={{ fontSize:12, fontWeight:700, color:"#4338ca", margin:0,
+          textTransform:"uppercase", letterSpacing:".05em" }}>📊 Resumen Financiero</h3>
+        <span style={{ fontSize:10, color:"#94a3b8" }}>✏️ Edita los porcentajes</span>
+      </div>
+      {[
+        { label:"Costo Directo", val:cd,   bold:false, pct:null },
+        { label:"Gastos Generales", val:gg, bold:false, pct:<PctInput val={pctGG}  onChange={setPctGG}/> },
+        { label:"Utilidades",    val:ut,   bold:false, pct:<PctInput val={pctUt}  onChange={setPctUt}/> },
+        { label:"Costo Neto",    val:neto, bold:true,  pct:null },
+        { label:"IVA",           val:iva,  bold:false, pct:<PctInput val={pctIva} onChange={setPctIva}/> },
+      ].map(({label,val,bold,pct}) => (
+        <div key={label} style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
           padding:"8px 0", borderBottom:"1px solid #f1f5f9" }}>
-          <span style={{ fontSize:13, color:"#374151", fontWeight:bold?700:400 }}>{label}</span>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:13, color:"#374151", fontWeight:bold?700:400 }}>{label}</span>
+            {pct && <>{pct}<span style={{ fontSize:11, color:"#94a3b8" }}>%</span></>}
+          </div>
           <span style={{ fontSize:13, fontWeight:bold?700:500, color:"#1e293b" }}>{fmtN(val)}</span>
         </div>
       ))}
