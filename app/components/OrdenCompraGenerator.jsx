@@ -25,6 +25,13 @@ const ESTADO_COLOR = {
 const MONEDAS = ["CLP", "UF", "USD", "EUR"];
 const CONDICIONES_PAGO = ["Contra entrega", "30 días factura", "60 días factura", "Anticipado 50%", "Personalizado"];
 
+const TEMAS_COLOR = {
+  indigo: { label: "Índigo",  hex: "#4338ca", rgb: [67, 56, 202] },
+  gris:   { label: "Gris",    hex: "#475569", rgb: [71, 85, 105] },
+  azul:   { label: "Azul",    hex: "#1d4ed8", rgb: [29, 78, 216] },
+  verde:  { label: "Verde",   hex: "#166534", rgb: [22, 101, 52]  },
+};
+
 function emptyItem(orden) {
   return { _id: uid(), orden, descripcion: "", unidad: "Unid.", cantidad: 1, precio_unitario: 0, total: 0 };
 }
@@ -133,6 +140,7 @@ export default function OrdenCompraGenerator({ obra, ocData, ordenesAnteriores =
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [emitiendo, setEmitiendo] = useState(false);
+  const [tema, setTema] = useState("gris");
 
   // Imágenes
   const [firmaImg, setFirmaImg] = useState(null);
@@ -295,7 +303,7 @@ export default function OrdenCompraGenerator({ obra, ocData, ordenesAnteriores =
       const W = doc.internal.pageSize.getWidth();
       const H = doc.internal.pageSize.getHeight();
       const M = 14;
-      const INDIGO = [67, 56, 202];
+      const INDIGO = TEMAS_COLOR[tema]?.rgb || [67, 56, 202];
       const WHITE = [255, 255, 255];
       const DARK = [15, 23, 42];
       const SLATE_L = [248, 250, 252];
@@ -628,7 +636,16 @@ export default function OrdenCompraGenerator({ obra, ocData, ordenesAnteriores =
               {oc.estado.charAt(0).toUpperCase() + oc.estado.slice(1)}
             </span>
             <Select value={oc.estado} onChange={setF("estado")} options={ESTADOS} />
-            <button onClick={onClose} className="ml-2 text-slate-400 hover:text-white transition text-xl font-bold">✕</button>
+            {/* Selector de color tema PDF */}
+            <div className="flex items-center gap-1 ml-1">
+              {Object.entries(TEMAS_COLOR).map(([key, t]) => (
+                <button key={key} onClick={() => setTema(key)} title={t.label}
+                  className="w-5 h-5 rounded-full border-2 transition"
+                  style={{ background: t.hex, borderColor: tema === key ? "#fff" : "transparent" }}
+                />
+              ))}
+            </div>
+            <button onClick={onClose} className="ml-1 text-slate-400 hover:text-white transition text-xl font-bold">✕</button>
           </div>
         </div>
 

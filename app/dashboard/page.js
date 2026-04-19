@@ -233,11 +233,15 @@ export default function Dashboard() {
       const ids = membs.map(m => m.empresa_id);
       const { data: empsMiembro } = await supabase
         .from("empresas").select("*").in("id", ids).order("created_at", { ascending: false });
-      setEmpresasComoMiembro((empsMiembro || []).map(e => ({
-        ...e,
-        _miembro: true,
-        _rol: membs.find(m => m.empresa_id === e.id)?.rol || "editor",
-      })));
+      // Filtrar empresas donde ya soy propietario para no duplicar
+      const propiaIds = new Set((propias || []).map(e => e.id));
+      setEmpresasComoMiembro((empsMiembro || [])
+        .filter(e => !propiaIds.has(e.id))
+        .map(e => ({
+          ...e,
+          _miembro: true,
+          _rol: membs.find(m => m.empresa_id === e.id)?.rol || "editor",
+        })));
     }
   };
 

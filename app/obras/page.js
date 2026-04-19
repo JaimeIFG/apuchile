@@ -112,7 +112,8 @@ export default function ObrasPage() {
       if (empActiva?.id) {
         obrasQuery = obrasQuery.eq("empresa_id", empActiva.id);
       } else {
-        obrasQuery = obrasQuery.eq("user_id", user.id);
+        // Solo obras personales (sin empresa asignada)
+        obrasQuery = obrasQuery.eq("user_id", user.id).is("empresa_id", null);
       }
 
       const [obrasR, garR, pagosR] = await Promise.all([

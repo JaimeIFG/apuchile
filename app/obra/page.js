@@ -1242,6 +1242,10 @@ function ObraDetail() {
   const [docs,      setDocs]      = useState([]);
   const [pagos,     setPagos]     = useState([]);
   const [garantias, setGarantias] = useState([]);
+  const [garSeleccionada, setGarSeleccionada] = useState(null);
+  const [gastos, setGastos] = useState([]);
+  const [mGasto, setMGasto] = useState(false);
+  const [gastoSeleccionado, setGastoSeleccionado] = useState(null);
   const [bitacora,  setBitacora]  = useState([]);
   const [fotos,     setFotos]     = useState([]);
   const [presupuesto, setPresupuesto] = useState([]);
@@ -1302,6 +1306,8 @@ function ObraDetail() {
       setRecepciones(recR.data || []);
       const ocR = await supabase.from("obra_ordenes_compra").select("*").eq("obra_id", obraId).order("created_at",{ascending:false});
       setOrdenes(ocR.data || []);
+      const gastosR = await supabase.from("obra_gastos").select("*").eq("obra_id", obraId).order("fecha",{ascending:false});
+      setGastos(gastosR.data || []);
       // Agrupar anexos por bitacora_id
       const anexosMap = {};
       (aR.data||[]).forEach(a=>{ if(!anexosMap[a.bitacora_id]) anexosMap[a.bitacora_id]=[]; anexosMap[a.bitacora_id].push(a); });
@@ -1331,7 +1337,8 @@ function ObraDetail() {
   };
   const delDoc  = async id => { await supabase.from("obra_documentos").delete().eq("id",id).eq("obra_id",obraId);   setDocs(p=>p.filter(x=>x.id!==id)); };
   const delPago = async id => { await supabase.from("obra_estados_pago").delete().eq("id",id).eq("obra_id",obraId); setPagos(p=>p.filter(x=>x.id!==id)); };
-  const delGar  = async id => { await supabase.from("obra_garantias").delete().eq("id",id).eq("obra_id",obraId);    setGarantias(p=>p.filter(x=>x.id!==id)); };
+  const delGar   = async id => { await supabase.from("obra_garantias").delete().eq("id",id).eq("obra_id",obraId); setGarantias(p=>p.filter(x=>x.id!==id)); };
+  const delGasto = async id => { await supabase.from("obra_gastos").delete().eq("id",id); setGastos(p=>p.filter(x=>x.id!==id)); };
   const delBit  = async id => { await supabase.from("obra_bitacora").delete().eq("id",id).eq("obra_id",obraId);     setBitacora(p=>p.filter(x=>x.id!==id)); };
   const delFoto = async id => { await supabase.from("obra_fotos").delete().eq("id",id).eq("obra_id",obraId);        setFotos(p=>p.filter(x=>x.id!==id)); };
   const delPresupuesto = async id => { await supabase.from("obra_presupuesto").delete().eq("id",id).eq("obra_id",obraId); setPresupuesto(p=>p.filter(x=>x.id!==id)); };
@@ -1572,6 +1579,7 @@ ${partidas.map(p=>`
     { id:"ficha",     Icon:FcDocument, label:"Ficha"            },
     { id:"docs",      Icon:FcOpenedFolder, label:"Banco de Datos", sub:true },
     { id:"pagos",     Icon:FcPaid, label:"Estados de Pago" },
+    { id:"gastos",    Icon:FcCalculator, label:"Gastos de Obra", badge:gastos.length },
     { id:"garantias", Icon:FcApproval, label:"Garantías"        },
     { id:"bitacora",  Icon:FcReadingEbook, label:"Bitácora"         },
     { id:"informes",  Icon:FcSurvey, label:"Informes"         },
@@ -1757,7 +1765,39 @@ ${partidas.map(p=>`
             <div>
               {fotos.length>0 && <FotoSlideshow fotos={fotos} onClickFoto={f=>setLb(f)}/>}
 
-              <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:"0 0 16px" }}>Resumen Ejecutivo</h2>
+              <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:"0 0 12px" }}>Resumen Ejecutivo</h2>
+
+              {/* Edición rápida de montos financieros */}
+              <div style={{ background:"#f8fafc", border:"1px solid #e2e8f0", borderRadius:12,
+                padding:"12px 16px", marginBottom:14, display:"flex", gap:16, flexWrap:"wrap", alignItems:"flex-end" }}>
+                <div style={{ display:"flex", flexDirection:"column", gap:4, flex:1, minWidth:160 }}>
+                  <label style={{ fontSize:10, fontWeight:700, color:"#94a3b8", textTransform:"uppercase", letterSpacing:".05em" }}>
+                    Monto Contrato ($)
+                  </label>
+                  <input type="number" value={obra.monto_contrato||""} onChange={e=>setField("monto_contrato",e.target.value)}
+                    placeholder="0"
+                    style={{ border:"1.5px solid #e2e8f0", borderRadius:8, padding:"6px 10px", fontSize:13,
+                      fontWeight:600, color:"#1e293b", outline:"none", background:"#fff" }}/>
+                </div>
+                <div style={{ display:"flex", flexDirection:"column", gap:4, flex:1, minWidth:160 }}>
+                  <label style={{ fontSize:10, fontWeight:700, color:"#94a3b8", textTransform:"uppercase", letterSpacing:".05em" }}>
+                    Presupuesto Oficial ($)
+                  </label>
+                  <input type="number" value={obra.presupuesto_oficial||""} onChange={e=>setField("presupuesto_oficial",e.target.value)}
+                    placeholder="0"
+                    style={{ border:"1.5px solid #e2e8f0", borderRadius:8, padding:"6px 10px", fontSize:13,
+                      color:"#1e293b", outline:"none", background:"#fff" }}/>
+                </div>
+                <div style={{ display:"flex", flexDirection:"column", gap:4, flex:1, minWidth:120 }}>
+                  <label style={{ fontSize:10, fontWeight:700, color:"#94a3b8", textTransform:"uppercase", letterSpacing:".05em" }}>
+                    Gastos reales ($)
+                  </label>
+                  <div style={{ border:"1.5px solid #e2e8f0", borderRadius:8, padding:"6px 10px", fontSize:13,
+                    fontWeight:700, color:"#6366f1", background:"#f8fafc" }}>
+                    {fmtPeso(gastos.reduce((s,g)=>s+(g.monto||0),0)) || "—"}
+                  </div>
+                </div>
+              </div>
 
               <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:16 }}>
                 <MetricCard title="Avance Financiero" main={`${pctEjec.toFixed(1)}%`}
@@ -2151,8 +2191,12 @@ ${partidas.map(p=>`
               {garantias.length===0?<EmptyState icon="🔒" msg="Sin garantías"/>:(
                 <div style={{ display:"grid", gap:10 }}>
                   {garantias.map(g=>(
-                    <div key={g.id} style={{ background:"#fff", border:"1.5px solid #e2e8f0",
-                      borderRadius:14, padding:"14px 16px" }}>
+                    <div key={g.id}
+                      onClick={()=>setGarSeleccionada(g)}
+                      style={{ background:"#fff", border:"1.5px solid #e2e8f0", borderRadius:14,
+                        padding:"14px 16px", cursor:"pointer", transition:"box-shadow .15s" }}
+                      onMouseEnter={e=>e.currentTarget.style.boxShadow="0 0 0 2px #6366f1"}
+                      onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
                       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:10 }}>
                         <div style={{ flex:1 }}>
                           <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6, flexWrap:"wrap" }}>
@@ -2170,9 +2214,85 @@ ${partidas.map(p=>`
                             {g.fecha_vencimiento&&<span style={{ fontSize:12, color:"#64748b" }}>Vence: {fmtFecha(g.fecha_vencimiento)}</span>}
                           </div>
                           {g.descripcion&&<p style={{ fontSize:12, color:"#94a3b8", margin:"6px 0 0" }}>{g.descripcion}</p>}
+                          {g.archivo_url&&<a href={g.archivo_url} target="_blank" rel="noopener noreferrer"
+                            onClick={e=>e.stopPropagation()}
+                            style={{ fontSize:11, color:"#6366f1", marginTop:4, display:"inline-block" }}>
+                            📎 {g.archivo_nombre||"Ver archivo"}
+                          </a>}
                         </div>
-                        <button onClick={()=>delGar(g.id)}
-                          style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:16 }}>✕</button>
+                        <div style={{ display:"flex", gap:6 }}>
+                          <button onClick={e=>{e.stopPropagation();setGarSeleccionada(g);}}
+                            style={{ background:"#eef2ff", border:"none", color:"#4338ca",
+                              cursor:"pointer", borderRadius:8, padding:"4px 8px", fontSize:11, fontWeight:600 }}>Editar</button>
+                          <button onClick={e=>{e.stopPropagation();delGar(g.id);}}
+                            style={{ background:"none", border:"none", color:"#fca5a5", cursor:"pointer", fontSize:16 }}>✕</button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ═══ GASTOS DE OBRA ═══ */}
+          {tab==="gastos" && (
+            <div>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14 }}>
+                <div>
+                  <h2 style={{ fontSize:15, fontWeight:800, color:"#1e293b", margin:0 }}>Gastos de Obra</h2>
+                  <p style={{ fontSize:12, color:"#64748b", margin:"2px 0 0" }}>
+                    {gastos.length} registros · Total: <strong>{fmtPeso(gastos.reduce((s,g)=>s+(g.monto||0),0))}</strong>
+                  </p>
+                </div>
+                <button onClick={()=>setMGasto(true)}
+                  style={{ background:"#6366f1", color:"#fff", border:"none", borderRadius:10,
+                    padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>＋ Registrar gasto</button>
+              </div>
+
+              {/* Totales por categoría */}
+              {gastos.length>0 && (()=>{
+                const byCat = {};
+                gastos.forEach(g=>{ byCat[g.categoria||"General"]=(byCat[g.categoria||"General"]||0)+(g.monto||0); });
+                return (
+                  <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginBottom:14 }}>
+                    {Object.entries(byCat).map(([cat,total])=>(
+                      <div key={cat} style={{ background:"#eef2ff", borderRadius:10, padding:"6px 12px" }}>
+                        <span style={{ fontSize:11, color:"#64748b" }}>{cat}</span>
+                        <span style={{ fontSize:12, fontWeight:700, color:"#4338ca", marginLeft:6 }}>{fmtPeso(total)}</span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+
+              {gastos.length===0 ? <EmptyState icon="💸" msg="Sin gastos registrados aún"/> : (
+                <div style={{ display:"grid", gap:8 }}>
+                  {gastos.map(g=>(
+                    <div key={g.id}
+                      onClick={()=>setGastoSeleccionado(g)}
+                      style={{ background:"#fff", border:"1px solid #e2e8f0", borderRadius:12,
+                        padding:"12px 16px", display:"flex", gap:12, alignItems:"center",
+                        cursor:"pointer" }}
+                      onMouseEnter={e=>e.currentTarget.style.boxShadow="0 0 0 2px #6366f1"}
+                      onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
+                      <div style={{ flex:1 }}>
+                        <div style={{ display:"flex", gap:8, alignItems:"center", marginBottom:4 }}>
+                          <span style={{ fontSize:13, fontWeight:700, color:"#1e293b" }}>{g.concepto}</span>
+                          <span style={{ fontSize:10, fontWeight:600, padding:"2px 8px", borderRadius:99,
+                            background:"#f1f5f9", color:"#64748b" }}>{g.categoria||"General"}</span>
+                        </div>
+                        <div style={{ display:"flex", gap:14, flexWrap:"wrap", fontSize:12, color:"#64748b" }}>
+                          {g.fecha&&<span>📅 {fmtFecha(g.fecha)}</span>}
+                          {g.proveedor&&<span>🏢 {g.proveedor}</span>}
+                          {g.numero_factura&&<span>📄 Fac. {g.numero_factura}</span>}
+                          {g.numero_oc&&<span>🛒 OC {g.numero_oc}</span>}
+                        </div>
+                      </div>
+                      <div style={{ textAlign:"right" }}>
+                        <div style={{ fontWeight:700, fontSize:15, color:"#6366f1" }}>{fmtPeso(g.monto)}</div>
+                        <button onClick={e=>{e.stopPropagation();delGasto(g.id);}}
+                          style={{ background:"none",border:"none",color:"#fca5a5",cursor:"pointer",fontSize:13,marginTop:2 }}>✕ Eliminar</button>
                       </div>
                     </div>
                   ))}
@@ -3053,6 +3173,14 @@ ${partidas.map(p=>`
                   onSave={p=>{ setPagos(prev=>[p,...prev]); setMPago(false); }}/>}
       {mGar  && <ModalGarantia obraId={obraId} onClose={()=>setMGar(false)}
                   onSave={g=>{ setGarantias(prev=>[...prev,g].sort((a,b)=>new Date(a.fecha_vencimiento)-new Date(b.fecha_vencimiento))); setMGar(false); }}/>}
+      {garSeleccionada && <ModalGarantia obraId={obraId} garantia={garSeleccionada} onClose={()=>setGarSeleccionada(null)}
+                  onSave={g=>{ setGarantias(prev=>prev.map(x=>x.id===g.id?g:x)); setGarSeleccionada(null); }}/>}
+      {(mGasto||gastoSeleccionado) && <ModalGasto obraId={obraId} gasto={gastoSeleccionado||null} onClose={()=>{setMGasto(false);setGastoSeleccionado(null);}}
+                  onSave={g=>{
+                    if(gastoSeleccionado){ setGastos(prev=>prev.map(x=>x.id===g.id?g:x)); }
+                    else { setGastos(prev=>[g,...prev]); }
+                    setMGasto(false); setGastoSeleccionado(null);
+                  }}/>}
       {mBit  && <ModalBitacora obraId={obraId} userId={userId} onClose={()=>setMBit(false)}
                   onSave={(b,newAnexos)=>{
                     setBitacora(prev=>[b,...prev]);
@@ -3380,16 +3508,46 @@ function ModalPago({ obraId, obraMontoContrato, onClose, onSave }) {
   );
 }
 
-function ModalGarantia({ obraId, onClose, onSave }) {
-  const [form,setForm]=useState({tipo:"Fiel Cumplimiento",descripcion:"",monto:"",entidad:"",numero_documento:"",fecha_emision:"",fecha_vencimiento:"",estado:"Vigente"});
-  const [saving,setSaving]=useState(false); const set=(k,v)=>setForm(f=>({...f,[k]:v}));
+function ModalGarantia({ obraId, garantia, onClose, onSave }) {
+  const isEdit = !!garantia?.id;
+  const [form,setForm]=useState({
+    tipo:             garantia?.tipo            || "Fiel Cumplimiento",
+    descripcion:      garantia?.descripcion     || "",
+    monto:            garantia?.monto!=null     ? String(garantia.monto) : "",
+    entidad:          garantia?.entidad         || "",
+    numero_documento: garantia?.numero_documento|| "",
+    fecha_emision:    garantia?.fecha_emision   || "",
+    fecha_vencimiento:garantia?.fecha_vencimiento|| "",
+    estado:           garantia?.estado          || "Vigente",
+  });
+  const [file,setFile]=useState(null);
+  const [saving,setSaving]=useState(false);
+  const [err,setErr]=useState("");
+  const set=(k,v)=>setForm(f=>({...f,[k]:v}));
+
   const save=async()=>{
-    setSaving(true);
-    const{data,error}=await supabase.from("obra_garantias").insert({obra_id:obraId,...form,monto:form.monto?parseFloat(form.monto):null}).select().single();
-    setSaving(false); if(!error&&data) onSave(data);
+    setSaving(true); setErr("");
+    let archivo_url = garantia?.archivo_url || null;
+    let archivo_nombre = garantia?.archivo_nombre || null;
+    if(file){
+      const r=await uploadFile(obraId,"garantias",file);
+      if(r.error){ setErr("Error subiendo archivo: "+r.error); setSaving(false); return; }
+      archivo_url=r.url; archivo_nombre=r.nombre;
+    }
+    const payload={...form, monto:form.monto?parseFloat(form.monto):null, archivo_url, archivo_nombre};
+    let data,error;
+    if(isEdit){
+      ({data,error}=await supabase.from("obra_garantias").update(payload).eq("id",garantia.id).select().single());
+    } else {
+      ({data,error}=await supabase.from("obra_garantias").insert({obra_id:obraId,...payload}).select().single());
+    }
+    setSaving(false);
+    if(error){setErr(error.message);return;}
+    if(data) onSave(data);
   };
+
   return(
-    <Modal title="🔒 Nueva Garantía" onClose={onClose}>
+    <Modal title={isEdit?"✏️ Editar Garantía":"🔒 Nueva Garantía"} onClose={onClose}>
       <div style={{display:"grid",gap:14}}>
         <InputRow label="Tipo"><select value={form.tipo} onChange={e=>set("tipo",e.target.value)} style={selectSt}>{TIPOS_GAR.map(t=><option key={t}>{t}</option>)}</select></InputRow>
         <Grid cols={2}>
@@ -3401,6 +3559,16 @@ function ModalGarantia({ obraId, onClose, onSave }) {
           <InputRow label="Fecha Vencimiento"><input type="date" value={form.fecha_vencimiento} onChange={e=>set("fecha_vencimiento",e.target.value)} style={inputSt}/></InputRow>
         </Grid>
         <InputRow label="Descripción"><input value={form.descripcion} onChange={e=>set("descripcion",e.target.value)} style={inputSt}/></InputRow>
+        <InputRow label="Archivo adjunto">
+          <FileDropZone id={`gar-file-${garantia?.id||"new"}`} file={file} setFile={setFile}/>
+          {!file && garantia?.archivo_url && (
+            <a href={garantia.archivo_url} target="_blank" rel="noopener noreferrer"
+              style={{fontSize:11,color:"#6366f1",marginTop:4,display:"block"}}>
+              📎 {garantia.archivo_nombre||"Archivo actual"}
+            </a>
+          )}
+        </InputRow>
+        {err&&<p style={{fontSize:11,color:"#ef4444",margin:0}}>{err}</p>}
         <ModalActions onClose={onClose} onSave={save} saving={saving}/>
       </div>
     </Modal>
@@ -3774,6 +3942,96 @@ function ModalPresupuesto({ obraId, onClose, onSave }) {
             </div>
           </>
         )}
+      </div>
+    </Modal>
+  );
+}
+
+const CATEGORIAS_GASTO = ["Materiales","Mano de Obra","Subcontratos","Maquinaria y Equipos","Transporte","Gastos Generales","Imprevistos","Otros"];
+
+function ModalGasto({ obraId, gasto, onClose, onSave }) {
+  const isEdit = !!gasto?.id;
+  const [form,setForm]=useState({
+    concepto:       gasto?.concepto       || "",
+    categoria:      gasto?.categoria      || "Materiales",
+    monto:          gasto?.monto!=null    ? String(gasto.monto) : "",
+    proveedor:      gasto?.proveedor      || "",
+    numero_factura: gasto?.numero_factura || "",
+    numero_oc:      gasto?.numero_oc      || "",
+    fecha:          gasto?.fecha          || new Date().toISOString().split("T")[0],
+    notas:          gasto?.notas          || "",
+  });
+  const [file,setFile]=useState(null);
+  const [saving,setSaving]=useState(false);
+  const [err,setErr]=useState("");
+  const set=(k,v)=>setForm(f=>({...f,[k]:v}));
+
+  const save=async()=>{
+    if(!form.concepto.trim())return;
+    setSaving(true); setErr("");
+    let archivo_url=gasto?.archivo_url||null, archivo_nombre=gasto?.archivo_nombre||null;
+    if(file){
+      const r=await uploadFile(obraId,"gastos",file);
+      if(r.error){setErr("Error: "+r.error);setSaving(false);return;}
+      archivo_url=r.url; archivo_nombre=r.nombre;
+    }
+    const { data:{ user } } = await supabase.auth.getUser();
+    const payload={...form, monto:form.monto?parseFloat(form.monto):null, archivo_url, archivo_nombre};
+    let data,error;
+    if(isEdit){
+      ({data,error}=await supabase.from("obra_gastos").update(payload).eq("id",gasto.id).select().single());
+    } else {
+      ({data,error}=await supabase.from("obra_gastos").insert({obra_id:obraId,user_id:user.id,...payload}).select().single());
+    }
+    setSaving(false);
+    if(error){setErr(error.message);return;}
+    if(data) onSave(data);
+  };
+
+  return(
+    <Modal title={isEdit?"✏️ Editar Gasto":"💸 Registrar Gasto"} onClose={onClose}>
+      <div style={{display:"grid",gap:14,minWidth:440}}>
+        <InputRow label="Concepto / Descripción">
+          <input autoFocus value={form.concepto} onChange={e=>set("concepto",e.target.value)}
+            style={inputSt} placeholder="Ej: Compra de áridos, arriendo grúa..."/>
+        </InputRow>
+        <Grid cols={2}>
+          <InputRow label="Categoría">
+            <select value={form.categoria} onChange={e=>set("categoria",e.target.value)} style={selectSt}>
+              {CATEGORIAS_GASTO.map(c=><option key={c}>{c}</option>)}
+            </select>
+          </InputRow>
+          <InputRow label="Monto ($)">
+            <input type="number" value={form.monto} onChange={e=>set("monto",e.target.value)} style={inputSt} placeholder="0"/>
+          </InputRow>
+          <InputRow label="Fecha">
+            <input type="date" value={form.fecha} onChange={e=>set("fecha",e.target.value)} style={inputSt}/>
+          </InputRow>
+          <InputRow label="Proveedor">
+            <input value={form.proveedor} onChange={e=>set("proveedor",e.target.value)} style={inputSt} placeholder="Nombre empresa o persona"/>
+          </InputRow>
+          <InputRow label="N° Factura / Boleta">
+            <input value={form.numero_factura} onChange={e=>set("numero_factura",e.target.value)} style={inputSt}/>
+          </InputRow>
+          <InputRow label="N° OC asociada (opcional)">
+            <input value={form.numero_oc} onChange={e=>set("numero_oc",e.target.value)} style={inputSt} placeholder="OC-2026-0001"/>
+          </InputRow>
+        </Grid>
+        <InputRow label="Notas">
+          <textarea value={form.notas} onChange={e=>set("notas",e.target.value)}
+            rows={2} style={{...inputSt,resize:"vertical"}} placeholder="Observaciones..."/>
+        </InputRow>
+        <InputRow label="Archivo adjunto (factura, boleta…)">
+          <FileDropZone id={`gasto-file-${gasto?.id||"new"}`} file={file} setFile={setFile}/>
+          {!file && gasto?.archivo_url && (
+            <a href={gasto.archivo_url} target="_blank" rel="noopener noreferrer"
+              style={{fontSize:11,color:"#6366f1",marginTop:4,display:"block"}}>
+              📎 {gasto.archivo_nombre||"Archivo actual"}
+            </a>
+          )}
+        </InputRow>
+        {err&&<p style={{fontSize:11,color:"#ef4444",margin:0}}>{err}</p>}
+        <ModalActions onClose={onClose} onSave={save} saving={saving} disabled={!form.concepto.trim()}/>
       </div>
     </Modal>
   );
