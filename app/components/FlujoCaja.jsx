@@ -4,7 +4,7 @@ import { useMemo } from "react";
 const fmtPeso = n => "$" + Math.round(Math.abs(n || 0)).toLocaleString("es-CL");
 const MESES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
-export default function FlujoCaja({ obra, presupuesto, pagos }) {
+export default function FlujoCaja({ obra, presupuesto, pagos, gastos }) {
   const fechaInicio = obra?.fecha_inicio ? new Date(obra.fecha_inicio) : null;
   const fechaTermino = obra?.fecha_termino_contractual ? new Date(obra.fecha_termino_contractual) : null;
   const montoContrato = obra?.monto_contrato || presupuesto.reduce((s, p) => s + (p.valor_total || 0), 0);
@@ -52,9 +52,22 @@ export default function FlujoCaja({ obra, presupuesto, pagos }) {
     const realAcum = [];
     realMensual.reduce((acc, v) => { const next = acc + v; realAcum.push(next); return next; }, 0);
 
-    // Cost estimate (80% of contract as outflow)
-    const costoRatio = 0.82; // typical cost/sale ratio
-    const costoMensual = planMensual.map(v => v * costoRatio);
+    // Real gastos by month (if available), otherwise estimate 82% of planned
+    const gastosMensual = meses.map(() => 0);
+    (gastos || []).forEach(g => {
+      if (g.fecha && g.monto) {
+        const d = new Date(g.fecha);
+        const idx = meses.findIndex(m =>
+          m.getFullYear() === d.getFullYear() && m.getMonth() === d.getMonth()
+        );
+        if (idx >= 0) gastosMensual[idx] += g.monto;
+      }
+    });
+    const hasGastos = gastosMensual.some(v => v > 0);
+    const costoRatio = 0.82;
+    const costoMensual = hasGastos
+      ? gastosMensual
+      : planMensual.map(v => v * costoRatio);
     const costoAcum = [];
     costoMensual.reduce((acc, v) => { const next = acc + v; costoAcum.push(next); return next; }, 0);
 
@@ -65,7 +78,7 @@ export default function FlujoCaja({ obra, presupuesto, pagos }) {
       costoMensual, costoAcum,
       flujoCaja: meses.map((_, i) => realMensual[i] - costoMensual[i]),
     };
-  }, [fechaInicio, fechaTermino, montoContrato, pagos]);
+  }, [fechaInicio, fechaTermino, montoContrato, pagos, gastos]);
 
   if (!data) {
     return (
@@ -102,7 +115,7 @@ export default function FlujoCaja({ obra, presupuesto, pagos }) {
         {[
           { color: "#6366f1", label: "Planificado" },
           { color: "#10b981", label: "Ingresos reales" },
-          { color: "#f59e0b", label: "Egresos estimados" },
+          { color: "#f59e0b", label: (gastos || []).some(g => g.monto) ? "Egresos reales" : "Egresos estimados" },
         ].map(l => (
           <span key={l.label} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "#64748b" }}>
             <span style={{ width: 12, height: 12, borderRadius: 4, background: l.color }} />

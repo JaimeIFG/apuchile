@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 const fmtPeso = n => (n || n === 0) ? "$" + Math.round(n).toLocaleString("es-CL") : "—";
 const fmtPct = n => (n || n === 0) ? n.toFixed(1) + "%" : "—";
 
-export default function ControlCostos({ obra, presupuesto, pagos }) {
+export default function ControlCostos({ obra, presupuesto, pagos, gastos }) {
   const [viewMode, setViewMode] = useState("seccion"); // seccion | detalle
 
   // Group by section
@@ -46,11 +46,15 @@ export default function ControlCostos({ obra, presupuesto, pagos }) {
   const totales = useMemo(() => {
     const t = { venta: 0, objetivo: 0, real: 0 };
     secciones.forEach(s => { t.venta += s.venta; t.objetivo += s.objetivo; t.real += s.real; });
+    // Add gastos de obra to costo real
+    const gastosTotal = (gastos || []).reduce((s, g) => s + (g.monto || 0), 0);
+    t.real += gastosTotal;
+    t.gastosTotal = gastosTotal;
     t.margenVenta = t.venta > 0 ? ((t.venta - t.objetivo) / t.venta * 100) : 0;
     t.margenReal = t.venta > 0 ? ((t.venta - t.real) / t.venta * 100) : 0;
     t.desviacion = t.objetivo > 0 ? ((t.real - t.objetivo) / t.objetivo * 100) : 0;
     return t;
-  }, [secciones]);
+  }, [secciones, gastos]);
 
   const hasObjetivo = presupuesto.some(p => p.costo_objetivo && p.costo_objetivo !== p.valor_total);
   const hasReal = totales.real > 0;

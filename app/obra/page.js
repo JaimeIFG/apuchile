@@ -2961,17 +2961,17 @@ ${partidas.map(p=>`
 
           {/* ═══ CARTA GANTT ═══ */}
           {tab==="gantt" && (
-            <GanttObra obra={obra} presupuesto={presupuesto} />
+            <GanttObra obra={obra} presupuesto={presupuesto} gastos={gastos} />
           )}
 
           {/* ═══ CONTROL DE COSTOS ═══ */}
           {tab==="costos" && (
-            <ControlCostos obra={obra} presupuesto={presupuesto} pagos={pagos} />
+            <ControlCostos obra={obra} presupuesto={presupuesto} pagos={pagos} gastos={gastos} />
           )}
 
           {/* ═══ FLUJO DE CAJA ═══ */}
           {tab==="flujo" && (
-            <FlujoCaja obra={obra} presupuesto={presupuesto} pagos={pagos} />
+            <FlujoCaja obra={obra} presupuesto={presupuesto} pagos={pagos} gastos={gastos} />
           )}
 
           {/* ═══ RECURSOS ═══ */}
