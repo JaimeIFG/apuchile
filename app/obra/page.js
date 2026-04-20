@@ -1357,7 +1357,6 @@ function ObraDetail() {
       return next;
     });
     setPresupuesto(updated);
-    setEditingCell(null);
     const item = updated.find(p => p.id === id);
     await supabase.from("obra_presupuesto").update({
       [field]: num,
@@ -2711,13 +2710,21 @@ ${partidas.map(p=>`
                         padding:"8px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>🗑 Limpiar</button>
                   )}
                   {presupuesto.length>0 && (
-                    <button onClick={async()=>{
-                      const { data } = await supabase.from("obra_presupuesto")
+                    <button onClick={async(e)=>{
+                      const btn = e.currentTarget;
+                      btn.disabled = true; btn.textContent = "Agregando…";
+                      const { data, error } = await supabase.from("obra_presupuesto")
                         .insert({ obra_id:obraId, item:String(presupuesto.length+1), seccion:"General",
-                          partida:"Nueva partida", unidad:"", cantidad:0, valor_unitario:0, valor_total:0,
+                          partida:"Nueva partida", unidad:"glb", cantidad:1, valor_unitario:0, valor_total:0,
                           orden:presupuesto.length+1 })
                         .select().single();
-                      if(data) setPresupuesto(p=>[...p,data]);
+                      btn.disabled = false; btn.textContent = "＋ Agregar fila";
+                      if(error){ alert("Error al crear partida: "+error.message); return; }
+                      if(data){
+                        setPresupuesto(p=>[...p,data]);
+                        setEditingCell({id:data.id, field:"partida"});
+                        setTimeout(()=>document.getElementById("prow-"+data.id)?.scrollIntoView({behavior:"smooth",block:"center"}),120);
+                      }
                     }}
                       style={{ background:"#fff", color:"#6366f1", border:"1.5px solid #c7d2fe", borderRadius:10,
                         padding:"8px 14px", fontSize:12, fontWeight:600, cursor:"pointer" }}>＋ Agregar fila</button>
@@ -2764,7 +2771,7 @@ ${partidas.map(p=>`
                                 const editUnit    = editingCell?.id===p.id && editingCell?.field==="valor_unitario";
                                 const editPartida = editingCell?.id===p.id && editingCell?.field==="partida";
                                 return (
-                                  <tr key={p.id} style={{ background:i%2===0?"#fff":"#fafafa",
+                                  <tr key={p.id} id={"prow-"+p.id} style={{ background:i%2===0?"#fff":"#fafafa",
                                     borderBottom:"1px solid #f1f5f9", transition:"background .1s" }}
                                     onMouseEnter={e=>e.currentTarget.style.background="#eef2ff"}
                                     onMouseLeave={e=>e.currentTarget.style.background=i%2===0?"#fff":"#fafafa"}>
@@ -2772,8 +2779,8 @@ ${partidas.map(p=>`
                                     <td style={{ padding:"4px 6px", color:"#1e293b", maxWidth:280 }}>
                                       {editPartida ? (
                                         <input autoFocus defaultValue={p.partida ?? ""}
-                                          onBlur={async e=>{ const v=e.target.value.trim()||p.partida; setPresupuesto(prev=>prev.map(x=>x.id===p.id?{...x,partida:v}:x)); setEditingCell(null); await supabase.from("obra_presupuesto").update({partida:v}).eq("id",p.id); }}
-                                          onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
+                                          onBlur={async e=>{ const v=e.target.value.trim()||p.partida; setPresupuesto(prev=>prev.map(x=>x.id===p.id?{...x,partida:v}:x)); await supabase.from("obra_presupuesto").update({partida:v}).eq("id",p.id); setEditingCell({id:p.id,field:"cantidad"}); }}
+                                          onKeyDown={e=>{ if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.target.blur();} if(e.key==="Escape") setEditingCell(null); }}
                                           style={{ width:"100%", border:"1.5px solid #6366f1", borderRadius:6,
                                             padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
                                       ) : (
@@ -2788,9 +2795,9 @@ ${partidas.map(p=>`
                                     {/* Cantidad — editable */}
                                     <td style={{ padding:"4px 6px", textAlign:"right" }}>
                                       {editCant ? (
-                                        <input autoFocus defaultValue={p.cantidad ?? ""}
-                                          onBlur={e=>updatePresupuesto(p.id,"cantidad",e.target.value)}
-                                          onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
+                                        <input autoFocus defaultValue={p.cantidad ?? ""} onFocus={e=>e.target.select()}
+                                          onBlur={e=>{ updatePresupuesto(p.id,"cantidad",e.target.value); setEditingCell({id:p.id,field:"valor_unitario"}); }}
+                                          onKeyDown={e=>{ if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.target.blur();} if(e.key==="Escape") setEditingCell(null); }}
                                           style={{ width:70, textAlign:"right", border:"1.5px solid #6366f1",
                                             borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
                                       ) : (
@@ -2807,9 +2814,9 @@ ${partidas.map(p=>`
                                     {/* Valor unitario — editable */}
                                     <td style={{ padding:"4px 6px", textAlign:"right" }}>
                                       {editUnit ? (
-                                        <input autoFocus defaultValue={p.valor_unitario ?? ""}
-                                          onBlur={e=>updatePresupuesto(p.id,"valor_unitario",e.target.value)}
-                                          onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
+                                        <input autoFocus defaultValue={p.valor_unitario ?? ""} onFocus={e=>e.target.select()}
+                                          onBlur={e=>{ updatePresupuesto(p.id,"valor_unitario",e.target.value); setEditingCell(null); }}
+                                          onKeyDown={e=>{ if(e.key==="Enter"||e.key==="Tab"){e.preventDefault();e.target.blur();} if(e.key==="Escape") setEditingCell(null); }}
                                           style={{ width:90, textAlign:"right", border:"1.5px solid #6366f1",
                                             borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
                                       ) : (
@@ -2832,7 +2839,7 @@ ${partidas.map(p=>`
                                     <td style={{ padding:"4px 6px", textAlign:"right" }}>
                                       {editingCell?.id===p.id && editingCell?.field==="costo_objetivo" ? (
                                         <input autoFocus defaultValue={p.costo_objetivo ?? ""}
-                                          onBlur={e=>updatePresupuesto(p.id,"costo_objetivo",e.target.value)}
+                                          onBlur={e=>{ updatePresupuesto(p.id,"costo_objetivo",e.target.value); setEditingCell(null); }}
                                           onKeyDown={e=>{ if(e.key==="Enter") e.target.blur(); if(e.key==="Escape") setEditingCell(null); }}
                                           style={{ width:90, textAlign:"right", border:"1.5px solid #f59e0b",
                                             borderRadius:6, padding:"3px 6px", fontSize:12, fontFamily:"inherit", outline:"none" }}/>
